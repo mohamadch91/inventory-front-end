@@ -64,7 +64,10 @@ function Home() {
               <h1 className=" text-primary font-weight-bold">Inventory</h1>
               <h2>and </h2>
               <h2> Gap analyses </h2>
-              <button>get started</button>
+              <button id="links" >
+                
+              <Link to="main">get started</Link>
+                </button>
               </div>
             </div>
           </div>
