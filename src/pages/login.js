@@ -25,7 +25,7 @@ function Login() {
             <span style=
             {{color: "hsl(218, 81%, 75%)"}}>and Gap analyses system</span>
           </h1>
-          <p class="mb-4 opacity-70 mt-5" style={{color: "hsl(218, 81%, 85%)"}}>
+          <p class="mb-5 opacity-70 mt-5" style={{color: "hsl(218, 81%, 85%)"}}>
             Lorem ipsum dolor, sit amet consectetur adipisicing elit.
             Temporibus, expedita iusto veniam atque, magni tempora mollitia
             dolorum consequatur nulla, neque debitis eos reprehenderit quasi
@@ -37,13 +37,13 @@ function Login() {
           <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
           <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
   
-          <div class="card bg-glass  mb-5 mt-1">
+          <div class="card bg-glass  mb-5 mt-5">
             <div class="card-body px-5 py-5 px-md-5 col-md-12">
               <form>
     
 
   
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-4 mt-2">
                   <input type="email" id="form3Example3" class="form-control" />
                   <label class="form-label" for="form3Example3">Email address</label>
                 </div>
