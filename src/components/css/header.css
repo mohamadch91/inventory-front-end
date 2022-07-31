@@ -1,0 +1,36 @@
+#who-logo{
+    width: 300px;
+    height: 50px;
+    margin: 10 ;
+}
+
+@media screen and (max-width: 1600px) {
+    #who-logo{
+        width: 250px;
+        height: 40px;
+    }
+}
+    
+@media screen and (max-width: 1200px) {
+    #who-logo{
+        width: 250px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #who-logo{
+        width: 250px;
+        height: 40px;
+    }
+}
+    
+
+
+@media screen and (max-width: 600px) {
+    #who-logo{
+        width: 220px;
+        height: 40px;
+    }
+}
+    
