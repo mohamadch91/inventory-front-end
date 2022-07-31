@@ -169,7 +169,7 @@ const Accordion = styled((props) => (
   }));
 export default function PersistentDrawerLeft(props) {
     const theme = useTheme();
-    const [main_content,setMainContent]=React.useState("level setting")
+    const [main_content,setMainContent]=React.useState("")
   
     const switch_render =() =>{
       console.log(main_content)
