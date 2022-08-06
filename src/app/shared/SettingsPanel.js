@@ -93,13 +93,16 @@ inputChangeHandler(event) {
 
   closeRightSidebar() {
     document.querySelector('.right-sidebar').classList.remove('open');
-    //alert("abc")
+    // alert("abc")
+  }
+  openRightSideabr(){
+    document.querySelector('.right-sidebar').classList.add('open');
   }
 
   render() {
     return (
       <div>
-        {/* <div id="settings-trigger"><i className="mdi mdi-settings"></i></div> */}
+        <div id="settings-trigger"><i className="mdi mdi-settings"  onClick={this.openRightSideabr}></i></div>
         <div id="right-sidebar" className="settings-panel right-sidebar">
           <i className="settings-close mdi mdi-close"  onClick={this.closeRightSidebar}></i>
           <Tabs defaultActiveKey="TODOLIST" className="bg-primary" id="uncontrolled-tab-example">

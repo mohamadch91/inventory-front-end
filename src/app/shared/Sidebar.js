@@ -44,6 +44,8 @@ class Sidebar extends Component {
       {path:'/error-pages', state: 'errorPagesMenuOpen'},
       {path:'/general-pages', state: 'generalPagesMenuOpen'},
       {path:'/ecommerce', state: 'ecommercePagesMenuOpen'},
+      {path:'/settings', state: 'settingsMenuOpen'},
+      
     ];
 
     dropdownPaths.forEach((obj => {
@@ -63,6 +65,21 @@ class Sidebar extends Component {
               <span className="icon-bg"><i className="mdi mdi-cube menu-icon"></i></span>
               <span className="menu-title"><Trans>Dashboard</Trans></span>
             </Link>
+          </li>
+          <li className="nav-item nav-category"><Trans>Admin setting </Trans></li>
+          <li className={ this.isPathActive('/setting') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.settingsMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('settingsMenuOpen') } data-toggle="collapse">
+              <span className="icon-bg"><i className="mdi mdi-settings menu-icon"></i></span>
+              <span className="menu-title"><Trans>Settings</Trans></span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={ this.state.settingsMenuOpen }>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/basic-ui/buttons') ? 'nav-link active' : 'nav-link' } to="/basic-ui/buttons"><Trans>Country setting</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/basic-ui/dropdowns') ? 'nav-link active' : 'nav-link' } to="/basic-ui/dropdowns"><Trans>level setting</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/basic-ui/typography') ? 'nav-link active' : 'nav-link' } to="/basic-ui/typography"><Trans>level list</Trans></Link></li>
+              </ul>
+            </Collapse>
           </li>
           <li className="nav-item nav-category"><Trans>UI Features</Trans></li>
           <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>

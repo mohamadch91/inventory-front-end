@@ -50,7 +50,7 @@ function Home() {
               <h2> Gap analyses </h2>
               <button id="links" >
                 
-              <Link to="dashboard">get started</Link>
+              <Link to="/dashboard">get started</Link>
                 </button>
               </div>
             </div>
