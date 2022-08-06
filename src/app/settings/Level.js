@@ -35,7 +35,7 @@ export class Level extends Component {
                       <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Level number</label>
                         <div className="col-sm-9">
-                        <select className="form-control">
+                        <Form.Control className="form-select" as="select">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -44,7 +44,7 @@ export class Level extends Component {
                             <option>6</option>
                             <option>7</option>
                             <option>8</option>
-                          </select>
+                            </Form.Control>
                         </div>
                       </Form.Group>
                     </div>
@@ -58,34 +58,9 @@ export class Level extends Component {
                       </Form.Group>
                     </div>
                   </div>
+        
                   <div className="row">
-                    <div className="col-md-6">
-                    <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Country code</label>
-                        <div className="col-sm-9">
-                        <Form.Control  type="text" />
-                        </div>
-                      </Form.Group>
-                    </div>
-                    <div className="col-md-6">
-                        
-                    <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Country code</label>
-                        <div className="col-sm-9">
-                        <Form.Control  type="text" />
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                    <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Country code</label>
-                        <div className="col-sm-9">
-                        <Form.Control  type="text" />
-                        </div>
-                      </Form.Group>
-                    </div>
+                   
                     <div className="col-md-6">
                         
                     <Form.Group className="row">
@@ -95,8 +70,6 @@ export class Level extends Component {
                         </div>
                       </Form.Group>
                     </div>
-                  </div>
-                  <div className="row">
                     <div className="col-md-6">
                     <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">Max. Population at this Level</label>
@@ -105,6 +78,9 @@ export class Level extends Component {
                         </div>
                       </Form.Group>
                     </div>
+                  </div>
+                  <div className="row">
+                   
                     <div className="col-md-6">
                         
                     <Form.Group className="row">
@@ -114,8 +90,6 @@ export class Level extends Component {
                         </div>
                       </Form.Group>
                     </div>
-                  </div>
-                  <div className="row">
                     <div className="col-md-6">
                     <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">Max. Population: Children under one year at this level</label>
@@ -124,6 +98,9 @@ export class Level extends Component {
                         </div>
                       </Form.Group>
                     </div>
+                  </div>
+                  <div className="row">
+                 
                     <div className="col-md-6">
                         
                     <Form.Group className="row">

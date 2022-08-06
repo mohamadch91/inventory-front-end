@@ -263,7 +263,7 @@ export class BasicElements extends Component {
                 <Form.Group>
                   <div className="input-group">
                     <div className="input-group-prepend">
-                      <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                      <button className="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Dropdown</button>
                       <div className="dropdown-menu">
                         <a className="dropdown-item" href="!#" onClick={event => event.preventDefault()}>Action</a>
                         <a className="dropdown-item" href="!#" onClick={event => event.preventDefault()}>Another action</a>
