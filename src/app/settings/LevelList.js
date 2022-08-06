@@ -45,6 +45,7 @@ export class LevelList extends Component {
                       <tr>
                         <th> id </th>
                         <th> name </th>
+                        <th> edit </th>
                         <th> Min. Population </th>
                         <th> Max. Population  </th>
                         <th> Min. Population: Children </th>
@@ -60,7 +61,7 @@ export class LevelList extends Component {
                         <th> +20 degree C (NEW) </th>
                         <th> Below zero (-20 C) (NEW) </th>
                     
-                        <th> edit </th>
+                       
                    
                       
                       </tr>
@@ -71,6 +72,7 @@ export class LevelList extends Component {
 <tr>
 <td>{row.id}</td>
                                 <td>{row.name}</td>
+                                <td><i className="btn btn-primary mdi mdi-pencil" ></i></td>
                                 <td>{row.minp}</td>
                                 <td>{row.maxp}</td>
                                 <td>{row.mincp}</td>
@@ -85,7 +87,7 @@ export class LevelList extends Component {
                                 <td>{row.cc}</td>
                                 <td>{row.dd}</td>
                                 <td>{row.ee}</td>
-                                <td><i className="btn btn-primary mdi mdi-pencil" ></i></td>
+                              
                       </tr>
                           
                             )}
