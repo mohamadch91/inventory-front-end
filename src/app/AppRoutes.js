@@ -23,13 +23,16 @@ const Error500 = lazy(() => import('./error-pages/Error500'));
 const Login = lazy(() => import('./user-pages/Login'));
 const Register1 = lazy(() => import('./user-pages/Register'));
 const Home= lazy(() => import('./home/Home'));
-
+const Country= lazy(() => import('./settings/Country'));
+const Level = lazy(() => import('./settings/Level'));
 class AppRoutes extends Component {
   render () {
     return (
       <Suspense fallback={<Spinner/>}>
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/settings/country" component={Country} />
+          <Route exact path="/settings/level" component={Level} />
           <Route exact path="/dashboard" component={ Dashboard } />
 
           <Route path="/basic-ui/buttons" component={ Buttons } />
