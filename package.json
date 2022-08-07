@@ -38,6 +38,7 @@
     "react-dnd-multi-backend": "^3.2.2",
     "react-dnd-touch-backend": "^9.4.0",
     "react-dom": "^16.9.0",
+    
     "react-images": "^1.0.0",
     "react-input-mask": "^3.0.0-alpha.0",
     "react-jvectormap": "0.0.13",
@@ -53,16 +54,15 @@
     "react-treebeard": "^3.2.4",
     "react-trello": "^2.2.3",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "simple-line-icons": "^2.4.1",
-    "slick-carousel": "^1.8.1",
-    "redux-devtools-extension": "^2.13.8"
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-  
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

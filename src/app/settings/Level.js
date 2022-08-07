@@ -3,12 +3,16 @@ import { Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import bsCustomFileInput from 'bs-custom-file-input'
 import UserService from '../services/user.service';
+// import ReactDualRangeSlider from 'react-dual-range-slider'
+import MultiRangeSlider from '../components/Dualslider'
 export class Level extends Component {
-  state = {
+  constructor(props){
+    super(props);
+  this.state = {
     startDate: new Date(),
     validated: false,
-    minPop:5,
-    maxPop:16,
+    minPop:0,
+    maxPop:100,
     name:"",
     number:1,
     current2:0,
@@ -21,12 +25,20 @@ export class Level extends Component {
     planneddry:0,
     
   };
- 
+  this.handlemin=this.handlemin.bind(this)
+  this.handlemax=this.handlemax.bind(this)
+}
   handleChange = date => {
     this.setState({
       startDate: date
     });
   };
+  handlemin= (min) => {
+    this.setState({minPop:min})
+  }
+  handlemax= (max) => {
+    this.setState({maxPop:max})
+  }
   componentDidMount() {
     bsCustomFileInput.init()
     }
@@ -151,38 +163,26 @@ export class Level extends Component {
                   <div className="row">
                   <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Min. Population at this Level</label>
+                        <label className="col-sm-3 col-form-label">Population at this Level</label>
                         <div className="col-sm-9 mt-3">
+                        <MultiRangeSlider
+      min={0}
+      max={100}
+      handlemin={this.handlemin}
+      handlemax={this.handlemax}
+      onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
+    />
                         
-                        <Form.Control required onChange={(e)=>{
-                          this.setState({minPop:e.target.value})
-
-                        }} type="range" min="0" max="100" step="1"  defaultValue={5}/>
                         </div>
-                        <label className="col-sm-3 col-form-label">value :</label>
+                        <label className="col-sm-3 col-form-label">Min value :</label>
                         <div className="col-sm-9 mt-3">
                         
-                        {this.state.minPop} M
+                        {this.state.minPop} Milion 
                         </div>
-                        
-                        
-                      </Form.Group>
-            
-                    </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Max. Population at this Level</label>
+                        <label className="col-sm-3 col-form-label">Max value :</label>
                         <div className="col-sm-9 mt-3">
                         
-                        <Form.Control required onChange={(e)=>{
-                          this.setState({maxPop:e.target.value})
-
-                        }} type="range"  min="0" max="100" step="1"  defaultValue={4}/>
-                        </div>
-                        <label className="col-sm-3 col-form-label">value :</label>
-                        <div className="col-sm-9 mt-3">
-                        
-                        {this.state.maxPop} M
+                        {this.state.maxPop} Milion 
                         </div>
                         
                         
@@ -191,44 +191,32 @@ export class Level extends Component {
                     </div>
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Min. Population: Children under one year at this level</label>
+                        <label className="col-sm-3 col-form-label"> Population: Children under one year at this level</label>
                         <div className="col-sm-9 mt-3">
-                        
-                        <Form.Control required onChange={(e)=>{
-                          this.setState({minPop:e.target.value})
-
-                        }} type="range" min="0" max="100" step="1" defaultValue={4}/>
+                        <MultiRangeSlider
+      min={0}
+      max={100}
+      handlemin={this.handlemin}
+      handlemax={this.handlemax}
+      onChange={({ min, max }) => console.log(`min = ${min}, max = ${max}`)}
+    />
                         </div>
-                        <label className="col-sm-3 col-form-label">value :</label>
+                        <label className="col-sm-3 col-form-label">Min value :</label>
                         <div className="col-sm-9 mt-3">
                         
-                        {this.state.minPop} M
+                        {this.state.minPop} Milion 
                         </div>
-                        
-                        
-                      </Form.Group>
-            
-                    </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Max. Population: Children under one year at this level</label>
+                        <label className="col-sm-3 col-form-label">Max value :</label>
                         <div className="col-sm-9 mt-3">
                         
-                        <Form.Control required onChange={(e)=>{
-                          this.setState({maxPop:e.target.value})
-
-                        }} type="range"  min="0" max="100" step="1"  defaultValue={4}/>
-                        </div>
-                        <label className="col-sm-3 col-form-label">value :</label>
-                        <div className="col-sm-9 mt-3">
-                        
-                        {this.state.maxPop} M
+                        {this.state.maxPop} Milion 
                         </div>
                         
                         
                       </Form.Group>
             
                     </div>
+             
           </div>
               
               </div>
