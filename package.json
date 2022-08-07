@@ -61,6 +61,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "redux-devtools-extension": "^2.13.8",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
