@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Trans } from 'react-i18next';
+// import { p } from 'react-i18next';
 
 class Navbar extends Component {
   toggleOffcanvas() {
@@ -21,10 +21,10 @@ class Navbar extends Component {
           <div className="search-field d-none d-md-block">
             <form className="d-flex align-items-center h-100" action="#">
               <div className="input-group">
-                <div className="input-group-prepend bg-transparent">
+                <div className="input-group-prepend bg-pparent">
                   <i className="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
-                <input type="text" className="form-control bg-transparent border-0" placeholder="Search products"/>
+                <input type="text" className="form-control bg-pparent border-0" placeholder="Search products"/>
               </div>
             </form>
           </div>
@@ -32,19 +32,19 @@ class Navbar extends Component {
             <li className="nav-item nav-profile d-none d-xl-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
-                  <Trans>Reports</Trans>
+                  <p>Reports</p>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
                   <Dropdown.Item className="dropdown-item d-flex align-items-center" href="!#" onClick={evt =>evt.preventDefault()}>
-                    <i className="mdi mdi-file-pdf mr-2"></i><Trans>PDF</Trans>
+                    <i className="mdi mdi-file-pdf mr-2"></i><p>PDF</p>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item className="dropdown-item d-flex align-items-center" href="!#" onClick={evt =>evt.preventDefault()}>
-                  <i className="mdi mdi-file-excel mr-2"></i><Trans>Excel</Trans>
+                  <i className="mdi mdi-file-excel mr-2"></i><p>Excel</p>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item className="dropdown-item d-flex align-items-center" href="!#" onClick={evt =>evt.preventDefault()}>
-                    <i className="mdi mdi-file-word mr-2"></i><Trans>doc</Trans>
+                    <i className="mdi mdi-file-word mr-2"></i><p>doc</p>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -52,15 +52,15 @@ class Navbar extends Component {
             <li className="nav-item nav-profile d-none d-xl-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
-                  <Trans>Projects</Trans>
+                  <p>Projects</p>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
                   <Dropdown.Item className="dropdown-item d-flex align-items-center" href="!#" onClick={evt =>evt.preventDefault()}>
-                    <i className="mdi mdi-eye-outline mr-2"></i><Trans>View Project</Trans>
+                    <i className="mdi mdi-eye-outline mr-2"></i><p>View Project</p>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item className="dropdown-item d-flex align-items-center" href="!#" onClick={evt =>evt.preventDefault()}>
-                    <i className="mdi mdi-pencil-outline mr-2"></i><Trans>Edit Project</Trans>
+                    <i className="mdi mdi-pencil-outline mr-2"></i><p>Edit Project</p>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
@@ -72,7 +72,7 @@ class Navbar extends Component {
                     <i className="flag-icon flag-icon-us" title="us" id="us"></i>
                   </div>
                   <div className="nav-language-text">
-                    <p className="mb-1 text-black"><Trans>English</Trans></p>
+                    <p className="mb-1 text-black"><p>English</p></p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
@@ -81,7 +81,7 @@ class Navbar extends Component {
                       <i className="flag-icon flag-icon-ae" title="ae" id="ae"></i>
                     </div>
                     <div className="nav-language-text">
-                      <p className="mb-1 text-black"><Trans>Arabic</Trans></p>
+                      <p className="mb-1 text-black"><p>Arabic</p></p>
                     </div>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
@@ -90,7 +90,7 @@ class Navbar extends Component {
                       <i className="flag-icon flag-icon-gb" title="GB" id="gb"></i>
                     </div>
                     <div className="nav-language-text">
-                      <p className="mb-1 text-black"><Trans>English</Trans></p>
+                      <p className="mb-1 text-black"><p>English</p></p>
                     </div>
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -104,7 +104,7 @@ class Navbar extends Component {
                       <img src={require("../../assets/images/faces/face28.png")} alt="profile" />
                     </div>
                     <div className="nav-profile-text">
-                      <p className="mb-1 text-black"><Trans>Henry Klein</Trans></p>
+                      <p className="mb-1 text-black"><p>Henry Klein</p></p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
@@ -112,33 +112,33 @@ class Navbar extends Component {
                     <img className="img-avatar img-avatar48 img-avatar-thumb" src={require("../../assets/images/faces/face28.png")} alt=""/>
                   </div>
                   <div className="p-2">
-                    <h5 className="dropdown-header text-uppercase pl-2 text-dark"><Trans>User Options</Trans></h5>
+                    <h5 className="dropdown-header text-uppercase pl-2 text-dark"><p>User Options</p></h5>
                     <Dropdown.Item className="dropdown-item d-flex align-items-center justify-content-between" href="!#" onClick={evt =>evt.preventDefault()}>
-                      <span><Trans>Inbox</Trans></span>
+                      <span><p>Inbox</p></span>
                       <span className="p-0">
                         <span className="badge badge-primary">3</span>
                         <i className="mdi mdi-email-open-outline ml-1"></i>
                       </span>
                     </Dropdown.Item>
                     <Dropdown.Item className="dropdown-item d-flex align-items-center justify-content-between" href="!#" onClick={evt =>evt.preventDefault()}>
-                      <span><Trans>Profile</Trans></span>
+                      <span><p>Profile</p></span>
                       <span className="p-0">
                         <span className="badge badge-success">1</span>
                         <i className="mdi mdi-account-outline ml-1"></i>
                       </span>
                     </Dropdown.Item>
                     <Dropdown.Item className="dropdown-item d-flex align-items-center justify-content-between" href="!#" onClick={evt =>evt.preventDefault()}>
-                      <span><Trans>Settings</Trans></span>
+                      <span><p>Settings</p></span>
                       <i className="mdi mdi-settings"></i>
                     </Dropdown.Item>
                     <div role="separator" className="dropdown-divider"></div>
-                    <h5 className="dropdown-header text-uppercase  pl-2 text-dark mt-2"><Trans>Actions</Trans></h5>
+                    <h5 className="dropdown-header text-uppercase  pl-2 text-dark mt-2"><p>Actions</p></h5>
                     <Dropdown.Item className="dropdown-item d-flex align-items-center justify-content-between" href="!#" onClick={evt =>evt.preventDefault()}>
-                      <span><Trans>Lock Account</Trans></span>
+                      <span><p>Lock Account</p></span>
                       <i className="mdi mdi-lock ml-1"></i>
                       </Dropdown.Item>
                       <Dropdown.Item className="dropdown-item d-flex align-items-center justify-content-between" href="!#" onClick={evt =>evt.preventDefault()}>
-                      <span><Trans>Log Out</Trans></span>
+                      <span><p>Log Out</p></span>
                       <i className="mdi mdi-logout ml-1"></i>
                     </Dropdown.Item>
                   </div>
@@ -159,9 +159,9 @@ class Navbar extends Component {
                       <img src={require("../../assets/images/faces/face4.jpg")} alt="user" className="profile-pic"/>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><Trans>Mark send you a message</Trans></h6>
+                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><p>Mark send you a message</p></h6>
                       <p className="text-gray mb-0">
-                        1 <Trans>Minutes ago</Trans>
+                        1 <p>Minutes ago</p>
                       </p>
                     </div>
                   </Dropdown.Item>
@@ -171,9 +171,9 @@ class Navbar extends Component {
                       <img src={require("../../assets/images/faces/face2.jpg")} alt="user" className="profile-pic"/>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><Trans>Cregh send you a message</Trans></h6>
+                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><p>Cregh send you a message</p></h6>
                       <p className="text-gray mb-0">
-                        15 <Trans>Minutes ago</Trans>
+                        15 <p>Minutes ago</p>
                       </p>
                     </div>
                   </Dropdown.Item>
@@ -183,14 +183,14 @@ class Navbar extends Component {
                       <img src={require("../../assets/images/faces/face3.jpg")} alt="user" className="profile-pic"/>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><Trans>Profile picture updated</Trans></h6>
+                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal"><p>Profile picture updated</p></h6>
                       <p className="text-gray mb-0">
-                        18 <Trans>Minutes ago</Trans>
+                        18 <p>Minutes ago</p>
                       </p>
                     </div>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer">4<Trans> new messages</Trans></h6>
+                  <h6 className="p-3 mb-0 text-center cursor-pointer">4<p> new messages</p></h6>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -201,7 +201,7 @@ class Navbar extends Component {
                   <span className="count-symbol bg-danger"></span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
-                  <h6 className="p-3 mb-0 bg-primary text-white py-4"><Trans>Notifications</Trans></h6>
+                  <h6 className="p-3 mb-0 bg-primary text-white py-4"><p>Notifications</p></h6>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item className="dropdown-item preview-item" onClick={evt =>evt.preventDefault()}>
                     <div className="preview-thumbnail">
@@ -210,8 +210,8 @@ class Navbar extends Component {
                       </div>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1"><Trans>Event today</Trans></h6>
-                      <p className="text-gray ellipsis mb-0"> <Trans>Just a reminder that you have an event today</Trans> </p>
+                      <h6 className="preview-subject font-weight-normal mb-1"><p>Event today</p></h6>
+                      <p className="text-gray ellipsis mb-0"> <p>Just a reminder that you have an event today</p> </p>
                     </div>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
@@ -222,9 +222,9 @@ class Navbar extends Component {
                       </div>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1"><Trans>Settings</Trans></h6>
+                      <h6 className="preview-subject font-weight-normal mb-1"><p>Settings</p></h6>
                       <p className="text-gray ellipsis mb-0">
-                      <Trans>Update dashboard</Trans>
+                      <p>Update dashboard</p>
                       </p>
                     </div>
                   </Dropdown.Item>
@@ -236,14 +236,14 @@ class Navbar extends Component {
                       </div>
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1"><Trans>Launch Admin</Trans></h6>
+                      <h6 className="preview-subject font-weight-normal mb-1"><p>Launch Admin</p></h6>
                       <p className="text-gray ellipsis mb-0">
-                      <Trans>New admin wow!</Trans>
+                      <p>New admin wow!</p>
                       </p>
                     </div>
                   </Dropdown.Item>
                   <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer"><Trans>See all notifications</Trans></h6>
+                  <h6 className="p-3 mb-0 text-center cursor-pointer"><p>See all notifications</p></h6>
                 </Dropdown.Menu>
               </Dropdown>
             </li>

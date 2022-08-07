@@ -1,14 +1,30 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './App.scss';
+import { connect } from "react-redux";
 import AppRoutes from './AppRoutes';
 import Navbar from './shared/Navbar';
 import Sidebar from './shared/Sidebar';
 import SettingsPanel from './shared/SettingsPanel';
 import Footer from './shared/Footer';
-import { withTranslation } from "react-i18next";
+// import { withTranslation } from "react-i18next";
+import { clearMessage } from "./actions/message";
 
+import { history } from './helpers/history';
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showModeratorBoard: false,
+      showAdminBoard: false,
+      currentUser: undefined,
+    };
+
+    history.listen((location) => {
+      props.dispatch(clearMessage()); // clear message when changing location
+    });
+  }
   state = {}
   componentDidMount() {
     this.onRouteChanged();
@@ -44,16 +60,16 @@ class App extends Component {
 
   onRouteChanged() {
     console.log("ROUTE CHANGED");
-    const { i18n } = this.props;
+    // const { i18n } = this.props;
     const body = document.querySelector('body');
-    if(this.props.location.pathname === '/layout/RtlLayout') {
-      body.classList.add('rtl');
-      i18n.changeLanguage('ar');
-    }
-    else {
-      body.classList.remove('rtl')
-      i18n.changeLanguage('en');
-    }
+    // if(this.props.location.pathname === '/layout/RtlLayout') {
+    //   body.classList.add('rtl');
+    //   // i18n.changeLanguage('ar');
+    // }
+    // else {
+    //   body.classList.remove('rtl')
+    //   // i18n.changeLanguage('en');
+    // }
     window.scrollTo(0, 0);
     const fullPageLayoutRoutes = ['/','/login', '/user-pages/login-2', '/user-pages/register-1', '/user-pages/register-2', '/user-pages/lockscreen', '/error-pages/error-404', '/error-pages/error-500', '/general-pages/landing-page'];
     for ( let i = 0; i < fullPageLayoutRoutes.length; i++ ) {
@@ -73,5 +89,10 @@ class App extends Component {
   }
 
 }
-
-export default withTranslation()(withRouter(App));
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+export default withRouter(connect(mapStateToProps) (App));
