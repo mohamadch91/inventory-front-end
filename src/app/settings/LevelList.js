@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ProgressBar } from 'react-bootstrap';
+import UserService from '../services/user.service';
 function createData(id, name, minp, maxp, mincp,maxcp,az,bz,d2,d8,ds,a,bb,cc,dd,ee) {
     return {
       id,
@@ -25,6 +26,28 @@ function createData(id, name, minp, maxp, mincp,maxcp,az,bz,d2,d8,ds,a,bb,cc,dd,
     
   ];
 export class LevelList extends Component {
+  state={
+    levels:[]
+  }
+  componentDidMount() {
+    UserService.getLevels().then((response) => {
+      let row=[]
+      for(let i=0;i<response.data.length;i++){
+        row.push(
+createData(response.data[i].id,response.data[i].name,response.data[i].minpop,response.data[i].maxpop,response.data[i].minpopu1,response.data[i].maxpopu1,response.data[i].undervol,response.data[i].uppervol,response.data[i].m25vol,response.data[i].m70vol,response.data[i].dryvol,response.data[i].dryvolnew,response.data[i].m70volnew,response.data[i].m25volnew,response.data[i].undervolnew,response.data[i].uppervolnew)
+
+        )
+      }
+      this.setState({
+        levels : row
+      })
+
+    }).catch((e) => {
+      console.log(e);
+    }
+    )
+  }
+
   render() {
     return (
       <div>
@@ -67,7 +90,7 @@ export class LevelList extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                        {rows.map((row,index) =>{
+                        {this.state.levels.map((row,index) =>{
                             return(
 <tr>
 <td>{row.id}</td>

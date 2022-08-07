@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import bsCustomFileInput from 'bs-custom-file-input'
-
+import UserService from '../services/user.service';
 export class Country extends Component {
   state = {
     startDate: new Date(),
     levels:4,
-   
     validated: false,
     CountryName:"",
     CountryCode:"",
@@ -18,8 +17,8 @@ export class Country extends Component {
     mainlocation:"",
     enableHR:false,
     enableMaintaining:false,
-    targetpopulation:"",
-    requiredcapacities:"",
+    targetpopulation:"General population",
+    requiredcapacities:true,
   };
   changestate = (e,state) => {
     this.setState({[state]:e.target.value});
@@ -43,8 +42,33 @@ export class Country extends Component {
         event.preventDefault();
         event.stopPropagation();
       }
-  
-     this.setState({ validated: true });
+      else{
+       const  data={
+          "country": this.state.CountryName,
+          "codecountry": this.state.CountryCode,
+          "currency": this.state.Currency,
+          "levels": this.state.levels,
+          "logo": this.state.logo,
+          "secondLogo": this.state.slogo,
+          "poptarget": this.state.targetpopulation,
+          "poprate": this.state.growthRate,
+          "havehr": this.state.enableHR,
+          "mainlocation": this.state.mainlocation,
+          "logo2": this.state.logo2,
+          "usingtool": this.state.requiredcapacities,
+          "usingmaintenance": this.state.enableMaintaining,
+        }
+        UserService.addcountry(data).then(res => {
+          console.log(res)
+          // this.alerthandle("Country added successfully","success")
+        }
+        ).catch(err => {
+          console.log(err)
+          // this.alerthandle("Country added unsuccessfully","error")
+        }
+        )
+
+      }
     };
     countryvalidator = () => {
       var hasNumber = /\d/; 
@@ -194,7 +218,10 @@ export class Country extends Component {
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">Main Location</label>
                         <div className="col-sm-9">
-                        <Form.Control  required type="text"/>
+                        <Form.Control  required value={this.state.mainlocation} onChange={(e)=>{
+                          this.setState({  mainlocation : e.target.value })
+                       
+                        }} type="text"/>
                         </div>
                       </Form.Group>
                     </div>
@@ -205,6 +232,10 @@ export class Country extends Component {
                         <label className="col-sm-5 col-form-label">Enable HR</label>
                         <div className="col-sm-7">
                         <Form.Check 
+                        onChange={(e)=>{
+                          this.setState({  enableHR : e.target.value })
+                       
+                        }}
         
         type="switch"
         label=""
@@ -218,7 +249,10 @@ export class Country extends Component {
                         <label className="col-sm-5 col-form-label">Enable Maintenance</label>
                         <div className="col-sm-7">
                         <Form.Check 
-        
+         onChange={(e)=>{
+          this.setState({  enableMaintaining : e.target.value })
+       
+        }}
         type="switch"
         label=""
         id="disabled-custom"
@@ -232,7 +266,10 @@ export class Country extends Component {
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">Target Population</label>
                         <div className="col-sm-9">
-                        <Form.Control className="form-select" as="select" >
+                        <Form.Control  onChange={(e)=>{
+                          this.setState({  targetpopulation : e.target.value })
+                       
+                        }}className="form-select" as="select" >
                         <option>General population</option>
                             <option>Under-1 Population</option>
                           </Form.Control>
@@ -243,9 +280,12 @@ export class Country extends Component {
                       <Form.Group className="row">  
                         <label className="col-sm-3 col-form-label">Require Capacity</label>
                         <div className="col-sm-9">
-                          <Form.Control  className="form-select" as="select">
-                            <option>Estimate required capacity  (in MS Excel)</option>
-                            <option>Enter required capacity manually</option>
+                          <Form.Control  onChange={(e)=>{
+                          this.setState({  requiredcapacities : e.target.value })
+                       
+                        }}   className="form-select" as="select">
+                            <option value="true">Estimate required capacity  (in MS Excel)</option>
+                            <option value="false">Enter required capacity manually</option>
                           
                           </Form.Control>
                         </div>

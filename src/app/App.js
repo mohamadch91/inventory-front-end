@@ -9,8 +9,10 @@ import SettingsPanel from './shared/SettingsPanel';
 import Footer from './shared/Footer';
 // import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
-
+import EventBus from "./common/EventBus";
+import { logout } from "./actions/auth";
 import { history } from './helpers/history';
+import { Redirect } from "react-router-dom";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -27,10 +29,33 @@ class App extends Component {
   }
   state = {}
   componentDidMount() {
+    const user = this.props.user;
+
+    if (user) {
+      this.setState({
+        currentUser: user,
+        // showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+        // showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+      });
+    }
+
+    EventBus.on("logout", () => {
+      this.logOut();
+    });
     this.onRouteChanged();
   }
+  logOut() {
+    this.props.dispatch(logout());
+    this.setState({
+      showModeratorBoard: false,
+      showAdminBoard: false,
+      currentUser: undefined,
+    });
+  }
   render () {
-
+    // if(this.state.currentUser === undefined){
+    //   return  <Redirect to="/" />;
+    // }
     let navbarComponent = !this.state.isFullPageLayout ? <Navbar/> : '';
     let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar/> : '';
     let SettingsPanelComponent = !this.state.isFullPageLayout ? <SettingsPanel/> : '';

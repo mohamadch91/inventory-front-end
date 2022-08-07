@@ -8,7 +8,7 @@ class AuthService {
       .post(API_URL , { username, password })
       .then((response) => {
         console.log(response);
-        if (response.data.accessToken) {
+        if (response.data.access) {
           localStorage.setItem("user", JSON.stringify(response.data));
         }
 

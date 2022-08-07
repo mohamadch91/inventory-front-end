@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import bsCustomFileInput from 'bs-custom-file-input'
-
+import UserService from '../services/user.service';
 export class Level extends Component {
   state = {
     startDate: new Date(),
@@ -38,6 +38,41 @@ export class Level extends Component {
       if (form.checkValidity() === false) {
         event.preventDefault();
         event.stopPropagation();
+      }
+      else{
+        const data={
+          "maxpop": this.state.maxPop,
+        "minpop": this.state.minPop,
+        "uppervol": this.state.current2,
+        "undervol": null,
+        "maxpopu1": this.state.maxPop,
+        "minpopu1": this.state.minPop,
+        "m25vol": this.state.current20,
+        "m70vol": this.state.current80,
+        "m25volnew": this.state.planned20,
+        "m70volnew": this.state.planned80,
+        "uppervolnew": this.state.planned2,
+        "undervolnew": null,
+        "name": this.state.name,
+        "dryvol": this.state.currentdry,
+        "dryvolnew": this.state.planneddry,
+  
+        "country": null,
+        "parent": this.state.number,
+        }
+        UserService.addlevel(data)
+        .then(
+          (response) => {
+            console.log(response)
+            // this.props.history.push('/level');
+          }
+        )
+        .catch(
+          (error) => {
+            console.log(error)
+          }
+        )
+        
       }
   
      this.setState({ validated: true });
