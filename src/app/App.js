@@ -61,7 +61,7 @@ class App extends Component {
   onRouteChanged() {
     console.log("ROUTE CHANGED");
     // const { i18n } = this.props;
-    const body = document.querySelector('body');
+    // const body = document.querySelector('body');
     // if(this.props.location.pathname === '/layout/RtlLayout') {
     //   body.classList.add('rtl');
     //   // i18n.changeLanguage('ar');
@@ -86,7 +86,9 @@ class App extends Component {
         document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
       }
     }
+    console.log("salam");
   }
+  
 
 }
 function mapStateToProps(state) {

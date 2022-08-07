@@ -66,7 +66,7 @@ class Login extends Component {
       loading: true,
     });
 
-    this.form.validateAll();
+   
     if(this.state.username==""){
       this.alerthandle("Username is required","error")
       this.setState({
@@ -76,7 +76,7 @@ class Login extends Component {
 
     }
     if(this.state.password==""){
-      this.alerthandle("Password is required","error")
+      this.alerthandle("Password is required","alert")
       this.setState({
         loading: false,
       });
@@ -84,7 +84,6 @@ class Login extends Component {
     }
     const { dispatch, history } = this.props;
 
-    if (this.checkBtn.context._errors.length === 0) {
       dispatch(login(this.state.username, this.state.password))
         .then(() => {
 
@@ -95,17 +94,12 @@ class Login extends Component {
           window.location.reload();
         })
         .catch(() => {
-          this.alerthandle("Login failed ","error")
+          this.alerthandle("Login failed ","alert")
           this.setState({
             loading: false,
           });
         });
-    } else {
-      this.alerthandle("Login failed ","error")
-      this.setState({
-        loading: false,
-      });
-    }
+ 
   }
   handleClosesnack = (event, reason) => {
     if (reason === 'clickaway') {
@@ -133,9 +127,9 @@ class Login extends Component {
 
   render() {
     const { isLoggedIn, message } = this.props;
-
+  
     if (isLoggedIn) {
-      return <Redirect to="/profileEn" />;
+      return <Redirect to="/dashboard" />;
     }
 
     return (
@@ -219,8 +213,10 @@ class Login extends Component {
     <Toast
      style={{
       position: 'absolute',
-      top: 0,
-      right: 0,
+      top: '90vh',
+      right: '18vw',
+      backgroundColor:this.state.type=="success"? "hsl(218, 81%, 95%)" : "#F8D7DA",
+      color:"#000"
     }}
     onClose={(e) => {this.handleClosesnack(e)}} show={this.state.snackopen} delay={3000} autohide
           className="d-inline-block m-1"

@@ -2,7 +2,7 @@ import React, { Component,Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
-
+import { connect } from "react-redux";
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
@@ -62,5 +62,10 @@ class AppRoutes extends Component {
     );
   }
 }
-
-export default AppRoutes;
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+export default connect(mapStateToProps) (AppRoutes);
