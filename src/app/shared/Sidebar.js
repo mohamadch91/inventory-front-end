@@ -79,6 +79,7 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/settings/country') ? 'nav-link active' : 'nav-link' } to="/settings/country"><span>Country setting</span></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/settings/level') ? 'nav-link active' : 'nav-link' } to="/settings/level"><span>level setting</span></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/settings/level-list') ? 'nav-link active' : 'nav-link' } to="/settings/level-list"><span>level list</span></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/settings/new-level-list') ? 'nav-link active' : 'nav-link' } to="/settings/new-level-list"><span>New level list</span></Link></li>
               </ul>
             </Collapse>
           </li>
