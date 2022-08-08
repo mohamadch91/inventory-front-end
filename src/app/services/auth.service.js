@@ -41,25 +41,23 @@ class AuthService {
           */
          return axios.get(USER_PROFILE  ,  { headers: {Authorization:"Bearer "+user.access} }).then
           (res=>{
-            /**
-             * if user profile is not null then save user profile to local storage
-             */
-            const country=res.data.country;
-            user.id=res.data.user.pk;
-            user.admin=res.data.user.is_superuser;
-            user.name=res.data.user.name;
-            user.username=res.data.user.username;
-            user.idnumber=res.data.user.idnumber;
-            user.phone=res.data.user.phone;
-            user.facility_admin=res.data.user.facadmin;
-            user.facility_id=res.data.user.facilityid;
-            user.reportadmin=res.data.user.reportadmin;
-            user.useradmin=res.data.user.useradmin;
-            user.created_at=res.data.user.created_at.split("T")[0];
-            user.updated_at=res.data.user.updated_at.split("T")[0];
-          localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("country", JSON.stringify(country));
-          return response.data;
+        
+            const country=res.data.Country[0];
+            user.id=res.data.User.pk;
+            user.admin=res.data.User.is_superuser;
+            user.name=res.data.User.name;
+            user.username=res.data.User.username;
+            user.idnumber=res.data.User.idnumber;
+            user.phone=res.data.User.phone;
+            user.facility_admin=res.data.User.facadmin;
+            user.facility_id=res.data.User.facilityid;
+            user.reportadmin=res.data.User.reportadmin;
+            user.useradmin=res.data.User.useradmin;
+            user.created_at=res.data.User.created_at.split("T")[0];
+            user.updated_at=res.data.User.updated_at.split("T")[0];
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("country", JSON.stringify(country));
+            return res.data;
           })
         }
         

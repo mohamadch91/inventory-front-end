@@ -90,10 +90,11 @@ class Login extends Component {
           this.alerthandle("Login Successful","success");
           this.sleep(500000)
           
-          history.push("/profileEn");
+          history.push("/dashboard");
           window.location.reload();
         })
         .catch(() => {
+          
           this.alerthandle("Login failed ","alert")
           this.setState({
             loading: false,
@@ -127,7 +128,7 @@ class Login extends Component {
 
   render() {
     const { isLoggedIn, message } = this.props;
-  
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       return <Redirect to="/dashboard" />;
     }
@@ -198,7 +199,7 @@ class Login extends Component {
                 <button type="submit" className="btn btn-primary btn-block mb-4">
                   sign in
                   {this.state.loading && (
-                    <span classNameName="pt-2 spinner-border spinner-border-sm"></span>
+                    <span className="mr-2 pr-1 pl-2 spinner-border spinner-border-sm"></span>
                   )}
                 </button>
   
