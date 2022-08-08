@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import bsCustomFileInput from 'bs-custom-file-input'
 import UserService from '../services/user.service';
+import {Toast} from 'react-bootstrap';
 export class Country extends Component {
   constructor(props) {
     super(props);
@@ -23,11 +24,16 @@ export class Country extends Component {
     requiredcapacities:true,
     user:JSON.parse(localStorage.getItem("user")),
     country:JSON.parse(localStorage.getItem("country")),
-    put:false
+    put:false,
+    snackopen:false,
+    type:"success",
   };
 }
   changestate = (e,state) => {
     this.setState({[state]:e.target.value});
+  }
+  alerthandle(message,type){
+    this.setState({content:message,type:type,snackopen:true})
   }
   handleChange = date => {
     this.setState({
@@ -54,8 +60,15 @@ export class Country extends Component {
         formData.append("codecountry",this.state.CountryCode);
           formData.append("currency", this.state.Currency)
           formData.append("levels", this.state.levels)
-          formData.append("logo", this.state.logo)
-          formData.append("secondLogo", this.state.slogo)
+          console.log(typeof this.state.logo )
+          if( this.state.logo !== null && typeof this.state.logo !== "string"){
+            formData.append("logo", this.state.logo)
+          }
+          if(this.state.slogo !== null && typeof this.state.slogo !== "string"){
+            formData.append("secondLogo", this.state.slogo)
+          }
+          
+         
           formData.append("poptarget", this.state.targetpopulation)
           formData.append("poprate", this.state.growthRate)
           formData.append("havehr", this.state.enableHR)
@@ -67,24 +80,57 @@ export class Country extends Component {
         if(this.state.user.admin && this.state.country!==[]){
           formData.append("id",this.state.country.id)
           UserService.editcountry(formData).then(res => {
-            console.log(res)
-            // this.alerthandle("Country added successfully","success")
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country=JSON.parse(localStorage.getItem("country"))
+            this.setState({
+              CountryName:country.country,
+              CountryCode:country.codecountry,
+              Currency:country.currency,
+              levels:country.levels,
+              logo:country.logo,
+              slogo:country.secondLogo,
+              growthRate:country.poprate,
+              targetpopulation:country.poptarget,
+              enableHR:country.havehr,
+              mainlocation:country.mainlocation,
+              logo2:country.logo2,
+              requiredcapacities:country.usingtool,
+              enableMaintaining:country.usingmaintenance
+            })
+            this.alerthandle("Country changed successfully","success")
           }
           ).catch(err => {
-            console.log(formData)
-            console.log(err)
-            // this.alerthandle("Country added unsuccessfully","error")
+            // console.log(formData)
+            // console.log(err)
+            this.alerthandle("Country changed unsuccessfully","error")
           }
           )
         }
         else{
           UserService.addcountry(formData).then(res => {
-            console.log(res)
-            // this.alerthandle("Country added successfully","success")
+            // console.log(res)
+            this.alerthandle("Country added successfully","success")
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country=JSON.parse(localStorage.getItem("country"))
+            this.setState({
+              CountryName:country.country,
+              CountryCode:country.codecountry,
+              Currency:country.currency,
+              levels:country.levels,
+              logo:country.logo,
+              slogo:country.secondLogo,
+              growthRate:country.poprate,
+              targetpopulation:country.poptarget,
+              enableHR:country.havehr,
+              mainlocation:country.mainlocation,
+              logo2:country.logo2,
+              requiredcapacities:country.usingtool,
+              enableMaintaining:country.usingmaintenance
+            })
           }
           ).catch(err => {
-            console.log(err)
-            // this.alerthandle("Country added unsuccessfully","error")
+            // console.log(err)
+            this.alerthandle("Country added unsuccessfully","error")
           }
           )
         }
@@ -108,6 +154,13 @@ export class Country extends Component {
       }
       return true;
     }
+    handleClosesnack = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      this.setState({snackopen:false})
+    };
     ccodevalid =()=>{
       if(this.state.CountryCode.length === 0){
         return false;
@@ -142,6 +195,7 @@ export class Country extends Component {
       const user = JSON.parse(localStorage.getItem("user"));
       const country = JSON.parse(localStorage.getItem("country"));
       console.log(country)
+      console.log(typeof country.logo)
       if(country!=[] && country!=null){
         this.setState({
           CountryName:country.country,
@@ -249,7 +303,10 @@ export class Country extends Component {
                       <Form.Control onChange={(e)=>{
                         this.setState({logo:e.target.files[0]})
                       }}  disabled={!this.state.user.admin} type="file" className="form-control visibility-hidden" id="customFileLang" lang="es"/>
-                      <label className="custom-file-label" htmlFor="customFileLang">{this.state.logo!==null?this.state.logo.name:"Upload image"}</label>
+                      <label className="custom-file-label" htmlFor="customFileLang">{(this.state.logo!==null  )?this.state.logo.name:"Upload image"}
+
+                      {(typeof this.state.logo) === "string" ?this.state.logo.split("/")[2]:""}
+                      </label>
                     </div>
                       </Form.Group>
                     </div>
@@ -260,7 +317,9 @@ export class Country extends Component {
                       <Form.Control onChange={(e)=>{
                         this.setState({slogo:e.target.files[0]})
                       }} disabled={!this.state.user.admin} type="file" className="form-control visibility-hidden" id="customFileLang1" lang="es"/>
-                      <label className="custom-file-label" htmlFor="customFileLang1">{this.state.slogo!==null?this.state.slogo.name:"Upload image"}</label>
+                      <label className="custom-file-label" htmlFor="customFileLang1">{this.state.slogo!==null?this.state.slogo.name:"Upload image"}
+                      {(typeof this.state.slogo) === "string" ?this.state.slogo.split("/")[2]:""}
+                      </label>
                     </div>
                       </Form.Group>
                     </div>
@@ -379,6 +438,24 @@ export class Country extends Component {
             </div>
           </div>
         </div>
+        <Toast
+     style={{
+      position: 'absolute',
+      top: '120%',
+      right: '0',
+      backgroundColor:this.state.type=="success"? "#03A10A" : "#F8D7DA",
+      color:"#000"
+    }}
+    onClose={(e) => {this.handleClosesnack(e)}} show={this.state.snackopen} delay={3000} autohide
+          className="d-inline-block m-1"
+          bg={this.state.type}
+          
+        >
+       
+          <Toast.Body >
+           {this.state.content}
+          </Toast.Body>
+        </Toast>
       </div>
     )
   }
