@@ -299,7 +299,8 @@ export class Country extends Component {
                     <div className="col-md-6">
                     <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">logo </label>
-                        <div className="custom-file col-sm-8">
+                        <div className="col-sm-9">
+                        <div className="custom-file ">
                       <Form.Control onChange={(e)=>{
                         this.setState({logo:e.target.files[0]})
                       }}  disabled={!this.state.user.admin} type="file" className="form-control visibility-hidden" id="customFileLang" lang="es"/>
@@ -308,18 +309,21 @@ export class Country extends Component {
                       {(typeof this.state.logo) === "string" ?this.state.logo.split("/")[2]:""}
                       </label>
                     </div>
+                    </div>
                       </Form.Group>
                     </div>
                     <div className="col-md-6">
                     <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">second logo </label>
-                        <div className="custom-file col-sm-8">
+                        <div className="col-sm-9">
+                        <div className="custom-file ">
                       <Form.Control onChange={(e)=>{
                         this.setState({slogo:e.target.files[0]})
                       }} disabled={!this.state.user.admin} type="file" className="form-control visibility-hidden" id="customFileLang1" lang="es"/>
                       <label className="custom-file-label" htmlFor="customFileLang1">{this.state.slogo!==null?this.state.slogo.name:"Upload image"}
                       {(typeof this.state.slogo) === "string" ?this.state.slogo.split("/")[2]:""}
                       </label>
+                    </div>
                     </div>
                       </Form.Group>
                     </div>
@@ -329,9 +333,10 @@ export class Country extends Component {
                     <div className="col-md-6 ">
                    
   
-                      <Form.Group className=" input-group row  ">
+                      <Form.Group className=" row  ">
                       <label className="col-sm-3 col-form-label control-label">Annual Population Growth Rate</label>
-                     <div className="input-group col-sm-9">
+                      <div className="col-sm-9">
+                     <div className="input-group ">
                  
                     <Form.Control disabled={!this.state.user.admin} required  value={this.state.growthRate} onChange={(e)=>{
                           this.setState({  growthRate : e.target.value })
@@ -342,7 +347,7 @@ export class Country extends Component {
                       <span className="input-group-text">%</span>
                     </div>
                   </div>
-                     
+                  </div>
                       </Form.Group>
                     </div>
                     <div className="col-md-6">
