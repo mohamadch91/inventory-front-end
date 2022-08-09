@@ -140,13 +140,41 @@ const Level = () => {
       UserService.addlevel(data)
         .then((response) => {
           console.log(response);
+          let newSkipped = skipped;
+    if (isStepSkipped(activeStep)) {
+      newSkipped = new Set(newSkipped.values());
+      newSkipped.delete(activeStep);
+    }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSkipped(newSkipped);
+    
+  setstartDate(new Date());
+  setvalidated(false);
+  setminPop(0);
+  setmaxPop(100);
+  setMinChildPop(0);
+  setMaxChildPop(100);
+  setname("");
+  setnumber(1);
+  setcurrent2();
+  setcurrent20();
+  setcurrent25();
+  setcurrent70();
+  setcurrentdry();
+  setplanned2();
+  setplanned20();
+  setplanned25();
+  setplanned70();
+  setplanneddry();
+  setParent();
           // this.props.history.push('/level');
         })
         .catch((error) => {
           console.log(error);
         });
+        
     }
-
+    
     //  this.setState({ validated: true });
     setvalidated(true);
   };
