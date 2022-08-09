@@ -12,33 +12,32 @@ import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const Level = () => {
+const Level = (update) => {
   const [startDate, setstartDate] = useState(new Date());
   const [validated, setvalidated] = useState(false);
   const [minPop, setminPop] = useState(0);
   const [maxPop, setmaxPop] = useState(100);
-  const [minChildPop, setMinChildPop] = useState(0);
-  const [maxChildPop, setMaxChildPop] = useState(100);
+
   const [name, setname] = useState("");
   const [number, setnumber] = useState(1);
-  const [current2, setcurrent2] = useState();
-  const [current20, setcurrent20] = useState();
-  const [current25, setcurrent25] = useState();
-  const [current70, setcurrent70] = useState();
-  const [currentdry, setcurrentdry] = useState();
-  const [planned2, setplanned2] = useState();
-  const [planned20, setplanned20] = useState();
-  const [planned25, setplanned25] = useState();
-  const [planned70, setplanned70] = useState();
-  const [planneddry, setplanneddry] = useState();
-  const [parent , setParent] = useState();
-
+  const [current2, setcurrent2] = useState(0.0);
+  const [current20, setcurrent20] = useState(0.0);
+  const [current25, setcurrent25] = useState(0.0);
+  const [current70, setcurrent70] = useState(0.0);
+  const [currentdry, setcurrentdry] = useState(0.0);
+  const [planned2, setplanned2] = useState(0.0);
+  const [planned20, setplanned20] = useState(0.0);
+  const [planned25, setplanned25] = useState(0.0);
+  const [planned70, setplanned70] = useState(0.0);
+  const [planneddry, setplanneddry] = useState(0.0);
+  const [parent , setParent] = useState(null);
+  const [country, setcountry] = useState(JSON.parse(localStorage.getItem("country")));
 
 
   // form event targets
   const [levelNumber , setLevelNumber] = useState(1);
   const levelNumberHandler = (event) => {
-   setLevelNumber(event.target.value)
+   setLevelNumber( parseInt(event.target.value))
   }
 
  
@@ -104,10 +103,10 @@ const Level = () => {
   }, []);
 
   const handleSubmit = (event) => {
-    if(number ===1 ){
+    if(levelNumber ===1 ){
       setParent(null)
     }else{
-      setParent(number-1)
+      setParent(levelNumber-1)
     }
     event.preventDefault();
     event.stopPropagation();
@@ -118,18 +117,16 @@ const Level = () => {
       event.stopPropagation();
     } else {
       const data = {
-        number: number,
+        number: levelNumber,
         maxpop: maxPop,
         minpop: minPop,
         uppervol: current2,
-        undervol: null,
+        undervol: current20,
         m25vol: current25,
-        m20vol: current20,
         m70vol: current70,
-        m20volnew: planned20,
         m25volnew: planned25,
         m70volnew: planned70,
-        uppervolnew: null,
+        uppervolnew: planned20,
         undervolnew: planned2,
         name: name,
         dryvol: currentdry,
@@ -137,6 +134,7 @@ const Level = () => {
         country: 1,
         parent: parent,
       };
+      console.log(data)
       UserService.addlevel(data)
         .then((response) => {
           console.log(response);
@@ -152,8 +150,6 @@ const Level = () => {
   setvalidated(false);
   setminPop(0);
   setmaxPop(100);
-  setMinChildPop(0);
-  setMaxChildPop(100);
   setname("");
   setnumber(1);
   setcurrent2();
@@ -179,30 +175,33 @@ const Level = () => {
     setvalidated(true);
   };
   const levelvalidator = () => {
-    var hasNumber = /\d/;
 
-    if (hasNumber.test(name)) {
-      return false;
+    if (name.length >0) {
+      return true;
     }
-    if (name.length < 1) {
-      return false;
-    }
-    return true;
   };
-  const capacityvalidator = (text) => {
-    var hasNumber = /\d/;
-    if (hasNumber.test(text)) {
-      const num = Number(text);
-
-      if (Number.isInteger(num) && num > 0) {
-        return true;
-      }
+  const minpopvalidator = ()=> {
+    if (minPop.toString().length>0 ) {
+      return true;
     }
-    return false;
+  }
+  const maxpopvalidator = ()=> {
+    if (maxPop.toString().length>0 ) {
+      return true;
+    }
+  }
+  const capacityvalidator = (text) => {
+    console.log(typeof text)
+    if(text<0){
+      return false
+    }
+    if (text.toString().length>0 ) {
+      return true;
+    }
   };
 
   return (
-    <div>
+   
       <Form
         noValidate
         validated={validated}
@@ -242,43 +241,42 @@ const Level = () => {
           ) : activeStep === 0 ? (
             <React.Fragment>
               <div className="row">
-                <div className="col-12 grid-margin">
-                  <div className="card">
-                    <div className="card-body">
+                <div className="col-12 grid-margin text-black">
+                
+                   
                       <h4 className="card-title"><Typography sx={{ mt: 2, mb: 1 }}>
                 Step {activeStep + 1}
-              </Typography> Add Level</h4>
+              </Typography> Level configurations</h4>
 
-                      <p className="card-description"> Level info </p>
+                      <p className="card-description h3"> Level info </p>
                       <div className="row">
-                        <div className="col-md-6">
                           <Form.Group className="row">
-                            <label className="col-sm-3 col-form-label">
+                            <label className="col-sm-3 col-form-label control-label">
                               Level number
                             </label>
                             <div className="col-sm-9">
                               <Form.Control className="form-select" as="select" onChange={levelNumberHandler} value={levelNumber}>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
+                              {[...Array(country.levels)].map((x, i) =>
+                            <option value={i+1}>{i+1}</option>
+                               )}
+                     
                               </Form.Control>
                             </div>
                           </Form.Group>
-                        </div>
-                        <div className="col-md-6">
-                          <Form.Group className="row">
-                            <label className="col-sm-3 col-form-label">
+                        
+                   
+                      </div>
+
+                      <div className="row">
+
+                      <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label control-label">
                               Level name
                             </label>
                             <div className="col-sm-9">
                               <Form.Control
                                 required
-                                isInvalid={!levelvalidator()}
+                                
                                 isValid={levelvalidator()}
                                 value={name}
                                 onChange={(e) => {
@@ -288,68 +286,48 @@ const Level = () => {
                               />
                             </div>
                           </Form.Group>
-                        </div>
                       </div>
-
                       <div className="row">
-                        <div className="col-md-6">
-                          <Form.Group className="row">
-                            <label className="col-sm-3 col-form-label">
-                              Population at this Level
+                      <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label control-label">
+                            Min {country.poptarget}  at this level
                             </label>
-                            <div className="col-sm-9 mt-3">
-                              <MultiRangeSlider
-                                min={0}
-                                max={100}
-                                handlemin={handlemin}
-                                handlemax={handlemax}
-                                onChange={({ min, max }) =>{
-                                  setminPop(min);
-                                  setmaxPop(max);
-                                }
-                                }
+                            <div className="col-sm-9">
+                              <Form.Control
+                                required
+                               
+                                isValid={minpopvalidator()}
+                                value={minPop}
+                                onChange={(e) => {
+                                  setminPop(e.target.value);
+                                }}
+                                type="number"
                               />
                             </div>
-                            <label className="col-sm-3 col-form-label">
-                              Min value :
-                            </label>
-                            <div className="col-sm-9 mt-3">{minPop} Milion</div>
-                            <label className="col-sm-3 col-form-label">
-                              Max value :
-                            </label>
-                            <div className="col-sm-9 mt-3">{maxPop} Milion</div>
                           </Form.Group>
-                        </div>
-                        <div className="col-md-6">
-                          <Form.Group className="row">
-                            <label className="col-sm-3 col-form-label">
-                              Population: Children under one year at this level
-                            </label>
-                            <div className="col-sm-9 mt-3">
-                              <MultiRangeSlider
-                                min={0}
-                                max={100}
-                                handlemin={handlemin}
-                                handlemax={handlemax}
-                                onChange={({ min, max }) =>{
-                                setMinChildPop(min);
-                                setMaxChildPop(max);
-                                }
-                              }
-                              />
-                            </div>
-                            <label className="col-sm-3 col-form-label">
-                              Min value :
-                            </label>
-                            <div className="col-sm-9 mt-3">{minChildPop} Milion</div>
-                            <label className="col-sm-3 col-form-label">
-                              Max value :
-                            </label>
-                            <div className="col-sm-9 mt-3">{maxChildPop} Milion</div>
-                          </Form.Group>
-                        </div>
                       </div>
-                    </div>
+                      <div className="row">
+                      <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label control-label">
+                            Max {country.poptarget}  at this level
+                            </label>
+                            <div className="col-sm-9">
+                              <Form.Control
+
+                                required
+                                isValid={maxpopvalidator()}
+                                value={maxPop}
+                                onChange={(e) => {
+                                  setmaxPop(e.target.value);
+                                }
+                                }
+                                type="number"
+                              />
+                            </div>
+                          </Form.Group>
+                      </div>
+                   
+                   
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -371,7 +349,7 @@ const Level = () => {
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
-                  </div>
+              
                 </div>
               </div>
               
@@ -379,13 +357,12 @@ const Level = () => {
           ) : activeStep === 1 ? (
             <React.Fragment>
               <div className="row">
-                <div className="col-md-12 grid-margin">
-                  <div className="card">
-                    <div className="card-body">
+                <div className="col-md-12 grid-margin text-black">
+               
                       <h4 className="card-title"><Typography sx={{ mt: 2, mb: 1 }}>
-                Step1 {activeStep + 1}
+                Step{activeStep + 1}
               </Typography> Current</h4>
-                      <p className="card-description"> Current Capacity </p>
+                      <p className="card-description"> Current Capacities </p>
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
@@ -394,11 +371,10 @@ const Level = () => {
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(current25)}
                             isValid={capacityvalidator(current25)}
                             value={current25}
                             onChange={(e) => {
-                              setcurrent25(e.target.value);
+                              setcurrent25(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -410,16 +386,15 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          (+2 to +8 C) in cm3
+                          (+2- +8 C) in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(current2)}
                             isValid={capacityvalidator(current2)}
                             value={current2}
                             onChange={(e) => {
-                              setcurrent2(e.target.value);
+                              setcurrent2(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -431,16 +406,15 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          -20 C
+                          -20 C in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(current20)}
                             isValid={capacityvalidator(current20)}
                             value={current20}
                             onChange={(e) => {
-                              setcurrent20(e.target.value);
+                              setcurrent20(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -451,16 +425,15 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          -70 C
+                          -70 C in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(current70)}
                             isValid={capacityvalidator(current70)}
                             value={current70}
                             onChange={(e) => {
-                              setcurrent70(e.target.value);
+                              setcurrent70(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -471,16 +444,15 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          Dry Store
+                          Dry Store in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(currentdry)}
                             isValid={capacityvalidator(currentdry)}
                             value={currentdry}
                             onChange={(e) => {
-                              setcurrentdry(e.target.value);
+                              setcurrentdry(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -488,7 +460,7 @@ const Level = () => {
                           />
                         </div>
                       </Form.Group>
-                    </div>
+                      </div>
                     <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                 <Button
                   color="inherit"
@@ -510,8 +482,8 @@ const Level = () => {
                   {activeStep === steps.length - 1 ? "Finish" : "Next"}
                 </Button>
               </Box>
-                  </div>
-                </div>
+               
+             
               </div>
               
               
@@ -519,9 +491,8 @@ const Level = () => {
           ) : activeStep === 2 ? (
             <React.Fragment>
               <div className="row">
-                <div className="col-md-12 grid-margin">
-                  <div className="card">
-                    <div className="card-body">
+                <div className="col-md-12 grid-margin text-black">
+                  
                       <h4 className="card-title"><Typography sx={{ mt: 2, mb: 1 }}>
                 Step {activeStep + 1}
               </Typography> Planned</h4>
@@ -534,11 +505,10 @@ const Level = () => {
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(planned25)}
                             isValid={capacityvalidator(planned25)}
                             value={planned25}
                             onChange={(e) => {
-                              setplanned25(e.target.value);
+                              setplanned25(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -549,16 +519,15 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          (+2 to +8 C) in cm3
+                          (+2 - +8 C) in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            isInvalid={!capacityvalidator(planned2)}
                             isValid={capacityvalidator(planned2)}
                             value={planned2}
                             onChange={(e) => {
-                              setplanned2(e.target.value);
+                              setplanned2(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -569,7 +538,7 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          -20 C
+                          -20 C in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -578,7 +547,7 @@ const Level = () => {
                             isValid={capacityvalidator(planned20)}
                             value={planned20}
                             onChange={(e) => {
-                              setplanned20(e.target.value);
+                              setplanned20(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -589,7 +558,7 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          -70 C
+                          -70 C in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -598,7 +567,7 @@ const Level = () => {
                             isValid={capacityvalidator(planned70)}
                             value={planned70}
                             onChange={(e) => {
-                              setplanned70(e.target.value);
+                              setplanned70(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -609,7 +578,7 @@ const Level = () => {
 
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">
-                          Dry Store
+                          Dry Store in cm3
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -618,7 +587,7 @@ const Level = () => {
                             isValid={capacityvalidator(planneddry)}
                             value={planneddry}
                             onChange={(e) => {
-                              setplanneddry(e.target.value);
+                              setplanneddry(parseFloat(e.target.value));
                             }}
                             type="number"
                             placeholder="0"
@@ -648,8 +617,8 @@ const Level = () => {
                   Submit
                 </Button>
               </Box>
-                  </div>
-                </div>
+                 
+              
               </div>
              
             </React.Fragment>
@@ -660,7 +629,6 @@ const Level = () => {
       </Form>
 
 
-    </div>
   );
 };
 
