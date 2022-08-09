@@ -109,10 +109,39 @@ export class Country extends Component {
         }
         else{
           UserService.addcountry(formData).then(res => {
-            // console.log(res)
+           
+            
             this.alerthandle("Country added successfully","success")
             localStorage.setItem("country", JSON.stringify(res.data));
             const country=JSON.parse(localStorage.getItem("country"))
+            for (let i = 0; i < country.levels; i++) {
+              const data = {
+                number: i,
+                maxpop: 0,
+                minpop: 0,
+                uppervol: 0,
+                undervol: 0,
+                m25vol: 0,
+                m70vol: 0,
+                m25volnew: 0,
+                m70volnew: 0,
+                uppervolnew: 0,
+                undervolnew: 0,
+                name: "levels"+i,
+                dryvol: 0,
+                dryvolnew: 0,
+                country: 1,
+                parent: i===0?null:i-1
+              };
+              UserService.addlevel(data).then(res => {
+                console.log(res)
+              }
+              ).catch(err => {
+                console.log(err)
+              }
+              )
+
+            }
             this.setState({
               CountryName:country.country,
               CountryCode:country.codecountry,
