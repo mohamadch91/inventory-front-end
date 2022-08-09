@@ -129,9 +129,9 @@ class Login extends Component {
   render() {
     const { isLoggedIn, message } = this.props;
     // console.log(isLoggedIn);
-    // if (isLoggedIn) {
-    //   return <Redirect to="/dashboard" />;
-    // }
+    if (isLoggedIn) {
+      return <Redirect to="/dashboard" />;
+    }
 
     return (
       

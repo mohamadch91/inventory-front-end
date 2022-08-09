@@ -217,6 +217,7 @@ export class Country extends Component {
       this.setState({user:user,country:country});
       }
   render() {
+    
     return (
       <div>
         <div className="page-header">
