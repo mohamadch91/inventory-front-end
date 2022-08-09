@@ -3,6 +3,8 @@ import { ProgressBar } from 'react-bootstrap';
 import { Dropdown, Tabs, Tab } from 'react-bootstrap';
 import {Line, Bar} from 'react-chartjs-2';
 import {CircularProgressbarWithChildren} from 'react-circular-progressbar';
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 export class Dashboard extends Component {
   constructor(props){
@@ -584,7 +586,15 @@ export class Dashboard extends Component {
   toggleProBanner() {
     document.querySelector('.proBanner').classList.toggle("hide");
   }
+  // componentDidMount() {
+  //   if(this.props.user===undefined){
+  //     this.props.history.push('/');
+  //   }
+  // }
   render () {
+    if(this.props.user===undefined){
+      return <Redirect to='/' />
+    }
     return (
       <div>
         <div className="row proBanner">
@@ -988,4 +998,10 @@ export class Dashboard extends Component {
     );
   }
 }
-export default Dashboard;
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+export default connect(mapStateToProps) (Dashboard);

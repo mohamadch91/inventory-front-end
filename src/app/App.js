@@ -13,6 +13,7 @@ import EventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from './helpers/history';
 import { Redirect } from "react-router-dom";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -53,9 +54,8 @@ class App extends Component {
     });
   }
   render () {
-    // if(this.state.currentUser === undefined){
-    //   return  <Redirect to="/" />;
-    // }
+    // console.log(this.state.currentUser);
+ 
     let navbarComponent = !this.state.isFullPageLayout ? <Navbar/> : '';
     let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar/> : '';
     let SettingsPanelComponent = !this.state.isFullPageLayout ? <SettingsPanel/> : '';
@@ -122,4 +122,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default withRouter(connect(mapStateToProps) (App));
+export default connect(mapStateToProps) (withRouter((App)));

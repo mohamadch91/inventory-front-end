@@ -8,24 +8,27 @@ class UserService {
     return axios.get(API_URL + "all");
   }
   addcountry(country) {
-    return axios.post(API_URL+"country/" , country, { headers: authHeader() });
+    return axios.post(API_URL+"country/" , country, { headers: { Authorization:authHeader() } });
+  }
+  editcountry(country) {
+    return axios.put(API_URL+"country/" , country, { headers: { Authorization:authHeader(),'Content-Type': 'multipart/form-data', } });
   }
   addlevel(level) {
-    return axios.post(API_URL+"level" , level, { headers: authHeader() });
+    return axios.post(API_URL+"level" , level, { headers: { Authorization:authHeader() } });
   }
   getLevels() {
-    return axios.get(API_URL+"level" , { headers: authHeader() });
+    return axios.get(API_URL+"level" , { headers: { Authorization:authHeader() } });
   }
   getUserBoard() {
-    return axios.get(API_URL + "user", { headers: authHeader() });
+    return axios.get(API_URL + "user", { headers: { Authorization:authHeader() } });
   }
 
   getModeratorBoard() {
-    return axios.get(API_URL + "mod", { headers: authHeader() });
+    return axios.get(API_URL + "mod", { headers: { Authorization:authHeader() } });
   }
 
   getAdminBoard() {
-    return axios.get(API_URL + "admin", { headers: authHeader() });
+    return axios.get(API_URL + "admin", { headers: { Authorization:authHeader() } });
   }
 }
 
