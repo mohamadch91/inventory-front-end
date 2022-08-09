@@ -79,9 +79,10 @@ export class Country extends Component {
     
         if(this.state.user.admin && this.state.country!==[]){
           formData.append("id",this.state.country.id)
+          console.log(this.state.targetpopulation)
           UserService.editcountry(formData).then(res => {
             localStorage.setItem("country", JSON.stringify(res.data));
-            const country=JSON.parse(localStorage.getItem("country"))
+            const country=JSON.parse(localStorage.getItem("country"));
             this.setState({
               CountryName:country.country,
               CountryCode:country.codecountry,
@@ -177,10 +178,10 @@ export class Country extends Component {
     }
     CurrencyValidator = () => {
 
-      if(this.state.Currency.length > 3){
-        return false;
+      if(this.state.Currency.length < 4){
+        return true;
       }
-      return true;
+      return false;
     }
     CV =()=>{
       if(this.state.Currency.length>0){
@@ -217,7 +218,7 @@ export class Country extends Component {
       this.setState({user:user,country:country});
       }
   render() {
-    
+
     return (
       <div>
         <div className="page-header">
@@ -284,12 +285,12 @@ export class Country extends Component {
                           this.setState({levels:e.target.value})
 
                         }} type="range" min="1" max="8" step="1"  defaultValue={4}/>
+                       
+                        <label className="col-sm-3 col-form-label  ">value :    {this.state.levels} </label>
+                     
+                      
                         </div>
-                        <label className="col-sm-3 col-form-label ">value :</label>
-                        <div style={{marginTop:"2%"}} className="col-sm-9 ">
                         
-                        {this.state.levels}
-                        </div>
                         
                         
                       </Form.Group>
@@ -409,8 +410,8 @@ export class Country extends Component {
                           this.setState({  targetpopulation : e.target.value })
                        
                         }}className="form-select" as="select" >
-                        <option>General population</option>
-                            <option>Under-1 Population</option>
+                        <option value="General population">General population</option>
+                            <option value="Under-1 Population">Under-1 Population</option>
                           </Form.Control>
                         </div>
                       </Form.Group>

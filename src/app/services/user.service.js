@@ -8,9 +8,11 @@ class UserService {
     return axios.get(API_URL + "all");
   }
   addcountry(country) {
+    console.log(country)
     return axios.post(API_URL+"country/" , country, { headers: { Authorization:authHeader() } });
   }
   editcountry(country) {
+    console.log(country)
     return axios.put(API_URL+"country/" , country, { headers: { Authorization:authHeader(),'Content-Type': 'multipart/form-data', } });
   }
   addlevel(level) {

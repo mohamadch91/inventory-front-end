@@ -205,6 +205,7 @@ function EnhancedTableHead(props) {
 
       Target Population : 
       {JSON.parse(localStorage.getItem("country")).poptarget}
+      {console.log(JSON.parse(localStorage.getItem("country")).poptarget)}
     </TableCell>
     <TableCell colSpan={6}>
 
@@ -214,10 +215,10 @@ function EnhancedTableHead(props) {
       <TableCell  colSpan={3}>
 
 </TableCell>
-    <TableCell sx={{backgroundColor:"#82c4ed",textAlign:"center"}} colSpan={5}>
+    <TableCell sx={{backgroundColor:"#82c4ed",textAlign:"center",borderLeft:"1px solid black"}} colSpan={5}>
 Current values
     </TableCell>
-    <TableCell  sx={{backgroundColor:"#2f7ebf",textAlign:"center"}} colSpan={5}>
+    <TableCell  sx={{backgroundColor:"#2f7ebf",textAlign:"center",borderLeft:"1px solid black",borderRight:"1px solid black"}} colSpan={5}>
 Planned values
 </TableCell>
         </TableRow>
@@ -236,6 +237,8 @@ Planned values
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
+            sx={(headCell.id=='m25vol' ||headCell.id=='m25volnew')?{borderLeft:"1px solid black"}:(headCell.id=='dryvolnew')?{borderRight:"1px solid black"}: ""}
+
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
@@ -500,16 +503,16 @@ useEffect(() => {
                       >
                         {row.name}
                       </TableCell>
-                      <TableCell          padding="none" align="rigth">{row.m25vol}</TableCell>
+                      <TableCell  sx={{borderLeft:"1px solid black"}}        padding="none" align="rigth">{row.m25vol}</TableCell>
                       <TableCell padding="none"  align="left">{row.uppervol}</TableCell>
                       <TableCell padding="none"  align="left">{row.undervol}</TableCell>
                       <TableCell padding="none"  align="left">{row.m70vol}</TableCell>
                       <TableCell padding="none"  align="left">{row.dryvol}</TableCell>
-                      <TableCell padding="none"  align="left">{row.m25volnew}</TableCell>
+                      <TableCell sx={{borderLeft:"1px solid black"}} padding="none"  align="left">{row.m25volnew}</TableCell>
                       <TableCell padding="none"  align="left">{row.uppervolnew}</TableCell>
                       <TableCell padding="none"  align="left">{row.undervolnew}</TableCell>
                       <TableCell padding="none"  align="left">{row.m70volnew}</TableCell>
-                      <TableCell padding="none"  align="left">{row.dryvolnew}</TableCell>
+                      <TableCell padding="none" sx={{borderRight:"1px solid black"}}  align="left">{row.dryvolnew}</TableCell>
                       <TableCell padding="none"  align="left">{row.minpop}</TableCell>
                       <TableCell padding="none"  align="left">{row.maxpop}</TableCell>
                     </TableRow>
