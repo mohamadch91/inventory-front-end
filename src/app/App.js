@@ -39,7 +39,7 @@ class App extends Component {
         // showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
-
+    
     EventBus.on("logout", () => {
       this.logOut();
     });
