@@ -1,0 +1,174 @@
+[33mcommit 6d4b4a8bd80929318c01834361aa12a453ed95f5[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 13:42:26 2022 +0430
+
+    dual range slider added to level
+
+[33mcommit 12a64e942f18e0067247d026c6965c06306f02c3[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 07:45:23 2022 +0430
+
+    update heroku setup
+
+[33mcommit 3f4f8309ac7a52873aa2285508a6d5157b41887b[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 07:40:38 2022 +0430
+
+    last
+
+[33mcommit b7fcda69d394f3d15d028120c9415c0e12668399[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 07:32:09 2022 +0430
+
+    change package.json
+
+[33mcommit c1347261a2aa402593fa467ce8384033dd9c6379[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 07:05:50 2022 +0430
+
+    connect level setting to front end
+
+[33mcommit 592288af99c79641ebf7e9db29bf0173db0f8006[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 06:05:54 2022 +0430
+
+    login connected to back end
+
+[33mcommit c17df4985444531d4f91dc674c8627dbc1fda5cc[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 05:18:39 2022 +0430
+
+    remove i18n
+
+[33mcommit 475ed1aed0b065856dfff22dbc100fc2ca6e938f[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 03:35:56 2022 +0430
+
+    add redux
+
+[33mcommit c6b3f8fa138b9e10cb62f647756948a90ee9f8cd[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 03:22:07 2022 +0430
+
+    level validators complete
+
+[33mcommit 0e5d8e20bf15a28fb2e07f8a2693bc15679bece8[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Aug 7 02:44:59 2022 +0430
+
+    country settings validators done
+
+[33mcommit b6b8b86d433f45b5283f89636ff9a7e31b4b9025[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sat Aug 6 15:02:37 2022 +0430
+
+    level list complete
+
+[33mcommit 47704bd81cb996f0f7df5f7e0466bffebbb06830[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sat Aug 6 14:37:40 2022 +0430
+
+    add level page
+
+[33mcommit 652a14e8bba36f7bccb996986538200cef16fe9e[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sat Aug 6 13:40:52 2022 +0430
+
+    add settings to side bar
+
+[33mcommit 912a398c5d988ed5928bc91fc4e578a16a0293eb[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sat Aug 6 13:01:52 2022 +0430
+
+    change front end totally
+
+[33mcommit 2ccbe6466f9ab23496121126c12213e6f39e0ba8[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 12:22:24 2022 +0430
+
+    Update drawer.js
+
+[33mcommit a5ac28b9b195dce6044411ad75524377c31c364f[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 12:11:04 2022 +0430
+
+    complete settings ui
+
+[33mcommit a3705bf0e278428af9103279ab3e0f8cb6a13fab[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 09:10:16 2022 +0430
+
+    Delete pages.yml
+
+[33mcommit 95eadf975c8ce482821b3fe1565489d16a68d693[m
+Merge: b920046 ef9a4a8
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 09:09:06 2022 +0430
+
+    Merge branch 'main' of https://github.com/mohamadch91/inventory-front-end into main
+
+[33mcommit b920046d2d3f29995bb8d92b853b12f5129dfae4[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 09:08:56 2022 +0430
+
+    Update package.json
+
+[33mcommit ef9a4a8ae77be381fdfe69e0b8cccb7e13604aa7[m
+Author: Mohamad Choupan <58650941+mohamadch91@users.noreply.github.com>
+Date:   Sun Jul 31 09:04:47 2022 +0430
+
+    Create pages.yml
+
+[33mcommit 0d7614a450769261909248097ada13e0dd6fd5a8[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:49:16 2022 +0430
+
+    update login
+
+[33mcommit 563c95806c6527bc18cb4f92fbe253dd4d193706[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:48:45 2022 +0430
+
+    Update home.js
+
+[33mcommit 1bd0cf09647f0447ee17ba48ab7a1cfadbc5aa8a[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:46:34 2022 +0430
+
+    updaate view
+
+[33mcommit 7215ff70576453369707eedbb0f7d9f90312b8f3[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:18:56 2022 +0430
+
+    Update package.json
+
+[33mcommit a988bdc556d7a9bc5ae3e9e7b4e3fd3e326bd425[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:06:50 2022 +0430
+
+    change packages
+
+[33mcommit 474232433fb48e50af31eb0edd2140474649dd53[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 08:03:59 2022 +0430
+
+    complete login
+
+[33mcommit 05780d7732ff94a10da0b013ba1a49127edd44ef[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 06:59:09 2022 +0430
+
+    complete demo main page
+
+[33mcommit a1566202aef98190f87dcfc53214afb366153393[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 02:47:41 2022 +0430
+
+    initialize project
+
+[33mcommit fddba2d04d58ec0ef77f4030c384596d60db1881[m
+Author: Mohamad Choupan <mohamadchoupan80@gmail.com>
+Date:   Sun Jul 31 02:13:21 2022 +0430
+
+    Initial commit

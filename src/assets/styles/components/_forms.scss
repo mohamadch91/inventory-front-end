@@ -3,7 +3,11 @@
 .form-group {
   margin-bottom: 1.5rem;
 }
-
+.form-group.required .control-label:after { 
+  content:"   *";
+  color:red;
+  white-space: pre;
+}
 .input-group-append,
 .input-group-prepend {
   color: $input-placeholder-color;
@@ -71,6 +75,16 @@ select {
     visibility: hidden;
     position: absolute;
   }
+  .required {
+    content:" *";
+    color:red;
+    white-space: pre;
+  }
+  .control-label:after { 
+    content:" *";
+    color:red;
+    white-space: pre;
+ }
   .file-upload-info {
     background: transparent;
   }

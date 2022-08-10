@@ -1,5 +1,9 @@
 /* Tables */
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .table {
   margin-bottom: 0;
   thead {

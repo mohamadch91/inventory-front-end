@@ -67,7 +67,6 @@ addTodo (event) {
         id: todos.length ? todos[todos.length - 1].id + 1 : 1,
         task: this.state.inputValue,
         isCompleted: false
-        
     })
 
     this.setState({
