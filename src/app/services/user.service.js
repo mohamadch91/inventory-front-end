@@ -21,6 +21,9 @@ class UserService {
   getLevels() {
     return axios.get(API_URL+"level" , { headers: { Authorization:authHeader() } });
   }
+  putLevels(level) {
+    return axios.put(API_URL+"level" ,level, { headers: { Authorization:authHeader() } });
+  }
   getUserBoard() {
     return axios.get(API_URL + "user", { headers: { Authorization:authHeader() } });
   }

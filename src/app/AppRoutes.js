@@ -25,7 +25,6 @@ const Register1 = lazy(() => import('./user-pages/Register'));
 const Home= lazy(() => import('./home/Home'));
 const Country= lazy(() => import('./settings/Country'));
 const Level = lazy(() => import('./settings/Level'));
-const LevelList = lazy(() => import('./settings/LevelList'));
 const NewLevelList = lazy(() => import('./settings/NewLevel'));
 class AppRoutes extends Component {
   render () {
@@ -35,7 +34,6 @@ class AppRoutes extends Component {
           <Route exact path="/" component={Home} />
           <Route exact path="/settings/country" component={Country} />
           <Route exact path="/settings/level" component={Level} />
-          <Route exact path="/settings/level-list" component={LevelList} />
           <Route exact path="/settings/new-level-list" component={NewLevelList} />
           <Route exact path="/dashboard" component={ Dashboard } />
 
