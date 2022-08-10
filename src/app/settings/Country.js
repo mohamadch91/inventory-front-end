@@ -463,7 +463,17 @@ export class Country extends Component {
                               required
                               value={this.state.growthRate}
                               onChange={(e) => {
-                                this.setState({ growthRate:e.target.value });
+                                let number=e.target.value
+                                const flag=number.split(".").length
+                                console.log(flag)
+                                if(flag>1){
+                                  const num=number.split(".")[0]
+                                  const floatpoint=number.split(".")[1].slice(0,2)
+                                  number=num+"."+floatpoint
+                                  console.log(number)
+                                }
+                               
+                                this.setState({ growthRate:parseFloat(number)});
                               }}
                               type="number"
                               className="form-control"
@@ -503,8 +513,11 @@ export class Country extends Component {
                         <div className="col-sm-7">
                           <Form.Check
                             disabled={!this.state.user.admin}
+                            checked={this.state.enableHR}
+                            value={this.state.enableHR}
                             onChange={(e) => {
-                              this.setState({ enableHR: e.target.value });
+                              // e.preventDefault()
+                              this.setState({ enableHR: !this.state.enableHR });
                             }}
                             type="switch"
                             label=""
@@ -520,10 +533,11 @@ export class Country extends Component {
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
+                            checked={this.state.enableMaintaining}
                             disabled={!this.state.user.admin}
                             onChange={(e) => {
                               this.setState({
-                                enableMaintaining: e.target.value,
+                                enableMaintaining:  !this.state.enableMaintaining,
                               });
                             }}
                             type="switch"
@@ -549,6 +563,7 @@ export class Country extends Component {
                                 targetpopulation: e.target.value,
                               });
                             }}
+                            value={this.state.targetpopulation}
                             className="form-select"
                             as="select"
                           >
@@ -575,6 +590,7 @@ export class Country extends Component {
                                 requiredcapacities: e.target.value,
                               });
                             }}
+                            value={this.state.requiredcapacities}
                             className="form-select"
                             as="select"
                           >
