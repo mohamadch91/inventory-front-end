@@ -358,13 +358,10 @@ export default function DataTable() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [rows, setRows] = useState([]);
-  const [rowUpdate, setRowUpdate] = useState([]);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -400,14 +397,8 @@ export default function DataTable() {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value));
-    setPage(0);
-  };
+
 
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
@@ -416,8 +407,6 @@ export default function DataTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   useEffect(() => {
     // get
@@ -482,7 +471,7 @@ export default function DataTable() {
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
                 {stableSort(rows, getComparator(order, orderBy))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
@@ -568,30 +557,12 @@ export default function DataTable() {
                       </TableRow>
                     );
                   })}
-                {emptyRows > 0 && (
-                  <TableRow
-                    style={{
-                      height: (dense ? 33 : 53) * emptyRows,
-                    }}
-                  >
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
+                
               </TableBody>
             </Table>
           </TableContainer>
           {/* pagination */}
-          <TablePagination
-            sx={{ marginBottom: "0" }}
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            className="pagination"
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+       
         </Paper>
         <FormControlLabel
           control={<Switch checked={dense} onChange={handleChangeDense} />}

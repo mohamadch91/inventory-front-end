@@ -8,7 +8,6 @@ export class Country extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      startDate: new Date(),
       levels: 4,
       validated: false,
       CountryName: "",
@@ -28,6 +27,15 @@ export class Country extends Component {
       snackopen: false,
       type: "success",
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.cv = this.cv.bind(this);
+    this.CV=this.CV.bind(this);
+    this.countryvalidator = this.countryvalidator.bind(this);
+    this.ccodevalid = this.ccodevalid.bind(this);
+    this.CurrencyValidator = this.CurrencyValidator.bind(this);
+
+
   }
   changestate = (e, state) => {
     this.setState({ [state]: e.target.value });
@@ -73,7 +81,7 @@ export class Country extends Component {
       formData.append("usingtool", this.state.requiredcapacities);
       formData.append("usingmaintenance", this.state.enableMaintaining);
 
-      if (this.state.user.admin && this.state.country !== []) {
+      if (this.state.user.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
         console.log(this.state.targetpopulation);
         
@@ -93,11 +101,11 @@ export class Country extends Component {
                 m70volnew: 0,
                 uppervolnew: 0,
                 undervolnew: 0,
-                name: "levels" + i,
+                name: "levels" + (i+1),
                 dryvol: 0,
                 dryvolnew: 0,
                 country: 1,
-                parent: i === 0 ? null : i - 1,
+                parent: i+1 === 1 ? null : i - 1,
               };
               UserService.addlevel(data)
                 .then((res) => {
@@ -216,6 +224,7 @@ export class Country extends Component {
     }
   };
   cv = () => {
+    console.log(this.state.CountryName);
     if (this.state.CountryName.length > 1) {
       return true;
     }
@@ -238,9 +247,11 @@ export class Country extends Component {
     // bsCustomFileInput.init()
     const user = JSON.parse(localStorage.getItem("user"));
     const country = JSON.parse(localStorage.getItem("country"));
-    console.log(country);
+    
+    console.log(country.length);
     console.log(typeof country.logo);
-    if (country !== [] && country !== null) {
+    if (Object.keys(country).length !== 0) {
+      console.log("kir bokhor")
       this.setState({
         CountryName: country.country,
         CountryCode: country.codecountry,
@@ -252,13 +263,16 @@ export class Country extends Component {
         targetpopulation: country.poptarget,
         enableHR: country.havehr,
         mainlocation: country.mainlocation,
-        logo2: country.logo2,
+        slogo: country.logo2,
         requiredcapacities: country.usingtool,
         enableMaintaining: country.usingmaintenance,
+        country: country
       });
     }
-    console.log(user);
-    this.setState({ user: user, country: country });
+   
+        
+    console.log(this.state.CountryName);
+    this.setState({ user: user });
   }
   render() {
     return (
@@ -372,7 +386,7 @@ export class Country extends Component {
                             min="1"
                             max="8"
                             step="1"
-                            defaultValue={4}
+                            value={this.state.levels}
                           />
 
                           <label className="col-sm-3 col-form-label  ">

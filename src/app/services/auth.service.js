@@ -42,7 +42,11 @@ class AuthService {
          return axios.get(USER_PROFILE  ,  { headers: {Authorization:"Bearer "+user.access} }).then
           (res=>{
         
-            const country=res.data.Country[0];
+            let country=res.data.Country[0];
+            if(country ===undefined){
+              country={}
+
+            }
             user.id=res.data.User.pk;
             user.admin=res.data.User.is_superuser;
             user.name=res.data.User.name;
