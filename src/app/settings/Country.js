@@ -83,7 +83,6 @@ export class Country extends Component {
             const country = JSON.parse(localStorage.getItem("country"));
             for (let i = 0; i < country.levels; i++) {
               const data = {
-                id: i,
                 maxpop: 0,
                 minpop: 0,
                 uppervol: 0,
@@ -138,7 +137,6 @@ export class Country extends Component {
             const country = JSON.parse(localStorage.getItem("country"));
             for (let i = 0; i < country.levels; i++) {
               const data = {
-                id: i,
                 maxpop: 0,
                 minpop: 0,
                 uppervol: 0,

@@ -405,7 +405,7 @@ export default function DataTable() {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value));
     setPage(0);
   };
 
@@ -451,34 +451,7 @@ export default function DataTable() {
       .catch((e) => {
         console.log(e);
       });
-    // put
-    UserService.putLevels()
-      .then((res) => {
-        localStorage.setItem("level-put", JSON.stringify(res.data));
-        const level = JSON.parse(localStorage.getItem("level-put"));
-        setRowUpdate({
-          id: level.id,
-          number: level.number,
-          maxpop: level.maxpop,
-          minpop: level.minpop,
-          uppervol: level.uppervol,
-          undervol: level.undervol,
-          m25vol: level.m25vol,
-          m70vol: level.m70vol,
-          m25volnew: level.m25volnew,
-          m70volnew: level.m70volnew,
-          uppervolnew: level.uppervolnew,
-          undervolnew: level.undervolnew,
-          name: level.name,
-          dryvol: level.dryvol,
-          dryvolnew: level.dryvolnew,
-          country: level.dryvolnew,
-          parent: level.parent,
-        });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  
   }, []);
 
   return (
