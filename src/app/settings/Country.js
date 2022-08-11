@@ -4,6 +4,18 @@ import DatePicker from "react-datepicker";
 import bsCustomFileInput from "bs-custom-file-input";
 import UserService from "../services/user.service";
 import { Toast } from "react-bootstrap";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import "./country.css";
+import LocationMarker from "./LocationMarker";
+import * as XLSX from "xlsx";
+
 export class Country extends Component {
   constructor(props) {
     super(props);
@@ -15,27 +27,28 @@ export class Country extends Component {
       Currency: "",
       logo: null,
       slogo: null,
-      growthRate:0,
+      growthRate: 0,
       mainlocation: "",
       enableHR: false,
       enableMaintaining: false,
       targetpopulation: "General population",
       requiredcapacities: true,
+      excelData: [],
       user: JSON.parse(localStorage.getItem("user")),
       country: JSON.parse(localStorage.getItem("country")),
       put: false,
       snackopen: false,
       type: "success",
+      mainLocation: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleExcelChange = this.handleExcelChange.bind(this);
     this.cv = this.cv.bind(this);
-    this.CV=this.CV.bind(this);
+    this.CV = this.CV.bind(this);
     this.countryvalidator = this.countryvalidator.bind(this);
     this.ccodevalid = this.ccodevalid.bind(this);
     this.CurrencyValidator = this.CurrencyValidator.bind(this);
-
-
   }
   changestate = (e, state) => {
     this.setState({ [state]: e.target.value });
@@ -59,6 +72,7 @@ export class Country extends Component {
       event.stopPropagation();
       console.log("invalid");
     } else {
+      UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
       this.setState({ validated: true });
       let formData = new FormData();
       formData.append("country", this.state.CountryName);
@@ -84,40 +98,40 @@ export class Country extends Component {
       if (this.state.user.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
         console.log(this.state.targetpopulation);
-        
+
         UserService.editcountry(formData)
           .then((res) => {
-            const perviuscountry=JSON.parse(localStorage.getItem("country"));
+            const perviuscountry = JSON.parse(localStorage.getItem("country"));
             localStorage.setItem("country", JSON.stringify(res.data));
             const country = JSON.parse(localStorage.getItem("country"));
-            if(country.levels>perviuscountry.levels){
-            for (let i = 0; i < (country.levels-perviuscountry.levels); i++) {
-              const data = {
-                maxpop: 0,
-                minpop: 0,
-                uppervol: 0,
-                undervol: 0,
-                m25vol: 0,
-                m70vol: 0,
-                m25volnew: 0,
-                m70volnew: 0,
-                uppervolnew: 0,
-                undervolnew: 0,
-                name: "levels" + (perviuscountry.levels+i+1),
-                dryvol: 0,
-                dryvolnew: 0,
-                country: 1,
-                parent: perviuscountry.levels+i - 1,
-              };
-              UserService.addlevel(data)
-                .then((res) => {
-                  console.log(res);
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
+            if (country.levels > perviuscountry.levels) {
+              for (let i = 0; i < country.levels - perviuscountry.levels; i++) {
+                const data = {
+                  maxpop: 0,
+                  minpop: 0,
+                  uppervol: 0,
+                  undervol: 0,
+                  m25vol: 0,
+                  m70vol: 0,
+                  m25volnew: 0,
+                  m70volnew: 0,
+                  uppervolnew: 0,
+                  undervolnew: 0,
+                  name: "levels" + (perviuscountry.levels + i + 1),
+                  dryvol: 0,
+                  dryvolnew: 0,
+                  country: 1,
+                  parent: perviuscountry.levels + i - 1,
+                };
+                UserService.addlevel(data)
+                  .then((res) => {
+                    console.log(res);
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             }
-          }
             this.setState({
               CountryName: country.country,
               CountryCode: country.codecountry,
@@ -227,7 +241,6 @@ export class Country extends Component {
     }
   };
   cv = () => {
-    console.log(this.state.CountryName);
     if (this.state.CountryName.length > 1) {
       return true;
     }
@@ -245,16 +258,26 @@ export class Country extends Component {
     }
     return false;
   };
+  handleExcelChange(e) {
+    const [file] = e.target.files;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target.result;
+      const wb = XLSX.read(bstr, { type: "binary" });
+      const wsname = wb.SheetNames[0];
+      const ws = wb.Sheets[wsname];
+      const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+      this.setState({ excelData: data });
+    };
+    reader.readAsBinaryString(file);
+  }
 
   componentDidMount() {
     // bsCustomFileInput.init()
     const user = JSON.parse(localStorage.getItem("user"));
     const country = JSON.parse(localStorage.getItem("country"));
-    
-    console.log(country.length);
-    console.log(typeof country.logo);
+
     if (Object.keys(country).length !== 0) {
-      console.log("kir bokhor")
       this.setState({
         CountryName: country.country,
         CountryCode: country.codecountry,
@@ -269,12 +292,10 @@ export class Country extends Component {
         slogo: country.logo2,
         requiredcapacities: country.usingtool,
         enableMaintaining: country.usingmaintenance,
-        country: country
+        country: country,
       });
     }
-   
-        
-    console.log(this.state.CountryName);
+
     this.setState({ user: user });
   }
   render() {
@@ -480,17 +501,21 @@ export class Country extends Component {
                               required
                               value={this.state.growthRate}
                               onChange={(e) => {
-                                let number=e.target.value
-                                const flag=number.split(".").length
-                                console.log(flag)
-                                if(flag>1){
-                                  const num=number.split(".")[0]
-                                  const floatpoint=number.split(".")[1].slice(0,2)
-                                  number=num+"."+floatpoint
-                                  console.log(number)
+                                let number = e.target.value;
+                                const flag = number.split(".").length;
+                                console.log(flag);
+                                if (flag > 1) {
+                                  const num = number.split(".")[0];
+                                  const floatpoint = number
+                                    .split(".")[1]
+                                    .slice(0, 2);
+                                  number = num + "." + floatpoint;
+                                  console.log(number);
                                 }
-                               
-                                this.setState({ growthRate:parseFloat(number)});
+
+                                this.setState({
+                                  growthRate: parseFloat(number),
+                                });
                               }}
                               type="number"
                               className="form-control"
@@ -554,7 +579,8 @@ export class Country extends Component {
                             disabled={!this.state.user.admin}
                             onChange={(e) => {
                               this.setState({
-                                enableMaintaining:  !this.state.enableMaintaining,
+                                enableMaintaining:
+                                  !this.state.enableMaintaining,
                               });
                             }}
                             type="switch"
@@ -611,17 +637,55 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option value="true">
+                            <option value={true}>
                               Estimate required capacity (in MS Excel)
                             </option>
-                            <option value="false">
+                            <option value={false}>
                               Enter required capacity manually
                             </option>
                           </Form.Control>
                         </div>
+                        {this.state.requiredcapacities && (
+                          <>
+                            <div className="col-sm-3"></div>
+                            <div className="col-sm-9">
+                              <Form.Control
+                                as="input"
+                                type="file"
+                                accept=".xlsx"
+                                onChange={this.handleExcelChange}
+                              ></Form.Control>
+                            </div>
+                          </>
+                        )}
                       </Form.Group>
                     </div>
                   </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label ">
+                        Main Location
+                      </label>
+
+                      <div className="map">
+                        <MapContainer
+                          center={[52.22977, 21.01178]}
+                          zoom={13}
+                          scrollWheelZoom={false}
+                        >
+                          <TileLayer
+                            {...{
+                              attribution:
+                                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            }}
+                          />
+                          <LocationMarker />
+                        </MapContainer>
+                      </div>
+                    </Form.Group>
+                  </div>
+
                   {this.state.country !== [] &&
                   this.state.country !== undefined &&
                   this.state.user.admin ? (
