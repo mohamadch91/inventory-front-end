@@ -87,9 +87,11 @@ export class Country extends Component {
         
         UserService.editcountry(formData)
           .then((res) => {
+            const perviuscountry=JSON.parse(localStorage.getItem("country"));
             localStorage.setItem("country", JSON.stringify(res.data));
             const country = JSON.parse(localStorage.getItem("country"));
-            for (let i = 0; i < country.levels; i++) {
+            if(country.levels>perviuscountry.levels){
+            for (let i = 0; i < (country.levels-perviuscountry.levels); i++) {
               const data = {
                 maxpop: 0,
                 minpop: 0,
@@ -101,11 +103,11 @@ export class Country extends Component {
                 m70volnew: 0,
                 uppervolnew: 0,
                 undervolnew: 0,
-                name: "levels" + (i+1),
+                name: "levels" + (perviuscountry.levels+i+1),
                 dryvol: 0,
                 dryvolnew: 0,
                 country: 1,
-                parent: i+1 === 1 ? null : i - 1,
+                parent: perviuscountry.levels+i - 1,
               };
               UserService.addlevel(data)
                 .then((res) => {
@@ -115,6 +117,7 @@ export class Country extends Component {
                   console.log(err);
                 });
             }
+          }
             this.setState({
               CountryName: country.country,
               CountryCode: country.codecountry,

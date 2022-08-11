@@ -25,7 +25,7 @@ const Register1 = lazy(() => import('./user-pages/Register'));
 const Home= lazy(() => import('./home/Home'));
 const Country= lazy(() => import('./settings/Country'));
 const Level = lazy(() => import('./settings/Level'));
-const NewLevelList = lazy(() => import('./settings/NewLevel'));
+const NewLevelList = lazy(() => import('./settings/NewLevel.js'));
 class AppRoutes extends Component {
   render () {
     return (
