@@ -1,7 +1,15 @@
 .pagination p {
-    margin: 0;
-   
+  margin: 0;
 }
-.pagination  {
-   display: block;
+.pagination {
+  display: block;
+}
+input {
+  margin: 0 0.5rem;
+}
+svg {
+  opacity: 0.4 !important;
+}
+svg:hover {
+  opacity: 1 !important;
 }

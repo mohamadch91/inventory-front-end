@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import './App.scss';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import "./App.scss";
 import { connect } from "react-redux";
-import AppRoutes from './AppRoutes';
-import Navbar from './shared/Navbar';
-import Sidebar from './shared/Sidebar';
-import SettingsPanel from './shared/SettingsPanel';
-import Footer from './shared/Footer';
+import AppRoutes from "./AppRoutes";
+import Navbar from "./shared/Navbar";
+import Sidebar from "./shared/Sidebar";
+import SettingsPanel from "./shared/SettingsPanel";
+import Footer from "./shared/Footer";
 // import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
 import EventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
-import { history } from './helpers/history';
+import { history } from "./helpers/history";
 import { Redirect } from "react-router-dom";
 
 class App extends Component {
@@ -28,7 +28,7 @@ class App extends Component {
       props.dispatch(clearMessage()); // clear message when changing location
     });
   }
-  state = {}
+  state = {};
   componentDidMount() {
     const user = this.props.user;
 
@@ -39,7 +39,7 @@ class App extends Component {
         // showAdminBoard: user.roles.includes("ROLE_ADMIN"),
       });
     }
-    
+
     EventBus.on("logout", () => {
       this.logOut();
     });
@@ -53,24 +53,28 @@ class App extends Component {
       currentUser: undefined,
     });
   }
-  render () {
+  render() {
     // console.log(this.state.currentUser);
- 
-    let navbarComponent = !this.state.isFullPageLayout ? <Navbar/> : '';
-    let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar/> : '';
-    let SettingsPanelComponent = !this.state.isFullPageLayout ? <SettingsPanel/> : '';
-    let footerComponent = !this.state.isFullPageLayout ? <Footer/> : '';
+
+    let navbarComponent = !this.state.isFullPageLayout ? <Navbar /> : "";
+    let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar /> : "";
+    let SettingsPanelComponent = !this.state.isFullPageLayout ? (
+      <SettingsPanel />
+    ) : (
+      ""
+    );
+    let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
-        { navbarComponent }
+        {navbarComponent}
         <div className="container-fluid page-body-wrapper">
-          { sidebarComponent }
+          {sidebarComponent}
           <div className="main-panel">
             <div className="content-wrapper">
-              <AppRoutes/>
-              { SettingsPanelComponent }
+              <AppRoutes />
+              {SettingsPanelComponent}
             </div>
-            { footerComponent }
+            {footerComponent}
           </div>
         </div>
       </div>
@@ -84,7 +88,6 @@ class App extends Component {
   }
 
   onRouteChanged() {
-    console.log("ROUTE CHANGED");
     // const { i18n } = this.props;
     // const body = document.querySelector('body');
     // if(this.props.location.pathname === '/layout/RtlLayout') {
@@ -96,25 +99,36 @@ class App extends Component {
     //   // i18n.changeLanguage('en');
     // }
     window.scrollTo(0, 0);
-    const fullPageLayoutRoutes = ['/','/login', '/user-pages/login-2', '/user-pages/register-1', '/user-pages/register-2', '/user-pages/lockscreen', '/error-pages/error-404', '/error-pages/error-500', '/general-pages/landing-page'];
-    for ( let i = 0; i < fullPageLayoutRoutes.length; i++ ) {
+    const fullPageLayoutRoutes = [
+      "/",
+      "/login",
+      "/user-pages/login-2",
+      "/user-pages/register-1",
+      "/user-pages/register-2",
+      "/user-pages/lockscreen",
+      "/error-pages/error-404",
+      "/error-pages/error-500",
+      "/general-pages/landing-page",
+    ];
+    for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
       if (this.props.location.pathname === fullPageLayoutRoutes[i]) {
         this.setState({
-          isFullPageLayout: true
-        })
-        document.querySelector('.page-body-wrapper').classList.add('full-page-wrapper');
+          isFullPageLayout: true,
+        });
+        document
+          .querySelector(".page-body-wrapper")
+          .classList.add("full-page-wrapper");
         break;
       } else {
         this.setState({
-          isFullPageLayout: false
-        })
-        document.querySelector('.page-body-wrapper').classList.remove('full-page-wrapper');
+          isFullPageLayout: false,
+        });
+        document
+          .querySelector(".page-body-wrapper")
+          .classList.remove("full-page-wrapper");
       }
     }
-    console.log("salam");
   }
-  
-
 }
 function mapStateToProps(state) {
   const { user } = state.auth;
@@ -122,4 +136,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps) (withRouter((App)));
+export default connect(mapStateToProps)(withRouter(App));

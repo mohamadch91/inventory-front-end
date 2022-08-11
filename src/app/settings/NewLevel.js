@@ -238,7 +238,7 @@ function EnhancedTableHead(props) {
         <TableCell colSpan={4}>
           Target Population :
           {JSON.parse(localStorage.getItem("country")).poptarget}
-          {console.log(JSON.parse(localStorage.getItem("country")).poptarget)}
+          {/* {console.log(JSON.parse(localStorage.getItem("country")).poptarget)} */}
         </TableCell>
         <TableCell colSpan={6}></TableCell>
       </TableRow>
@@ -402,6 +402,7 @@ export default function DataTable() {
     setRows(rows);
     console.log("saved : ", rows);
     setDisable(true);
+    UserService.putLevels(JSON.stringify({ data: rows }));
     setOpen(true);
   };
   const handleInputChange = (e, index) => {
@@ -411,6 +412,7 @@ export default function DataTable() {
     list[index][name] = value;
     setRows(list);
   };
+
   // Showing delete confirmation to users
   const handleConfirm = () => {
     setShowConfirm(true);
@@ -466,7 +468,7 @@ export default function DataTable() {
     setSelected(newSelected);
   };
 
-  const sprator = (x) => {
+  const separator = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
@@ -477,30 +479,30 @@ export default function DataTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
- const levelvalidator = (text) => {
-   if (text.length > 0) {
-     return true;
-   }
- };
- const minpopvalidator = (text) => {
-   if (text.toString().length > 0) {
-     return true;
-   }
- };
- const maxpopvalidator = (text) => {
-   if (text.toString().length > 0) {
-     return true;
-   }
- };
- const capacityvalidator = (text) => {
-   console.log(typeof text);
-   if (text < 0) {
-     return false;
-   }
-   if (text.toString().length > 0) {
-     return true;
-   }
- };
+  const levelValidator = (text) => {
+    if (text.length > 0) {
+      return true;
+    }
+  };
+  const minpopValidator = (text) => {
+    if (text.toString().length > 0) {
+      return true;
+    }
+  };
+  const maxpopValidator = (text) => {
+    if (text.toString().length > 0) {
+      return true;
+    }
+  };
+  const capacityValidator = (text) => {
+    // console.log(typeof text);
+    if (text < 0) {
+      return false;
+    }
+    if (text.toString().length > 0) {
+      return true;
+    }
+  };
   React.useEffect(() => {
     // get
     UserService.getLevels()
@@ -532,7 +534,7 @@ export default function DataTable() {
         setRows(row);
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }, []);
 
@@ -591,7 +593,6 @@ export default function DataTable() {
                         {isEdit ? (
                           <TableRow
                             hover
-                            onClick={(event) => handleClick(event, row.name)}
                             role="checkbox"
                             aria-checked={isItemSelected}
                             tabIndex={-1}
@@ -601,13 +602,20 @@ export default function DataTable() {
                             <TableCell align="center" padding="checkbox">
                               <Checkbox
                                 color="primary"
+                                onClick={(event) =>
+                                  handleClick(event, row.name)
+                                }
                                 checked={isItemSelected}
                                 inputProps={{
                                   "aria-labelledby": labelId,
                                 }}
                               />
                             </TableCell>
-                            <TableCell scope="row" padding="none">
+                            <TableCell
+                              className="text-center"
+                              scope="row"
+                              padding="none"
+                            >
                               {row.id}
                             </TableCell>
                             <TableCell
@@ -615,11 +623,13 @@ export default function DataTable() {
                               id={labelId}
                               scope="row"
                               padding="none"
+                              className="text-center"
                             >
-                              <input 
+                              <input
                                 required
-                                isValid={levelvalidator(row.name)}
+                                isValid={levelValidator(row.name)}
                                 value={row.name}
+                                name="name"
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
@@ -631,65 +641,70 @@ export default function DataTable() {
                               padding="none"
                               align="center"
                             >
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.m25vol)}
+                                isValid={capacityValidator(row.m25vol)}
                                 value={row.m25vol}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="m25vol"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.uppervol)}
+                                isValid={capacityValidator(row.uppervol)}
                                 value={row.uppervol}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="uppervol"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.undervol)}
+                                isValid={capacityValidator(row.undervol)}
                                 value={row.undervol}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="undervol"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.m70vol)}
+                                isValid={capacityValidator(row.m70vol)}
                                 value={row.m70vol}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="m70vol"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.dryvol)}
-                                value={row.m25vol}
+                                isValid={capacityValidator(row.dryvol)}
+                                value={row.dryvol}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="dryvol"
                                 type="number"
                                 placeholder="0"
                                 min="0"
@@ -700,52 +715,56 @@ export default function DataTable() {
                               padding="none"
                               align="center"
                             >
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.m25volnew)}
+                                isValid={capacityValidator(row.m25volnew)}
                                 value={row.m25volnew}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="m25volnew"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.uppervolnew)}
+                                isValid={capacityValidator(row.uppervolnew)}
                                 value={row.uppervolnew}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="uppervolnew"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.undervolnew)}
+                                isValid={capacityValidator(row.undervolnew)}
                                 value={row.undervolnew}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="undervolnew"
                                 type="number"
                                 placeholder="0"
                                 min="0"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.m70volnew)}
+                                isValid={capacityValidator(row.m70volnew)}
                                 value={row.m70volnew}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="m70volnew"
                                 type="number"
                                 placeholder="0"
                                 min="0"
@@ -756,13 +775,14 @@ export default function DataTable() {
                               sx={{ borderRight: "1px solid black" }}
                               align="center"
                             >
-                              <input 
+                              <input
                                 required
-                                isValid={capacityvalidator(row.dryvolnew)}
+                                isValid={capacityValidator(row.dryvolnew)}
                                 value={row.dryvolnew}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="dryvolnew"
                                 type="number"
                                 placeholder="0"
                                 min="0"
@@ -770,24 +790,26 @@ export default function DataTable() {
                             </TableCell>
 
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={minpopvalidator(row.maxpop)}
-                                value={sprator(row.maxpop)}
+                                isValid={minpopValidator(row.maxpop)}
+                                value={separator(row.maxpop)}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="maxpop"
                                 type="number"
                               />
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              <input 
+                              <input
                                 required
-                                isValid={maxpopvalidator(row.minpop)}
-                                value={sprator(row.minpop)}
+                                isValid={maxpopValidator(row.minpop)}
+                                value={separator(row.minpop)}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
+                                name="minpop"
                                 type="number"
                               />
                             </TableCell>
@@ -795,7 +817,6 @@ export default function DataTable() {
                         ) : (
                           <TableRow
                             hover
-                            onClick={(event) => handleClick(event, row.name)}
                             role="checkbox"
                             aria-checked={isItemSelected}
                             tabIndex={-1}
@@ -805,19 +826,27 @@ export default function DataTable() {
                             <TableCell align="center" padding="checkbox">
                               <Checkbox
                                 color="primary"
+                                onClick={(event) =>
+                                  handleClick(event, row.name)
+                                }
                                 checked={isItemSelected}
                                 inputProps={{
                                   "aria-labelledby": labelId,
                                 }}
                               />
                             </TableCell>
-                            <TableCell scope="row" padding="none">
+                            <TableCell
+                              className="text-center"
+                              scope="row"
+                              padding="none"
+                            >
                               {row.id}
                             </TableCell>
                             <TableCell
                               component="th"
                               id={labelId}
                               scope="row"
+                              className="text-center"
                               padding="none"
                             >
                               {row.name}
@@ -865,10 +894,10 @@ export default function DataTable() {
                               {row.dryvolnew}
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              {sprator(row.minpop)}
+                              {separator(row.minpop)}
                             </TableCell>
                             <TableCell padding="none" align="center">
-                              {sprator(row.maxpop)}
+                              {separator(row.maxpop)}
                             </TableCell>
                           </TableRow>
                         )}
