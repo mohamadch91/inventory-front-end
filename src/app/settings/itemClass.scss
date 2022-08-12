@@ -1,0 +1,30 @@
+.item-class-page {
+  h3 {
+    color: black;
+  }
+  label {
+    color: black;
+  }
+  td,
+  th {
+    text-align: left;
+  }
+  th {
+    background: rgb(40, 136, 254);
+    color: white;
+  }
+  tr:nth-child(even) {
+    background: #ffffff;
+  }
+  tr:nth-child(odd) {
+    background: #d8d8d85b;
+  }
+  .edit-btn {
+    width: 2rem;
+    height: 2rem;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(61, 237, 255);
+  }
+}

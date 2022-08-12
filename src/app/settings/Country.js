@@ -72,7 +72,9 @@ export class Country extends Component {
       event.stopPropagation();
       console.log("invalid");
     } else {
-      // UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
+      if (this.state.excelData) {
+        UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
+      }
       this.setState({ validated: true });
       let formData = new FormData();
       formData.append("country", this.state.CountryName);
@@ -123,7 +125,7 @@ export class Country extends Component {
                   country: 1,
                   parent: perviuscountry.levels + i - 1,
                 };
-                console.log("hello")
+                console.log("hello");
                 UserService.addlevel(data)
                   .then((res) => {
                     console.log(res);
@@ -631,9 +633,10 @@ export class Country extends Component {
                           <Form.Control
                             disabled={!this.state.user.admin}
                             onChange={(e) => {
-                             const value=e.target.value === 'true' ?true :false
+                              const value =
+                                e.target.value === "true" ? true : false;
                               this.setState({
-                                requiredcapacities:value,
+                                requiredcapacities: value,
                               });
                             }}
                             value={this.state.requiredcapacities}
@@ -648,7 +651,7 @@ export class Country extends Component {
                             </option>
                           </Form.Control>
                         </div>
-                        {(this.state.requiredcapacities===true) && (
+                        {this.state.requiredcapacities === true && (
                           <>
                             <div className="col-sm-3"></div>
                             <div className="col-sm-9">
