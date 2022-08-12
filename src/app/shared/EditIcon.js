@@ -1,4 +1,4 @@
-function EditShape() {
+function EditIcon() {
   return (
     <>
       <svg
@@ -18,4 +18,4 @@ function EditShape() {
   );
 }
 
-export default EditShape;
+export default EditIcon;

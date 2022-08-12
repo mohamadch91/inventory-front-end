@@ -27,11 +27,21 @@
     border-radius: 3px;
     background: transparent;
   }
-  input[type="submit"] {
-    border: none;
-    background: #1de172;
-    border-radius: 5px;
-    width: 5rem;
-    height: 2rem;
+}
+.save-btn {
+  border: none;
+  background: #1de172;
+  border-radius: 5px;
+  width: 4rem;
+  height: 2rem;
+}
+.close-btn {
+  width: 1rem;
+  border: none;
+  background-color: transparent;
+  svg {
+    width: 1rem;
+    height: auto;
+    margin-left: 1rem;
   }
 }
