@@ -72,7 +72,7 @@ export class Country extends Component {
       event.stopPropagation();
       console.log("invalid");
     } else {
-      UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
+      // UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
       this.setState({ validated: true });
       let formData = new FormData();
       formData.append("country", this.state.CountryName);
@@ -123,6 +123,7 @@ export class Country extends Component {
                   country: 1,
                   parent: perviuscountry.levels + i - 1,
                 };
+                console.log("hello")
                 UserService.addlevel(data)
                   .then((res) => {
                     console.log(res);

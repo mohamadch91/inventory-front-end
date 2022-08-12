@@ -136,7 +136,7 @@ const headCells = [
   {
     id: "number",
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: "Levels",
   },
   {
@@ -566,14 +566,17 @@ export default function DataTable() {
             )
           );
         }
+      
         setRows(row);
+      
       })
       .catch((e) => {
-        // console.log(e);
+        console.log(e);
       });
   }, []);
 
   return (
+    
     <div>
       <div className="page-header">
         <h3 className="page-title"> Level Configurations </h3>
@@ -618,11 +621,12 @@ export default function DataTable() {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
+                 {console.log(rows)}
                 {stableSort(rows, getComparator(order, orderBy)).map(
                   (row, i) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${i}`;
-
+                    console.log(row)
                     return (
                       <>
                         {isEdit ? (
@@ -860,7 +864,7 @@ export default function DataTable() {
                             <TableCell
                               className="text-center"
                               scope="row"
-                              padding="checkbox"
+                              padding="none"
                             >
                               {row.id}
                             </TableCell>

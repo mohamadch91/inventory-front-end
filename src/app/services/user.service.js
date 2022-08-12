@@ -33,6 +33,7 @@ class UserService {
     });
   }
   putLevels(level) {
+    console.log("vayyy")
     return axios.put(API_URL + "level", level, {
       headers: { Authorization: authHeader() },
     });
