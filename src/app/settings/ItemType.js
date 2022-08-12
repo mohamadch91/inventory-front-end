@@ -1,9 +1,10 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import "./itemClass.scss";
+import "./itemType.scss";
 
 function ItemType() {
   const [data, setData] = useState([
@@ -46,17 +47,44 @@ function ItemType() {
     "Transport",
   ]);
   const [editFormData, setEditFormData] = useState({});
+  const [addRowFormData, setAddRowFormData] = useState({});
   const [editableRowId, setEditableRowId] = useState(null);
+
+  useEffect(() => {
+    setAddRowFormData({
+      ...addRowFormData,
+      itemClass: itemClasses[0],
+    });
+  }, [itemClasses]);
 
   function handleEdit(i) {
     const formData = data.find((item) => item.id === i.id);
     setEditFormData(formData);
     setEditableRowId(i.id);
   }
+
   function handleChange(e) {
-    const { name, value } = e.target;
-    setEditFormData({ ...editFormData, [name]: value });
+    const { name, value, valueAsNumber } = e.target;
+    if (e.target.type === "number") {
+      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
+        setEditFormData({ ...editFormData, [name]: valueAsNumber });
+      }
+    } else {
+      setEditFormData({ ...editFormData, [name]: value });
+    }
   }
+
+  function handleChangeAdd(e) {
+    const { name, value, valueAsNumber } = e.target;
+    if (e.target.type === "number") {
+      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
+        setAddRowFormData({ ...addRowFormData, [name]: valueAsNumber });
+      }
+    } else {
+      setAddRowFormData({ ...addRowFormData, [name]: value });
+    }
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const newData = [...data];
@@ -67,57 +95,18 @@ function ItemType() {
     setEditFormData({});
   }
 
-  function EditRowForm() {
-    return (
-      <TableRow>
-        <TableCell>{editFormData?.id}</TableCell>
-        <TableCell>
-          <input
-            name="title"
-            type="text"
-            onChange={handleChange}
-            value={editFormData?.title}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <select
-            name="itemClass"
-            onChange={handleChange}
-            value={editFormData?.itemClass}
-          >
-            {itemClasses.map((item, index) => (
-              <option key={index} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </TableCell>
-        <TableCell>
-          <input
-            name="code"
-            type="number"
-            onChange={handleChange}
-            value={editFormData?.code}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <input
-            name="active"
-            type="checkbox"
-            onChange={handleChange}
-            checked={editFormData?.active}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <button className="save-btn" onClick={handleSubmit}>
-            Save
-          </button>
-          <button className="close-btn" onClick={() => setEditableRowId(null)}>
-            <CloseIcon />
-          </button>
-        </TableCell>
-      </TableRow>
-    );
+  function handleAdd() {
+    const newData = [...data];
+    setAddRowFormData({ ...addRowFormData, id: newData.length + 1 });
+    newData.push(addRowFormData);
+    setData(newData);
+    setAddRowFormData({
+      title: "",
+      itemClass: "",
+      code: 0,
+      active: false,
+      havePQS: false,
+    });
   }
 
   return (
@@ -132,6 +121,7 @@ function ItemType() {
               <TableCell>Item class</TableCell>
               <TableCell>Code</TableCell>
               <TableCell>Active</TableCell>
+              <TableCell>Have PQS?</TableCell>
               <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
@@ -152,6 +142,13 @@ function ItemType() {
                       ></input>
                     </TableCell>
                     <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={item.havePQS}
+                        disabled
+                      ></input>
+                    </TableCell>
+                    <TableCell>
                       <button
                         className="edit-btn"
                         onClick={(event) => handleEdit(item)}
@@ -161,12 +158,148 @@ function ItemType() {
                     </TableCell>
                   </TableRow>
                 ) : (
-                  <EditRowForm />
+                  <TableRow>
+                    <TableCell>{editFormData?.id}</TableCell>
+                    <TableCell>
+                      <input
+                        name="title"
+                        type="text"
+                        onChange={handleChange}
+                        value={editFormData?.title}
+                      ></input>
+                    </TableCell>
+                    <TableCell>
+                      <select
+                        name="itemClass"
+                        onChange={handleChange}
+                        value={editFormData?.itemClass}
+                      >
+                        {itemClasses.map((item, index) => (
+                          <option key={index} value={item}>
+                            {item}
+                          </option>
+                        ))}
+                      </select>
+                    </TableCell>
+                    <TableCell>
+                      <input
+                        name="code"
+                        type="number"
+                        onChange={handleChange}
+                        value={editFormData?.code}
+                      ></input>
+                    </TableCell>
+                    <TableCell>
+                      <input
+                        name="active"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            active: !editFormData.active,
+                          })
+                        }
+                        checked={editFormData?.active}
+                      ></input>
+                    </TableCell>
+                    <TableCell>
+                      <input
+                        name="havePQS"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            havePQS: !editFormData.havePQS,
+                          })
+                        }
+                        checked={editFormData?.havePQS}
+                      ></input>
+                    </TableCell>
+                    <TableCell>
+                      <button className="save-btn" onClick={handleSubmit}>
+                        Save
+                      </button>
+                      <button
+                        className="close-btn"
+                        onClick={() => setEditableRowId(null)}
+                      >
+                        <CloseIcon />
+                      </button>
+                    </TableCell>
+                  </TableRow>
                 )}
               </>
             ))}
           </TableBody>
         </SharedTable>
+      </div>
+      <div className="add-row mt-4">
+        <h3>Submit new</h3>
+        <div className="row">
+          <div className="col-md-3 flex-column d-flex">
+            <label>Item type</label>
+            <input
+              name="title"
+              type="text"
+              onChange={handleChangeAdd}
+              value={addRowFormData?.title}
+            ></input>
+          </div>
+          <div className="col-md-3 flex-column d-flex">
+            <label>Item class</label>
+            <select
+              name="itemClass"
+              onChange={handleChangeAdd}
+              value={addRowFormData?.itemClass}
+            >
+              {itemClasses.map((item, index) => (
+                <option key={index} value={item} selected={index === 0}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="col-md-2 flex-column d-flex">
+            <label>Code</label>
+            <input
+              name="code"
+              type="number"
+              onChange={handleChangeAdd}
+              value={addRowFormData?.code}
+            ></input>
+          </div>
+          <div className="col-md-4 d-flex align-items-center">
+            <label>Active</label>
+            <input
+              name="active"
+              className="mr-4"
+              type="checkbox"
+              onChange={() =>
+                setAddRowFormData({
+                  ...addRowFormData,
+                  active: !addRowFormData.active,
+                })
+              }
+              checked={addRowFormData?.active}
+            ></input>
+            <label>Have PQS?</label>
+            <input
+              name="havePQS"
+              className="mr-4"
+              type="checkbox"
+              onChange={() =>
+                setAddRowFormData({
+                  ...addRowFormData,
+                  havePQS: !addRowFormData.havePQS,
+                })
+              }
+              checked={addRowFormData?.havePQS}
+            ></input>
+            <button className="save-btn" onClick={handleAdd}>
+              Save
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
