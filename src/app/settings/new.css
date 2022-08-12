@@ -13,3 +13,29 @@ svg {
 svg:hover {
   opacity: 1 !important;
 }
+
+input + span {
+  position: relative;
+}
+
+input + span::before {
+  position: absolute;
+  right: -3px;
+  top: 0px;
+}
+
+input:invalid {
+  border: 2px solid #28a745;
+}
+
+input:invalid + span::before {
+  /* content: '✖';
+  color: #dc3545; */
+   content: '✓';
+  color: #28a745;
+}
+
+input:valid + span::before {
+  content: '✓';
+  color: #28a745;
+}

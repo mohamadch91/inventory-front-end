@@ -499,6 +499,7 @@ export class Country extends Component {
                             <Form.Control
                               disabled={!this.state.user.admin}
                               required
+                              isValid={true}
                               value={this.state.growthRate}
                               onChange={(e) => {
                                 let number = e.target.value;
@@ -629,8 +630,9 @@ export class Country extends Component {
                           <Form.Control
                             disabled={!this.state.user.admin}
                             onChange={(e) => {
+                             const value=e.target.value === 'true' ?true :false
                               this.setState({
-                                requiredcapacities: e.target.value,
+                                requiredcapacities:value,
                               });
                             }}
                             value={this.state.requiredcapacities}
@@ -645,7 +647,7 @@ export class Country extends Component {
                             </option>
                           </Form.Control>
                         </div>
-                        {this.state.requiredcapacities && (
+                        {(this.state.requiredcapacities===true) && (
                           <>
                             <div className="col-sm-3"></div>
                             <div className="col-sm-9">
