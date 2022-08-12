@@ -12,6 +12,7 @@ function ItemClass() {
     { id: 3, title: "Transport", code: "TPT", active: true },
     { id: 4, title: "Transport", code: "TPT", active: true },
   ]);
+
   const [editFormData, setEditFormData] = useState({});
   const [editableRowId, setEditableRowId] = useState(null);
 
