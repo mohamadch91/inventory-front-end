@@ -1,5 +1,5 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
@@ -80,9 +80,22 @@ function ItemType() {
           ></input>
         </TableCell>
         <TableCell>
+          <select
+            name="itemClass"
+            onChange={handleChange}
+            value={editFormData?.itemClass}
+          >
+            {itemClasses.map((item, index) => (
+              <option key={index} value={item}>
+                {item}
+              </option>
+            ))}
+          </select>
+        </TableCell>
+        <TableCell>
           <input
             name="code"
-            type="text"
+            type="number"
             onChange={handleChange}
             value={editFormData?.code}
           ></input>
@@ -116,6 +129,7 @@ function ItemType() {
             <TableRow>
               <TableCell></TableCell>
               <TableCell>Title</TableCell>
+              <TableCell>Item class</TableCell>
               <TableCell>Code</TableCell>
               <TableCell>Active</TableCell>
               <TableCell>Edit</TableCell>
@@ -128,6 +142,7 @@ function ItemType() {
                   <TableRow>
                     <TableCell>{item.id}</TableCell>
                     <TableCell>{item.title}</TableCell>
+                    <TableCell>{item.itemClass}</TableCell>
                     <TableCell>{item.code}</TableCell>
                     <TableCell>
                       <input

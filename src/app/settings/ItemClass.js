@@ -1,5 +1,5 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
@@ -59,7 +59,9 @@ function ItemClass() {
           <input
             name="active"
             type="checkbox"
-            onChange={handleChange}
+            onChange={() =>
+              setEditFormData({ ...editFormData, active: !editFormData.active })
+            }
             checked={editFormData?.active}
           ></input>
         </TableCell>
