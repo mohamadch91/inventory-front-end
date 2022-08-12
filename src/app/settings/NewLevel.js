@@ -25,7 +25,7 @@ import { Form } from "react-bootstrap";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import "./new.css";
+import "./newLevel.css";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
