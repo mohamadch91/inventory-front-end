@@ -235,7 +235,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell colSpan={7}></TableCell>
+        <TableCell colSpan={5}></TableCell>
         <TableCell colSpan={4}>
           Target Population :
           {JSON.parse(localStorage.getItem("country")).poptarget}
@@ -244,7 +244,7 @@ function EnhancedTableHead(props) {
         <TableCell colSpan={6}></TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={3}></TableCell>
+        <TableCell colSpan={2}></TableCell>
         <TableCell
           sx={{
             backgroundColor: "#82c4ed",
