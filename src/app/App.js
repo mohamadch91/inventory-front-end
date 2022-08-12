@@ -12,6 +12,7 @@ import { clearMessage } from "./actions/message";
 import EventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
+import { Toaster } from "react-hot-toast";
 import { Redirect } from "react-router-dom";
 
 class App extends Component {
@@ -66,6 +67,7 @@ class App extends Component {
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
+        <Toaster />
         {navbarComponent}
         <div className="container-fluid page-body-wrapper">
           {sidebarComponent}

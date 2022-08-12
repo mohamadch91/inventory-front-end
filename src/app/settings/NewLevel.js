@@ -36,6 +36,7 @@ import CancelIcon from "@mui/icons-material/Close";
 import CreateIcon from "@mui/icons-material/Create";
 import DoneIcon from "@mui/icons-material/Done";
 import { ContactSupportOutlined } from "@mui/icons-material";
+import toast from "react-hot-toast";
 function createData(
   id,
   name,
@@ -212,10 +213,10 @@ const headCells = [
     label: "Min pop",
   },
   {
-    id: "max pop",
+    id: "maxpop",
     numeric: false,
     disablePadding: true,
-    label: "max pop",
+    label: "Max pop",
   },
 ];
 
@@ -363,6 +364,8 @@ export default function DataTable() {
   const [isEdit, setEdit] = React.useState(false);
   const [disable, setDisable] = React.useState(true);
   const [showConfirm, setShowConfirm] = React.useState(false);
+  const [isFormValid, setIsFormValid] = React.useState(true);
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -389,53 +392,57 @@ export default function DataTable() {
   const handleSave = () => {
     setEdit(!isEdit);
     setRows(rows);
-    console.log("saved : ", rows);
     setDisable(true);
-    // const req = JSON.stringify({ rows: rows });
-    // console.log(req)
-    UserService.putLevels(rows)
-      .then((response) => {
-        const country = JSON.parse(localStorage.getItem("country"));
-        let row = [];
-        for (let i = 0; i < country.levels; i++) {
-          row.push(
-            createData(
-              response.data[i].id,
-              response.data[i].name,
-              parseInt(response.data[i].maxpop),
-              parseInt(response.data[i].minpop),
-              response.data[i].uppervol,
-              response.data[i].undervol,
-              response.data[i].m25vol,
-              response.data[i].m70vol,
-              response.data[i].dryvol,
-              response.data[i].m25volnew,
-              response.data[i].m70volnew,
-              response.data[i].uppervolnew,
-              response.data[i].undervolnew,
-              response.data[i].dryvolnew,
-              response.data[i].country,
-              response.data[i].parent
-            )
-          );
-        }
-        setRows(row);
-      })
-      .catch((e) => {
-        // console.log(e);
-      });
-    setOpen(true);
+    if (!isFormValid) {
+      toast.error("Please fill the fields with right format");
+    } else {
+      UserService.putLevels(rows)
+        .then((response) => {
+          const country = JSON.parse(localStorage.getItem("country"));
+          let row = [];
+          for (let i = 0; i < country.levels; i++) {
+            row.push(
+              createData(
+                response.data[i].id,
+                response.data[i].name,
+                parseInt(response.data[i].maxpop),
+                parseInt(response.data[i].minpop),
+                response.data[i].uppervol,
+                response.data[i].undervol,
+                response.data[i].m25vol,
+                response.data[i].m70vol,
+                response.data[i].dryvol,
+                response.data[i].m25volnew,
+                response.data[i].m70volnew,
+                response.data[i].uppervolnew,
+                response.data[i].undervolnew,
+                response.data[i].dryvolnew,
+                response.data[i].country,
+                response.data[i].parent
+              )
+            );
+          }
+          setRows(row);
+        })
+        .catch((e) => {
+          // console.log(e);
+        });
+      setOpen(true);
+    }
   };
   const handleInputChange = (e, index) => {
-    setDisable(false);
+    if (e.target.name !== "name") {
+      if (isNaN(e.target.value)) {
+        setIsFormValid(false);
+      }
+    }
     let number = e.target.value;
+    setDisable(false);
     const flag = number.split(".").length;
-    console.log(flag);
     if (flag > 1) {
       const num = number.split(".")[0];
       const floatpoint = number.split(".")[1].slice(0, 2);
       number = num + "." + floatpoint;
-      console.log(number);
     }
     const { name, value } = e.target;
     const list = [...rows];
@@ -527,7 +534,6 @@ export default function DataTable() {
   const capacityValidator = (text) => {
     // console.log(text)
     const check = parseFloat(text);
-    console.log(check);
     if (check < 0) {
       return false;
     }
@@ -617,12 +623,10 @@ export default function DataTable() {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                {console.log(rows)}
                 {stableSort(rows, getComparator(order, orderBy)).map(
                   (row, i) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${i}`;
-                    console.log(row);
                     return (
                       <>
                         {isEdit ? (
