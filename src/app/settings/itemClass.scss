@@ -25,6 +25,13 @@
     outline: none;
     border: none;
     border-radius: 3px;
-    background-color: rgb(61, 237, 255);
+    background: transparent;
+  }
+  input[type="submit"] {
+    border: none;
+    background: #1de172;
+    border-radius: 5px;
+    width: 5rem;
+    height: 2rem;
   }
 }
