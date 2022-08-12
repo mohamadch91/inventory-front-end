@@ -134,7 +134,7 @@ class Sidebar extends Component {
                   {" "}
                   <Link
                     className={
-                      this.isPathActive("/settings/new-level-list")
+                      this.isPathActive("/settings/item-class")
                         ? "nav-link active"
                         : "nav-link"
                     }
@@ -147,7 +147,7 @@ class Sidebar extends Component {
                   {" "}
                   <Link
                     className={
-                      this.isPathActive("/settings/new-level-list")
+                      this.isPathActive("/settings/item-type")
                         ? "nav-link active"
                         : "nav-link"
                     }

@@ -239,7 +239,6 @@ function EnhancedTableHead(props) {
         <TableCell colSpan={4}>
           Target Population :
           {JSON.parse(localStorage.getItem("country")).poptarget}
-          {/* {console.log(JSON.parse(localStorage.getItem("country")).poptarget)} */}
         </TableCell>
         <TableCell colSpan={6}></TableCell>
       </TableRow>
@@ -268,7 +267,6 @@ function EnhancedTableHead(props) {
         </TableCell>
       </TableRow>
       <TableRow>
-       
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -395,50 +393,50 @@ export default function DataTable() {
     setDisable(true);
     // const req = JSON.stringify({ rows: rows });
     // console.log(req)
-     UserService.putLevels( rows )
-       .then((response) => {
-         const country = JSON.parse(localStorage.getItem("country"));
-         let row = [];
-         for (let i = 0; i < country.levels; i++) {
-           row.push(
-             createData(
-               response.data[i].id,
-               response.data[i].name,
-               parseInt(response.data[i].maxpop),
-               parseInt(response.data[i].minpop),
-               response.data[i].uppervol,
-               response.data[i].undervol,
-               response.data[i].m25vol,
-               response.data[i].m70vol,
-               response.data[i].dryvol,
-               response.data[i].m25volnew,
-               response.data[i].m70volnew,
-               response.data[i].uppervolnew,
-               response.data[i].undervolnew,
-               response.data[i].dryvolnew,
-               response.data[i].country,
-               response.data[i].parent
-             )
-           );
-         }
-         setRows(row);
-       })
-       .catch((e) => {
-         // console.log(e);
-       });
+    UserService.putLevels(rows)
+      .then((response) => {
+        const country = JSON.parse(localStorage.getItem("country"));
+        let row = [];
+        for (let i = 0; i < country.levels; i++) {
+          row.push(
+            createData(
+              response.data[i].id,
+              response.data[i].name,
+              parseInt(response.data[i].maxpop),
+              parseInt(response.data[i].minpop),
+              response.data[i].uppervol,
+              response.data[i].undervol,
+              response.data[i].m25vol,
+              response.data[i].m70vol,
+              response.data[i].dryvol,
+              response.data[i].m25volnew,
+              response.data[i].m70volnew,
+              response.data[i].uppervolnew,
+              response.data[i].undervolnew,
+              response.data[i].dryvolnew,
+              response.data[i].country,
+              response.data[i].parent
+            )
+          );
+        }
+        setRows(row);
+      })
+      .catch((e) => {
+        // console.log(e);
+      });
     setOpen(true);
   };
   const handleInputChange = (e, index) => {
     setDisable(false);
-     let number = e.target.value;
-     const flag = number.split(".").length;
-     console.log(flag);
-     if (flag > 1) {
-       const num = number.split(".")[0];
-       const floatpoint = number.split(".")[1].slice(0, 2);
-       number = num + "." + floatpoint;
-       console.log(number);
-     }
+    let number = e.target.value;
+    const flag = number.split(".").length;
+    console.log(flag);
+    if (flag > 1) {
+      const num = number.split(".")[0];
+      const floatpoint = number.split(".")[1].slice(0, 2);
+      number = num + "." + floatpoint;
+      console.log(number);
+    }
     const { name, value } = e.target;
     const list = [...rows];
     list[index][name] = number;
@@ -528,15 +526,15 @@ export default function DataTable() {
   };
   const capacityValidator = (text) => {
     // console.log(text)
-    const check=parseFloat(text)
-    console.log(check)
+    const check = parseFloat(text);
+    console.log(check);
     if (check < 0) {
       return false;
     }
     if (check.toString().length > 0) {
       return true;
     }
-    return true
+    return true;
   };
   React.useEffect(() => {
     // get
@@ -566,9 +564,8 @@ export default function DataTable() {
             )
           );
         }
-      
+
         setRows(row);
-      
       })
       .catch((e) => {
         console.log(e);
@@ -576,7 +573,6 @@ export default function DataTable() {
   }, []);
 
   return (
-    
     <div>
       <div className="page-header">
         <h3 className="page-title"> Level Configurations </h3>
@@ -621,12 +617,12 @@ export default function DataTable() {
               <TableBody>
                 {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                 {console.log(rows)}
+                {console.log(rows)}
                 {stableSort(rows, getComparator(order, orderBy)).map(
                   (row, i) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${i}`;
-                    console.log(row)
+                    console.log(row);
                     return (
                       <>
                         {isEdit ? (
@@ -682,7 +678,7 @@ export default function DataTable() {
                                 placeholder="0"
                                 min="0"
                               />
-                             
+
                               <span></span>
                             </TableCell>
                             <TableCell padding="none" align="center">
@@ -829,12 +825,12 @@ export default function DataTable() {
                             <TableCell padding="none" align="center">
                               <input
                                 required
-                                isValid={minpopValidator(rows[i].maxpop)}
-                                value={separator(rows[i].maxpop)}
+                                isValid={minpopValidator(rows[i].minpop)}
+                                value={separator(rows[i].minpop)}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
-                                name="maxpop"
+                                name="minpop"
                                 type="number"
                               />
                               <span></span>
@@ -842,12 +838,12 @@ export default function DataTable() {
                             <TableCell padding="none" align="center">
                               <input
                                 required
-                                isValid={maxpopValidator(rows[i].minpop)}
-                                value={separator(rows[i].minpop)}
+                                isValid={maxpopValidator(row.maxpop)}
+                                value={separator(row.maxpop)}
                                 onChange={(e) => {
                                   handleInputChange(e, i);
                                 }}
-                                name="minpop"
+                                name="maxpop"
                                 type="number"
                               />
                             </TableCell>
