@@ -13,3 +13,9 @@ svg {
 svg:hover {
   opacity: 1 !important;
 }
+tr:nth-child(odd) {
+  background: #ffffff;
+}
+tr:nth-child(even) {
+  background: #d8d8d85b;
+}
