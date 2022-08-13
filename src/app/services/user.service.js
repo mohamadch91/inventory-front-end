@@ -8,13 +8,11 @@ class UserService {
     return axios.get(API_URL + "all");
   }
   addcountry(country) {
-    console.log(country);
     return axios.post(API_URL + "country/", country, {
       headers: { Authorization: authHeader() },
     });
   }
   editcountry(country) {
-    console.log(country);
     return axios.put(API_URL + "country/", country, {
       headers: {
         Authorization: authHeader(),
@@ -33,7 +31,6 @@ class UserService {
     });
   }
   putLevels(level) {
-    console.log("vayyy")
     return axios.put(API_URL + "level", level, {
       headers: { Authorization: authHeader() },
     });

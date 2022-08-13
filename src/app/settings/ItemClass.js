@@ -1,23 +1,37 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ItemsService from "../services/items.service";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
+import toast from "react-hot-toast";
+import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 
 function ItemClass() {
-  const [data, setData] = useState([
-    { id: 1, title: "Refrigerator", code: "CC", active: true },
-    { id: 2, title: "Electrical", code: "ELC", active: false },
-    { id: 3, title: "Transport", code: "TPT", active: true },
-    { id: 4, title: "Transport", code: "TPT", active: true },
-  ]);
-
+  const [itemClasses, setItemClasses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [editFormData, setEditFormData] = useState({});
   const [editableRowId, setEditableRowId] = useState(null);
 
+  function getItemClasses() {
+    ItemsService.getItemClasses()
+      .then((res) => {
+        setItemClasses(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast.error("There is a problem loading data");
+        setIsLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    getItemClasses();
+  }, []);
+
   function handleEdit(i) {
-    const formData = data.find((item) => item.id === i.id);
+    const formData = itemClasses.find((item) => item.id === i.id);
     setEditFormData(formData);
     setEditableRowId(i.id);
   }
@@ -27,102 +41,129 @@ function ItemClass() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    const newData = [...data];
-    const index = newData.findIndex((item) => item.id === editFormData.id);
-    newData[index] = editFormData;
-    setData(newData);
-    setEditableRowId(null);
-    setEditFormData({});
-  }
-
-  function EditRowForm() {
-    return (
-      <TableRow>
-        <TableCell>{editFormData?.id}</TableCell>
-        <TableCell>
-          <input
-            name="title"
-            type="text"
-            onChange={handleChange}
-            value={editFormData?.title}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <input
-            name="code"
-            type="text"
-            onChange={handleChange}
-            value={editFormData?.code}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <input
-            name="active"
-            type="checkbox"
-            onChange={() =>
-              setEditFormData({ ...editFormData, active: !editFormData.active })
-            }
-            checked={editFormData?.active}
-          ></input>
-        </TableCell>
-        <TableCell>
-          <button className="save-btn" onClick={handleSubmit}>
-            Save
-          </button>
-          <button className="close-btn" onClick={() => setEditableRowId(null)}>
-            <CloseIcon />
-          </button>
-        </TableCell>
-      </TableRow>
-    );
+    const isValid = Object.keys(editFormData).every((key) => {
+      return editFormData[key] !== "";
+    });
+    if (!isValid) {
+      toast.error("Please fill all the fields");
+    } else {
+      setIsLoading(true);
+      const newData = [...itemClasses];
+      const index = newData.findIndex((item) => item.id === editFormData.id);
+      newData[index] = editFormData;
+      const formToPut = (({ id, title, code, active }) => ({
+        id,
+        title,
+        code,
+        active,
+      }))(editFormData);
+      ItemsService.putItemClass(formToPut)
+        .then((res) => {
+          getItemClasses();
+        })
+        .catch((err) => {
+          toast.error("There is a problem sending data");
+          setIsLoading(false);
+        });
+      setEditableRowId(null);
+      setEditFormData({});
+    }
   }
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Item class list</h3>
-      <div>
-        <SharedTable>
-          <TableHead>
-            <TableRow>
-              <TableCell></TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Code</TableCell>
-              <TableCell>Active</TableCell>
-              <TableCell>Edit</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item) => (
-              <>
-                {editableRowId !== item.id ? (
-                  <TableRow>
-                    <TableCell>{item.id}</TableCell>
-                    <TableCell>{item.title}</TableCell>
-                    <TableCell>{item.code}</TableCell>
-                    <TableCell>
-                      <input
-                        type="checkbox"
-                        checked={item.active}
-                        disabled
-                      ></input>
-                    </TableCell>
-                    <TableCell>
-                      <button
-                        className="edit-btn"
-                        onClick={(event) => handleEdit(item)}
-                      >
-                        <EditIcon />
-                      </button>
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  <EditRowForm />
-                )}
-              </>
-            ))}
-          </TableBody>
-        </SharedTable>
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <h3 className="page-title mb-3">Item class list</h3>
+          <div>
+            <SharedTable>
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Code</TableCell>
+                  <TableCell>Active</TableCell>
+                  <TableCell>Edit</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {itemClasses.map((item) => (
+                  <>
+                    {editableRowId !== item.id ? (
+                      <TableRow>
+                        <TableCell>{item.id}</TableCell>
+                        <TableCell>{item.title}</TableCell>
+                        <TableCell>{item.code}</TableCell>
+                        <TableCell>
+                          <input
+                            type="checkbox"
+                            checked={item.active}
+                            disabled
+                          ></input>
+                        </TableCell>
+                        <TableCell>
+                          <button
+                            className="edit-btn"
+                            onClick={(event) => handleEdit(item)}
+                          >
+                            <EditIcon />
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      <TableRow>
+                        <TableCell>{editFormData?.id}</TableCell>
+                        <TableCell>
+                          <input
+                            name="title"
+                            type="text"
+                            onChange={handleChange}
+                            value={editFormData?.title}
+                          ></input>
+                        </TableCell>
+                        <TableCell>
+                          <input
+                            name="code"
+                            type="text"
+                            onChange={handleChange}
+                            value={editFormData?.code}
+                          ></input>
+                        </TableCell>
+                        <TableCell>
+                          <input
+                            name="active"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                active: !editFormData.active,
+                              })
+                            }
+                            checked={editFormData?.active}
+                          ></input>
+                        </TableCell>
+                        <TableCell>
+                          <button className="save-btn" onClick={handleSubmit}>
+                            Save
+                          </button>
+                          <button
+                            className="close-btn"
+                            onClick={() => setEditableRowId(null)}
+                          >
+                            <CloseIcon />
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </>
+                ))}
+              </TableBody>
+            </SharedTable>
+          </div>
+        </>
+      )}
     </div>
   );
 }
