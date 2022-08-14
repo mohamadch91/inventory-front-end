@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/414.b71b11a4.chunk.js","mappings":"+HAIA,UAJA,WACE,OAAO,uBACR,C","sources":["app/settings/ItemClass.js"],"sourcesContent":["function ItemClass() {\n  return <></>;\n}\n\nexport default ItemClass;\n"],"names":[],"sourceRoot":""}
