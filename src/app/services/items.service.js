@@ -37,6 +37,31 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getActiveItemClassesWithFields(itemClassId) {
+    const params = {};
+    if (itemClassId) {
+      params["id"] = itemClassId;
+    }
+    return axios.get(API_URL + "itembyclass", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  getItemTinLevels(level) {
+    const params = {};
+    if (level) {
+      params["level"] = level;
+    }
+    return axios.get(API_URL + "itemTinLevels", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  putItemTypeInClass(payload) {
+    return axios.put(API_URL + "itemTinLevels", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ItemService();

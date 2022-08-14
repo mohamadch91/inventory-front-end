@@ -7,11 +7,17 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store";
 // import i18n from './i18n';
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
+
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter basename="">
-      <App />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter basename="">
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
   </Provider>,
   document.getElementById("root")
 );

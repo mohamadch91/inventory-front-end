@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
+import ItemTypeLevel from "./settings/ItemTypeLevel";
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -40,6 +41,11 @@ class AppRoutes extends Component {
           <Route exact path="/settings/level" component={Level} />
           <Route exact path="/settings/item-class" component={ItemClass} />
           <Route exact path="/settings/item-type" component={ItemType} />
+          <Route
+            exact
+            path="/settings/item-t-level"
+            component={ItemTypeLevel}
+          />
           <Route
             exact
             path="/settings/new-level-list"

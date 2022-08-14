@@ -156,6 +156,18 @@ class Sidebar extends Component {
                     <span>Item type</span>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/settings/item-t-level")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/item-t-level"
+                  >
+                    <span>"Item type" In different levels</span>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>
