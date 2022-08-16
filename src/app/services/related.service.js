@@ -9,8 +9,13 @@ class RelatedService {
       headers: { Authorization: authHeader() },
     });
   }
+  getParameterDescriptions(id, type) {
+    return axios.get(API_URL + "params/?id=" + id + "&type=" + type, {
+      headers: { Authorization: authHeader() },
+    });
+  }
   putParameters(data) {
-    return axios.put(API_URL + "params", data, {
+    return axios.put(API_URL + "params/", data, {
       headers: { Authorization: authHeader() },
     });
   }

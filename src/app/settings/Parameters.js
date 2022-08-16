@@ -10,7 +10,7 @@ import "./itemType.scss";
 
 function Parameters() {
   const [data, setData] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   function getData() {
     RelatedService.getParameters()
@@ -25,7 +25,7 @@ function Parameters() {
   }
 
   useEffect(() => {
-    // getData();
+    getData();
   }, []);
 
   return (
@@ -48,7 +48,7 @@ function Parameters() {
                   <>
                     <TableRow>
                       <TableCell>
-                        <Link to={`/settings/params/${item.id}`}>
+                        <Link to={`/settings/params/facility-${item.id}`}>
                           {item.name}
                         </Link>
                       </TableCell>
@@ -73,7 +73,7 @@ function Parameters() {
                   <>
                     <TableRow>
                       <TableCell>
-                        <Link to={`/settings/params/${item.id}`}>
+                        <Link to={`/settings/params/type-${item.id}`}>
                           {item.name}
                         </Link>
                       </TableCell>

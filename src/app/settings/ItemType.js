@@ -22,7 +22,7 @@ function ItemType() {
       .then((res) => {
         const data = res.data.filter((item) => item.active === true);
         setItemClasses(data);
-        setIsLoading(false);
+        getItemTypes();
       })
       .catch((err) => {
         toast.error("There is a problem loading data");
@@ -44,13 +44,14 @@ function ItemType() {
 
   useEffect(() => {
     getItemClasses();
-    getItemTypes();
   }, []);
 
   useEffect(() => {
     setAddRowFormData({
       ...addRowFormData,
       itemClass: itemClasses[0],
+      active: false,
+      havePQS: false,
     });
   }, [itemClasses]);
 
@@ -119,13 +120,17 @@ function ItemType() {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
-      const formToPut = (({ title, code, active, havePQS, itemclass }) => ({
+      let formToPut = (({ title, code, active, havePQS }) => ({
         title,
         code,
         active,
         havePQS,
-        itemclass,
       }))(addRowFormData);
+      if (addRowFormData?.itemClass?.id) {
+        formToPut.itemclass = addRowFormData.itemClass.id.toString();
+      } else {
+        formToPut.itemclass = addRowFormData.itemClass.toString();
+      }
       ItemsService.postItemType(formToPut)
         .then((res) => {
           getItemTypes();
@@ -134,7 +139,13 @@ function ItemType() {
           toast.error("There is a problem sending data");
           setIsLoading(false);
         });
-      setAddRowFormData({});
+      setAddRowFormData({
+        ...addRowFormData,
+        itemClass: itemClasses[0],
+        active: false,
+        havePQS: false,
+        title: "",
+      });
     }
   }
 
@@ -163,11 +174,11 @@ function ItemType() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {itemTypes.map((itemType) => (
+                {itemTypes.map((itemType, index) => (
                   <>
                     {editableRowId !== itemType.id ? (
                       <TableRow>
-                        <TableCell>{itemType.id}</TableCell>
+                        <TableCell>{index + 1}</TableCell>
                         <TableCell>{itemType.title}</TableCell>
                         <TableCell>
                           {findItemClassById(itemType.itemclass)?.title}
@@ -198,7 +209,7 @@ function ItemType() {
                       </TableRow>
                     ) : (
                       <TableRow>
-                        <TableCell>{editFormData?.id}</TableCell>
+                        <TableCell>{index + 1}</TableCell>
                         <TableCell>
                           <input
                             name="title"
@@ -294,7 +305,7 @@ function ItemType() {
                   {itemClasses.map((item, index) => (
                     <option
                       key={item.id}
-                      value={item.title}
+                      value={item.id}
                       selected={index === 0}
                     >
                       {item.title}

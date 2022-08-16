@@ -1,6 +1,5 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useEffect, useState } from "react";
-import ItemsService from "../services/items.service";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
@@ -8,18 +7,25 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import RelatedService from "../services/related.service";
+import { useParams } from "react-router-dom";
 
-function ParameterDescription() {
-  const [itemTypes, setItemTypes] = useState([]);
+function ItemType() {
+  const [descriptions, setDescriptions] = useState([]);
   const [editFormData, setEditFormData] = useState({});
-  const [addRowFormData, setAddRowFormData] = useState({});
+  const [addRowFormData, setAddRowFormData] = useState({
+    name: "",
+    order: null,
+    enabled: false,
+  });
   const [editableRowId, setEditableRowId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
 
-  function getItemTypes() {
-    ItemsService.getItemTypes()
+  function getData(type, id) {
+    RelatedService.getParameterDescriptions(id, type)
       .then((res) => {
-        setItemTypes(res.data);
+        setDescriptions(res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -29,11 +35,19 @@ function ParameterDescription() {
   }
 
   useEffect(() => {
-    getItemTypes();
-  }, []);
+    const params = id?.split("-");
+    getData(params[0], params[1]);
+  }, [id]);
+
+  // useEffect(() => {
+  //   setAddRowFormData({
+  //     ...addRowFormData,
+  //     enabled: false,
+  //   });
+  // }, [descriptions]);
 
   function handleEdit(i) {
-    const formData = itemTypes.find((item) => item.id === i.id);
+    const formData = descriptions.find((item) => item.id === i.id);
     setEditFormData(formData);
     setEditableRowId(i.id);
   }
@@ -62,23 +76,18 @@ function ParameterDescription() {
 
   function handleSubmitEdit() {
     const isValid = Object.keys(editFormData).every((key) => {
-      return editFormData[key] !== "";
+      return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
-      const formToPut = (({ id, title, code, active, havePQS, itemclass }) => ({
-        id,
-        title,
-        code,
-        active,
-        havePQS,
-        itemclass,
-      }))(editFormData);
-      ItemsService.putItemTypes(formToPut)
+      let formToPut = editFormData;
+      formToPut.type = id.split("-")[0];
+      RelatedService.putParameters(formToPut)
         .then((res) => {
-          getItemTypes();
+          const params = id.split("-");
+          getData(params[0], params[1]);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -91,28 +100,34 @@ function ParameterDescription() {
 
   function handleSubmitNew() {
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "";
+      return addRowFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
-      const formToPut = (({ title, code, active, havePQS, itemclass }) => ({
-        title,
-        code,
-        active,
-        havePQS,
-        itemclass,
+      let formToPut = (({ name, enabled, order }) => ({
+        name,
+        enabled,
+        order,
       }))(addRowFormData);
-      ItemsService.postItemType(formToPut)
+      formToPut.type = id.split("-")[0];
+      formToPut.paramid = parseInt(id.split("-")[1]);
+      RelatedService.putParameters(formToPut)
         .then((res) => {
-          getItemTypes();
+          const params = id.split("-");
+          getData(params[0], params[1]);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
           setIsLoading(false);
         });
-      setAddRowFormData({});
+      setAddRowFormData({
+        ...addRowFormData,
+        name: "",
+        order: null,
+        enabled: false,
+      });
     }
   }
 
@@ -122,49 +137,76 @@ function ParameterDescription() {
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Item type list</h3>
+          <h3 className="page-title mb-3">Parameter Descriptions</h3>
+          <div className="add-row mt-4 mb-4">
+            <h3>Insert parameter In this row!</h3>
+            <div className="row">
+              <div className="col-md-4 flex-column d-flex">
+                <label>Parameter description</label>
+                <input
+                  name="name"
+                  type="text"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.name}
+                ></input>
+              </div>
+              <div className="col-md-4 flex-column d-flex">
+                <label>Show order</label>
+                <input
+                  name="order"
+                  type="number"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.order}
+                ></input>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center align-items-center">
+                <label>Enable</label>
+                <input
+                  name="enabled"
+                  className="mr-4"
+                  type="checkbox"
+                  onChange={() =>
+                    setAddRowFormData({
+                      ...addRowFormData,
+                      enabled: !addRowFormData.enabled,
+                    })
+                  }
+                  checked={addRowFormData?.enabled}
+                ></input>
+                <button className="save-btn" onClick={handleSubmitNew}>
+                  Save
+                </button>
+              </div>
+            </div>
+          </div>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Item class</TableCell>
-                  <TableCell>Code</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell>Have PQS?</TableCell>
+                  <TableCell>Description</TableCell>
+                  <TableCell>Show order</TableCell>
+                  <TableCell>Enable</TableCell>
                   <TableCell>Edit</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {itemTypes.map((itemType) => (
+                {descriptions.map((item, index) => (
                   <>
-                    {editableRowId !== itemType.id ? (
+                    {editableRowId !== item.id ? (
                       <TableRow>
-                        <TableCell>{itemType.id}</TableCell>
-                        <TableCell>{itemType.title}</TableCell>
-                        <TableCell>
-                          {/* {findItemClassById(itemType.itemclass)?.title} */}
-                        </TableCell>
-                        <TableCell>{itemType.code}</TableCell>
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell>{item.order}</TableCell>
                         <TableCell>
                           <input
                             type="checkbox"
-                            checked={itemType.active}
-                            disabled
-                          ></input>
-                        </TableCell>
-                        <TableCell>
-                          <input
-                            type="checkbox"
-                            checked={itemType.havePQS}
+                            checked={item.enabled}
                             disabled
                           ></input>
                         </TableCell>
                         <TableCell>
                           <button
                             className="edit-btn"
-                            onClick={(event) => handleEdit(itemType)}
+                            onClick={(event) => handleEdit(item)}
                           >
                             <EditIcon />
                           </button>
@@ -172,57 +214,33 @@ function ParameterDescription() {
                       </TableRow>
                     ) : (
                       <TableRow>
-                        <TableCell>{editFormData?.id}</TableCell>
                         <TableCell>
                           <input
-                            name="title"
+                            name="name"
                             type="text"
                             onChange={handleChange}
-                            value={editFormData?.title}
+                            value={editFormData?.name}
                           ></input>
                         </TableCell>
                         <TableCell>
-                          {/* <select
-                            name="itemclass"
+                          <input
+                            name="order"
+                            type="number"
                             onChange={handleChange}
-                            value={editFormData?.itemClass}
-                          >
-                            {itemClasses.map((itemClass, index) => (
-                              <option
-                                key={itemClass.id}
-                                value={itemClass.id}
-                                selected={itemType.itemclass === itemClass.id}
-                              >
-                                {itemClass.title}
-                              </option>
-                            ))}
-                          </select> */}
-                        </TableCell>
-                        <TableCell>{editFormData?.code}</TableCell>
-                        <TableCell>
-                          <input
-                            name="active"
-                            type="checkbox"
-                            onChange={() =>
-                              setEditFormData({
-                                ...editFormData,
-                                active: !editFormData.active,
-                              })
-                            }
-                            checked={editFormData?.active}
+                            value={editFormData?.order}
                           ></input>
                         </TableCell>
                         <TableCell>
                           <input
-                            name="havePQS"
+                            name="enabled"
                             type="checkbox"
                             onChange={() =>
                               setEditFormData({
                                 ...editFormData,
-                                havePQS: !editFormData.havePQS,
+                                enabled: !editFormData.enabled,
                               })
                             }
-                            checked={editFormData?.havePQS}
+                            checked={editFormData?.enabled}
                           ></input>
                         </TableCell>
                         <TableCell>
@@ -246,73 +264,10 @@ function ParameterDescription() {
               </TableBody>
             </SharedTable>
           </div>
-          <div className="add-row mt-4">
-            <h3>Submit new</h3>
-            <div className="row">
-              <div className="col-md-4 flex-column d-flex">
-                <label>Item type</label>
-                <input
-                  name="title"
-                  type="text"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.title}
-                ></input>
-              </div>
-              <div className="col-md-4 flex-column d-flex">
-                <label>Item class</label>
-                {/* <select
-                  name="itemClass"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.itemClass}
-                >
-                  {itemClasses.map((item, index) => (
-                    <option
-                      key={item.id}
-                      value={item.title}
-                      selected={index === 0}
-                    >
-                      {item.title}
-                    </option>
-                  ))}
-                </select> */}
-              </div>
-              <div className="col-md-4 d-flex justify-content-center align-items-center">
-                <label>Active</label>
-                <input
-                  name="active"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      active: !addRowFormData.active,
-                    })
-                  }
-                  checked={addRowFormData?.active}
-                ></input>
-                <label>Have PQS?</label>
-                <input
-                  name="havePQS"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      havePQS: !addRowFormData.havePQS,
-                    })
-                  }
-                  checked={addRowFormData?.havePQS}
-                ></input>
-                <button className="save-btn" onClick={handleSubmitNew}>
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
         </>
       )}
     </div>
   );
 }
 
-export default ParameterDescription;
+export default ItemType;
