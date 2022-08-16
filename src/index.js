@@ -9,7 +9,9 @@ import store from "./store";
 // import i18n from './i18n';
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 0 } },
+});
 
 ReactDOM.render(
   <Provider store={store}>

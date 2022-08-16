@@ -26,7 +26,7 @@ function ItemTypeLevel() {
       }
     );
 
-  const { isLoading: isItemTinLevelLoading } = useQuery(
+  const { data: itemsTinLevel, isLoading: isItemTinLevelLoading } = useQuery(
     ["itemTinLevel", selectedLevel],
     async () => {
       const res = await ItemsService.getItemTinLevels(selectedLevel);
@@ -34,7 +34,24 @@ function ItemTypeLevel() {
     },
     {
       onSuccess(data) {
-        setFieldsValue((preFields) => [...preFields, ...data]);
+        const fieldsValueClone = [...fieldsValue];
+        data.forEach((newField) => {
+          if (
+            !fieldsValue.find(
+              (fieldValue) =>
+                fieldValue.itemtypeid === newField.itemtype.id &&
+                fieldValue.level === newField.level.id
+            )
+          ) {
+            fieldsValueClone.push({
+              itemtypeid: newField.itemtype.id,
+              level: newField.level.id,
+              active: newField.active,
+              id: newField.id,
+            });
+          }
+        });
+        setFieldsValue(fieldsValueClone);
       },
     }
   );
@@ -47,33 +64,52 @@ function ItemTypeLevel() {
   };
 
   const selectLevelHandler = (e) => {
-    setSelectedLevel(e.target.value);
+    setSelectedLevel(+e.target.value);
   };
 
   const onEnableFieldHandler = (e, currentField) => {
+    const checked = e.target.checked;
+    console.log(currentField);
     const fieldValuesClone = [...fieldsValue];
     const fieldIndex = fieldsValue.findIndex(
-      (field) => field.itemtypeid === currentField.id
+      (field) =>
+        field.itemtypeid === currentField.id && field.level === selectedLevel
     );
     if (fieldIndex === -1) {
       fieldValuesClone.push({
         itemtypeid: currentField.id,
         level: selectedLevel,
-        active: true,
+        active: checked,
       });
     } else {
       const currentFieldValue = fieldsValue[fieldIndex];
       fieldValuesClone[fieldIndex] = {
         ...currentFieldValue,
-        active: !currentFieldValue,
+        active: !currentFieldValue.active,
+        level: selectedLevel,
       };
     }
+    console.log(fieldValuesClone);
     setFieldsValue(fieldValuesClone);
   };
 
   const onSaveHandler = async () => {
-    ItemsService.putItemTypeInClass(fieldsValue);
+    console.log(fieldsValue);
+    console.log(itemsTinLevel);
+    const payload = fieldsValue.filter(
+      (field) =>
+        !itemsTinLevel?.some(
+          (item) =>
+            item.itemtype.id === field.itemtypeid &&
+            item.level.id === field.level &&
+            item.active === field.active
+        )
+    );
+    console.log(payload);
+    const res = await ItemsService.putItemTypeInClass(payload);
   };
+
+  console.log(itemsTinLevel);
 
   return (
     <div>
@@ -141,23 +177,32 @@ function ItemTypeLevel() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {selectedItemClass.item_type.map((item) => (
-                    <TableRow key={item.id}>
-                      <TableCell className="col-sm-10">{item.title}</TableCell>
-                      <TableCell>
-                        <input
-                          type="checkbox"
-                          disabled={isItemTinLevelLoading}
-                          defaultChecked={
-                            !!fieldsValue.find(
-                              (field) => field.itemtypeid === item.id
-                            )
-                          }
-                          onChange={(e) => onEnableFieldHandler(e, item)}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  {selectedItemClass.item_type.map((item) => {
+                    console.log("item", item);
+                    console.log("selectedLevel", selectedLevel);
+                    console.log("fieldsValue", fieldsValue);
+                    const isChecked = fieldsValue.find(
+                      (field) =>
+                        field.itemtypeid === item.id &&
+                        field.level === selectedLevel
+                    )?.active;
+                    console.log(isChecked);
+                    return (
+                      <TableRow key={item.id}>
+                        <TableCell className="col-sm-10">
+                          {item.title}
+                        </TableCell>
+                        <TableCell>
+                          <input
+                            type="checkbox"
+                            disabled={isItemTinLevelLoading}
+                            checked={!!isChecked}
+                            onChange={(e) => onEnableFieldHandler(e, item)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
                 </TableBody>
               </SharedTable>
             </div>
