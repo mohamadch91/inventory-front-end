@@ -123,14 +123,7 @@ function ItemClass() {
                             value={editFormData?.title}
                           ></input>
                         </TableCell>
-                        <TableCell>
-                          <input
-                            name="code"
-                            type="text"
-                            onChange={handleChange}
-                            value={editFormData?.code}
-                          ></input>
-                        </TableCell>
+                        <TableCell>{editFormData.code}</TableCell>
                         <TableCell>
                           <input
                             name="active"

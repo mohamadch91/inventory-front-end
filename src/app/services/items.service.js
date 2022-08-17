@@ -62,6 +62,21 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getManufacturers() {
+    return axios.get(API_URL + "manufacturer", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  postManufacturer(data) {
+    return axios.post(API_URL + "manufacturer", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putManufacturer(data) {
+    return axios.put(API_URL + "manufacturer", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ItemService();

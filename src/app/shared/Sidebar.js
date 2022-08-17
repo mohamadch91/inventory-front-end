@@ -168,6 +168,19 @@ class Sidebar extends Component {
                     <span>"Item type" In different levels</span>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/settings/params")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/params"
+                  >
+                    <span>Parameters</span>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>

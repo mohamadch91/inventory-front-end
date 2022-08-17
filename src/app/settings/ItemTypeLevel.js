@@ -30,29 +30,28 @@ function ItemTypeLevel() {
     ["itemTinLevel", selectedLevel],
     async () => {
       const res = await ItemsService.getItemTinLevels(selectedLevel);
-      return res.data;
+      const fieldsValueClone = [...fieldsValue];
+      res.data.forEach((newField) => {
+        if (
+          !fieldsValue.find(
+            (fieldValue) =>
+              fieldValue.itemtypeid === newField.itemtype.id &&
+              fieldValue.level === newField.level.id
+          )
+        ) {
+          fieldsValueClone.push({
+            itemtypeid: newField.itemtype.id,
+            level: newField.level.id,
+            active: newField.active,
+            id: newField.id,
+          });
+        }
+      });
+      setFieldsValue(fieldsValueClone);
+      return fieldsValueClone;
     },
     {
-      onSuccess(data) {
-        const fieldsValueClone = [...fieldsValue];
-        data.forEach((newField) => {
-          if (
-            !fieldsValue.find(
-              (fieldValue) =>
-                fieldValue.itemtypeid === newField.itemtype.id &&
-                fieldValue.level === newField.level.id
-            )
-          ) {
-            fieldsValueClone.push({
-              itemtypeid: newField.itemtype.id,
-              level: newField.level.id,
-              active: newField.active,
-              id: newField.id,
-            });
-          }
-        });
-        setFieldsValue(fieldsValueClone);
-      },
+      staleTime: 5 * 60 * 1000, // cache data about 5 minutes
     }
   );
 
@@ -69,7 +68,6 @@ function ItemTypeLevel() {
 
   const onEnableFieldHandler = (e, currentField) => {
     const checked = e.target.checked;
-    console.log(currentField);
     const fieldValuesClone = [...fieldsValue];
     const fieldIndex = fieldsValue.findIndex(
       (field) =>
@@ -89,27 +87,21 @@ function ItemTypeLevel() {
         level: selectedLevel,
       };
     }
-    console.log(fieldValuesClone);
     setFieldsValue(fieldValuesClone);
   };
 
   const onSaveHandler = async () => {
-    console.log(fieldsValue);
-    console.log(itemsTinLevel);
     const payload = fieldsValue.filter(
       (field) =>
         !itemsTinLevel?.some(
           (item) =>
-            item.itemtype.id === field.itemtypeid &&
-            item.level.id === field.level &&
+            item.itemtypeid === field.itemtypeid &&
+            item.level === field.level &&
             item.active === field.active
         )
     );
-    console.log(payload);
     const res = await ItemsService.putItemTypeInClass(payload);
   };
-
-  console.log(itemsTinLevel);
 
   return (
     <div>
@@ -178,15 +170,11 @@ function ItemTypeLevel() {
                 </TableHead>
                 <TableBody>
                   {selectedItemClass.item_type.map((item) => {
-                    console.log("item", item);
-                    console.log("selectedLevel", selectedLevel);
-                    console.log("fieldsValue", fieldsValue);
                     const isChecked = fieldsValue.find(
                       (field) =>
                         field.itemtypeid === item.id &&
                         field.level === selectedLevel
                     )?.active;
-                    console.log(isChecked);
                     return (
                       <TableRow key={item.id}>
                         <TableCell className="col-sm-10">
