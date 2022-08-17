@@ -12,9 +12,9 @@ function ItemTypeLevel() {
   const [selectedLevel, setSelectedLevel] = useState(1);
   const [fieldsValue, setFieldsValue] = useState([]);
 
-  const { data: itemClassesWithFields, isLoading: isItemClassesLoading } =
+  const { data: itemClassesWithItemTypes, isLoading: isItemClassesLoading } =
     useQuery(
-      ["active-item-classes-with-fields"],
+      ["active-item-classes-with-item-type"],
       async () => {
         const res = await ItemsService.getActiveItemClassesWithFields();
         return res.data;
@@ -59,7 +59,7 @@ function ItemTypeLevel() {
   const levels = JSON.parse(localStorage.getItem("country"))?.levels ?? 1;
 
   const selectItemClassHandler = (e) => {
-    setSelectedItemClass(itemClassesWithFields[e.target.value]);
+    setSelectedItemClass(itemClassesWithItemTypes[e.target.value]);
   };
 
   const selectLevelHandler = (e) => {
@@ -122,7 +122,7 @@ function ItemTypeLevel() {
                         className="form-select"
                         as="select"
                       >
-                        {itemClassesWithFields.map((itemClass, index) => (
+                        {itemClassesWithItemTypes.map((itemClass, index) => (
                           <option value={index}>
                             {itemClass.item_class.title}
                           </option>
