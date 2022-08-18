@@ -15,118 +15,78 @@ import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 
-function FieldsOfItemT() {
+function FieldsFacility() {
   const [activeStep, setActiveStep] = useState(0);
-  const [selectedItemClassAndItemTypes, setSelectedItemClassAndItemTypes] =
-    useState();
-  const [selectedItemType, setSelectedItemType] = useState();
   const [fieldsValue, setFieldsValue] = useState([]);
   const [editedField, setEditedField] = useState(null);
   const [newFieldName, setNewFieldName] = useState("");
 
-  const { data: itemClassesWithItemTypes, isLoading: isItemClassesLoading } =
-    useQuery(
-      ["active-item-classes-with-item-type"],
-      async () => {
-        const res = await ItemsService.getActiveItemClassesWithFields();
-        return res.data;
-      },
-      {
-        onSuccess(data) {
-          setSelectedItemClassAndItemTypes(data[0]);
-          setSelectedItemType(data[0].item_type[0]);
-        },
-      }
-    );
-
   const {
-    data: relatedItemFields,
-    isLoading: isRelatedItemFieldsLoading,
-    refetch: refetchRelatedItemFields,
+    data: relatedFacility,
+    isLoading: isRelatedFacilityLoading,
+    refetch: refetchRelatedFacility,
   } = useQuery(
-    ["related-item-fields"],
+    ["related-facility"],
     async () => {
-      const res = await ItemsService.getItemFields();
+      const res = await ItemsService.getRelatedFacility();
       return res.data;
     },
     {
       staleTime: Infinity,
-    }
-  );
-
-  const { data: relatedItemType } = useQuery(
-    ["related-item-type", selectedItemType?.id],
-    async () => {
-      const res = await ItemsService.getRelatedItemType(selectedItemType.id);
-      return res.data;
-    },
-    {
-      enabled: !isItemClassesLoading,
-      staleTime: 5 * 60 * 1000, // cache data about 5 minutes
+      refetchOnMount: true,
     }
   );
 
   const fieldsCategories = useMemo(() => {
     const result = {};
-    if (relatedItemFields) {
-      for (const field of relatedItemFields) {
+    if (relatedFacility) {
+      for (const field of relatedFacility) {
         const fieldTopicInResult = result[field.topic] ?? [];
         fieldTopicInResult.push(field);
         result[field.topic] = fieldTopicInResult;
       }
     }
     return result;
-  }, [relatedItemFields]);
-
-  const selectItemClassHandler = (e) => {
-    setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
-  };
-
-  const selectItemTypeHandler = (e) => {
-    setSelectedItemType(
-      selectedItemClassAndItemTypes.item_type[e.target.value]
-    );
-  };
+  }, [relatedFacility]);
 
   const onFieldChangeHandler = (e, currentField, kind) => {
     const checked = e.target.checked;
     const fieldValuesClone = [...fieldsValue];
     const fieldIndex = fieldsValue.findIndex(
-      (field) =>
-        field.itemtypeid === selectedItemType.id &&
-        field.fieldid === currentField.id
+      (field) => field.id === currentField.id
     );
     if (fieldIndex === -1) {
       //for the first time
       fieldValuesClone.push({
-        itemtypeid: selectedItemType.id,
-        fieldid: currentField.id,
+        ...currentField,
         required: kind === "required" ? checked : false,
-        enable: kind === "enable" ? checked : true,
+        active: kind === "enable" ? checked : true,
       });
     } else {
       const currentFieldValue = fieldsValue[fieldIndex];
       fieldValuesClone[fieldIndex] = {
         ...currentFieldValue,
         required: kind === "required" ? checked : currentFieldValue.required,
-        enable: kind === "enable" ? checked : currentFieldValue.enable,
+        active: kind === "enable" ? checked : currentFieldValue.active,
       };
     }
     setFieldsValue(fieldValuesClone);
   };
 
   const handleSubmitEdit = async () => {
-    const res = await ItemsService.putItemFields({
-      ...editedField,
-      name: newFieldName,
-    });
-    refetchRelatedItemFields();
+    const res = await ItemsService.putRelatedFacility([
+      {
+        ...editedField,
+        name: newFieldName,
+      },
+    ]);
+    refetchRelatedFacility();
     setEditedField(null);
     setNewFieldName("");
   };
 
   const onSaveHandler = async () => {
-    const res = await ItemsService.putRelatedItemType(fieldsValue);
+    const res = await ItemsService.putRelatedFacility(fieldsValue);
   };
 
   const handleNext = () => {
@@ -143,57 +103,8 @@ function FieldsOfItemT() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Fields of "Item type"</h3>
-      {isItemClassesLoading ? (
-        <Spinner />
-      ) : (
-        <div className="mt-3">
-          <div className="card">
-            <div className="card-body">
-              <div className="row">
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-12">Item class</label>
-                    <div className="col-sm-12">
-                      <Form.Control
-                        onChange={selectItemClassHandler}
-                        className="form-select"
-                        as="select"
-                      >
-                        {itemClassesWithItemTypes.map((itemClass, index) => (
-                          <option value={index}>
-                            {itemClass.item_class.title}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </div>
-                  </Form.Group>
-                </div>
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="col-sm-12">Item type</label>
-                    <div className="col-sm-12">
-                      <Form.Control
-                        onChange={selectItemTypeHandler}
-                        className="form-select"
-                        disabled={selectedItemClassAndItemTypes === null}
-                        as="select"
-                      >
-                        {selectedItemClassAndItemTypes?.item_type.map(
-                          (itemType, index) => (
-                            <option value={index}>{itemType.title}</option>
-                          )
-                        )}
-                      </Form.Control>
-                    </div>
-                  </Form.Group>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-      {isRelatedItemFieldsLoading ? (
+      <h3 className="page-title mb-3">Fields related to facilities</h3>
+      {isRelatedFacilityLoading ? (
         <Spinner />
       ) : (
         <>
@@ -270,17 +181,11 @@ function FieldsOfItemT() {
                           (field) => {
                             const fieldValue =
                               fieldsValue.find(
-                                (fieldValue) =>
-                                  fieldValue.fieldid === field.id &&
-                                  fieldValue.itemtypeid === selectedItemType.id
+                                (fieldValue) => fieldValue.id === field.id
                               ) ??
-                              relatedItemType?.find(
-                                (rItem) =>
-                                  field.id === rItem.field.id &&
-                                  selectedItemType.id === rItem.itemtype.id
+                              relatedFacility?.find(
+                                (rItem) => field.id === rItem.id
                               );
-                            const isEnable = fieldValue?.enable ?? !!fieldValue;
-                            const isRequired = fieldValue?.required;
                             return (
                               <TableRow key={field.id}>
                                 <TableCell className="col-sm-4">
@@ -300,8 +205,8 @@ function FieldsOfItemT() {
                                 <TableCell className="col-sm-2">
                                   <input
                                     type="checkbox"
-                                    disabled={!relatedItemType}
-                                    checked={isEnable}
+                                    disabled={fieldValue?.disabled}
+                                    checked={fieldValue?.active}
                                     onChange={(e) =>
                                       onFieldChangeHandler(e, field, "enable")
                                     }
@@ -310,8 +215,11 @@ function FieldsOfItemT() {
                                 <TableCell className="col-sm-4">
                                   <input
                                     type="checkbox"
-                                    disabled={!isEnable}
-                                    checked={isRequired}
+                                    disabled={
+                                      fieldValue?.disabled ||
+                                      !fieldValue?.active
+                                    }
+                                    checked={fieldValue?.required}
                                     onChange={(e) =>
                                       onFieldChangeHandler(e, field, "required")
                                     }
@@ -365,4 +273,4 @@ function FieldsOfItemT() {
   );
 }
 
-export default FieldsOfItemT;
+export default FieldsFacility;

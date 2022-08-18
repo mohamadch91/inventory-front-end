@@ -181,6 +181,18 @@ class Sidebar extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/settings/facility-fields")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/facility-fields"
+                  >
+                    <span>Fields related to facilities</span>
+                  </Link>
+                </li>
+                <li className="nav-item">
                   {" "}
                   <Link
                     className={

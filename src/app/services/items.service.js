@@ -89,6 +89,16 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getRelatedFacility() {
+    return axios.get(Related_API_URL + "related-facility/", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putRelatedFacility(payload) {
+    return axios.put(Related_API_URL + "related-facility/", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
   getManufacturers() {
     return axios.get(API_URL + "manufacturer", {
       headers: { Authorization: authHeader() },
