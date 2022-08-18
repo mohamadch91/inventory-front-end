@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 
 function ItemType() {
   const [itemTypes, setItemTypes] = useState([]);
@@ -127,9 +128,9 @@ function ItemType() {
         havePQS,
       }))(addRowFormData);
       if (addRowFormData?.itemClass?.id) {
-        formToPut.itemclass = addRowFormData.itemClass.id.toString();
+        formToPut.itemclass = parseInt(addRowFormData.itemClass.id);
       } else {
-        formToPut.itemclass = addRowFormData.itemClass.toString();
+        formToPut.itemclass = parseInt(addRowFormData.itemClass);
       }
       ItemsService.postItemType(formToPut)
         .then((res) => {
@@ -216,6 +217,7 @@ function ItemType() {
                             type="text"
                             onChange={handleChange}
                             value={editFormData?.title}
+                            required
                           ></input>
                         </TableCell>
                         <TableCell>
@@ -293,6 +295,7 @@ function ItemType() {
                   type="text"
                   onChange={handleChangeAdd}
                   value={addRowFormData?.title}
+                  required
                 ></input>
               </div>
               <div className="col-md-4 flex-column d-flex">
