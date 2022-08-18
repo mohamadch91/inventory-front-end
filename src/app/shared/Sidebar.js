@@ -47,6 +47,7 @@ class Sidebar extends Component {
       { path: "/ecommerce", state: "ecommercePagesMenuOpen" },
       { path: "/settings", state: "settingsMenuOpen" },
       { path: "/hr", state: "hrMenuOpen" },
+      { path: "/user", state: "userListMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -119,6 +120,46 @@ class Sidebar extends Component {
           </li>
           <li
             className={
+              this.isPathActive("/user") ? "nav-item active" : "nav-item"
+            }
+          >
+            <div
+              className={
+                this.state.userListMenuOpen
+                  ? "nav-link menu-expanded"
+                  : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("userListMenuOpen")}
+              data-toggle="collapse"
+            >
+              <span className="icon-bg">
+                <i className="mdi mdi-account menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>User</span>
+              </span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={this.state.userListMenuOpen}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/user/list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/user/list"
+                  >
+                    <span>Users List</span>
+                  </Link>
+                </li>
+              </ul>
+            </Collapse>
+          </li>
+          <li
+            className={
               this.isPathActive("/setting") ? "nav-item active" : "nav-item"
             }
           >
@@ -154,8 +195,32 @@ class Sidebar extends Component {
                     <span>Country setting</span>
                   </Link>
                 </li>
-                {/* <li className="nav-item"> <Link className={ this.isPathActive('/settings/level') ? 'nav-link active' : 'nav-link' } to="/settings/level"><span>level setting</span></Link></li> */}
-                {/* <li className="nav-item"> <Link className={ this.isPathActive('/settings/level-list') ? 'nav-link active' : 'nav-link' } to="/settings/level-list"><span>level list</span></Link></li> */}
+                {/* <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/settings/level")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/level"
+                  >
+                    <span>level setting</span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/settings/level-list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/level-list"
+                  >
+                    <span>level list</span>
+                  </Link>
+                </li> */}
                 <li className="nav-item">
                   {" "}
                   <Link

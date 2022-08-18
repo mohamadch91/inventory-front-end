@@ -4,12 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
 import ItemTypeLevel from "./settings/ItemTypeLevel";
-import Parameters from "./settings/Parameters";
-import ParameterDescription from "./settings/ParameterDescription";
-import FieldsOfItemT from "./settings/FieldsOfItemT";
-import FacilityFields from "./settings/FacilityFields";
-import Manufacturer from "./settings/Manufacturer";
-import HRList from "./hr/HRList";
+
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -35,6 +30,15 @@ const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
+const Parameters = lazy(() => import("./settings/Parameters"));
+const ParameterDescription = lazy(() =>
+  import("./settings/ParameterDescription")
+);
+const FieldsOfItemT = lazy(() => import("./settings/FieldsOfItemT"));
+const FacilityFields = lazy(() => import("./settings/FacilityFields"));
+const Manufacturer = lazy(() => import("./settings/Manufacturer"));
+const HRList = lazy(() => import("./hr/HRList"));
+const UsersList = lazy(() => import("./user/usersList"));
 
 class AppRoutes extends Component {
   render() {
@@ -43,8 +47,9 @@ class AppRoutes extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
 
-          {/* <Route exact path="/hr/new" component={} /> */}
           <Route exact path="/hr/list" component={HRList} />
+
+          <Route exact path="/user/list" component={UsersList} />
 
           <Route exact path="/settings/country" component={Country} />
           <Route exact path="/settings/level" component={Level} />

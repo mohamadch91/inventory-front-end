@@ -1,7 +1,6 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
-import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
@@ -10,6 +9,8 @@ import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
 import "../styles/hr.scss";
+import "../settings/itemClass.scss";
+import "../settings/itemType.scss";
 
 function HRList() {
   const genders = ["male", "female"];
@@ -18,12 +19,12 @@ function HRList() {
 
   const [list, setList] = useState([]);
   const [editFormData, setEditFormData] = useState({
-    gender: genders[0],
+    genders: genders[0],
     position_level: positionLevels[0],
     educatioin_level: educationLevels[0],
   });
   const [addRowFormData, setAddRowFormData] = useState({
-    gender: genders[0],
+    genders: genders[0],
     position_level: positionLevels[0],
     educatioin_level: educationLevels[0],
   });
@@ -70,7 +71,6 @@ function HRList() {
         ...addRowFormData,
         facility: facilities[0]?.id,
       });
-      // getList(facilities[0].id);
     }
   }, [facilities]);
 
@@ -98,37 +98,46 @@ function HRList() {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
-      const formToPut = (({
+      let formToPut = (({
         id,
         full_name,
         position_level,
         educatioin_level,
-        years_in_service,
-        year_in_position,
-        facility,
-        gender,
+        genders,
       }) => ({
         id,
         full_name,
         position_level,
         educatioin_level,
-        years_in_service,
-        year_in_position,
-        facility,
-        gender,
+        genders,
       }))(editFormData);
+      if (!editFormData.genders) {
+        formToPut.genders = "male";
+      }
+      if (!editFormData.position_level) {
+        formToPut.position_level = positionLevels[0];
+      }
+      if (!editFormData.educatioin_level) {
+        formToPut.educatioin_level = educationLevels[0];
+      }
+      formToPut.year_in_position = parseInt(editFormData.year_in_position);
+      formToPut.years_in_service = parseInt(editFormData.years_in_service);
+      formToPut.facility = parseInt(editFormData.facility);
       HRService.putHR(formToPut)
         .then((res) => {
           setIsLoading(true);
           getList(selectedFacility);
+          setEditFormData({
+            genders: genders[0],
+            position_level: positionLevels[0],
+            educatioin_level: educationLevels[0],
+          });
+          setIsEditModalOpen(false);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
           setIsLoading(false);
         });
-      setIsEditModalOpen(false);
-      setEditFormData({});
-      setIsEditModalOpen(false);
     }
   }
 
@@ -147,7 +156,7 @@ function HRList() {
         educatioin_level,
         years_in_service,
         year_in_position,
-        gender,
+        genders,
       }) => ({
         id,
         full_name,
@@ -155,25 +164,27 @@ function HRList() {
         educatioin_level,
         years_in_service,
         year_in_position,
-        gender,
+        genders,
       }))(addRowFormData);
-      formToPost.facility = addRowFormData.facility;
+      formToPost.year_in_position = parseInt(addRowFormData.year_in_position);
+      formToPost.years_in_service = parseInt(addRowFormData.years_in_service);
+      formToPost.facility = parseInt(addRowFormData.facility);
       HRService.postHR(formToPost)
         .then((res) => {
           setIsLoading(true);
           getList(selectedFacility);
+          setAddRowFormData({
+            ...addRowFormData,
+            genders: genders[0],
+            position_level: positionLevels[0],
+            educatioin_level: educationLevels[0],
+          });
+          setIsAddModalOpen(false);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
           setIsLoading(false);
         });
-      setAddRowFormData({
-        ...addRowFormData,
-        describe: "",
-        order: null,
-        active: false,
-      });
-      setIsAddModalOpen(false);
     }
   }
 
@@ -201,6 +212,7 @@ function HRList() {
                 name="facility"
                 onChange={(e) => {
                   setSelectedFacility(e.target.value);
+                  setIsLoading(true);
                   getList(e.target.value);
                 }}
                 value={selectedFacility}
@@ -240,7 +252,7 @@ function HRList() {
                             {findFacilityById(item.facility)?.name}
                           </TableCell>
                           <TableCell>{item.position_level}</TableCell>
-                          <TableCell>{item.gender}</TableCell>
+                          <TableCell>{item.genders}</TableCell>
                           <TableCell>{item.educatioin_level}</TableCell>
                           <TableCell>{item.years_in_service}</TableCell>
                           <TableCell>{item.year_in_position}</TableCell>
@@ -330,9 +342,9 @@ function HRList() {
               <div className="d-flex flex-column align-items-center">
                 <label>Gender</label>
                 <select
-                  name="gender"
+                  name="genders"
                   onChange={handleChangeEdit}
-                  value={editFormData?.gender}
+                  value={editFormData?.genders}
                 >
                   {genders.map((i, index) => (
                     <option key={index} value={i}>
@@ -437,9 +449,9 @@ function HRList() {
               <div className="d-flex flex-column align-items-center">
                 <label>Gender</label>
                 <select
-                  name="gender"
+                  name="genders"
                   onChange={handleChangeAdd}
-                  value={addRowFormData?.gender}
+                  value={addRowFormData?.genders}
                 >
                   {genders.map((i, index) => (
                     <option key={index} value={i}>
