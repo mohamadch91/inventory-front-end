@@ -8,6 +8,7 @@ import Parameters from "./settings/Parameters";
 import ParameterDescription from "./settings/ParameterDescription";
 import FieldsOfItemT from "./settings/FieldsOfItemT";
 import Manufacturer from "./settings/Manufacturer";
+import HRList from "./hr/HRList";
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -40,6 +41,9 @@ class AppRoutes extends Component {
       <Suspense fallback={<Spinner />}>
         <Switch>
           <Route exact path="/" component={Home} />
+
+          {/* <Route exact path="/hr/new" component={} /> */}
+          <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/settings/country" component={Country} />
           <Route exact path="/settings/level" component={Level} />

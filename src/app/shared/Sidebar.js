@@ -46,6 +46,7 @@ class Sidebar extends Component {
       { path: "/general-pages", state: "generalPagesMenuOpen" },
       { path: "/ecommerce", state: "ecommercePagesMenuOpen" },
       { path: "/settings", state: "settingsMenuOpen" },
+      { path: "/hr", state: "hrMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -77,6 +78,44 @@ class Sidebar extends Component {
           </li>
           <li className="nav-item nav-category">
             <span>Admin setting </span>
+          </li>
+          <li
+            className={
+              this.isPathActive("/hr") ? "nav-item active" : "nav-item"
+            }
+          >
+            <div
+              className={
+                this.state.hrMenuOpen ? "nav-link menu-expanded" : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("hrMenuOpen")}
+              data-toggle="collapse"
+            >
+              <span className="icon-bg">
+                <i className="mdi mdi-account menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>Human Resource</span>
+              </span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={this.state.hrMenuOpen}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/hr/list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/hr/list"
+                  >
+                    <span>HR List</span>
+                  </Link>
+                </li>
+              </ul>
+            </Collapse>
           </li>
           <li
             className={

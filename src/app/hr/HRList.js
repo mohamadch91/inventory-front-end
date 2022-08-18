@@ -1,0 +1,482 @@
+import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import Modal from "react-bootstrap/Modal";
+import { useEffect, useState } from "react";
+import CloseIcon from "../shared/CloseIcon";
+import EditIcon from "../shared/EditIcon";
+import SharedTable from "../shared/SharedTable";
+import toast from "react-hot-toast";
+import HRService from "../services/hr.service";
+import Spinner from "../shared/Spinner";
+import "../styles/table.scss";
+import "../styles/inputs.scss";
+import "../styles/hr.scss";
+
+function HRList() {
+  const genders = ["male", "female"];
+  const positionLevels = ["Nurse", "Vaccinator", "Assistant"];
+  const educationLevels = ["Diploma", "Bsc"];
+
+  const [list, setList] = useState([]);
+  const [editFormData, setEditFormData] = useState({
+    gender: genders[0],
+    position_level: positionLevels[0],
+    educatioin_level: educationLevels[0],
+  });
+  const [addRowFormData, setAddRowFormData] = useState({
+    gender: genders[0],
+    position_level: positionLevels[0],
+    educatioin_level: educationLevels[0],
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [facilities, setFacilities] = useState([]);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  function getFacilities() {
+    HRService.getFacilities()
+      .then((res) => {
+        const data = res.data;
+        setFacilities(data);
+        setSelectedFacility(data[0].id);
+        setIsLoading(false);
+        getList(data[0].id);
+      })
+      .catch((err) => {
+        toast.error("There is a problem loading data");
+        setIsLoading(false);
+      });
+  }
+
+  function getList(id) {
+    HRService.getHRList(id)
+      .then((res) => {
+        setList(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast.error("There is a problem loading data");
+        setIsLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    getFacilities();
+  }, []);
+
+  useEffect(() => {
+    if (facilities) {
+      setAddRowFormData({
+        ...addRowFormData,
+        facility: facilities[0]?.id,
+      });
+      // getList(facilities[0].id);
+    }
+  }, [facilities]);
+
+  function handleEdit(i) {
+    const formData = list.find((item) => item.id === i.id);
+    setEditFormData(formData);
+    setIsEditModalOpen(true);
+  }
+
+  function handleChangeEdit(e) {
+    const { name, value } = e.target;
+    setEditFormData({ ...editFormData, [name]: value });
+  }
+
+  function handleChangeAdd(e) {
+    const { name, value } = e.target;
+    setAddRowFormData({ ...addRowFormData, [name]: value });
+  }
+
+  function handleSubmitEdit() {
+    const isValid = Object.keys(editFormData).every((key) => {
+      return editFormData[key] !== "";
+    });
+    if (!isValid) {
+      toast.error("Please fill all the fields");
+    } else {
+      setIsLoading(true);
+      const formToPut = (({
+        id,
+        full_name,
+        position_level,
+        educatioin_level,
+        years_in_service,
+        year_in_position,
+        facility,
+        gender,
+      }) => ({
+        id,
+        full_name,
+        position_level,
+        educatioin_level,
+        years_in_service,
+        year_in_position,
+        facility,
+        gender,
+      }))(editFormData);
+      HRService.putHR(formToPut)
+        .then((res) => {
+          setIsLoading(true);
+          getList(selectedFacility);
+        })
+        .catch((err) => {
+          toast.error("There is a problem sending data");
+          setIsLoading(false);
+        });
+      setIsEditModalOpen(false);
+      setEditFormData({});
+      setIsEditModalOpen(false);
+    }
+  }
+
+  function handleSubmitNew() {
+    const isValid = Object.keys(addRowFormData).every((key) => {
+      return addRowFormData[key] !== "";
+    });
+    if (!isValid) {
+      toast.error("Please fill all the fields");
+    } else {
+      setIsLoading(true);
+      let formToPost = (({
+        id,
+        full_name,
+        position_level,
+        educatioin_level,
+        years_in_service,
+        year_in_position,
+        gender,
+      }) => ({
+        id,
+        full_name,
+        position_level,
+        educatioin_level,
+        years_in_service,
+        year_in_position,
+        gender,
+      }))(addRowFormData);
+      formToPost.facility = addRowFormData.facility;
+      HRService.postHR(formToPost)
+        .then((res) => {
+          setIsLoading(true);
+          getList(selectedFacility);
+        })
+        .catch((err) => {
+          toast.error("There is a problem sending data");
+          setIsLoading(false);
+        });
+      setAddRowFormData({
+        ...addRowFormData,
+        describe: "",
+        order: null,
+        active: false,
+      });
+      setIsAddModalOpen(false);
+    }
+  }
+
+  function toggleModal() {
+    setIsAddModalOpen((prevState) => !prevState);
+  }
+
+  function findFacilityById(id) {
+    return facilities.find((item) => item.id === id);
+  }
+
+  return (
+    <div className="item-class-page hr-page">
+      <h3 className="page-title mb-3">HR by Facility</h3>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <div className="row mb-4 mt-4">
+            <div className="col-md-2 d-flex align-items-center">
+              <h4 className="page-title">Main Facility</h4>
+            </div>
+            <div className="col-md-10 d-flex">
+              <select
+                name="facility"
+                onChange={(e) => {
+                  setSelectedFacility(e.target.value);
+                  getList(e.target.value);
+                }}
+                value={selectedFacility}
+              >
+                {facilities.map((item, index) => (
+                  <option key={item.id} value={item.id}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          {facilities && list && list.length > 0 && (
+            <div>
+              <SharedTable>
+                <TableHead>
+                  <TableRow>
+                    <TableCell></TableCell>
+                    <TableCell>Full Name</TableCell>
+                    <TableCell>Facility</TableCell>
+                    <TableCell>HR Position Levels</TableCell>
+                    <TableCell>Gender</TableCell>
+                    <TableCell>HR Education Levels</TableCell>
+                    <TableCell>Total Years In Service</TableCell>
+                    <TableCell>Total Year In This Position</TableCell>
+                    <TableCell>Edit</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {list &&
+                    list.map((item, index) => (
+                      <>
+                        <TableRow>
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>{item.full_name}</TableCell>
+                          <TableCell>
+                            {findFacilityById(item.facility)?.name}
+                          </TableCell>
+                          <TableCell>{item.position_level}</TableCell>
+                          <TableCell>{item.gender}</TableCell>
+                          <TableCell>{item.educatioin_level}</TableCell>
+                          <TableCell>{item.years_in_service}</TableCell>
+                          <TableCell>{item.year_in_position}</TableCell>
+                          <TableCell>
+                            <button
+                              className="edit-btn"
+                              onClick={(event) => handleEdit(item)}
+                            >
+                              <EditIcon />
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      </>
+                    ))}
+                </TableBody>
+              </SharedTable>
+            </div>
+          )}
+          <Modal
+            show={isEditModalOpen}
+            onHide={() => setIsEditModalOpen(false)}
+          >
+            <form onSubmit={handleSubmitEdit}>
+              <h3 className="mb-1">Human Resource Information</h3>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+
+              <div className="d-flex flex-column align-items-center">
+                <label>Facility</label>
+                <select
+                  name="facility"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.facility}
+                >
+                  {facilities.map((item, index) => (
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      selected={item.facility === item.id}
+                    >
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Full Name</label>
+                <input
+                  name="full_name"
+                  type="text"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.full_name}
+                  required
+                ></input>
+              </div>
+
+              <div className="d-flex flex-column align-items-center">
+                <label>HR Position Levels</label>
+                <select
+                  name="position_level"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.position_level}
+                >
+                  {positionLevels.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>HR Education Levels</label>
+                <select
+                  name="educatioin_level"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.educatioin_level}
+                >
+                  {educationLevels.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Gender</label>
+                <select
+                  name="gender"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.gender}
+                >
+                  {genders.map((i, index) => (
+                    <option key={index} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Total Years In Service</label>
+                <input
+                  name="years_in_service"
+                  type="number"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.years_in_service}
+                  required
+                ></input>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Total Years In This Position</label>
+                <input
+                  name="year_in_position"
+                  type="number"
+                  onChange={handleChangeEdit}
+                  value={editFormData?.year_in_position}
+                  required
+                ></input>
+              </div>
+              <button className="save-btn w-100" type="submit">
+                Save
+              </button>
+            </form>
+          </Modal>
+          <button className="modal-btn" onClick={toggleModal}>
+            Human Resource Information
+          </button>
+          <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
+            <form onSubmit={handleSubmitNew}>
+              <h3 className="mb-1">Human Resource Information</h3>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+              <div className="d-flex flex-column align-items-center"></div>
+
+              <div className="d-flex flex-column align-items-center">
+                <label>Facility</label>
+                <select
+                  name="facility"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.facility}
+                >
+                  {facilities.map((item, index) => (
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      selected={item.facility === item.id}
+                    >
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Full Name</label>
+                <input
+                  name="full_name"
+                  type="text"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.full_name}
+                  required
+                ></input>
+              </div>
+
+              <div className="d-flex flex-column align-items-center">
+                <label>HR Position Levels</label>
+                <select
+                  name="position_level"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.position_level}
+                >
+                  {positionLevels.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>HR Education Levels</label>
+                <select
+                  name="educatioin_level"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.educatioin_level}
+                >
+                  {educationLevels.map((item, index) => (
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Gender</label>
+                <select
+                  name="gender"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.gender}
+                >
+                  {genders.map((i, index) => (
+                    <option key={index} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Total Years In Service</label>
+                <input
+                  name="years_in_service"
+                  type="number"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.years_in_service}
+                  required
+                ></input>
+              </div>
+              <div className="d-flex flex-column align-items-center">
+                <label>Total Years In This Position</label>
+                <input
+                  name="year_in_position"
+                  type="number"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.year_in_position}
+                  required
+                ></input>
+              </div>
+              <button className="save-btn w-100" type="submit">
+                Save
+              </button>
+            </form>
+          </Modal>
+        </>
+      )}
+    </div>
+  );
+}
+
+export default HRList;

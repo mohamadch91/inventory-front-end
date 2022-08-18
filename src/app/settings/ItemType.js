@@ -63,25 +63,13 @@ function ItemType() {
   }
 
   function handleChange(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setEditFormData({ ...editFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setEditFormData({ ...editFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setEditFormData({ ...editFormData, [name]: value });
   }
 
   function handleChangeAdd(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setAddRowFormData({ ...addRowFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setAddRowFormData({ ...addRowFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
   function handleSubmitEdit() {

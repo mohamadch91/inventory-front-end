@@ -69,25 +69,15 @@ function Manufacturer() {
   }
 
   function handleChangeEdit(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setEditFormData({ ...editFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setEditFormData({ ...editFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+
+    setEditFormData({ ...editFormData, [name]: value });
   }
 
   function handleChangeAdd(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setAddRowFormData({ ...addRowFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setAddRowFormData({ ...addRowFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+
+    setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
   function handleSubmitEdit() {
@@ -251,6 +241,7 @@ function Manufacturer() {
                               type="number"
                               onChange={handleChangeEdit}
                               value={editFormData?.order}
+                              required
                             ></input>
                           </TableCell>
                           <TableCell>
@@ -288,64 +279,67 @@ function Manufacturer() {
             </SharedTable>
           </div>
           <div className="add-row mt-4 mb-4">
-            <h3 className="mb-3 mt-3">Insert Manufacturer</h3>
-            <div className="row">
-              <div className="col-md-3 flex-column d-flex">
-                <label>Parameter description</label>
-                <input
-                  name="describe"
-                  type="text"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.describe}
-                  required
-                ></input>
+            <form onSubmit={handleSubmitNew}>
+              <h3 className="mb-3 mt-3">Insert Manufacturer</h3>
+              <div className="row">
+                <div className="col-md-3 flex-column d-flex">
+                  <label>Parameter description</label>
+                  <input
+                    name="describe"
+                    type="text"
+                    onChange={handleChangeAdd}
+                    value={addRowFormData?.describe}
+                    required
+                  ></input>
+                </div>
+                <div className="col-md-3 flex-column d-flex">
+                  <label>Item class</label>
+                  <select
+                    name="itemclass"
+                    onChange={handleChangeAdd}
+                    value={addRowFormData?.itemclass}
+                  >
+                    {itemClasses.map((item, index) => (
+                      <option
+                        key={item.id}
+                        value={item.id}
+                        selected={index === 0}
+                      >
+                        {item.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="col-md-3 flex-column d-flex">
+                  <label>Show order</label>
+                  <input
+                    name="order"
+                    type="number"
+                    onChange={handleChangeAdd}
+                    value={addRowFormData?.order}
+                    required
+                  ></input>
+                </div>
+                <div className="col-md-3 d-flex justify-content-center align-items-center">
+                  <label>Active</label>
+                  <input
+                    name="active"
+                    className="mr-4"
+                    type="checkbox"
+                    onChange={() =>
+                      setAddRowFormData({
+                        ...addRowFormData,
+                        active: !addRowFormData.active,
+                      })
+                    }
+                    checked={addRowFormData?.active}
+                  ></input>
+                  <button className="save-btn" type="submit">
+                    Save
+                  </button>
+                </div>
               </div>
-              <div className="col-md-3 flex-column d-flex">
-                <label>Item class</label>
-                <select
-                  name="itemclass"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.itemclass}
-                >
-                  {itemClasses.map((item, index) => (
-                    <option
-                      key={item.id}
-                      value={item.id}
-                      selected={index === 0}
-                    >
-                      {item.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-3 flex-column d-flex">
-                <label>Show order</label>
-                <input
-                  name="order"
-                  type="number"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.order}
-                ></input>
-              </div>
-              <div className="col-md-3 d-flex justify-content-center align-items-center">
-                <label>Active</label>
-                <input
-                  name="active"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      active: !addRowFormData.active,
-                    })
-                  }
-                  checked={addRowFormData?.active}
-                ></input>
-                <button className="save-btn" onClick={handleSubmitNew}>
-                  Save
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </>
       )}
