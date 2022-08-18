@@ -7,6 +7,7 @@ import ItemTypeLevel from "./settings/ItemTypeLevel";
 import Parameters from "./settings/Parameters";
 import ParameterDescription from "./settings/ParameterDescription";
 import FieldsOfItemT from "./settings/FieldsOfItemT";
+import Manufacturer from "./settings/Manufacturer";
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -45,6 +46,7 @@ class AppRoutes extends Component {
           <Route exact path="/settings/item-class" component={ItemClass} />
           <Route exact path="/settings/item-type" component={ItemType} />
           <Route exact path="/settings/params" component={Parameters} />
+          <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route
             exact
             path="/settings/params/:id"

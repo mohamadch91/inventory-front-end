@@ -10,7 +10,7 @@ import "./itemType.scss";
 import RelatedService from "../services/related.service";
 import { useParams } from "react-router-dom";
 
-function ItemType() {
+function ParameterDescription() {
   const [descriptions, setDescriptions] = useState([]);
   const [editFormData, setEditFormData] = useState({});
   const [addRowFormData, setAddRowFormData] = useState({
@@ -133,52 +133,54 @@ function ItemType() {
 
   return (
     <div className="item-class-page">
+      <h3 className="page-title mb-3">Parameter Descriptions</h3>
+      <div className="add-row mt-4 mb-4">
+        <h3>Insert parameter In this row!</h3>
+        <div className="row">
+          <div className="col-md-4 flex-column d-flex">
+            <label>Parameter description</label>
+            <input
+              name="name"
+              type="text"
+              onChange={handleChangeAdd}
+              value={addRowFormData?.name}
+              required
+            ></input>
+          </div>
+          <div className="col-md-4 flex-column d-flex">
+            <label>Show order</label>
+            <input
+              name="order"
+              type="number"
+              onChange={handleChangeAdd}
+              value={addRowFormData?.order}
+              required
+            ></input>
+          </div>
+          <div className="col-md-4 d-flex justify-content-center align-items-center">
+            <label>Enable</label>
+            <input
+              name="enabled"
+              className="mr-4"
+              type="checkbox"
+              onChange={() =>
+                setAddRowFormData({
+                  ...addRowFormData,
+                  enabled: !addRowFormData.enabled,
+                })
+              }
+              checked={addRowFormData?.enabled}
+            ></input>
+            <button className="save-btn" onClick={handleSubmitNew}>
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Parameter Descriptions</h3>
-          <div className="add-row mt-4 mb-4">
-            <h3>Insert parameter In this row!</h3>
-            <div className="row">
-              <div className="col-md-4 flex-column d-flex">
-                <label>Parameter description</label>
-                <input
-                  name="name"
-                  type="text"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.name}
-                ></input>
-              </div>
-              <div className="col-md-4 flex-column d-flex">
-                <label>Show order</label>
-                <input
-                  name="order"
-                  type="number"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.order}
-                ></input>
-              </div>
-              <div className="col-md-4 d-flex justify-content-center align-items-center">
-                <label>Enable</label>
-                <input
-                  name="enabled"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      enabled: !addRowFormData.enabled,
-                    })
-                  }
-                  checked={addRowFormData?.enabled}
-                ></input>
-                <button className="save-btn" onClick={handleSubmitNew}>
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
           <div>
             <SharedTable>
               <TableHead>
@@ -220,6 +222,7 @@ function ItemType() {
                             type="text"
                             onChange={handleChange}
                             value={editFormData?.name}
+                            required
                           ></input>
                         </TableCell>
                         <TableCell>
@@ -228,6 +231,7 @@ function ItemType() {
                             type="number"
                             onChange={handleChange}
                             value={editFormData?.order}
+                            required
                           ></input>
                         </TableCell>
                         <TableCell>
@@ -270,4 +274,4 @@ function ItemType() {
   );
 }
 
-export default ItemType;
+export default ParameterDescription;

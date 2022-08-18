@@ -193,6 +193,19 @@ class Sidebar extends Component {
                     <span>Parameters</span>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/settings/manufacturer")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/manufacturer"
+                  >
+                    <span>Manufacturer by Item class</span>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>

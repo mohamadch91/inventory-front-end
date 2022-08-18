@@ -1,0 +1,10 @@
+input,
+select {
+  background: white;
+  border: 1px solid #ababab70;
+  border-radius: 5px;
+  padding: 0.5rem;
+  &:invalid {
+    border-color: #ff0000;
+  }
+}
