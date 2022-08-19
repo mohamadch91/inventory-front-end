@@ -90,7 +90,8 @@ function HRList() {
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
-  function handleSubmitEdit() {
+  function handleSubmitEdit(e) {
+    e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "";
     });
@@ -141,7 +142,8 @@ function HRList() {
     }
   }
 
-  function handleSubmitNew() {
+  function handleSubmitNew(e) {
+    e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
       return addRowFormData[key] !== "";
     });

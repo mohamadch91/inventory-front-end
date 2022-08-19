@@ -80,7 +80,8 @@ function Manufacturer() {
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
-  function handleSubmitEdit() {
+  function handleSubmitEdit(e) {
+    e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
@@ -102,8 +103,8 @@ function Manufacturer() {
     }
   }
 
-  function handleSubmitNew() {
-    console.log(addRowFormData);
+  function handleSubmitNew(e) {
+    e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
       return addRowFormData[key] !== "" && editFormData[key] !== null;
     });

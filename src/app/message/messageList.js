@@ -13,45 +13,44 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
+import "./message.scss";
+import { Link } from "react-router-dom";
 
 function MessageList() {
   const [list, setList] = useState([]);
   const [editFormData, setEditFormData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [facilities, setFacilities] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selected, setSelected] = useState([]);
+  const [sentOrReceived, setSentOrReceived] = useState("r"); // r means received and s means sent
 
-  function getFacilities() {
-    HRService.getFacilities()
-      .then((res) => {
-        const data = res.data;
-        setFacilities(data);
-        setSelectedFacility(data[0].id);
-        setIsLoading(false);
-        getList(data[0].id);
-      })
-      .catch((err) => {
-        toast.error("There is a problem loading data");
-        setIsLoading(false);
-      });
-  }
-
-  function getList(id) {
-    HRService.getHRList(id)
-      .then((res) => {
-        setList(res.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        toast.error("There is a problem loading data");
-        setIsLoading(false);
-      });
+  function getList() {
+    if (sentOrReceived === "r") {
+      MessageService.getReceivedMessages()
+        .then((res) => {
+          setList(res.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          toast.error("There is a problem loading data");
+          setIsLoading(false);
+        });
+    } else {
+      MessageService.getSentMessages()
+        .then((res) => {
+          setList(res.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          toast.error("There is a problem loading data");
+          setIsLoading(false);
+        });
+    }
   }
 
   useEffect(() => {
-    getFacilities();
+    getList();
   }, []);
 
   function handleEdit(i) {
@@ -65,81 +64,74 @@ function MessageList() {
     setEditFormData({ ...editFormData, [name]: value });
   }
 
-  function handleSubmitEdit() {
+  function handleSubmitEdit(e) {
+    e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "";
     });
     if (!isValid) {
       toast.error("Please fill all the fields");
     } else {
-      if (selected.length === 0) {
-        toast.error("Please select at least one facility");
-      } else {
-        const { subject, body } = editFormData;
-        const data = {
-          subject,
-          body,
-          reciever: selected.map((item) => item.value),
-        };
-        MessageService.sendMessage(data)
-          .then((res) => {
-            toast.success("Message sent successfully");
-            setEditFormData({});
-            setSelected([]);
-          })
-          .catch((err) => {
-            toast.error("There is a problem sending message");
-          });
-      }
+      const { subject, body, id, sender, reciever } = editFormData;
+      const data = {
+        subject,
+        body,
+        id,
+      };
+      data.sender = sender.id;
+      data.reciever = reciever.id;
+      MessageService.putMessage(data)
+        .then((res) => {
+          toast.success("Message sent successfully");
+          getList();
+          setEditFormData({});
+          setSelected([]);
+          setIsEditModalOpen(false);
+        })
+        .catch((err) => {
+          toast.error("There is a problem sending message");
+        });
     }
   }
 
-  function findFacilityById(id) {
-    return facilities.find((item) => item.id === id);
-  }
-
   return (
-    <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">HR by Facility</h3>
+    <div className="item-class-page hr-page message-page">
+      <h3 className="page-title mb-3">Messages List</h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="row mb-4 mt-4">
-            <div className="col-md-2 d-flex align-items-center">
-              <h4 className="page-title">Main Facility</h4>
+            <div className="col-md-3 d-flex align-items-center">
+              <h4 className="page-title">Received or Sent messages</h4>
             </div>
-            <div className="col-md-10 d-flex">
+            <div className="col-md-9 d-flex">
               <select
-                name="facility"
+                name="receivedOrSent"
                 onChange={(e) => {
-                  setSelectedFacility(e.target.value);
+                  setSentOrReceived(e.target.value);
                   setIsLoading(true);
-                  getList(e.target.value);
+                  getList();
                 }}
-                value={selectedFacility}
+                value={sentOrReceived}
               >
-                {facilities.map((item, index) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
+                <option value="s">Sent</option>
+                <option value="r">Received</option>
               </select>
             </div>
           </div>
-          {facilities && list && list.length > 0 && (
+          {list && list.length > 0 && (
             <div>
               <SharedTable>
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell>Full Name</TableCell>
-                    <TableCell>Facility</TableCell>
-                    <TableCell>HR Position Levels</TableCell>
-                    <TableCell>Gender</TableCell>
-                    <TableCell>HR Education Levels</TableCell>
-                    <TableCell>Total Years In Service</TableCell>
-                    <TableCell>Total Year In This Position</TableCell>
+                    <TableCell>
+                      {sentOrReceived === "s" ? "Receiver" : "Sender"}
+                    </TableCell>
+                    <TableCell>Subject</TableCell>
+                    <TableCell>Body</TableCell>
+                    <TableCell>Date</TableCell>
                     <TableCell>Edit</TableCell>
                   </TableRow>
                 </TableHead>
@@ -149,15 +141,16 @@ function MessageList() {
                       <>
                         <TableRow>
                           <TableCell>{index + 1}</TableCell>
-                          <TableCell>{item.full_name}</TableCell>
                           <TableCell>
-                            {findFacilityById(item.facility)?.name}
+                            {sentOrReceived === "s"
+                              ? item.reciever.name
+                              : item.sender.name}
                           </TableCell>
-                          <TableCell>{item.position_level}</TableCell>
-                          <TableCell>{item.genders}</TableCell>
-                          <TableCell>{item.educatioin_level}</TableCell>
-                          <TableCell>{item.years_in_service}</TableCell>
-                          <TableCell>{item.year_in_position}</TableCell>
+                          <TableCell>{item.subject}</TableCell>
+                          <TableCell>{item.body}</TableCell>
+                          <TableCell>
+                            {new Date(item.created_at).toLocaleDateString("en")}
+                          </TableCell>
                           <TableCell>
                             <button
                               className="edit-btn"
@@ -179,14 +172,35 @@ function MessageList() {
           >
             <form onSubmit={handleSubmitEdit}>
               <h3 className="mb-1">Edit Message</h3>
-
-              <button className="save-btn w-100" type="submit">
-                Save
+              <div className="d-flex flex-column">
+                <label>Subject</label>
+                <input
+                  onChange={handleChangeEdit}
+                  type="text"
+                  name="subject"
+                  value={editFormData.subject}
+                  required
+                />
+              </div>
+              <div className="d-flex flex-column">
+                <label>Message Body</label>
+                <textarea
+                  onChange={handleChangeEdit}
+                  value={editFormData.body}
+                  name="body"
+                  required
+                />
+              </div>
+              <button type="submit" className="w-100 save-btn mt-4">
+                Send
               </button>
             </form>
           </Modal>
         </>
       )}
+      <Link to="/message/new">
+        <button className="save-btn mt-4">Send Message</button>
+      </Link>
     </div>
   );
 }

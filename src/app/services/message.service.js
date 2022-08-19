@@ -9,7 +9,7 @@ class MessageService {
       headers: { Authorization: authHeader() },
     });
   }
-  getSendedMessages() {
+  getSentMessages() {
     return axios.get(API_URL + "?type=sender", {
       headers: { Authorization: authHeader() },
     });
