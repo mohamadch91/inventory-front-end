@@ -72,9 +72,9 @@ export class Country extends Component {
       event.stopPropagation();
       console.log("invalid");
     } else {
-      if (this.state.excelData) {
-        UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
-      }
+      // if (this.state.excelData) {
+      //   UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
+      // }
       this.setState({ validated: true });
       let formData = new FormData();
       formData.append("country", this.state.CountryName);

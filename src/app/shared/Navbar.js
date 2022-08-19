@@ -42,10 +42,10 @@ class Navbar extends Component {
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <Link className="navbar-brand brand-logo" to="/">
+          <Link className="navbar-brand brand-logo" to="/dashboard">
             <img src={this.state.logo1} alt="logo" />
           </Link>
-          <Link className="navbar-brand brand-logo-mini" to="/">
+          <Link className="navbar-brand brand-logo-mini" to="/dashboard">
             <img
               src={this.state.logo2}
               alt="logo"
