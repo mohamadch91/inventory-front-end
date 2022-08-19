@@ -3,7 +3,6 @@ import { Form } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import bsCustomFileInput from "bs-custom-file-input";
 import UserService from "../services/user.service";
-import { Toast } from "react-bootstrap";
 import {
   MapContainer,
   TileLayer,
@@ -15,6 +14,7 @@ import "leaflet/dist/leaflet.css";
 import "./country.css";
 import LocationMarker from "./LocationMarker";
 import * as XLSX from "xlsx";
+import {toast} from "react-hot-toast";
 
 export class Country extends Component {
   constructor(props) {
@@ -72,9 +72,9 @@ export class Country extends Component {
       event.stopPropagation();
       console.log("invalid");
     } else {
-      if (this.state.excelData) {
-        UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
-      }
+      // if (this.state.excelData) {
+      //   UserService.putLevels(JSON.stringify({ data: this.state.excelData }));
+      // }
       this.setState({ validated: true });
       let formData = new FormData();
       formData.append("country", this.state.CountryName);
@@ -146,21 +146,23 @@ export class Country extends Component {
               targetpopulation: country.poptarget,
               enableHR: country.havehr,
               mainlocation: country.mainlocation,
-              logo2: country.logo2,
               requiredcapacities: country.usingtool,
               enableMaintaining: country.usingmaintenance,
             });
             this.alerthandle("Country changed successfully", "success");
+            toast.success("Country changed successfully")
           })
           .catch((err) => {
             // console.log(formData)
             // console.log(err)
             this.alerthandle("Country changed unsuccessfully", "error");
+            toast.error("Country changed unsuccessfully")
           });
       } else {
         UserService.addcountry(formData)
           .then((res) => {
             this.alerthandle("Country added successfully", "success");
+            toast.success("Country added successfully")
             localStorage.setItem("country", JSON.stringify(res.data));
             const country = JSON.parse(localStorage.getItem("country"));
             for (let i = 0; i < country.levels; i++) {
@@ -200,7 +202,6 @@ export class Country extends Component {
               targetpopulation: country.poptarget,
               enableHR: country.havehr,
               mainlocation: country.mainlocation,
-              logo2: country.logo2,
               requiredcapacities: country.usingtool,
               enableMaintaining: country.usingmaintenance,
             });
@@ -208,6 +209,7 @@ export class Country extends Component {
           .catch((err) => {
             // console.log(err)
             this.alerthandle("Country added unsuccessfully", "error");
+            toast.error("Country added unsuccessfully")
           });
       }
     }
@@ -292,7 +294,6 @@ export class Country extends Component {
         targetpopulation: country.poptarget,
         enableHR: country.havehr,
         mainlocation: country.mainlocation,
-        slogo: country.logo2,
         requiredcapacities: country.usingtool,
         enableMaintaining: country.usingmaintenance,
         country: country,
@@ -712,26 +713,7 @@ export class Country extends Component {
             </div>
           </div>
         </div>
-        <Toast
-          style={{
-            position: "absolute",
-            top: "120%",
-            right: "0",
-            backgroundColor:
-              this.state.type == "success" ? "#03A10A" : "#F8D7DA",
-            color: "#000",
-          }}
-          onClose={(e) => {
-            this.handleClosesnack(e);
-          }}
-          show={this.state.snackopen}
-          delay={3000}
-          autohide
-          className="d-inline-block m-1"
-          bg={this.state.type}
-        >
-          <Toast.Body>{this.state.content}</Toast.Body>
-        </Toast>
+    
       </div>
     );
   }

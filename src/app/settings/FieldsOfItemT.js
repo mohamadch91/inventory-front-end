@@ -144,7 +144,7 @@ function FieldsOfItemT() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Fields of "Item type"</h3>
+      <h3 className="page-title mb-3">Fields of "item category"</h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (
@@ -172,7 +172,7 @@ function FieldsOfItemT() {
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Item type</label>
+                    <label className="col-sm-12">item category</label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemTypeHandler}
@@ -261,7 +261,7 @@ function FieldsOfItemT() {
                           <TableCell className="col-sm-4">Field name</TableCell>
                           <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item type?
+                            Is this required field for item category?
                           </TableCell>
                           <TableCell className="col-sm-2">Edit</TableCell>
                         </TableRow>

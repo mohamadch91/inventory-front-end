@@ -9,7 +9,7 @@ import SettingsPanel from "./shared/SettingsPanel";
 import Footer from "./shared/Footer";
 // import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
-import EventBus from "./common/EventBus";
+import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
@@ -41,12 +41,14 @@ class App extends Component {
       });
     }
 
-    EventBus.on("logout", () => {
+    eventBus.on("logout", () => {
       this.logOut();
     });
     this.onRouteChanged();
   }
   logOut() {
+    console.log("salam")
+     
     this.props.dispatch(logout());
     this.setState({
       showModeratorBoard: false,

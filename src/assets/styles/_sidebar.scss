@@ -6,35 +6,48 @@
   padding: 0;
   width: $sidebar-width-lg;
   z-index: 11;
-  transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
-  -webkit-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
-  -moz-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
-  -ms-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
+  transition: width $action-transition-duration
+      $action-transition-timing-function,
+    background $action-transition-duration $action-transition-timing-function;
+  -webkit-transition: width $action-transition-duration
+      $action-transition-timing-function,
+    background $action-transition-duration $action-transition-timing-function;
+  -moz-transition: width $action-transition-duration
+      $action-transition-timing-function,
+    background $action-transition-duration $action-transition-timing-function;
+  -ms-transition: width $action-transition-duration
+      $action-transition-timing-function,
+    background $action-transition-duration $action-transition-timing-function;
 
   .nav {
     overflow: hidden;
     flex-wrap: nowrap;
     flex-direction: column;
     margin-bottom: 60px;
+    
 
     .nav-item {
-      padding:0 $sidebar-menu-padding-x;
+      padding: 0 $sidebar-menu-padding-x;
       @include transition-duration(0.25s);
       transition-property: background;
       -webkit-transition-property: background;
       position: relative;
       .ReactCollapse--collapse {
-        -webkit-transition: height $action-transition-duration $action-transition-timing-function;
-        -moz-transition: height $action-transition-duration $action-transition-timing-function;
-        -ms-transition: height $action-transition-duration $action-transition-timing-function;
-        transition: height $action-transition-duration $action-transition-timing-function;
+        -webkit-transition: height $action-transition-duration
+          $action-transition-timing-function;
+        -moz-transition: height $action-transition-duration
+          $action-transition-timing-function;
+        -ms-transition: height $action-transition-duration
+          $action-transition-timing-function;
+        transition: height $action-transition-duration
+          $action-transition-timing-function;
       }
 
       .nav-link {
         @include display-flex;
         @include align-items(center);
-        white-space: nowrap;
-        padding:$sidebar-menu-padding-y 0 $sidebar-menu-padding-y 0;
+        white-space: normal;
+        padding: $sidebar-menu-padding-y 0 $sidebar-menu-padding-y 0;
         color: $sidebar-dark-menu-color;
         @include transition-duration(0.45s);
         transition-property: color;
@@ -57,7 +70,7 @@
             margin-right: 0;
           }
           .menu-icon {
-            color: $sidebar-dark-icon-color; 
+            color: $sidebar-dark-icon-color;
 
             &:after,
             &:before {
@@ -103,10 +116,10 @@
               }
             }
             + .menu-icon {
-              margin-left: .25rem;
+              margin-left: 0.25rem;
               .rtl & {
                 margin-left: 0;
-                margin-right: .25rem;
+                margin-right: 0.25rem;
               }
             }
           }
@@ -125,9 +138,9 @@
           margin-left: 1rem;
         }
 
-        &[aria-expanded="true"]{
-          .menu-arrow{
-            &:before{
+        &[aria-expanded="true"] {
+          .menu-arrow {
+            &:before {
               content: "\f140";
             }
           }
@@ -141,7 +154,7 @@
             content: "";
             position: absolute;
             left: 0;
-            top: .5rem;
+            top: 0.5rem;
             bottom: 0;
             background: theme-color(success);
             height: 24px;
@@ -154,14 +167,14 @@
           .menu-title {
             color: $sidebar-dark-menu-active-color;
             font-family: $type1;
-            font-weight: 600;          
+            font-weight: 600;
           }
           i {
             color: theme-color(success);
           }
         }
       }
-      &:hover{
+      &:hover {
         background: $sidebar-dark-menu-hover-bg;
       }
       &.nav-profile {
@@ -211,86 +224,86 @@
         }
       }
 
-    &.nav-category {
-      color: theme-color(dark);
-      font-size: 0.8125rem;
-      line-height: 16px;
-      margin: 25px 0px 10px 0px;
-      color: $sidebar-dark-menu-icon-color;
-      font-family: $type1;
-      font-weight: 700;
+      &.nav-category {
+        color: theme-color(dark);
+        font-size: 0.8125rem;
+        line-height: 16px;
+        margin: 25px 0px 10px 0px;
+        color: $sidebar-dark-menu-icon-color;
+        font-family: $type1;
+        font-weight: 700;
 
-      .nav-link {
-        padding: 1.2rem 2rem 0.2rem;
+        .nav-link {
+          padding: 1.2rem 2rem 0.2rem;
 
-        &:hover {
-          color: theme-color(dark);
+          &:hover {
+            color: theme-color(dark);
+          }
         }
       }
-    }
-    &.documentation-link {
-      margin: 2.5rem 0;
+      &.documentation-link {
+        margin: 2.5rem 0;
 
-      .nav-link {
-        background: theme-color(primary);
-        color: $white;
-        @include border-radius(2px);
-        padding: .875rem 0;
-        font-size: 1.125rem;
-        font-weight: bold;
-
-        .icon-bg {
-          display: none;
-        }
-
-        .menu-title {
-          margin: auto;
-          background: transparent;
+        .nav-link {
+          background: theme-color(primary);
           color: $white;
+          @include border-radius(2px);
+          padding: 0.875rem 0;
+          font-size: 1.125rem;
+          font-weight: bold;
+
+          .icon-bg {
+            display: none;
+          }
+
+          .menu-title {
+            margin: auto;
+            background: transparent;
+            color: $white;
+          }
         }
       }
-    }
-    &.sidebar-user-actions {
-      padding-left: 0;
-      padding-right: 0;
-      .user-details {
-        padding: 1rem 2.375rem;
-        width: 100%;
-        border-top: 1px solid $sidebar-dark-action-border;
-        border-bottom: 1px solid $sidebar-dark-action-border;
-        margin-bottom: 20px;
-        .sidebar-profile-img {
-          width: 31px;
-          height: 31px;
-          border-radius: 100%;
-          margin-right: 12px;
-          .rtl & {
-            margin-left: 1rem;
+      &.sidebar-user-actions {
+        padding-left: 0;
+        padding-right: 0;
+        .user-details {
+          padding: 1rem 2.375rem;
+          width: 100%;
+          border-top: 1px solid $sidebar-dark-action-border;
+          border-bottom: 1px solid $sidebar-dark-action-border;
+          margin-bottom: 20px;
+          .sidebar-profile-img {
+            width: 31px;
+            height: 31px;
+            border-radius: 100%;
+            margin-right: 12px;
+            .rtl & {
+              margin-left: 1rem;
+              margin-right: 0;
+            }
+          }
+          .sidebar-profile-text {
+            color: $white;
+          }
+          .badge {
             margin-right: 0;
           }
         }
-        .sidebar-profile-text {
-          color: $white;
-        }
-        .badge {
-          margin-right: 0;
-        }
-      }
-      .sidebar-user-menu {
-        padding: 0 2.375rem;
-        .nav-link {
-          font-size: 15px;
-          i {
-            font-size: 18px;
-            margin-right: 12px;
-            .rtl & {
-              margin-right: 0;
-              margin-left: 12px;
+        .sidebar-user-menu {
+          padding: 0 2.375rem;
+          .nav-link {
+            font-size: 15px;
+            i {
+              font-size: 18px;
+              margin-right: 12px;
+              .rtl & {
+                margin-right: 0;
+                margin-left: 12px;
+              }
             }
           }
         }
       }
-    }
     }
 
     &:not(.sub-menu) {
@@ -306,7 +319,7 @@
     }
     &.sub-menu {
       margin-bottom: 0px;
-      margin-top:0;
+      margin-top: 0;
       list-style: none;
 
       .nav-item {
@@ -324,16 +337,16 @@
             font-family: "Material Design Icons";
             display: block;
             position: absolute;
-            left:0px;
+            left: 0px;
             .rtl & {
               left: auto;
               right: 0;
               content: "\F04D";
             }
-            top:50%;
+            top: 50%;
             @include transform(translateY(-50%));
             color: lighten($sidebar-dark-submenu-color, 10%);
-            font-size: .75rem;
+            font-size: 0.75rem;
           }
           &.active {
             color: $sidebar-dark-menu-active-color;

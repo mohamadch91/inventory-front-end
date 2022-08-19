@@ -3,13 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
-import ItemTypeLevel from "./settings/ItemTypeLevel";
-import Parameters from "./settings/Parameters";
-import ParameterDescription from "./settings/ParameterDescription";
-import FieldsOfItemT from "./settings/FieldsOfItemT";
-import FacilityFields from "./settings/FacilityFields";
-import MangeHelp from "./settings/ManageHelp";
-import AboutIGA from "./about-iga";
+
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -35,6 +29,20 @@ const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
+const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
+const Parameters = lazy(() => import("./settings/Parameters"));
+const ParameterDescription = lazy(() =>
+  import("./settings/ParameterDescription")
+);
+const MangeHelp = lazy(() => import("./settings/ManageHelp"));
+const FieldsOfItemT = lazy(() => import("./settings/FieldsOfItemT"));
+const FacilityFields = lazy(() => import("./settings/FacilityFields"));
+const Manufacturer = lazy(() => import("./settings/Manufacturer"));
+const HRList = lazy(() => import("./hr/HRList"));
+const UsersList = lazy(() => import("./user/usersList"));
+const AboutIGA = lazy(() => import("./about-iga"));
+const Facility = lazy(() => import("./facilities/Facility"));
+const FacilityList = lazy(() => import("./facilities/FacilityList"));
 
 class AppRoutes extends Component {
   render() {
@@ -43,11 +51,16 @@ class AppRoutes extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
 
+          <Route exact path="/hr/list" component={HRList} />
+
+          <Route exact path="/user/list" component={UsersList} />
+
           <Route exact path="/settings/country" component={Country} />
           <Route exact path="/settings/level" component={Level} />
           <Route exact path="/settings/item-class" component={ItemClass} />
           <Route exact path="/settings/item-type" component={ItemType} />
           <Route exact path="/settings/params" component={Parameters} />
+          <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route
             exact
             path="/settings/params/:id"
@@ -71,6 +84,9 @@ class AppRoutes extends Component {
           />
           <Route exact path="/settings/manage-help" component={MangeHelp} />
           <Route exact path="/about-iga" component={AboutIGA} />
+
+          <Route exact path="/facilities/info/:id" component={Facility} />
+          <Route exact path="/facilities/list" component={FacilityList} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 

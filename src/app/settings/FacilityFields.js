@@ -1,15 +1,12 @@
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import { useMemo, useState } from "react";
 import SharedTable from "../shared/SharedTable";
-import { Form } from "react-bootstrap";
-import ItemsService from "../services/items.service";
 import { useQuery } from "react-query";
 import Spinner from "../shared/Spinner";
 import EditIcon from "../shared/EditIcon";
 import CloseIcon from "../shared/CloseIcon";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
@@ -172,7 +169,7 @@ function FieldsFacility() {
                           <TableCell className="col-sm-4">Field name</TableCell>
                           <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item type?
+                            Is this required field for item category?
                           </TableCell>
                           <TableCell className="col-sm-2">Edit</TableCell>
                         </TableRow>

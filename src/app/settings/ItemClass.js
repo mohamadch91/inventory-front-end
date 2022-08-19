@@ -7,6 +7,7 @@ import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
+import "../styles/inputs.scss";
 
 function ItemClass() {
   const [itemClasses, setItemClasses] = useState([]);
@@ -121,6 +122,7 @@ function ItemClass() {
                             type="text"
                             onChange={handleChange}
                             value={editFormData?.title}
+                            required
                           ></input>
                         </TableCell>
                         <TableCell>{editFormData.code}</TableCell>

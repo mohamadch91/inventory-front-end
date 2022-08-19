@@ -41,14 +41,15 @@ class AuthService {
           */
          return axios.get(USER_PROFILE  ,  { headers: {Authorization:"Bearer "+user.access} }).then
           (res=>{
-        
+            console.log(res.data.Country)
             let country=res.data.Country[0];
+            
             if(country ===undefined){
               country={}
 
             }
             user.id=res.data.User.pk;
-            user.admin=res.data.User.is_superuser;
+            user.admin = res.data.User.is_superuser;
             user.name=res.data.User.name;
             user.username=res.data.User.username;
             user.idnumber=res.data.User.idnumber;
@@ -56,6 +57,7 @@ class AuthService {
             user.facility_admin=res.data.User.facadmin;
             user.facility_id=res.data.User.facilityid;
             user.reportadmin=res.data.User.reportadmin;
+            user.itemadmin = res.data.User.itemadmin;
             user.useradmin=res.data.User.useradmin;
             user.created_at=res.data.User.created_at.split("T")[0];
             user.updated_at=res.data.User.updated_at.split("T")[0];

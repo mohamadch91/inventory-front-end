@@ -9,6 +9,11 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getActiveItemClasses() {
+    return axios.get(API_URL + "class-helper", {
+      headers: { Authorization: authHeader() },
+    });
+  }
   putItemClass(data) {
     // change item class
     return axios.put(API_URL + "itemClass", data, {
@@ -21,13 +26,13 @@ class ItemService {
     });
   }
   postItemType(data) {
-    // add item type
+    // add item category
     return axios.post(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
   }
   putItemTypes(data) {
-    // change item type
+    // change item category
     return axios.put(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
@@ -62,8 +67,8 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
-  getManufacturers() {
-    return axios.get(API_URL + "manufacturer", {
+  getManufacturers(id) {
+    return axios.get(API_URL + "manufacturer?id=" + id, {
       headers: { Authorization: authHeader() },
     });
   }

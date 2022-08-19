@@ -1,0 +1,31 @@
+.modal-content {
+  padding: 1rem;
+  h3 {
+    color: black;
+  }
+  form {
+    label {
+      color: black;
+      margin-top: 0.6rem;
+      margin-bottom: 0.3rem;
+    }
+    input,
+    select {
+      width: 100%;
+    }
+    input[type="checkbox"] {
+      width: auto;
+    }
+    button {
+      margin-top: 1rem;
+      height: 3rem;
+    }
+  }
+}
+.modal-btn {
+  margin-top: 2rem;
+  border: none;
+  background: #1de172;
+  border-radius: 5px;
+  padding: 0.7rem 1rem;
+}

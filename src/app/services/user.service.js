@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 const API_URL = "http://5.182.47.38:8001/settings/";
-
+const URL="http://5.182.47.38:8001";
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + "all");
@@ -50,6 +50,11 @@ class UserService {
   getAdminBoard() {
     return axios.get(API_URL + "admin", {
       headers: { Authorization: authHeader() },
+    });
+  }
+  getUserimage(url){
+    return axios.get(URL+url, {
+      headers: { Authorization: authHeader()}
     });
   }
 }

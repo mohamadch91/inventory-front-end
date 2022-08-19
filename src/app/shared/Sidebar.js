@@ -3,9 +3,16 @@ import { Link, withRouter } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 import EventBus from "../common/EventBus";
 // import { span } from 'react-i18next';
-
+import { connect } from "react-redux";
+import userService from "../services/user.service";
 class Sidebar extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: this.props.user || {},
+    };
+  }
 
   toggleMenuState(menuState) {
     if (this.state[menuState]) {
@@ -21,6 +28,7 @@ class Sidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    console.log(this.state.user);
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
@@ -47,6 +55,9 @@ class Sidebar extends Component {
       { path: "/ecommerce", state: "ecommercePagesMenuOpen" },
       { path: "/settings", state: "settingsMenuOpen" },
       { path: "/about-iga", state: "aboutIGA" },
+      { path: "/hr", state: "hrMenuOpen" },
+      { path: "/user", state: "userListMenuOpen" },
+      { path: "/facilities", state: "facilitiesOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -55,7 +66,10 @@ class Sidebar extends Component {
       }
     });
   }
+
+  user = JSON.parse(localStorage.getItem("user"));
   render() {
+    console.log(this.user);
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -76,187 +90,364 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>
-          <li className="nav-item nav-category">
-            <span>Admin setting </span>
-          </li>
+
           <li
             className={
-              this.isPathActive("/setting") ? "nav-item active" : "nav-item"
+              this.isPathActive("/hr") ? "nav-item active" : "nav-item"
             }
           >
             <div
               className={
-                this.state.settingsMenuOpen
-                  ? "nav-link menu-expanded"
-                  : "nav-link"
+                this.state.hrMenuOpen ? "nav-link menu-expanded" : "nav-link"
               }
-              onClick={() => this.toggleMenuState("settingsMenuOpen")}
+              onClick={() => this.toggleMenuState("hrMenuOpen")}
               data-toggle="collapse"
             >
               <span className="icon-bg">
-                <i className="mdi mdi-settings menu-icon"></i>
+                <i className="mdi mdi-account menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Settings</span>
+                <span>Human Resource</span>
               </span>
               <i className="menu-arrow"></i>
             </div>
-            <Collapse in={this.state.settingsMenuOpen}>
+            <Collapse in={this.state.hrMenuOpen}>
               <ul className="nav flex-column sub-menu">
                 <li className="nav-item">
                   {" "}
                   <Link
                     className={
-                      this.isPathActive("/settings/country")
+                      this.isPathActive("/hr/list")
                         ? "nav-link active"
                         : "nav-link"
                     }
-                    to="/settings/country"
+                    to="/hr/list"
                   >
-                    <span>Country setting</span>
-                  </Link>
-                </li>
-                {/* <li className="nav-item"> <Link className={ this.isPathActive('/settings/level') ? 'nav-link active' : 'nav-link' } to="/settings/level"><span>level setting</span></Link></li> */}
-                {/* <li className="nav-item"> <Link className={ this.isPathActive('/settings/level-list') ? 'nav-link active' : 'nav-link' } to="/settings/level-list"><span>level list</span></Link></li> */}
-                <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/settings/new-level-list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/new-level-list"
-                  >
-                    <span>Level setting</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/settings/item-class")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/item-class"
-                  >
-                    <span>Item class</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/settings/item-type")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/item-type"
-                  >
-                    <span>Item type</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/settings/item-t-level")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/item-t-level"
-                  >
-                    <span>"Item type" In different levels</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/settings/item-fields")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/item-fields"
-                  >
-                    <span>Fields of "Item type"</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/settings/facility-fields")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/facility-fields"
-                  >
-                    <span>Fields related to facilities</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/settings/params")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/params"
-                  >
-                    <span>Parameters</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/settings/manage-help")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/manage-help"
-                  >
-                    <span>Manage Help</span>
+                    <span>HR List</span>
                   </Link>
                 </li>
               </ul>
             </Collapse>
           </li>
-          <li
-            className={
-              this.isPathActive("/about-iga") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+          {this.user !== null && this.user.useradmin && (
+            <li
               className={
-                this.state.aboutIGA ? "nav-link menu-expanded" : "nav-link"
+                this.isPathActive("/user") ? "nav-item active" : "nav-item"
               }
-              onClick={() => this.toggleMenuState("aboutIGA")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-table-large menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>About IGA</span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.aboutIGA}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
+              <div
+                className={
+                  this.state.userListMenuOpen
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("userListMenuOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-account menu-icon"></i>
+                </span>
+                <span className="menu-title">
+                  <span>User</span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.userListMenuOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/user/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/user/list"
+                    >
+                      <span>Users List</span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
+
+          {this.user !== null && this.user.admin && (
+            <>
+              <li className="nav-item nav-category">
+                <span>Admin setting </span>
+              </li>
+              <li
+                className={
+                  this.isPathActive("/facilities")
+                    ? "nav-item active"
+                    : "nav-item"
+                }
+              >
+                <div
+                  className={
+                    this.state.aboutIGA ? "nav-link menu-expanded" : "nav-link"
+                  }
+                  onClick={() => this.toggleMenuState("facilitiesOpen")}
+                  data-toggle="collapse"
+                >
+                  <span className="icon-bg">
+                    <i className="mdi mdi-table-large menu-icon"></i>
+                  </span>
+                  <span className="menu-title">
+                    <span>Facilities</span>
+                  </span>
+                  <i className="menu-arrow"></i>
+                </div>
+                <Collapse in={this.state.facilitiesOpen}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/facilities/info")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/facilities/info/new"
+                      >
+                        <span>New Facility</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/facilities/list")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/facilities/list"
+                      >
+                        <span>Facility list</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </Collapse>
+              </li>
+              <li
+                className={
+                  this.isPathActive("/setting") ? "nav-item active" : "nav-item"
+                }
+              >
+                <div
+                  className={
+                    this.state.settingsMenuOpen
+                      ? "nav-link menu-expanded"
+                      : "nav-link"
+                  }
+                  onClick={() => this.toggleMenuState("settingsMenuOpen")}
+                  data-toggle="collapse"
+                >
+                  <span className="icon-bg">
+                    <i className="mdi mdi-settings menu-icon"></i>
+                  </span>
+                  <span className="menu-title">
+                    <span>Settings</span>
+                  </span>
+                  <i className="menu-arrow"></i>
+                </div>
+                <Collapse in={this.state.settingsMenuOpen}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/country")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/country"
+                      >
+                        <span>Country setting</span>
+                      </Link>
+                    </li>
+                    {/* <li className="nav-item">
+                  {" "}
                   <Link
                     className={
-                      this.isPathActive("/about-iga")
+                      this.isPathActive("/settings/level")
                         ? "nav-link active"
                         : "nav-link"
                     }
-                    to="/about-iga"
+                    to="/settings/level"
                   >
+                    <span>level setting</span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/settings/level-list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/level-list"
+                  >
+                    <span>level list</span>
+                  </Link>
+                </li> */}
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/new-level-list")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/new-level-list"
+                      >
+                        <span>Level setting</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/item-class")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/item-class"
+                      >
+                        <span>Item class</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/item-type")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/item-type"
+                      >
+                        <span>item category</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/item-t-level")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/item-t-level"
+                      >
+                        <span>"item category" In different levels</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/item-fields")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/item-fields"
+                      >
+                        <span>Fields of "item category"</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/facility-fields")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/facility-fields"
+                      >
+                        <span>Fields related to facilities</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/params")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/params"
+                      >
+                        <span>Parameters</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/manufacturer")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/manufacturer"
+                      >
+                        <span>Manufacturer by Item class</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/manage-help")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/manage-help"
+                      >
+                        <span>Manage Help</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </Collapse>
+              </li>
+              <li
+                className={
+                  this.isPathActive("/about-iga")
+                    ? "nav-item active"
+                    : "nav-item"
+                }
+              >
+                <div
+                  className={
+                    this.state.aboutIGA ? "nav-link menu-expanded" : "nav-link"
+                  }
+                  onClick={() => this.toggleMenuState("aboutIGA")}
+                  data-toggle="collapse"
+                >
+                  <span className="icon-bg">
+                    <i className="mdi mdi-table-large menu-icon"></i>
+                  </span>
+                  <span className="menu-title">
                     <span>About IGA</span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
+                  </span>
+                  <i className="menu-arrow"></i>
+                </div>
+                <Collapse in={this.state.aboutIGA}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/about-iga")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/about-iga"
+                      >
+                        <span>About IGA</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </Collapse>
+              </li>
+            </>
+          )}
+
           <li className="nav-item nav-category">
             <span>UI Features</span>
           </li>
@@ -650,5 +841,10 @@ class Sidebar extends Component {
     });
   }
 }
-
-export default withRouter(Sidebar);
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+export default connect(mapStateToProps)(withRouter(Sidebar));

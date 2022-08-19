@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 
 function ItemType() {
   const [itemTypes, setItemTypes] = useState([]);
@@ -62,25 +63,13 @@ function ItemType() {
   }
 
   function handleChange(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setEditFormData({ ...editFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setEditFormData({ ...editFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setEditFormData({ ...editFormData, [name]: value });
   }
 
   function handleChangeAdd(e) {
-    const { name, value, valueAsNumber } = e.target;
-    if (e.target.type === "number") {
-      if (typeof valueAsNumber === "number" && !isNaN(valueAsNumber)) {
-        setAddRowFormData({ ...addRowFormData, [name]: valueAsNumber });
-      }
-    } else {
-      setAddRowFormData({ ...addRowFormData, [name]: value });
-    }
+    const { name, value } = e.target;
+    setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
   function handleSubmitEdit() {
@@ -127,9 +116,9 @@ function ItemType() {
         havePQS,
       }))(addRowFormData);
       if (addRowFormData?.itemClass?.id) {
-        formToPut.itemclass = addRowFormData.itemClass.id.toString();
+        formToPut.itemclass = parseInt(addRowFormData.itemClass.id);
       } else {
-        formToPut.itemclass = addRowFormData.itemClass.toString();
+        formToPut.itemclass = parseInt(addRowFormData.itemClass);
       }
       ItemsService.postItemType(formToPut)
         .then((res) => {
@@ -159,7 +148,7 @@ function ItemType() {
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Item type list</h3>
+          <h3 className="page-title mb-3">item category list</h3>
           <div>
             <SharedTable>
               <TableHead>
@@ -216,6 +205,7 @@ function ItemType() {
                             type="text"
                             onChange={handleChange}
                             value={editFormData?.title}
+                            required
                           ></input>
                         </TableCell>
                         <TableCell>
@@ -287,12 +277,13 @@ function ItemType() {
             <h3>Submit new</h3>
             <div className="row">
               <div className="col-md-4 flex-column d-flex">
-                <label>Item type</label>
+                <label>item category</label>
                 <input
                   name="title"
                   type="text"
                   onChange={handleChangeAdd}
                   value={addRowFormData?.title}
+                  required
                 ></input>
               </div>
               <div className="col-md-4 flex-column d-flex">
