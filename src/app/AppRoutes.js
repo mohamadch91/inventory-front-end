@@ -46,7 +46,6 @@ const Facility = lazy(() => import("./facilities/Facility"));
 const FacilityList = lazy(() => import("./facilities/FacilityList"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
-const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 class AppRoutes extends Component {
   render() {
     return (
