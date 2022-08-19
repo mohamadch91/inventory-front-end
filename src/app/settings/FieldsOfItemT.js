@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
+import RelatedService from "../services/related.service";
 
 function FieldsOfItemT() {
   const [activeStep, setActiveStep] = useState(0);
@@ -46,7 +47,7 @@ function FieldsOfItemT() {
   } = useQuery(
     ["related-item-fields"],
     async () => {
-      const res = await ItemsService.getItemFields();
+      const res = await RelatedService.getItemFields();
       return res.data;
     },
     {
@@ -57,7 +58,7 @@ function FieldsOfItemT() {
   const { data: relatedItemType } = useQuery(
     ["related-item-type", selectedItemType?.id],
     async () => {
-      const res = await ItemsService.getRelatedItemType(selectedItemType.id);
+      const res = await RelatedService.getRelatedItemType(selectedItemType.id);
       return res.data;
     },
     {
@@ -116,7 +117,7 @@ function FieldsOfItemT() {
   };
 
   const handleSubmitEdit = async () => {
-    const res = await ItemsService.putItemFields({
+    const res = await RelatedService.putItemFields({
       ...editedField,
       name: newFieldName,
     });
@@ -126,7 +127,7 @@ function FieldsOfItemT() {
   };
 
   const onSaveHandler = async () => {
-    const res = await ItemsService.putRelatedItemType(fieldsValue);
+    const res = await RelatedService.putRelatedItemType(fieldsValue);
   };
 
   const handleNext = () => {

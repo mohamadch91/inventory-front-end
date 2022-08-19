@@ -8,6 +8,8 @@ import Parameters from "./settings/Parameters";
 import ParameterDescription from "./settings/ParameterDescription";
 import FieldsOfItemT from "./settings/FieldsOfItemT";
 import FacilityFields from "./settings/FacilityFields";
+import MangeHelp from "./settings/ManageHelp";
+import AboutIGA from "./about-iga";
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
@@ -67,6 +69,8 @@ class AppRoutes extends Component {
             path="/settings/new-level-list"
             component={NewLevelList}
           />
+          <Route exact path="/settings/manage-help" component={MangeHelp} />
+          <Route exact path="/about-iga" component={AboutIGA} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 

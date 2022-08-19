@@ -19,6 +19,42 @@ class RelatedService {
       headers: { Authorization: authHeader() },
     });
   }
+  getItemFields() {
+    return axios.get(API_URL + "item-fields", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putItemFields(data) {
+    // change item type
+    return axios.put(API_URL + "item-fields", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getRelatedItemType(id) {
+    const params = {};
+    if (id) {
+      params["id"] = id;
+    }
+    return axios.get(API_URL + "related-item-type", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  putRelatedItemType(payload) {
+    return axios.put(API_URL + "related-item-type", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getRelatedFacility() {
+    return axios.get(API_URL + "related-facility/", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putRelatedFacility(payload) {
+    return axios.put(API_URL + "related-facility/", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new RelatedService();

@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
+import RelatedService from "../services/related.service";
 
 function FieldsFacility() {
   const [activeStep, setActiveStep] = useState(0);
@@ -28,7 +29,7 @@ function FieldsFacility() {
   } = useQuery(
     ["related-facility"],
     async () => {
-      const res = await ItemsService.getRelatedFacility();
+      const res = await RelatedService.getRelatedFacility();
       return res.data;
     },
     {
@@ -74,7 +75,7 @@ function FieldsFacility() {
   };
 
   const handleSubmitEdit = async () => {
-    const res = await ItemsService.putRelatedFacility([
+    const res = await RelatedService.putRelatedFacility([
       {
         ...editedField,
         name: newFieldName,
@@ -86,7 +87,7 @@ function FieldsFacility() {
   };
 
   const onSaveHandler = async () => {
-    const res = await ItemsService.putRelatedFacility(fieldsValue);
+    const res = await RelatedService.putRelatedFacility(fieldsValue);
   };
 
   const handleNext = () => {

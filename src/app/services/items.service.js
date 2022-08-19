@@ -2,7 +2,6 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 const API_URL = "http://5.182.47.38:8001/items/";
-const Related_API_URL = "http://5.182.47.38:8001/related/";
 
 class ItemService {
   getItemClasses() {
@@ -60,42 +59,6 @@ class ItemService {
   }
   putItemTypeInClass(payload) {
     return axios.put(API_URL + "itemTinLevels", payload, {
-      headers: { Authorization: authHeader() },
-    });
-  }
-  getItemFields() {
-    return axios.get(Related_API_URL + "item-fields", {
-      headers: { Authorization: authHeader() },
-    });
-  }
-  putItemFields(data) {
-    // change item type
-    return axios.put(Related_API_URL + "item-fields", data, {
-      headers: { Authorization: authHeader() },
-    });
-  }
-  getRelatedItemType(id) {
-    const params = {};
-    if (id) {
-      params["id"] = id;
-    }
-    return axios.get(Related_API_URL + "related-item-type", {
-      headers: { Authorization: authHeader() },
-      params,
-    });
-  }
-  putRelatedItemType(payload) {
-    return axios.put(Related_API_URL + "related-item-type", payload, {
-      headers: { Authorization: authHeader() },
-    });
-  }
-  getRelatedFacility() {
-    return axios.get(Related_API_URL + "related-facility/", {
-      headers: { Authorization: authHeader() },
-    });
-  }
-  putRelatedFacility(payload) {
-    return axios.put(Related_API_URL + "related-facility/", payload, {
       headers: { Authorization: authHeader() },
     });
   }

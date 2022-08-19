@@ -46,6 +46,7 @@ class Sidebar extends Component {
       { path: "/general-pages", state: "generalPagesMenuOpen" },
       { path: "/ecommerce", state: "ecommercePagesMenuOpen" },
       { path: "/settings", state: "settingsMenuOpen" },
+      { path: "/about-iga", state: "aboutIGA" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -193,7 +194,6 @@ class Sidebar extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  {" "}
                   <Link
                     className={
                       this.isPathActive("/settings/params")
@@ -203,6 +203,55 @@ class Sidebar extends Component {
                     to="/settings/params"
                   >
                     <span>Parameters</span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/settings/manage-help")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/settings/manage-help"
+                  >
+                    <span>Manage Help</span>
+                  </Link>
+                </li>
+              </ul>
+            </Collapse>
+          </li>
+          <li
+            className={
+              this.isPathActive("/about-iga") ? "nav-item active" : "nav-item"
+            }
+          >
+            <div
+              className={
+                this.state.aboutIGA ? "nav-link menu-expanded" : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("aboutIGA")}
+              data-toggle="collapse"
+            >
+              <span className="icon-bg">
+                <i className="mdi mdi-table-large menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>About IGA</span>
+              </span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={this.state.aboutIGA}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/about-iga")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/about-iga"
+                  >
+                    <span>About IGA</span>
                   </Link>
                 </li>
               </ul>
