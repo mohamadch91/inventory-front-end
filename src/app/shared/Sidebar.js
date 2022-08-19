@@ -32,8 +32,7 @@ class Sidebar extends Component {
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
-
-}
+  }
 
   onRouteChanged() {
     document.querySelector("#sidebar").classList.remove("active");
@@ -57,6 +56,7 @@ class Sidebar extends Component {
       { path: "/settings", state: "settingsMenuOpen" },
       { path: "/hr", state: "hrMenuOpen" },
       { path: "/user", state: "userListMenuOpen" },
+      { path: "/message", state: "messageMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -103,7 +103,7 @@ class Sidebar extends Component {
               data-toggle="collapse"
             >
               <span className="icon-bg">
-                <i className="mdi mdi-account menu-icon"></i>
+                <i className="mdi mdi-account-multiple menu-icon"></i>
               </span>
               <span className="menu-title">
                 <span>Human Resource</span>
@@ -128,7 +128,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          {this.user !== null && this.user.useradmin && (
+          {this.user !== null && this.user.admin && (
             <li
               className={
                 this.isPathActive("/user") ? "nav-item active" : "nav-item"
@@ -170,6 +170,60 @@ class Sidebar extends Component {
               </Collapse>
             </li>
           )}
+
+          <li
+            className={
+              this.isPathActive("/message") ? "nav-item active" : "nav-item"
+            }
+          >
+            <div
+              className={
+                this.state.messageMenuOpen
+                  ? "nav-link menu-expanded"
+                  : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("messageMenuOpen")}
+              data-toggle="collapse"
+            >
+              <span className="icon-bg">
+                <i className="mdi mdi-message-text menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>Message</span>
+              </span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={this.state.messageMenuOpen}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/message/new")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/message/new"
+                  >
+                    <span>New Message</span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  {" "}
+                  <Link
+                    className={
+                      this.isPathActive("/message/list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/message/list"
+                  >
+                    <span>Message List</span>
+                  </Link>
+                </li>
+              </ul>
+            </Collapse>
+          </li>
 
           {this.user !== null && this.user.admin && (
             <>

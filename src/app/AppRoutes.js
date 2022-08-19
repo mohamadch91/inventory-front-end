@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
-import ItemTypeLevel from "./settings/ItemTypeLevel";
 
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
@@ -39,7 +38,9 @@ const FacilityFields = lazy(() => import("./settings/FacilityFields"));
 const Manufacturer = lazy(() => import("./settings/Manufacturer"));
 const HRList = lazy(() => import("./hr/HRList"));
 const UsersList = lazy(() => import("./user/usersList"));
-
+const NewMessage = lazy(() => import("./message/newMessage"));
+const MessageList = lazy(() => import("./message/messageList"));
+const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 class AppRoutes extends Component {
   render() {
     return (
@@ -50,6 +51,9 @@ class AppRoutes extends Component {
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
+
+          <Route exact path="/message/new" component={NewMessage} />
+          <Route exact path="/message/list" component={MessageList} />
 
           <Route exact path="/settings/country" component={Country} />
           <Route exact path="/settings/level" component={Level} />
