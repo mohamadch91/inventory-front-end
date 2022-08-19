@@ -3,16 +3,38 @@ import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 // import { span } from 'react-i18next';
 import eventBus from '../common/EventBus';
+import userService from '../services/user.service';
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
      user:JSON.parse(localStorage.getItem("user")),
+     logo1:null,
+      logo2:null,
     };
 
   
   }
+  componentDidMount() {
+        let country=JSON.parse(localStorage.getItem("country"));
+    console.log(country)
+
+    this.state.logo1=country.logo;
+    this.state.logo2 = country.secondLogo;
+    if (this.state.logo1 !== null) {
+      this.setState({
+        logo1: `http://5.182.47.38:8001${this.state.logo1}`,
+    }
+    )
+  }
+  console.log(this.state.logo2)
+  if (this.state.logo2 !== null) {
+    this.setState({
+      logo2: `http://5.182.47.38:8001${this.state.logo2}`,
+    })
+  }
+}
   toggleOffcanvas() {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
@@ -21,11 +43,11 @@ class Navbar extends Component {
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <Link className="navbar-brand brand-logo" to="/">
-            <img src={require("../../assets/images/logo.svg")} alt="logo" />
+            <img src={this.state.logo1} alt="logo" />
           </Link>
           <Link className="navbar-brand brand-logo-mini" to="/">
             <img
-              src={require("../../assets/images/logo-mini.svg")}
+              src={this.state.logo2}
               alt="logo"
             />
           </Link>

@@ -4,7 +4,7 @@ import { Collapse } from "react-bootstrap";
 import EventBus from "../common/EventBus";
 // import { span } from 'react-i18next';
 import { connect } from "react-redux";
-
+import userService from "../services/user.service";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +32,8 @@ class Sidebar extends Component {
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
-  }
+
+}
 
   onRouteChanged() {
     document.querySelector("#sidebar").classList.remove("active");
@@ -64,6 +65,7 @@ class Sidebar extends Component {
       }
     });
   }
+
   user = JSON.parse(localStorage.getItem("user"));
   render() {
     console.log(this.user);

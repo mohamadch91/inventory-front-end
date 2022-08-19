@@ -146,7 +146,6 @@ export class Country extends Component {
               targetpopulation: country.poptarget,
               enableHR: country.havehr,
               mainlocation: country.mainlocation,
-              logo2: country.logo2,
               requiredcapacities: country.usingtool,
               enableMaintaining: country.usingmaintenance,
             });
@@ -203,7 +202,6 @@ export class Country extends Component {
               targetpopulation: country.poptarget,
               enableHR: country.havehr,
               mainlocation: country.mainlocation,
-              logo2: country.logo2,
               requiredcapacities: country.usingtool,
               enableMaintaining: country.usingmaintenance,
             });
@@ -296,7 +294,6 @@ export class Country extends Component {
         targetpopulation: country.poptarget,
         enableHR: country.havehr,
         mainlocation: country.mainlocation,
-        slogo: country.logo2,
         requiredcapacities: country.usingtool,
         enableMaintaining: country.usingmaintenance,
         country: country,
