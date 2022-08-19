@@ -4,15 +4,15 @@ import "../styles/table.scss";
 import Spinner from "../shared/Spinner";
 import { useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
-import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
 import { Link } from "react-router-dom";
+import ItemService from "../services/item.service";
 
 function ItemList() {
-  const { data: Facilities, isLoading: isFacilityDefaultLoading } = useQuery(
-    ["facility-default-value"],
+  const { data: items, isLoading: isItemsDefaultLoading } = useQuery(
+    ["item-default-value"],
     async () => {
-      const res = await FacilitiesService.getFacilities();
+      const res = await ItemService.getItems();
       return res.data;
     },
     {
@@ -21,17 +21,30 @@ function ItemList() {
     }
   );
 
+  const { data: itemClassesAndTypes, isLoading: isItemClassesAndTypesLoading } =
+    useQuery(
+      ["item-classes-and-types"],
+      async () => {
+        const res = await ItemService.getItemClassesAndTypes();
+        return res.data.filter((item) => item.item_type.length > 0);
+      },
+      {
+        staleTime: Infinity,
+        refetchOnMount: true,
+      }
+    );
+
   const convertDate = (date) => {
     return new Date(date).toISOString().split("T")[0];
   };
 
-  if (isFacilityDefaultLoading) {
+  if (isItemsDefaultLoading || isItemClassesAndTypesLoading) {
     return <Spinner />;
   }
 
   return (
     <div>
-      <h3 className="page-title mb-3">Facility list</h3>
+      <h3 className="page-title mb-3">Item list</h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
@@ -39,41 +52,44 @@ function ItemList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-2">Facility name</TableCell>
-                    <TableCell className="col-sm-1">Level</TableCell>
-                    <TableCell className="col-sm-2">
-                      Number of lower level facility
-                    </TableCell>
-                    <TableCell className="col-sm-1">Code</TableCell>
-                    <TableCell className="col-sm-2">Type</TableCell>
+                    <TableCell className="col-sm-2">Item class</TableCell>
+                    <TableCell className="col-sm-2">Item type</TableCell>
+                    <TableCell className="col-sm-2">Code </TableCell>
+                    <TableCell className="col-sm-2">Manufacturer</TableCell>
                     <TableCell className="col-sm-2">Last Changes On</TableCell>
-                    <TableCell className="col-sm-2">Tool box</TableCell>
+                    <TableCell className="col-sm-2">Edit</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Facilities.map((facility) => {
+                  {items?.map((item) => {
+                    const itemClass = itemClassesAndTypes?.find(
+                      (itemC) => itemC.item_class.id === item.item_class
+                    );
+                    console.log(itemClass, "itemClass");
+                    const itemType = itemClass?.item_type.find(
+                      (itemT) => itemT.id === item.item_type
+                    );
                     return (
-                      <TableRow key={facility.id}>
+                      <TableRow key={item.id}>
                         <TableCell className="col-sm-2">
-                          {facility.name ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-1">
-                          {facility.level ?? "-"}
+                          {itemClass?.item_class.title ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          {facility.loverlevelfac ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-1">
-                          {facility.code ?? "-"}
+                          {itemType?.title ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          {facility.type ?? "-"}
+                          {item.code ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          {convertDate(facility.updated_at)}
+                          {item.Manufacturer ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          <Link to={`/facilities/info/${facility.id}`}>
+                          {item?.updated_at
+                            ? convertDate(itemType.updated_at)
+                            : "-"}
+                        </TableCell>
+                        <TableCell className="col-sm-2">
+                          <Link to={`/facilities/info/${item.id}`}>
                             <div style={{ width: "20px", height: "20px" }}>
                               <EditIcon />
                             </div>
