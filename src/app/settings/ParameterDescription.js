@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 import RelatedService from "../services/related.service";
 import { useParams } from "react-router-dom";
 
@@ -92,7 +93,7 @@ function ParameterDescription() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "" && editFormData[key] !== null;
+      return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
       toast.error("Please fill all the fields");

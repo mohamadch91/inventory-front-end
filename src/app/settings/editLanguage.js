@@ -1,50 +1,64 @@
-import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import {
+  Pagination,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import CloseIcon from "../shared/CloseIcon";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
+import LanguageService from "../services/language.service";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "./editLang.scss";
 
-import ItemsService from "../services/items.service";
+function EditLanguage() {
+  const languages = [
+    { label: "English", value: "en" },
+    { label: "Français", value: "fr" },
+    { label: "العربي", value: "ar" },
+    { label: "فارسی", value: "fa" },
+    { label: "Española", value: "es" },
+    { label: "Pусский", value: "ru" },
+  ];
 
-function Manufacturer() {
-  const [manufacturers, setManufacturers] = useState([]);
   const [editFormData, setEditFormData] = useState({});
   const [addRowFormData, setAddRowFormData] = useState({
-    describe: "",
-    order: null,
-    active: false,
+    word: "",
+    translate: "",
+    language: "en",
   });
   const [editableRowId, setEditableRowId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [itemClasses, setItemClasses] = useState([]);
-  const [selectedItemClass, setSelectedItemClass] = useState(null);
+  const [translations, setTranslations] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const [pageNum, setPageNum] = useState(1);
+  const [page, setPage] = useState(1);
+  const [searchParam, setSearchParam] = useState("");
 
-  function getItemClasses() {
-    ItemsService.getActiveItemClasses()
+  function getData(query) {
+    LanguageService.getTranslations()
       .then((res) => {
-        const data = res.data;
-        setItemClasses(data);
-        setSelectedItemClass(data[0].id);
+        let sum = res.data.reduce((acc, curr) => {
+          return acc + curr.words;
+        }, 0);
+        setPageNum(Math.ceil(sum / 20));
         setIsLoading(false);
-        getManufacturers(data[0].id);
       })
       .catch((err) => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
-  }
-
-  function getManufacturers(id) {
-    ItemsService.getManufacturers(id)
+    LanguageService.getTranslationsByQuery(query)
       .then((res) => {
-        setManufacturers(res.data[0].manufacturer);
+        setTranslations(res.data.words);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -54,33 +68,22 @@ function Manufacturer() {
   }
 
   useEffect(() => {
-    getItemClasses();
+    getData("?pnum=1&name=" + selectedLanguage);
   }, []);
 
-  useEffect(() => {
-    if (itemClasses) {
-      setAddRowFormData({
-        ...addRowFormData,
-        itemclass: itemClasses[0]?.id,
-      });
-    }
-  }, [itemClasses]);
-
   function handleEdit(i) {
-    const formData = manufacturers.find((item) => item.id === i.id);
+    const formData = translations.find((item) => item.id === i.id);
     setEditFormData(formData);
     setEditableRowId(i.id);
   }
 
   function handleChangeEdit(e) {
     const { name, value } = e.target;
-
     setEditFormData({ ...editFormData, [name]: value });
   }
 
   function handleChangeAdd(e) {
     const { name, value } = e.target;
-
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
@@ -94,9 +97,13 @@ function Manufacturer() {
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
-      ItemsService.putManufacturer(formToPut)
+      LanguageService.putTranslations(formToPut)
         .then((res) => {
-          getManufacturers(selectedItemClass);
+          getData(
+            `?pnum=${page}&name=${selectedLanguage}${
+              searchParam.length > 0 ? "&search=" + searchParam : ""
+            }`
+          );
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -116,15 +123,18 @@ function Manufacturer() {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
-      let formToPost = (({ describe, active, order, itemclass }) => ({
-        describe,
-        active,
-        order,
-        itemclass,
+      let formToPost = (({ language, word, translate }) => ({
+        language,
+        word,
+        translate,
       }))(addRowFormData);
-      ItemsService.postManufacturer(formToPost)
+      LanguageService.postTranslations(formToPost)
         .then((res) => {
-          getManufacturers(selectedItemClass);
+          getData(
+            `?pnum=${page}&name=${selectedLanguage}${
+              searchParam.length > 0 ? "&search=" + searchParam : ""
+            }`
+          );
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -132,15 +142,20 @@ function Manufacturer() {
         });
       setAddRowFormData({
         ...addRowFormData,
-        describe: "",
-        order: null,
-        active: false,
+        word: "",
+        translate: "",
       });
     }
   }
 
-  function findItemClassById(id) {
-    return itemClasses.find((item) => item.id === id);
+  function handlePage(e, p) {
+    setIsLoading(true);
+    setPage(p);
+    getData(
+      `?pnum=${page}&name=${selectedLanguage}${
+        searchParam.length > 0 ? "&search=" + searchParam : ""
+      }`
+    );
   }
 
   return (
@@ -152,62 +167,72 @@ function Manufacturer() {
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4>Item class</h4>
+              <h4 className="page-title">Language</h4>
             </div>
-            <div className="col-md-10 d-flex">
+            <div className="col-md-2 d-flex">
               <select
-                name="itemclass"
+                name="language"
+                className="w-100"
                 onChange={(e) => {
-                  setSelectedItemClass(e.target.value);
-                  getManufacturers(e.target.value);
+                  setSelectedLanguage(e.target.value);
                 }}
-                value={selectedItemClass}
+                value={selectedLanguage}
               >
-                {itemClasses.map((itemClass, index) => (
-                  <option
-                    key={itemClass.id}
-                    value={itemClass.id}
-                    //   selected={}
-                  >
-                    {itemClass.title}
+                {languages.map((lang, index) => (
+                  <option key={lang.value} value={lang.value}>
+                    {lang.label}
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="col-md-2 d-flex align-items-center justify-content-end">
+              <h4 className="page-title">Search</h4>
+            </div>
+            <div className="col-md-4 d-flex">
+              <input
+                type="text"
+                name="search"
+                value={searchParam}
+                onChange={(e) => setSearchParam(e.target.value)}
+              ></input>
+            </div>
+            <div className="col-md-2 d-flex align-items-center">
+              <button
+                className="save-btn w-100"
+                onClick={() => {
+                  setIsLoading(true);
+                  getData(
+                    `?pnum=${page}&name=${selectedLanguage}${
+                      "&search=" + searchParam
+                    }`
+                  );
+                }}
+              >
+                Filter
+              </button>
             </div>
           </div>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Item class</TableCell>
-                  <TableCell>Show order</TableCell>
-                  <TableCell>Enable</TableCell>
+                  <TableCell>Level name</TableCell>
+                  <TableCell>Value</TableCell>
                   <TableCell>Edit</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {manufacturers &&
-                  manufacturers.map((item, index) => (
+                {translations &&
+                  translations.map((item) => (
                     <>
                       {editableRowId !== item.id ? (
                         <TableRow>
-                          <TableCell>{item.describe}</TableCell>
-                          <TableCell>
-                            {findItemClassById(item.itemclass)?.title}
-                          </TableCell>
-                          <TableCell>{item.order}</TableCell>
-                          <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.active}
-                              disabled
-                            ></input>
-                          </TableCell>
+                          <TableCell>{item.word}</TableCell>
+                          <TableCell>{item.translate}</TableCell>
                           <TableCell>
                             <button
                               className="edit-btn"
-                              onClick={(event) => handleEdit(item)}
+                              onClick={() => handleEdit(item)}
                             >
                               <EditIcon />
                             </button>
@@ -217,49 +242,19 @@ function Manufacturer() {
                         <TableRow>
                           <TableCell>
                             <input
-                              name="describe"
+                              name="word"
                               type="text"
                               onChange={handleChangeEdit}
-                              value={editFormData?.describe}
+                              value={editFormData?.word}
                             ></input>
                           </TableCell>
                           <TableCell>
-                            <select
-                              name="itemclass"
-                              onChange={handleChangeEdit}
-                              value={editFormData?.itemclass}
-                            >
-                              {itemClasses.map((itemClass, index) => (
-                                <option
-                                  key={itemClass.id}
-                                  value={itemClass.id}
-                                  selected={item.itemclass === itemClass.id}
-                                >
-                                  {itemClass.title}
-                                </option>
-                              ))}
-                            </select>
-                          </TableCell>
-                          <TableCell>
                             <input
-                              name="order"
-                              type="number"
+                              name="translate"
+                              type="text"
                               onChange={handleChangeEdit}
-                              value={editFormData?.order}
+                              value={editFormData?.translate}
                               required
-                            ></input>
-                          </TableCell>
-                          <TableCell>
-                            <input
-                              name="active"
-                              type="checkbox"
-                              onChange={() =>
-                                setEditFormData({
-                                  ...editFormData,
-                                  active: !editFormData.active,
-                                })
-                              }
-                              checked={editFormData?.active}
                             ></input>
                           </TableCell>
                           <TableCell>
@@ -283,62 +278,57 @@ function Manufacturer() {
               </TableBody>
             </SharedTable>
           </div>
+          <div className="mt-4">
+            <Pagination
+              onChange={handlePage}
+              count={pageNum}
+              color="primary"
+              page={page}
+            />
+          </div>
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
-              <h3 className="mb-3 mt-3">Insert Manufacturer</h3>
+              <h3 className="mb-3 mt-3">Insert translation</h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Parameter description</label>
+                  <label>Level name</label>
                   <input
-                    name="describe"
+                    name="word"
                     type="text"
                     onChange={handleChangeAdd}
-                    value={addRowFormData?.describe}
+                    value={addRowFormData?.word}
                     required
                   ></input>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Item class</label>
-                  <select
-                    name="itemclass"
+                  <label>Value</label>
+                  <input
+                    name="translate"
+                    type="text"
                     onChange={handleChangeAdd}
-                    value={addRowFormData?.itemclass}
+                    value={addRowFormData?.translate}
+                    required
+                  ></input>
+                </div>
+                <div className="col-md-3 flex-column d-flex">
+                  <label>Language</label>
+                  <select
+                    name="language"
+                    onChange={handleChangeAdd}
+                    value={addRowFormData?.language}
                   >
-                    {itemClasses.map((item, index) => (
+                    {languages.map((item, index) => (
                       <option
-                        key={item.id}
-                        value={item.id}
+                        key={item.value}
+                        value={item.value}
                         selected={index === 0}
                       >
-                        {item.title}
+                        {item.label}
                       </option>
                     ))}
                   </select>
                 </div>
-                <div className="col-md-3 flex-column d-flex">
-                  <label>Show order</label>
-                  <input
-                    name="order"
-                    type="number"
-                    onChange={handleChangeAdd}
-                    value={addRowFormData?.order}
-                    required
-                  ></input>
-                </div>
                 <div className="col-md-3 d-flex justify-content-center align-items-center">
-                  <label>Active</label>
-                  <input
-                    name="active"
-                    className="mr-4"
-                    type="checkbox"
-                    onChange={() =>
-                      setAddRowFormData({
-                        ...addRowFormData,
-                        active: !addRowFormData.active,
-                      })
-                    }
-                    checked={addRowFormData?.active}
-                  ></input>
                   <button className="save-btn" type="submit">
                     Save
                   </button>
@@ -352,4 +342,4 @@ function Manufacturer() {
   );
 }
 
-export default Manufacturer;
+export default EditLanguage;

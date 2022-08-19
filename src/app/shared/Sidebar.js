@@ -28,7 +28,6 @@ class Sidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.state.user);
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
@@ -61,6 +60,8 @@ class Sidebar extends Component {
       { path: "/items", state: "itemsOpen" },
       { path: "/message", state: "messageMenuOpen" },
       { path: "/pqs4", state: "pqs4MenuOpen" },
+      { path: "/pqs3", state: "pqs4MenuOpen" },
+      { path: "/language", state: "languageMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -72,7 +73,6 @@ class Sidebar extends Component {
 
   user = JSON.parse(localStorage.getItem("user"));
   render() {
-    console.log(this.user);
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -509,7 +509,33 @@ class Sidebar extends Component {
                         }
                         to="/settings/pqs4"
                       >
-                        <span>Import pqs4</span>
+                        <span>Import PQS4/PIS</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/pqs3")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/pqs3"
+                      >
+                        <span>Import PQS3/PIS</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/language/edit")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/language/edit"
+                      >
+                        <span>Edit Language</span>
                       </Link>
                     </li>
                     <li className="nav-item">
