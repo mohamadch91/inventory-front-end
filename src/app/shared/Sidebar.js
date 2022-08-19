@@ -5,7 +5,6 @@ import EventBus from "../common/EventBus";
 // import { span } from 'react-i18next';
 import { connect } from "react-redux";
 
-
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +28,7 @@ class Sidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.state.user)
+    console.log(this.state.user);
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
@@ -65,9 +64,9 @@ class Sidebar extends Component {
       }
     });
   }
-  user=JSON.parse(localStorage.getItem('user'))
+  user = JSON.parse(localStorage.getItem("user"));
   render() {
-    console.log(this.user)
+    console.log(this.user);
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -274,7 +273,7 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-type"
                       >
-                        <span>Item type</span>
+                        <span>item category</span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -286,7 +285,7 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-t-level"
                       >
-                        <span>"Item type" In different levels</span>
+                        <span>"item category" In different levels</span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -298,7 +297,7 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-fields"
                       >
-                        <span>Fields of "Item type"</span>
+                        <span>Fields of "item category"</span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -745,4 +744,3 @@ function mapStateToProps(state) {
   };
 }
 export default connect(mapStateToProps)(withRouter(Sidebar));
-

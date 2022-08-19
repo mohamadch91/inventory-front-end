@@ -105,7 +105,7 @@ function ItemTypeLevel() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">"Item type" In different levels</h3>
+      <h3 className="page-title mb-3">"item category" In different levels</h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (

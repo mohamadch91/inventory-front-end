@@ -148,7 +148,7 @@ function ItemType() {
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Item type list</h3>
+          <h3 className="page-title mb-3">item category list</h3>
           <div>
             <SharedTable>
               <TableHead>
@@ -277,7 +277,7 @@ function ItemType() {
             <h3>Submit new</h3>
             <div className="row">
               <div className="col-md-4 flex-column d-flex">
-                <label>Item type</label>
+                <label>item category</label>
                 <input
                   name="title"
                   type="text"

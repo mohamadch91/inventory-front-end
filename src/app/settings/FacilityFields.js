@@ -171,7 +171,7 @@ function FieldsFacility() {
                           <TableCell className="col-sm-4">Field name</TableCell>
                           <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item type?
+                            Is this required field for item category?
                           </TableCell>
                           <TableCell className="col-sm-2">Edit</TableCell>
                         </TableRow>

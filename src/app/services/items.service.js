@@ -27,13 +27,13 @@ class ItemService {
     });
   }
   postItemType(data) {
-    // add item type
+    // add item category
     return axios.post(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
   }
   putItemTypes(data) {
-    // change item type
+    // change item category
     return axios.put(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
@@ -74,7 +74,7 @@ class ItemService {
     });
   }
   putItemFields(data) {
-    // change item type
+    // change item category
     return axios.put(Related_API_URL + "item-fields", data, {
       headers: { Authorization: authHeader() },
     });
