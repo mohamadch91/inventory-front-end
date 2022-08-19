@@ -58,6 +58,7 @@ class Sidebar extends Component {
       { path: "/hr", state: "hrMenuOpen" },
       { path: "/user", state: "userListMenuOpen" },
       { path: "/facilities", state: "facilitiesOpen" },
+      { path: "/items", state: "itemsOpen" },
       { path: "/message", state: "messageMenuOpen" },
       { path: "/pqs4", state: "pqs4MenuOpen" },
     ];
@@ -242,7 +243,9 @@ class Sidebar extends Component {
               >
                 <div
                   className={
-                    this.state.aboutIGA ? "nav-link menu-expanded" : "nav-link"
+                    this.state.facilitiesOpen
+                      ? "nav-link menu-expanded"
+                      : "nav-link"
                   }
                   onClick={() => this.toggleMenuState("facilitiesOpen")}
                   data-toggle="collapse"
@@ -279,6 +282,55 @@ class Sidebar extends Component {
                         to="/facilities/list"
                       >
                         <span>Facility list</span>
+                      </Link>
+                    </li>
+                  </ul>
+                </Collapse>
+              </li>
+              <li
+                className={
+                  this.isPathActive("/items") ? "nav-item active" : "nav-item"
+                }
+              >
+                <div
+                  className={
+                    this.state.itemsOpen ? "nav-link menu-expanded" : "nav-link"
+                  }
+                  onClick={() => this.toggleMenuState("itemsOpen")}
+                  data-toggle="collapse"
+                >
+                  <span className="icon-bg">
+                    <i className="mdi mdi-table-large menu-icon"></i>
+                  </span>
+                  <span className="menu-title">
+                    <span>Items</span>
+                  </span>
+                  <i className="menu-arrow"></i>
+                </div>
+                <Collapse in={this.state.itemsOpen}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/items/info")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/items/info/new"
+                      >
+                        <span>New Item</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/items/list")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/items/list"
+                      >
+                        <span>Item list</span>
                       </Link>
                     </li>
                   </ul>

@@ -9,42 +9,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
-
-const FacilityInput = (props) => {
-  const { field, onChangeHandler, defaultValue } = props;
-  if (field.type === "select") {
-    return (
-      <Form.Control
-        onChange={(e) => onChangeHandler(e, field)}
-        defaultValue={defaultValue}
-        className="form-control"
-        as="select"
-        disabled={field.disabled}
-        id={`field-${field.id}`}
-      >
-        <option value="" selected disabled>
-          Please select
-        </option>
-        {field.params.map((param) => (
-          <option disabled={!param.enabled} value={param.id}>
-            {param.name}
-          </option>
-        ))}
-      </Form.Control>
-    );
-  }
-
-  return (
-    <Form.Control
-      onChange={(e) => onChangeHandler(e, field)}
-      defaultValue={defaultValue}
-      className="form-control"
-      id={`field-${field.id}`}
-      type={field.type}
-      disabled={field.disabled}
-    />
-  );
-};
+import DynamicInput from "../components/DynamicInput";
 
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
@@ -255,7 +220,7 @@ function Facility() {
                       {field.name}
                     </label>
                     <div className="col-sm-8">
-                      <FacilityInput
+                      <DynamicInput
                         field={field}
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}

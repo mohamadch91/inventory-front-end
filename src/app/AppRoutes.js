@@ -46,6 +46,9 @@ const Facility = lazy(() => import("./facilities/Facility"));
 const FacilityList = lazy(() => import("./facilities/FacilityList"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
+const Item = lazy(() => import("./items/Item"));
+const ItemList = lazy(() => import("./items/ItemList"));
+
 class AppRoutes extends Component {
   render() {
     return (
@@ -93,6 +96,9 @@ class AppRoutes extends Component {
 
           <Route exact path="/facilities/info/:id" component={Facility} />
           <Route exact path="/facilities/list" component={FacilityList} />
+
+          <Route exact path="/items/info/:id" component={Item} />
+          <Route exact path="/items/list" component={ItemList} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 
