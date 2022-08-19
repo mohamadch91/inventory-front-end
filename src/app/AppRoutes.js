@@ -29,7 +29,6 @@ const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
-const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const Parameters = lazy(() => import("./settings/Parameters"));
 const Pqs4 = lazy(() => import("./settings/Pqs4"));
 const Pqs3 = lazy(() => import("./settings/Pqs3"));
@@ -49,6 +48,8 @@ const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
 const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const EditLanguage = lazy(() => import("./settings/editLanguage"));
+const Item = lazy(() => import("./items/Item"));
+const ItemList = lazy(() => import("./items/ItemList"));
 class AppRoutes extends Component {
   render() {
     return (
