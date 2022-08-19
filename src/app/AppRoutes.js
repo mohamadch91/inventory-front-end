@@ -30,6 +30,7 @@ const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
 const Parameters = lazy(() => import("./settings/Parameters"));
+const Pqs4= lazy(() => import("./settings/Pqs4"));
 const ParameterDescription = lazy(() =>
   import("./settings/ParameterDescription")
 );
@@ -61,6 +62,7 @@ class AppRoutes extends Component {
           <Route exact path="/settings/item-type" component={ItemType} />
           <Route exact path="/settings/params" component={Parameters} />
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
+          <Route exact path="/settings/pqs4" component={Pqs4} />
           <Route
             exact
             path="/settings/params/:id"

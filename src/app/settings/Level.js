@@ -11,7 +11,8 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
+import "../styles/table.scss";
+import "../styles/inputs.scss";
 const Level = (update) => {
   const [startDate, setstartDate] = useState(new Date());
   const [validated, setvalidated] = useState(false);

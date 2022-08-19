@@ -57,6 +57,7 @@ class Sidebar extends Component {
       { path: "/hr", state: "hrMenuOpen" },
       { path: "/user", state: "userListMenuOpen" },
       { path: "/message", state: "messageMenuOpen" },
+      { path: "/pqs4", state: "pqs4MenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -392,6 +393,19 @@ class Sidebar extends Component {
                         to="/settings/manufacturer"
                       >
                         <span>Manufacturer by Item class</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/pqs4")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/pqs4"
+                      >
+                        <span>Import pqs4</span>
                       </Link>
                     </li>
                   </ul>
