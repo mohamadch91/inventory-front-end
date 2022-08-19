@@ -64,7 +64,8 @@ function ParameterDescription() {
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
-  function handleSubmitEdit() {
+  function handleSubmitEdit(e) {
+    e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
@@ -88,7 +89,8 @@ function ParameterDescription() {
     }
   }
 
-  function handleSubmitNew() {
+  function handleSubmitNew(e) {
+    e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
       return addRowFormData[key] !== "" && editFormData[key] !== null;
     });

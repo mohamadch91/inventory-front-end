@@ -37,6 +37,9 @@ import CreateIcon from "@mui/icons-material/Create";
 import DoneIcon from "@mui/icons-material/Done";
 import { ContactSupportOutlined } from "@mui/icons-material";
 import toast from "react-hot-toast";
+import "../styles/table.scss";
+import "../styles/inputs.scss";
+import * as XLSX from "xlsx";
 function createData(
   id,
   name,
@@ -272,9 +275,9 @@ function EnhancedTableHead(props) {
           <TableCell
             key={headCell.id}
             sx={
-              headCell.id == "m25vol" || headCell.id == "m25volnew"
+              headCell.id === "m25vol" || headCell.id === "m25volnew"
                 ? { borderLeft: "1px solid black" }
-                : headCell.id == "dryvolnew"
+                : headCell.id === "dryvolnew"
                 ? { borderRight: "1px solid black" }
                 : ""
             }
@@ -542,6 +545,79 @@ export default function DataTable() {
     }
     return true;
   };
+  const [excel, setExcel] = React.useState(null);
+
+  const handleImport = (e) => {
+      const [file] = e.target.files;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const bstr = evt.target.result;
+        const wb = XLSX.read(bstr, { type: "binary" });
+        const wsname = wb.SheetNames[3];
+        const ws = wb.Sheets[wsname];
+        console.log(ws)
+        const data = XLSX.utils.sheet_to_json(ws);
+        console.log(data);
+        setExcel(data);
+      };
+      reader.readAsBinaryString(file);
+  };
+  const handleExcel = ()=>{ 
+    let levels=[]
+    const country = JSON.parse(localStorage.getItem("country"));
+    for (let i = 0; i < country.levels; i++){
+      let data=excel[i+5]
+      let level={
+        id:data['__EMPTY'],
+        uppervol:data['5']===''?0.0:data['5'].toFixed(2),
+        m25vol:data['__EMPTY_1']===''?0.0:data['__EMPTY_1'].toFixed(2),
+        undervol:data['__EMPTY_2']===''?0.0:data['__EMPTY_2'].toFixed(2),
+        dryvol:data['__EMPTY_3']===''?0.0:data['__EMPTY_3'].toFixed(2),
+        m25volnew:data['__EMPTY_4']===''?0.0:data['__EMPTY_4'].toFixed(2),
+        uppervolnew:data['__EMPTY_5']===''?0.0:data['__EMPTY_5'].toFixed(2),
+        undervolnew:data['__EMPTY_6']===''?0.0:data['__EMPTY_6'].toFixed(2),
+        m70volnew:data['__EMPTY_7']===''?0.0:data['__EMPTY_7'].toFixed(2),
+        dryvolnew:data['__EMPTY_8']===''?0.0:data['__EMPTY_8'].toFixed(2),
+        m70vol:data['Timor-Leste_1']===''?0.0:data['Timor-Leste_1'].toFixed(2)
+    }
+    levels.push(level)
+  }
+  UserService.putLevels(levels).then((response)=>{
+    toast.success("Levels imported successfully")
+       let row = [];
+       for (let i = 0; i < country.levels; i++) {
+         row.push(
+           createData(
+             response.data[i].id,
+             response.data[i].name,
+             parseInt(response.data[i].maxpop),
+             parseInt(response.data[i].minpop),
+             response.data[i].uppervol,
+             response.data[i].undervol,
+             response.data[i].m25vol,
+             response.data[i].m70vol,
+             response.data[i].dryvol,
+             response.data[i].m25volnew,
+             response.data[i].m70volnew,
+             response.data[i].uppervolnew,
+             response.data[i].undervolnew,
+             response.data[i].dryvolnew,
+             response.data[i].country,
+             response.data[i].parent
+           )
+         );
+       }
+
+       setRows(row);
+
+  }).catch((err)=>{
+    toast.error("Levels import failed")
+  }).finally(()=>{
+    setExcel(null)
+  }
+  )
+  console.log(levels)
+  }
   React.useEffect(() => {
     // get
     UserService.getLevels()
@@ -583,6 +659,46 @@ export default function DataTable() {
       <div className="page-header">
         <h3 className="page-title"> Level Configurations </h3>
       </div>
+      <Box sx={{ width: "100%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <div>
+            <div className="row mr-5 mt-2 mb-3 ml-5">
+              <Typography
+                sx={{ flex: "1 1 100%" }}
+                variant="h6"
+                id="tableTitle"
+                component="div"
+                className=" mt-3"
+              >
+                import level
+              </Typography>
+              <div className="col-md-12">
+                <label>upload excel to change levels data</label>
+                <div className="row d-flex mb-2 ">
+                  <div className="col-md-3">
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={handleImport}
+                    />
+                  </div>
+                  <div className="col-md-3 ml-2 mt-1">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        handleExcel();
+                      }}
+                    >
+                      sumbit
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Paper>
+      </Box>
       {rows.length !== 0 && (
         <div>
           {disable ? (

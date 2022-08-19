@@ -1,19 +1,11 @@
-import {
-  Box,
-  Step,
-  StepLabel,
-  Stepper,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Modal from "react-bootstrap/Modal";
 import { useEffect, useState } from "react";
 import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
 import HRService from "../services/hr.service";
+import UserListService from "../services/user-list.service";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
@@ -24,7 +16,13 @@ import "../settings/itemType.scss";
 function UsersList() {
   const [list, setList] = useState([]);
   const [editFormData, setEditFormData] = useState({});
-  const [addRowFormData, setAddRowFormData] = useState({});
+  const [addRowFormData, setAddRowFormData] = useState({
+    facadmin: false,
+    itemadmin: false,
+    reportadmin: false,
+    useradmin: false,
+    is_superuser: false,
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [facilities, setFacilities] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState(null);
@@ -48,7 +46,7 @@ function UsersList() {
   }
 
   function getList(id) {
-    HRService.getHRList(id)
+    UserListService.getUsersByFacilityId(id)
       .then((res) => {
         setList(res.data);
         setIsLoading(false);
@@ -67,13 +65,13 @@ function UsersList() {
     if (facilities) {
       setAddRowFormData({
         ...addRowFormData,
-        facility: facilities[0]?.id,
+        facilityid: facilities[0]?.id,
       });
     }
   }, [facilities]);
 
   function handleEdit(i) {
-    const formData = list.find((item) => item.id === i.id);
+    const formData = list.find((item) => item.idnumber === i.idnumber);
     setEditFormData(formData);
     setIsEditModalOpen(true);
   }
@@ -88,7 +86,8 @@ function UsersList() {
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
 
-  function handleSubmitEdit() {
+  function handleSubmitEdit(e) {
+    e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "";
     });
@@ -97,27 +96,37 @@ function UsersList() {
     } else {
       setIsLoading(true);
       let formToPut = (({
-        id,
-        full_name,
-        position_level,
-        educatioin_level,
-        gender,
+        password,
+        is_superuser,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
       }) => ({
-        id,
-        full_name,
-        position_level,
-        educatioin_level,
-        gender,
+        password,
+        is_superuser,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
       }))(editFormData);
-      formToPut.year_in_position = parseInt(editFormData.year_in_position);
-      formToPut.years_in_service = parseInt(editFormData.years_in_service);
-      formToPut.facility = parseInt(editFormData.facility);
-      HRService.putHR(formToPut)
+      UserListService.updateUser(formToPut)
         .then((res) => {
           setIsLoading(true);
           getList(selectedFacility);
           setEditFormData({});
           setIsEditModalOpen(false);
+          setActiveStep(0);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -126,7 +135,8 @@ function UsersList() {
     }
   }
 
-  function handleSubmitNew() {
+  function handleSubmitNew(e) {
+    e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
       return addRowFormData[key] !== "";
     });
@@ -135,33 +145,46 @@ function UsersList() {
     } else {
       setIsLoading(true);
       let formToPost = (({
-        id,
-        full_name,
-        position_level,
-        educatioin_level,
-        years_in_service,
-        year_in_position,
-        gender,
+        password,
+        is_superuser,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+        name,
       }) => ({
-        id,
-        full_name,
-        position_level,
-        educatioin_level,
-        years_in_service,
-        year_in_position,
-        gender,
+        password,
+        is_superuser,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+        name,
       }))(addRowFormData);
-      formToPost.year_in_position = parseInt(addRowFormData.year_in_position);
-      formToPost.years_in_service = parseInt(addRowFormData.years_in_service);
-      formToPost.facility = parseInt(addRowFormData.facility);
-      HRService.postHR(formToPost)
+      UserListService.addUser(formToPost)
         .then((res) => {
           setIsLoading(true);
           getList(selectedFacility);
           setAddRowFormData({
             ...addRowFormData,
+            facadmin: false,
+            itemadmin: false,
+            reportadmin: false,
+            useradmin: false,
+            is_superuser: false,
           });
           setIsAddModalOpen(false);
+          setActiveStep(0);
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -191,7 +214,7 @@ function UsersList() {
             </div>
             <div className="col-md-10 d-flex">
               <select
-                name="facility"
+                name="facilityid"
                 onChange={(e) => {
                   setSelectedFacility(e.target.value);
                   setIsLoading(true);
@@ -215,14 +238,12 @@ function UsersList() {
                     <TableCell></TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Username</TableCell>
-                    {/* <TableCell>Defined by</TableCell> */}
                     <TableCell>Facility Name</TableCell>
                     <TableCell>Manage Facilities</TableCell>
                     <TableCell>Manage Items</TableCell>
                     <TableCell>View Reports</TableCell>
                     <TableCell>Manage Users</TableCell>
-                    <TableCell>Superior</TableCell>
-                    {/* <TableCell>Enable</TableCell> */}
+                    <TableCell>Super User</TableCell>
                     <TableCell>Position</TableCell>
                     <TableCell>Edit</TableCell>
                   </TableRow>
@@ -235,9 +256,8 @@ function UsersList() {
                           <TableCell>{index + 1}</TableCell>
                           <TableCell>{item.name}</TableCell>
                           <TableCell>{item.username}</TableCell>
-                          {/* <TableCell>{item.definedby}</TableCell> */}
                           <TableCell>
-                            {findFacilityById(item.facility)?.name}
+                            {findFacilityById(item.facilityid)?.name}
                           </TableCell>
                           <TableCell>
                             <input
@@ -270,7 +290,7 @@ function UsersList() {
                           <TableCell>
                             <input
                               type="checkbox"
-                              checked={item.is_superior}
+                              checked={item.is_superuser}
                               disabled
                             ></input>
                           </TableCell>
@@ -292,7 +312,10 @@ function UsersList() {
           )}
           <Modal
             show={isEditModalOpen}
-            onHide={() => setIsEditModalOpen(false)}
+            onHide={() => {
+              setIsEditModalOpen(false);
+              setActiveStep(0);
+            }}
           >
             <form onSubmit={handleSubmitEdit}>
               {activeStep === 0 ? (
@@ -308,15 +331,15 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>Facility</label>
                     <select
-                      name="facility"
+                      name="facilityid"
                       onChange={handleChangeEdit}
-                      value={editFormData?.facility}
+                      value={editFormData?.facilityid}
                     >
                       {facilities.map((item, index) => (
                         <option
                           key={item.id}
                           value={item.id}
-                          selected={item.facility === item.id}
+                          selected={item.id === editFormData?.facilityid}
                         >
                           {item.name}
                         </option>
@@ -337,7 +360,7 @@ function UsersList() {
                     <label>Username</label>
                     <input
                       name="username"
-                      type="number"
+                      type="text"
                       onChange={handleChangeEdit}
                       value={editFormData?.username}
                       required
@@ -356,16 +379,25 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>Confirm Password</label>
                     <input
-                      name="conf-password"
+                      name="conf_password"
                       type="password"
                       onChange={handleChangeEdit}
-                      value={editFormData?.year_in_position}
+                      value={editFormData?.conf_password}
                       required
                     ></input>
                   </div>
                   <button
                     className="save-btn w-100"
-                    onClick={() => setActiveStep((prev) => prev + 1)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (
+                        editFormData?.password === editFormData?.conf_password
+                      ) {
+                        setActiveStep((prev) => prev + 1);
+                      } else {
+                        toast.error("Passwords doesn't match");
+                      }
+                    }}
                   >
                     Next
                   </button>
@@ -375,11 +407,12 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>ID Number</label>
                     <input
-                      name="id"
+                      name="idnumber"
                       type="number"
                       onChange={handleChangeEdit}
-                      value={editFormData?.id}
+                      value={editFormData?.idnumber}
                       required
+                      disabled
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
@@ -404,17 +437,17 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Enable</label>
+                      <label className="m-0 mr-2">Super user</label>
                       <input
-                        name="enable"
+                        name="is_superuser"
                         type="checkbox"
                         onChange={() =>
-                          setAddRowFormData({
+                          setEditFormData({
                             ...editFormData,
-                            enable: !editFormData.enable,
+                            is_superuser: !editFormData.is_superuser,
                           })
                         }
-                        checked={editFormData?.enable}
+                        checked={editFormData?.is_superuser}
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
@@ -423,7 +456,7 @@ function UsersList() {
                         name="facadmin"
                         type="checkbox"
                         onChange={() =>
-                          setAddRowFormData({
+                          setEditFormData({
                             ...editFormData,
                             facadmin: !editFormData.facadmin,
                           })
@@ -439,7 +472,7 @@ function UsersList() {
                         name="itemadmin"
                         type="checkbox"
                         onChange={() =>
-                          setAddRowFormData({
+                          setEditFormData({
                             ...editFormData,
                             itemadmin: !editFormData.itemadmin,
                           })
@@ -453,7 +486,7 @@ function UsersList() {
                         name="reportadmin"
                         type="checkbox"
                         onChange={() =>
-                          setAddRowFormData({
+                          setEditFormData({
                             ...editFormData,
                             reportadmin: !editFormData.reportadmin,
                           })
@@ -469,12 +502,13 @@ function UsersList() {
                         name="useradmin"
                         type="checkbox"
                         onChange={() =>
-                          setAddRowFormData({
+                          setEditFormData({
                             ...editFormData,
                             useradmin: !editFormData.useradmin,
                           })
                         }
                         checked={editFormData?.useradmin}
+                        value={editFormData?.useradmin}
                       />
                     </div>
                   </div>
@@ -494,7 +528,13 @@ function UsersList() {
           <button className="modal-btn" onClick={toggleModal}>
             Human Resource Information
           </button>
-          <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
+          <Modal
+            show={isAddModalOpen}
+            onHide={() => {
+              setIsAddModalOpen(false);
+              setActiveStep(0);
+            }}
+          >
             <form onSubmit={handleSubmitNew}>
               {activeStep === 0 ? (
                 <>
@@ -509,15 +549,15 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>Facility</label>
                     <select
-                      name="facility"
-                      onChange={handleChangeEdit}
-                      value={addRowFormData?.facility}
+                      name="facilityid"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.facilityid}
                     >
                       {facilities.map((item, index) => (
                         <option
                           key={item.id}
                           value={item.id}
-                          selected={item.facility === item.id}
+                          selected={item.id === addRowFormData?.facilityid}
                         >
                           {item.name}
                         </option>
@@ -529,7 +569,7 @@ function UsersList() {
                     <input
                       name="name"
                       type="text"
-                      onChange={handleChangeEdit}
+                      onChange={handleChangeAdd}
                       value={addRowFormData?.name}
                       required
                     ></input>
@@ -538,8 +578,8 @@ function UsersList() {
                     <label>Username</label>
                     <input
                       name="username"
-                      type="number"
-                      onChange={handleChangeEdit}
+                      type="text"
+                      onChange={handleChangeAdd}
                       value={addRowFormData?.username}
                       required
                     ></input>
@@ -549,7 +589,7 @@ function UsersList() {
                     <input
                       name="password"
                       type="password"
-                      onChange={handleChangeEdit}
+                      onChange={handleChangeAdd}
                       value={addRowFormData?.password}
                       required
                     ></input>
@@ -557,16 +597,27 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>Confirm Password</label>
                     <input
-                      name="conf-password"
+                      name="conf_password"
                       type="password"
-                      onChange={handleChangeEdit}
-                      value={addRowFormData?.year_in_position}
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.conf_password}
                       required
                     ></input>
                   </div>
                   <button
                     className="save-btn w-100"
-                    onClick={() => setActiveStep((prev) => prev + 1)}
+                    onClick={(e) => {
+                      e.preventDefault();
+
+                      if (
+                        addRowFormData?.password ===
+                        addRowFormData?.conf_password
+                      ) {
+                        setActiveStep((prev) => prev + 1);
+                      } else {
+                        toast.error("Passwords doesn't match");
+                      }
+                    }}
                   >
                     Next
                   </button>
@@ -576,10 +627,10 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center">
                     <label>ID Number</label>
                     <input
-                      name="id"
+                      name="idnumber"
                       type="number"
-                      onChange={handleChangeEdit}
-                      value={addRowFormData?.id}
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.idnumber}
                       required
                     ></input>
                   </div>
@@ -588,7 +639,7 @@ function UsersList() {
                     <input
                       name="position"
                       type="text"
-                      onChange={handleChangeEdit}
+                      onChange={handleChangeAdd}
                       value={addRowFormData?.position}
                       required
                     ></input>
@@ -598,24 +649,24 @@ function UsersList() {
                     <input
                       name="phone"
                       type="tel"
-                      onChange={handleChangeEdit}
+                      onChange={handleChangeAdd}
                       value={addRowFormData?.phone}
                       required
                     ></input>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Enable</label>
+                      <label className="m-0 mr-2">Super user</label>
                       <input
-                        name="enable"
+                        name="is_superuser"
                         type="checkbox"
                         onChange={() =>
                           setAddRowFormData({
                             ...addRowFormData,
-                            enable: !addRowFormData.enable,
+                            is_superuser: !addRowFormData.is_superuser,
                           })
                         }
-                        checked={addRowFormData?.enable}
+                        checked={addRowFormData?.is_superuser}
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
