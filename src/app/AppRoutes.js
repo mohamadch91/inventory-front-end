@@ -30,7 +30,7 @@ const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
 const Parameters = lazy(() => import("./settings/Parameters"));
-const Pqs4= lazy(() => import("./settings/Pqs4"));
+const Pqs4 = lazy(() => import("./settings/Pqs4"));
 const ParameterDescription = lazy(() =>
   import("./settings/ParameterDescription")
 );
@@ -42,6 +42,7 @@ const UsersList = lazy(() => import("./user/usersList"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
 const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
+const EditLanguage = lazy(() => import("./settings/editLanguage"));
 class AppRoutes extends Component {
   render() {
     return (
@@ -63,6 +64,11 @@ class AppRoutes extends Component {
           <Route exact path="/settings/params" component={Parameters} />
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
+          <Route
+            exact
+            path="/settings/language/edit"
+            component={EditLanguage}
+          />
           <Route
             exact
             path="/settings/params/:id"

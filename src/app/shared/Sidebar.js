@@ -28,7 +28,6 @@ class Sidebar extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.state.user);
     if (this.props.location !== prevProps.location) {
       this.onRouteChanged();
     }
@@ -58,6 +57,7 @@ class Sidebar extends Component {
       { path: "/user", state: "userListMenuOpen" },
       { path: "/message", state: "messageMenuOpen" },
       { path: "/pqs4", state: "pqs4MenuOpen" },
+      { path: "/language", state: "languageMenuOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -69,7 +69,6 @@ class Sidebar extends Component {
 
   user = JSON.parse(localStorage.getItem("user"));
   render() {
-    console.log(this.user);
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -406,6 +405,19 @@ class Sidebar extends Component {
                         to="/settings/pqs4"
                       >
                         <span>Import pqs4</span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      {" "}
+                      <Link
+                        className={
+                          this.isPathActive("/settings/language/edit")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/language/edit"
+                      >
+                        <span>Edit Language</span>
                       </Link>
                     </li>
                   </ul>
