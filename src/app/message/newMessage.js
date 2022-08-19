@@ -66,6 +66,7 @@ function NewMessage() {
       ) : (
         <div className="container">
           <form onSubmit={handleSubmit}>
+            <h3 className="mb-1">Send Message</h3>
             <div className="d-flex flex-column">
               <label>Receivers</label>
               <MultiSelect
