@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 import RelatedService from "../services/related.service";
+import "../styles/inputs.scss";
 
 function FieldsOfItemT() {
   const [activeStep, setActiveStep] = useState(0);
@@ -318,26 +319,27 @@ function FieldsOfItemT() {
                                     }
                                   />
                                 </TableCell>
-                                <TableCell className="col-sm-2">
-                                  {editedField?.id === field.id ? (
-                                    <>
-                                      <button
-                                        className="save-btn"
-                                        onClick={handleSubmitEdit}
-                                      >
-                                        Save
-                                      </button>
-                                      <button
-                                        className="close-btn"
-                                        onClick={() => {
-                                          setEditedField(null);
-                                          setNewFieldName("");
-                                        }}
-                                      >
-                                        <CloseIcon />
-                                      </button>
-                                    </>
-                                  ) : (
+
+                                {editedField?.id === field.id ? (
+                                  <TableCell className="col-sm-2">
+                                    <button
+                                      className="save-btn"
+                                      onClick={handleSubmitEdit}
+                                    >
+                                      Save
+                                    </button>
+                                    <button
+                                      className="close-btn"
+                                      onClick={() => {
+                                        setEditedField(null);
+                                        setNewFieldName("");
+                                      }}
+                                    >
+                                      <CloseIcon />
+                                    </button>
+                                  </TableCell>
+                                ) : (
+                                  <TableCell className="col-sm-2">
                                     <button
                                       className="edit-btn"
                                       onClick={() => {
@@ -347,8 +349,8 @@ function FieldsOfItemT() {
                                     >
                                       <EditIcon />
                                     </button>
-                                  )}
-                                </TableCell>
+                                  </TableCell>
+                                )}
                               </TableRow>
                             );
                           }

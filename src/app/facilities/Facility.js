@@ -212,7 +212,7 @@ function Facility() {
                       }`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}

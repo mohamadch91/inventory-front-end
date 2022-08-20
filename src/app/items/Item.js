@@ -250,10 +250,10 @@ function Item() {
                 <div className="row">
                   <Form.Group className="row mb-0">
                     <label
-                      className={`col-sm-4 text-right`}
+                      className={`col-sm-4 text-left`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}
@@ -282,7 +282,7 @@ function Item() {
                       className={`col-sm-4 text-right`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}
@@ -311,7 +311,7 @@ function Item() {
                           className={`col-sm-4 text-right`}
                           style={{
                             display: "flex",
-                            justifyContent: "flex-end",
+                            justifyContent: "flex-start",
                             alignItems: "center",
                             lineHeight: "1.4",
                           }}
@@ -339,7 +339,7 @@ function Item() {
                               }`}
                               style={{
                                 display: "flex",
-                                justifyContent: "flex-end",
+                                justifyContent: "flex-start",
                                 alignItems: "center",
                                 lineHeight: "1.4",
                               }}
@@ -372,7 +372,7 @@ function Item() {
                       }`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}

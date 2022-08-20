@@ -11,21 +11,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Level from "./Level";
 import { alpha } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
+import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import Paper from "@mui/material/Paper";
 import { Form } from "react-bootstrap";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import "./newLevel.css";
+import "./newLevel.scss";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
@@ -38,8 +31,9 @@ import DoneIcon from "@mui/icons-material/Done";
 import { ContactSupportOutlined } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import "../styles/table.scss";
-import "../styles/inputs.scss";
 import * as XLSX from "xlsx";
+import SharedTable from "../shared/SharedTable";
+import CloseIcon from "../shared/CloseIcon";
 function createData(
   id,
   name,
@@ -153,156 +147,77 @@ const headCells = [
     id: "m25vol",
     numeric: false,
     disablePadding: true,
-    label: "+25 C",
+    label: "+25 C(cm3)",
   },
   {
     id: "uppervol",
     numeric: false,
     disablePadding: true,
-    label: "+2 - +8 C",
+    label: "+2 - +8 C(cm3)",
   },
   {
     id: "undervol",
     numeric: false,
     disablePadding: true,
-    label: "-20 C",
+    label: "-20 C(cm3)",
   },
   {
     id: "m70vol",
     numeric: false,
     disablePadding: true,
-    label: "-70 C",
+    label: "-70 C(cm3)",
   },
   {
     id: "dryvol",
     numeric: false,
     disablePadding: true,
-    label: "Dry store",
+    label: "Dry store(cm3)",
   },
   {
     id: "m25volnew",
     numeric: false,
     disablePadding: true,
-    label: "+25 C",
+    label: "+25 C(cm3)",
   },
   {
     id: "uppervolnew",
     numeric: false,
     disablePadding: true,
-    label: "+2 - +8 C",
+    label: "+2 - +8 C(cm3)",
   },
   {
     id: "undervolnew",
     numeric: false,
     disablePadding: true,
-    label: "-20 C",
+    label: "-20 C(cm3)",
   },
   {
     id: "m70volnew",
     numeric: false,
     disablePadding: true,
-    label: "-70 C",
+    label: "-70 C(cm3)",
   },
   {
     id: "dryvolnew",
     numeric: false,
     disablePadding: true,
-    label: "Dry store",
+    label: "Dry store(cm3)",
   },
   {
     id: "minpop",
     numeric: false,
     disablePadding: true,
-    label: "Min pop",
+    label: "Min pop(cm3)",
   },
   {
     id: "maxpop",
     numeric: false,
     disablePadding: true,
-    label: "Max pop",
+    label: "Max pop(cm3)",
   },
 ];
 
-function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell colSpan={5}></TableCell>
-        <TableCell colSpan={4}>
-          Target Population :
-          {JSON.parse(localStorage.getItem("country")).poptarget}
-        </TableCell>
-        <TableCell colSpan={6}></TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell colSpan={2}></TableCell>
-        <TableCell
-          sx={{
-            backgroundColor: "#82c4ed",
-            textAlign: "center",
-            borderLeft: "1px solid black",
-          }}
-          colSpan={5}
-        >
-          Current values
-        </TableCell>
-        <TableCell
-          sx={{
-            backgroundColor: "#2f7ebf",
-            textAlign: "center",
-            borderLeft: "1px solid black",
-            borderRight: "1px solid black",
-          }}
-          colSpan={5}
-        >
-          Planned values
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            sx={
-              headCell.id === "m25vol" || headCell.id === "m25volnew"
-                ? { borderLeft: "1px solid black" }
-                : headCell.id === "dryvolnew"
-                ? { borderRight: "1px solid black" }
-                : ""
-            }
-            align={headCell.numeric ? "center" : "center"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-            {headCell.label}
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
@@ -347,14 +262,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
 
 export default function DataTable() {
   const [open, setOpen] = React.useState(false);
@@ -432,6 +339,8 @@ export default function DataTable() {
         });
       setOpen(true);
     }
+     setEditableRowId(null);
+     setEditFormData({});
   };
   const handleInputChange = (e, index) => {
     if (e.target.name !== "name") {
@@ -546,7 +455,13 @@ export default function DataTable() {
     return true;
   };
   const [excel, setExcel] = React.useState(null);
-
+  const [editFormData, setEditFormData] = React.useState({});
+  const [editableRowId, setEditableRowId] = React.useState(null);
+    function handleEdit1(i) {
+      const formData = rows.find((item) => item.id === i.id);
+      setEditFormData(formData);
+      setEditableRowId(i.id);
+    }
   const handleImport = (e) => {
       const [file] = e.target.files;
       const reader = new FileReader();
@@ -657,7 +572,7 @@ export default function DataTable() {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title"> Level Configurations </h3>
+        <h1 className="page-title"> Level Configurations </h1>
       </div>
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
@@ -699,363 +614,381 @@ export default function DataTable() {
           </div>
         </Paper>
       </Box>
-      {rows.length !== 0 && (
-        <div>
-          {disable ? (
-            <Button disabled align="right" onClick={handleSave}>
-              <DoneIcon />
-              SAVE
-            </Button>
-          ) : (
-            <Button align="right" onClick={handleSave}>
-              <DoneIcon />
-              SAVE
-            </Button>
-          )}
-          <Button align="right" onClick={handleEdit}>
-            <CreateIcon />
-            EDIT
-          </Button>
-        </div>
-      )}
+
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />
-          <TableContainer>
-            <Table
-              sx={{ minWidth: 750 }}
-              aria-labelledby="tableTitle"
-              size={dense ? "small" : "medium"}
-            >
-              <EnhancedTableHead
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
+          <SharedTable>
+            <TableHead>
+              <TableRow>
+                <TableCell colSpan={6}></TableCell>
+                <TableCell colSpan={4}>
+                  Target Population :
+                  {JSON.parse(localStorage.getItem("country")).poptarget}
+                </TableCell>
+                <TableCell colSpan={6}></TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell colSpan={3}></TableCell>
+                <TableCell
+                  sx={{
+                    backgroundColor: "#82c4ed",
+                    textAlign: "center",
+                    borderLeft: "1px solid black",
+                  }}
+                  colSpan={5}
+                >
+                  Current values
+                </TableCell>
+                <TableCell
+                  sx={{
+                    backgroundColor: "#2f7ebf",
+                    textAlign: "center",
+                    borderLeft: "1px solid black",
+                    borderRight: "1px solid black",
+                  }}
+                  colSpan={5}
+                >
+                  Planned values
+                </TableCell>
+              </TableRow>
+              <TableRow className="item-class-page">
+                <TableCell colSpan={2}></TableCell>
+                {headCells.map((headCell) => (
+                  <TableCell
+                    sx={
+                      headCell.id === "m25vol" || headCell.id === "m25volnew"
+                        ? { borderLeft: "1px solid black" }
+                        : headCell.id === "dryvolnew"
+                        ? { borderRight: "1px solid black" }
+                        : ""
+                    }
+                    key={headCell.id}
+                  >
+                    {headCell.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody className="item-class-page">
+              {rows.map((row, i) => (
+                <>
+                  {editableRowId !== row.id ? (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell colSpan={2}>
+                        <button
+                          className="edit-btn"
+                          onClick={(event) => handleEdit1(row)}
+                        >
+                          <EditIcon />
+                        </button>
+                      </TableCell>
+                      <TableCell
+                        className="text-center"
+                        scope="row"
+                        padding="none"
+                      >
+                        {row.id}
+                      </TableCell>
+                      <TableCell
+                        scope="row"
+                        className="text-center"
+                        padding="none"
+                      >
+                        {row.name}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          borderLeft: "1px solid black",
+                          paddongLeft: "2px",
+                        }}
+                        padding="none"
+                        align="center"
+                      >
+                        {row.m25vol}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.uppervol}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.undervol}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.m70vol}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.dryvol}
+                      </TableCell>
+                      <TableCell
+                        sx={{ borderLeft: "1px solid black" }}
+                        padding="none"
+                        align="center"
+                      >
+                        {row.m25volnew}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.uppervolnew}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.undervolnew}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {row.m70volnew}
+                      </TableCell>
+                      <TableCell
+                        padding="none"
+                        sx={{ borderRight: "1px solid black" }}
+                        align="center"
+                      >
+                        {row.dryvolnew}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {separator(row.minpop)}
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        {separator(row.maxpop)}
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                      <TableCell colSpan={2}>
+                        <button className="save-btn" onClick={handleSave}>
+                          Save
+                        </button>
+                        <button
+                          className="close-btn"
+                          onClick={() => setEditableRowId(null)}
+                        >
+                          <CloseIcon />
+                        </button>
+                      </TableCell>
+                      <TableCell
+                        className="text-center"
+                        scope="row"
+                        padding="none"
+                      >
+                        <input
+                          required
+                          disabled
+                          value={row.id}
+                          name="name"
+                          isValid={levelValidator(rows[i].name)}
+                          type="text"
+                        />
+                      </TableCell>
+                      <TableCell
+                        scope="row"
+                        padding="none"
+                        className="text-center"
+                      >
+                        <input
+                          required
+                          isValid={levelValidator(rows[i].name)}
+                          value={rows[i].name}
+                          name="name"
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          type="text"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell
+                        sx={{ borderLeft: "1px solid black" }}
+                        padding="none"
+                        align="center"
+                      >
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].m25vol)}
+                          isInvalid={!capacityValidator(rows[i].m25vol)}
+                          value={rows[i].m25vol}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="m25vol"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
 
-              <TableBody>
-                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-                {stableSort(rows, getComparator(order, orderBy)).map(
-                  (row, i) => {
-                    const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${i}`;
-                    return (
-                      <>
-                        {isEdit ? (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.id}
-                            selected={isItemSelected}
-                          >
-                            <TableCell
-                              className="text-center"
-                              scope="row"
-                              padding="none"
-                            >
-                              {row.id}
-                            </TableCell>
-                            <TableCell
-                              component="th"
-                              id={labelId}
-                              scope="row"
-                              padding="none"
-                              className="text-center"
-                            >
-                              <input
-                                required
-                                isValid={levelValidator(rows[i].name)}
-                                value={rows[i].name}
-                                name="name"
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                type="text"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderLeft: "1px solid black" }}
-                              padding="none"
-                              align="center"
-                            >
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].m25vol)}
-                                isInvalid={!capacityValidator(rows[i].m25vol)}
-                                value={rows[i].m25vol}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="m25vol"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].uppervol)}
+                          value={rows[i].uppervol}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="uppervol"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].undervol)}
+                          value={rows[i].undervol}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="undervol"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].m70vol)}
+                          value={rows[i].m70vol}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="m70vol"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].dryvol)}
+                          value={rows[i].dryvol}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="dryvol"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                      </TableCell>
+                      <TableCell
+                        sx={{ borderLeft: "1px solid black" }}
+                        padding="none"
+                        align="center"
+                      >
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].m25volnew)}
+                          value={rows[i].m25volnew}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="m25volnew"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].uppervolnew)}
+                          value={rows[i].uppervolnew}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="uppervolnew"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].undervolnew)}
+                          value={rows[i].undervolnew}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="undervolnew"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].m70volnew)}
+                          value={rows[i].m70volnew}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="m70volnew"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell
+                        padding="none"
+                        sx={{ borderRight: "1px solid black" }}
+                        align="center"
+                      >
+                        <input
+                          required
+                          isValid={capacityValidator(rows[i].dryvolnew)}
+                          value={rows[i].dryvolnew}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="dryvolnew"
+                          type="number"
+                          placeholder="0"
+                          min="0"
+                        />
+                      </TableCell>
 
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].uppervol)}
-                                value={rows[i].uppervol}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="uppervol"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].undervol)}
-                                value={rows[i].undervol}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="undervol"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].m70vol)}
-                                value={rows[i].m70vol}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="m70vol"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].dryvol)}
-                                value={rows[i].dryvol}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="dryvol"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderLeft: "1px solid black" }}
-                              padding="none"
-                              align="center"
-                            >
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].m25volnew)}
-                                value={rows[i].m25volnew}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="m25volnew"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].uppervolnew)}
-                                value={rows[i].uppervolnew}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="uppervolnew"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].undervolnew)}
-                                value={rows[i].undervolnew}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="undervolnew"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].m70volnew)}
-                                value={rows[i].m70volnew}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="m70volnew"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell
-                              padding="none"
-                              sx={{ borderRight: "1px solid black" }}
-                              align="center"
-                            >
-                              <input
-                                required
-                                isValid={capacityValidator(rows[i].dryvolnew)}
-                                value={rows[i].dryvolnew}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="dryvolnew"
-                                type="number"
-                                placeholder="0"
-                                min="0"
-                              />
-                            </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={minpopValidator(rows[i].minpop)}
+                          value={separator(rows[i].minpop)}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="minpop"
+                          type="number"
+                        />
+                        <span></span>
+                      </TableCell>
+                      <TableCell padding="none" align="center">
+                        <input
+                          required
+                          isValid={maxpopValidator(row.maxpop)}
+                          value={separator(row.maxpop)}
+                          onChange={(e) => {
+                            handleInputChange(e, i);
+                          }}
+                          name="maxpop"
+                          type="number"
+                        />
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </>
+              ))}
+            </TableBody>
+          </SharedTable>
 
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={minpopValidator(rows[i].minpop)}
-                                value={separator(rows[i].minpop)}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="minpop"
-                                type="number"
-                              />
-                              <span></span>
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              <input
-                                required
-                                isValid={maxpopValidator(row.maxpop)}
-                                value={separator(row.maxpop)}
-                                onChange={(e) => {
-                                  handleInputChange(e, i);
-                                }}
-                                name="maxpop"
-                                type="number"
-                              />
-                            </TableCell>
-                          </TableRow>
-                        ) : (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            aria-checked={isItemSelected}
-                            tabIndex={-1}
-                            key={row.id}
-                            selected={isItemSelected}
-                          >
-                            <TableCell
-                              className="text-center"
-                              scope="row"
-                              padding="none"
-                            >
-                              {row.id}
-                            </TableCell>
-                            <TableCell
-                              component="th"
-                              id={labelId}
-                              scope="row"
-                              className="text-center"
-                              padding="none"
-                            >
-                              {row.name}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderLeft: "1px solid black" }}
-                              padding="none"
-                              align="center"
-                            >
-                              {row.m25vol}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.uppervol}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.undervol}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.m70vol}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.dryvol}
-                            </TableCell>
-                            <TableCell
-                              sx={{ borderLeft: "1px solid black" }}
-                              padding="none"
-                              align="center"
-                            >
-                              {row.m25volnew}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.uppervolnew}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.undervolnew}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {row.m70volnew}
-                            </TableCell>
-                            <TableCell
-                              padding="none"
-                              sx={{ borderRight: "1px solid black" }}
-                              align="center"
-                            >
-                              {row.dryvolnew}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {separator(row.minpop)}
-                            </TableCell>
-                            <TableCell padding="none" align="center">
-                              {separator(row.maxpop)}
-                            </TableCell>
-                          </TableRow>
-                        )}
-                      </>
-                    );
-                  }
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
           {/* pagination */}
         </Paper>
-        <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
-        />
       </Box>
     </div>
   );

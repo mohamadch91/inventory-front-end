@@ -9,13 +9,21 @@ import {
   Marker,
   Popup,
   useMapEvents,
+  
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import "./country.css";
-import LocationMarker from "./LocationMarker";
 import * as XLSX from "xlsx";
 import {toast} from "react-hot-toast";
+import Map from "./Map";
+delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 export class Country extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +47,6 @@ export class Country extends Component {
       put: false,
       snackopen: false,
       type: "success",
-      mainLocation: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +56,7 @@ export class Country extends Component {
     this.countryvalidator = this.countryvalidator.bind(this);
     this.ccodevalid = this.ccodevalid.bind(this);
     this.CurrencyValidator = this.CurrencyValidator.bind(this);
+    this.handlemapclick = this.handlemapclick.bind(this);
   }
   changestate = (e, state) => {
     this.setState({ [state]: e.target.value });
@@ -61,6 +69,11 @@ export class Country extends Component {
       startDate: date,
     });
   };
+  handlemapclick(e){
+    // console.log(e.latlng);
+    this.setState({ mainlocation: e.latlng });
+    // console.log(this.state.mainlocation);
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -675,10 +688,11 @@ export class Country extends Component {
                       </label>
 
                       <div className="map">
-                        <MapContainer
-                          center={[52.22977, 21.01178]}
+                        {/* <MapContainer
+                          center={[52.22, 21.01178]}
                           zoom={13}
-                          scrollWheelZoom={false}
+                          scrollWheelZoom={true}
+                          onClick={this.handlemapclick}
                         >
                           <TileLayer
                             {...{
@@ -687,8 +701,28 @@ export class Country extends Component {
                               url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                             }}
                           />
-                          <LocationMarker />
-                        </MapContainer>
+                          {this.state.mainLocation && (
+                            <Marker
+                              position={this.state.mainLocation}
+                              draggable={true}
+                            >
+                              <Popup position={this.state.mainLocation}>
+                                Current location:{" "}
+                                <pre>
+                                  {JSON.stringify(
+                                    this.state.mainLocation,
+                                    null,
+                                    2
+                                  )}
+                                </pre>
+                              </Popup>
+                            </Marker>
+                          )}
+                        </MapContainer> */}
+                        <Map
+                          loca={this.state.mainlocation}
+                          handleChange={this.handlemapclick}
+                        />
                       </div>
                     </Form.Group>
                   </div>
