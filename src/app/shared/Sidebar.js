@@ -225,7 +225,7 @@ class Sidebar extends Component {
                     }
                     to="/hr/list"
                   >
-                    <span>HR List</span>
+                    <span>HR View</span>
                   </Link>
                 </li>
               </ul>
@@ -266,7 +266,7 @@ class Sidebar extends Component {
                       }
                       to="/user/list"
                     >
-                      <span>Users List</span>
+                      <span>Users View</span>
                     </Link>
                   </li>
                 </ul>

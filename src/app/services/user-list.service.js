@@ -10,7 +10,7 @@ class UserListService {
     });
   }
   updateUser(data) {
-    return axios.put(API_URL + "update_profile/" + data.idnumber + "/", data, {
+    return axios.put(API_URL + "update_profile/" + data.pk + "/", data, {
       headers: { Authorization: authHeader() },
     });
   }
