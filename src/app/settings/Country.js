@@ -9,13 +9,12 @@ import {
   Marker,
   Popup,
   useMapEvents,
-  
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "./country.css";
 import * as XLSX from "xlsx";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import Map from "./Map";
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -69,7 +68,7 @@ export class Country extends Component {
       startDate: date,
     });
   };
-  handlemapclick(e){
+  handlemapclick(e) {
     // console.log(e.latlng);
     this.setState({ mainlocation: e.latlng });
     // console.log(this.state.mainlocation);
@@ -85,110 +84,46 @@ export class Country extends Component {
       event.preventDefault();
       event.stopPropagation();
       toast.error("complete form correctly");
-      return ;
+      return;
     }
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-        toast.error("complete form correctly");
-      } else {
-        this.setState({ validated: true });
-        let formData = new FormData();
-        formData.append("country", this.state.CountryName);
-        formData.append("codecountry", this.state.CountryCode);
-        formData.append("currency", this.state.Currency);
-        formData.append("levels", this.state.levels);
-        console.log(typeof this.state.logo);
-        if (this.state.logo !== null && typeof this.state.logo !== "string") {
-          formData.append("logo", this.state.logo);
-        }
-        if (this.state.slogo !== null && typeof this.state.slogo !== "string") {
-          formData.append("secondLogo", this.state.slogo);
-        }
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      toast.error("complete form correctly");
+    } else {
+      this.setState({ validated: true });
+      let formData = new FormData();
+      formData.append("country", this.state.CountryName);
+      formData.append("codecountry", this.state.CountryCode);
+      formData.append("currency", this.state.Currency);
+      formData.append("levels", this.state.levels);
+      console.log(typeof this.state.logo);
+      if (this.state.logo !== null && typeof this.state.logo !== "string") {
+        formData.append("logo", this.state.logo);
+      }
+      if (this.state.slogo !== null && typeof this.state.slogo !== "string") {
+        formData.append("secondLogo", this.state.slogo);
+      }
 
-        formData.append("poptarget", this.state.targetpopulation);
-        formData.append("poprate", this.state.growthRate);
-        formData.append("havehr", this.state.enableHR);
-        formData.append("mainlocation", this.state.mainlocation);
-        formData.append("logo2", this.state.logo2);
-        formData.append("usingtool", this.state.requiredcapacities);
-        formData.append("usingmaintenance", this.state.enableMaintaining);
+      formData.append("poptarget", this.state.targetpopulation);
+      formData.append("poprate", this.state.growthRate);
+      formData.append("havehr", this.state.enableHR);
+      formData.append("mainlocation", this.state.mainlocation);
+      formData.append("logo2", this.state.logo2);
+      formData.append("usingtool", this.state.requiredcapacities);
+      formData.append("usingmaintenance", this.state.enableMaintaining);
 
-        if (this.state.user.admin && Object.keys(this.state.country).length) {
-          formData.append("id", this.state.country.id);
-          console.log(this.state.targetpopulation);
+      if (this.state.user.admin && Object.keys(this.state.country).length) {
+        formData.append("id", this.state.country.id);
+        console.log(this.state.targetpopulation);
 
-          UserService.editcountry(formData)
-            .then((res) => {
-              const perviuscountry = JSON.parse(
-                localStorage.getItem("country")
-              );
-              localStorage.setItem("country", JSON.stringify(res.data));
-              const country = JSON.parse(localStorage.getItem("country"));
-              if (country.levels > perviuscountry.levels) {
-                for (
-                  let i = 0;
-                  i < country.levels - perviuscountry.levels;
-                  i++
-                ) {
-                  const data = {
-                    maxpop: 0,
-                    minpop: 0,
-                    uppervol: 0,
-                    undervol: 0,
-                    m25vol: 0,
-                    m70vol: 0,
-                    m25volnew: 0,
-                    m70volnew: 0,
-                    uppervolnew: 0,
-                    undervolnew: 0,
-                    name: "levels" + (perviuscountry.levels + i + 1),
-                    dryvol: 0,
-                    dryvolnew: 0,
-                    country: 1,
-                    parent: perviuscountry.levels + i - 1,
-                  };
-                  console.log("hello");
-                  UserService.addlevel(data)
-                    .then((res) => {
-                      console.log(res);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                }
-              }
-              this.setState({
-                CountryName: country.country,
-                CountryCode: country.codecountry,
-                Currency: country.currency,
-                levels: country.levels,
-                logo: country.logo,
-                slogo: country.secondLogo,
-                growthRate: country.poprate,
-                targetpopulation: country.poptarget,
-                enableHR: country.havehr,
-                mainlocation: country.mainlocation,
-                requiredcapacities: country.usingtool,
-                enableMaintaining: country.usingmaintenance,
-              });
-              this.alerthandle("Country changed successfully", "success");
-              toast.success("Country changed successfully");
-            })
-            .catch((err) => {
-              // console.log(formData)
-              // console.log(err)
-              this.alerthandle("Country changed unsuccessfully", "error");
-              toast.error("Country changed unsuccessfully");
-            });
-        } else {
-          UserService.addcountry(formData)
-            .then((res) => {
-              this.alerthandle("Country added successfully", "success");
-              toast.success("Country added successfully");
-              localStorage.setItem("country", JSON.stringify(res.data));
-              const country = JSON.parse(localStorage.getItem("country"));
-              for (let i = 0; i < country.levels; i++) {
+        UserService.editcountry(formData)
+          .then((res) => {
+            const perviuscountry = JSON.parse(localStorage.getItem("country"));
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country = JSON.parse(localStorage.getItem("country"));
+            if (country.levels > perviuscountry.levels) {
+              for (let i = 0; i < country.levels - perviuscountry.levels; i++) {
                 const data = {
                   maxpop: 0,
                   minpop: 0,
@@ -200,12 +135,13 @@ export class Country extends Component {
                   m70volnew: 0,
                   uppervolnew: 0,
                   undervolnew: 0,
-                  name: "levels" + i,
+                  name: "levels" + (perviuscountry.levels + i + 1),
                   dryvol: 0,
                   dryvolnew: 0,
                   country: 1,
-                  parent: i === 0 ? null : i - 1,
+                  parent: perviuscountry.levels + i - 1,
                 };
+                console.log("hello");
                 UserService.addlevel(data)
                   .then((res) => {
                     console.log(res);
@@ -214,28 +150,85 @@ export class Country extends Component {
                     console.log(err);
                   });
               }
-              this.setState({
-                CountryName: country.country,
-                CountryCode: country.codecountry,
-                Currency: country.currency,
-                levels: country.levels,
-                logo: country.logo,
-                slogo: country.secondLogo,
-                growthRate: country.poprate,
-                targetpopulation: country.poptarget,
-                enableHR: country.havehr,
-                mainlocation: country.mainlocation,
-                requiredcapacities: country.usingtool,
-                enableMaintaining: country.usingmaintenance,
-              });
-            })
-            .catch((err) => {
-              // console.log(err)
-              this.alerthandle("Country added unsuccessfully", "error");
-              toast.error("Country added unsuccessfully");
+            }
+            this.setState({
+              CountryName: country.country,
+              CountryCode: country.codecountry,
+              Currency: country.currency,
+              levels: country.levels,
+              logo: country.logo,
+              slogo: country.secondLogo,
+              growthRate: country.poprate,
+              targetpopulation: country.poptarget,
+              enableHR: country.havehr,
+              mainlocation: country.mainlocation,
+              requiredcapacities: country.usingtool,
+              enableMaintaining: country.usingmaintenance,
             });
-        }
+            this.alerthandle("Country changed successfully", "success");
+            toast.success("Country changed successfully");
+          })
+          .catch((err) => {
+            // console.log(formData)
+            // console.log(err)
+            this.alerthandle("Country changed unsuccessfully", "error");
+            toast.error("Country changed unsuccessfully");
+          });
+      } else {
+        UserService.addcountry(formData)
+          .then((res) => {
+            this.alerthandle("Country added successfully", "success");
+            toast.success("Country added successfully");
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country = JSON.parse(localStorage.getItem("country"));
+            for (let i = 0; i < country.levels; i++) {
+              const data = {
+                maxpop: 0,
+                minpop: 0,
+                uppervol: 0,
+                undervol: 0,
+                m25vol: 0,
+                m70vol: 0,
+                m25volnew: 0,
+                m70volnew: 0,
+                uppervolnew: 0,
+                undervolnew: 0,
+                name: "levels" + i,
+                dryvol: 0,
+                dryvolnew: 0,
+                country: 1,
+                parent: i === 0 ? null : i - 1,
+              };
+              UserService.addlevel(data)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+            this.setState({
+              CountryName: country.country,
+              CountryCode: country.codecountry,
+              Currency: country.currency,
+              levels: country.levels,
+              logo: country.logo,
+              slogo: country.secondLogo,
+              growthRate: country.poprate,
+              targetpopulation: country.poptarget,
+              enableHR: country.havehr,
+              mainlocation: country.mainlocation,
+              requiredcapacities: country.usingtool,
+              enableMaintaining: country.usingmaintenance,
+            });
+          })
+          .catch((err) => {
+            // console.log(err)
+            this.alerthandle("Country added unsuccessfully", "error");
+            toast.error("Country added unsuccessfully");
+          });
       }
+    }
   };
   countryvalidator = () => {
     var hasNumber = /\d/;
@@ -267,12 +260,15 @@ export class Country extends Component {
     if (this.state.CountryCode.length === 3) {
       return false;
     }
-    
-      return true;
-    
+
+    return true;
   };
   cv = () => {
-    if (this.state.CountryName.length > 1) {
+    console.log(!/\d/.test(this.state.CountryName));
+    if (
+      this.state.CountryName.length > 1 &&
+      !/\d/.test(this.state.CountryName)
+    ) {
       return true;
     }
     return false;
@@ -360,7 +356,6 @@ export class Country extends Component {
                             isValid={this.cv()}
                             value={this.state.CountryName}
                             onChange={(e) => {
-                              console.log(e);
                               this.setState({ CountryName: e.target.value });
                             }}
                             required

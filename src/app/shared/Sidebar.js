@@ -11,7 +11,7 @@ class Sidebar extends Component {
 
     this.state = {
       user: this.props.user || {},
-      country: localStorage.getItem("country") || {},
+      country: JSON.parse(localStorage.getItem("country")) || {},
     };
   }
 
@@ -73,6 +73,7 @@ class Sidebar extends Component {
   }
 
   user = JSON.parse(localStorage.getItem("user"));
+  country = JSON.parse(localStorage.getItem("country"));
   render() {
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -200,44 +201,47 @@ class Sidebar extends Component {
               </Collapse>
             </li>
           )}
-          <li
-            className={
-              this.isPathActive("/hr") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+          {this.country.havehr && (
+            <li
               className={
-                this.state.hrMenuOpen ? "nav-link menu-expanded" : "nav-link"
+                this.isPathActive("/hr") ? "nav-item active" : "nav-item"
               }
-              onClick={() => this.toggleMenuState("hrMenuOpen")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-account-multiple menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>Human Resource</span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.hrMenuOpen}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/hr/list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/hr/list"
-                  >
-                    <span>HR View</span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
+              <div
+                className={
+                  this.state.hrMenuOpen ? "nav-link menu-expanded" : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("hrMenuOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-account-multiple menu-icon"></i>
+                </span>
+                <span className="menu-title">
+                  <span>Human Resource</span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.hrMenuOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    {" "}
+                    <Link
+                      className={
+                        this.isPathActive("/hr/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/hr/list"
+                    >
+                      <span>HR View</span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
+
           {this.user !== null && this.user.useradmin && (
             <li
               className={
