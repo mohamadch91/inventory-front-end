@@ -147,73 +147,73 @@ const headCells = [
     id: "m25vol",
     numeric: false,
     disablePadding: true,
-    label: "+25 C(cm3)",
+    label: "+25 C",
   },
   {
     id: "uppervol",
     numeric: false,
     disablePadding: true,
-    label: "+2 - +8 C(cm3)",
+    label: "+2 - +8 C",
   },
   {
     id: "undervol",
     numeric: false,
     disablePadding: true,
-    label: "-20 C(cm3)",
+    label: "-20 C",
   },
   {
     id: "m70vol",
     numeric: false,
     disablePadding: true,
-    label: "-70 C(cm3)",
+    label: "-70 C",
   },
   {
     id: "dryvol",
     numeric: false,
     disablePadding: true,
-    label: "Dry store(cm3)",
+    label: "Dry store",
   },
   {
     id: "m25volnew",
     numeric: false,
     disablePadding: true,
-    label: "+25 C(cm3)",
+    label: "+25 C",
   },
   {
     id: "uppervolnew",
     numeric: false,
     disablePadding: true,
-    label: "+2 - +8 C(cm3)",
+    label: "+2 - +8 C",
   },
   {
     id: "undervolnew",
     numeric: false,
     disablePadding: true,
-    label: "-20 C(cm3)",
+    label: "-20 C",
   },
   {
     id: "m70volnew",
     numeric: false,
     disablePadding: true,
-    label: "-70 C(cm3)",
+    label: "-70 C",
   },
   {
     id: "dryvolnew",
     numeric: false,
     disablePadding: true,
-    label: "Dry store(cm3)",
+    label: "Dry store",
   },
   {
     id: "minpop",
     numeric: false,
     disablePadding: true,
-    label: "Min pop(cm3)",
+    label: "Min pop",
   },
   {
     id: "maxpop",
     numeric: false,
     disablePadding: true,
-    label: "Max pop(cm3)",
+    label: "Max pop",
   },
 ];
 
@@ -481,20 +481,22 @@ export default function DataTable() {
     let levels=[]
     const country = JSON.parse(localStorage.getItem("country"));
     for (let i = 0; i < country.levels; i++){
-      let data=excel[i+5]
-      let level={
-        id:data['__EMPTY'],
-        uppervol:data['5']===''?0.0:data['5'].toFixed(2),
-        m25vol:data['__EMPTY_1']===''?0.0:data['__EMPTY_1'].toFixed(2),
-        undervol:data['__EMPTY_2']===''?0.0:data['__EMPTY_2'].toFixed(2),
-        dryvol:data['__EMPTY_3']===''?0.0:data['__EMPTY_3'].toFixed(2),
-        m25volnew:data['__EMPTY_4']===''?0.0:data['__EMPTY_4'].toFixed(2),
-        uppervolnew:data['__EMPTY_5']===''?0.0:data['__EMPTY_5'].toFixed(2),
-        undervolnew:data['__EMPTY_6']===''?0.0:data['__EMPTY_6'].toFixed(2),
-        m70volnew:data['__EMPTY_7']===''?0.0:data['__EMPTY_7'].toFixed(2),
-        dryvolnew:data['__EMPTY_8']===''?0.0:data['__EMPTY_8'].toFixed(2),
-        m70vol:data['Timor-Leste_1']===''?0.0:data['Timor-Leste_1'].toFixed(2)
-    }
+      let data=excel[i]
+      let level = {
+        name: data["__EMPTY_2"],
+        id: data["__EMPTY_3"],
+        uppervol: data["2-8°C"] === "" ? 0.0 : data["2-8°C"].toFixed(2),
+        m25vol: data["+25 C"] === "" ? 0.0 : data["+25 C"].toFixed(2),
+        undervol: data["-20°C"] === "" ? 0.0 : data["-20°C"].toFixed(2),
+        dryvol: data["Dry store"] === "" ? 0.0 : data["Dry store"].toFixed(2),
+        m25volnew: data["+25 C"] === "" ? 0.0 : data["+25 C_1"].toFixed(2),
+        uppervolnew: data["2-8°C_1"] === "" ? 0.0 : data["2-8°C_1"].toFixed(2),
+        undervolnew: data["-20°C_1"] === "" ? 0.0 : data["-20°C_1"].toFixed(2),
+        m70volnew: data["-70°C_1"] === "" ? 0.0 : data["-70°C_1"].toFixed(2),
+        dryvolnew:
+          data["Dry store_1"] === "" ? 0.0 : data["Dry store_1"].toFixed(2),
+        m70vol: data["-70°C"] === "" ? 0.0 : data["-70°C"].toFixed(2),
+      };
     levels.push(level)
   }
   UserService.putLevels(levels).then((response)=>{
@@ -577,17 +579,17 @@ export default function DataTable() {
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <div>
-            <div className="row mr-5 mt-2 mb-3 ml-5">
+            <div className="item-class-page row mr-5 mt-2 mb-3 ml-5">
               <Typography
                 sx={{ flex: "1 1 100%" }}
                 variant="h6"
                 id="tableTitle"
                 component="div"
-                className=" mt-3"
+                className=" mt-3 item-class-page"
               >
                 import level
               </Typography>
-              <div className="col-md-12">
+              <div className="col-md-12 item-class-page">
                 <label>upload excel to change levels data</label>
                 <div className="row d-flex mb-2 ">
                   <div className="col-md-3">
@@ -621,7 +623,7 @@ export default function DataTable() {
           <SharedTable>
             <TableHead>
               <TableRow>
-                <TableCell colSpan={6}></TableCell>
+                <TableCell colSpan={7.5}></TableCell>
                 <TableCell colSpan={4}>
                   Target Population :
                   {JSON.parse(localStorage.getItem("country")).poptarget}
@@ -629,7 +631,7 @@ export default function DataTable() {
                 <TableCell colSpan={6}></TableCell>
               </TableRow>
               <TableRow>
-                <TableCell colSpan={3}></TableCell>
+                <TableCell colSpan={4}></TableCell>
                 <TableCell
                   sx={{
                     backgroundColor: "#82c4ed",
@@ -638,7 +640,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  Current values
+                  Current values (cm3)
                 </TableCell>
                 <TableCell
                   sx={{
@@ -649,7 +651,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  Planned values
+                  Planned values (cm3)
                 </TableCell>
               </TableRow>
               <TableRow className="item-class-page">

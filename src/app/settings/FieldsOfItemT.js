@@ -98,6 +98,7 @@ function FieldsOfItemT() {
         field.itemtypeid === selectedItemType.id &&
         field.fieldid === currentField.id
     );
+    console.log(kind)
     if (fieldIndex === -1) {
       //for the first time
       fieldValuesClone.push({

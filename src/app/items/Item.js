@@ -78,9 +78,11 @@ function Item() {
           fieldTopicInResult.push(field.field);
           result[field.field.topic] = fieldTopicInResult;
         }
-        const firstTopic = Object.keys(result)[0];
-        //static fields
-
+       let firstTopic =[]
+        if(result!==[] ) {
+         firstTopic = Object.keys(result)[0];
+        //static fields}
+        }
         result[firstTopic].unshift({
           id: "code",
           name: "Item code:",

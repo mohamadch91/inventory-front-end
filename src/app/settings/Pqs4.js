@@ -134,29 +134,29 @@ TablePaginationActions.propTypes = {
       const wb = XLSX.read(bstr, { type: "binary" });
       const wsname = wb.SheetNames[1];
       const ws = wb.Sheets[wsname];
-      const data = XLSX.utils.sheet_to_json(ws);
-      console.log(data);
-      setExcel(data);
+      setExcel(ws);
     };
     reader.readAsBinaryString(file);
   };
   const handleExcel = () => {
    let pqs=[]
-    console.log(excel)
-    for (let i=4;i<excel.length;i++){
+    const len=XLSX.utils.sheet_to_json(excel).length+2;
+    for (let i=6;i<len;i++){
         let x=0.0
-        if(typeof excel[i]["__EMPTY_12"]=== "string"){
-               x = parseFloat(excel[i]["__EMPTY_12"].split("&")[0]); 
+        if(typeof excel["P"+i]=== "string"){
+               x = parseFloat(excel["P"+i].split("&")[0]); 
         }
         const data = {
-          pqsnumber: excel[i]["Passive container database"],
-          type: excel[i]["__EMPTY"],
-          manufacturer: excel[i]["__EMPTY_1"],
-          model: excel[i]["__EMPTY_2"],
-          vaccinenetstoragecapacity: excel[i]["__EMPTY_3"],
+          pqsnumber: excel["B" + i] === undefined ? "" : excel["B" + i].v,
+          type: excel["C" + i] === undefined ? "" : excel["C" + i].v,
+          manufacturer: excel["D" + i] === undefined ? "" : excel["D" + i].v,
+          model: excel["E" + i] === undefined ? "" : excel["E" + i].v,
+          vaccinenetstoragecapacity:
+            excel["G" + i] === undefined ? 0.0 : excel["G" + i].v,
           coolantpacknominalcapacity: x,
-          numbercoolantpacks: excel[i]["Index"],
-          externalvolume: excel[i]["__EMPTY_17"],
+          numbercoolantpacks:
+            excel["Q" + i] === undefined ? 0.0 : excel["Q" + i].v,
+          externalvolume: excel["V" + i] === undefined ? 0.0 : excel["V" + i].v,
         };
         pqs.push(data)
     }
@@ -195,7 +195,7 @@ TablePaginationActions.propTypes = {
               <div className="add-row mt-4 mb-4">
                 <h3 className="mb-3 mt-3">Insert PQS excel file</h3>
                 <div className="row">
-                  <div className="col-md-3 flex-column d-flex">
+                  <div className="col-md-4 flex-column d-flex">
                     <label>excel file</label>
                     <input
                       name="describe"
@@ -204,7 +204,7 @@ TablePaginationActions.propTypes = {
                       required
                     ></input>
                   </div>
-                  <div className="col-md-3 flex-column d-flex mt-2">
+                  <div className="col-md-4 flex-column d-flex mt-2">
                     <label>If you sumbit all old datas erased</label>
                     <button onClick={handleExcel} className="save-btn">
                       sumbit

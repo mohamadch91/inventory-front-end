@@ -11,6 +11,7 @@ class Sidebar extends Component {
 
     this.state = {
       user: this.props.user || {},
+      country: localStorage.getItem("country") || {},
     };
   }
 
@@ -93,106 +94,112 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>
-          <li
-            className={
-              this.isPathActive("/facilities") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+          {this.user !== null && this.user.facility_admin && (
+            <li
               className={
-                this.state.facilitiesOpen
-                  ? "nav-link menu-expanded"
-                  : "nav-link"
+                this.isPathActive("/facilities")
+                  ? "nav-item active"
+                  : "nav-item"
               }
-              onClick={() => this.toggleMenuState("facilitiesOpen")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-table-large menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>Facilities</span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.facilitiesOpen}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/facilities/info")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/facilities/info/new"
-                  >
-                    <span>New Facility</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/facilities/list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/facilities/list"
-                  >
-                    <span>Facility list</span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
-          <li
-            className={
-              this.isPathActive("/items") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+              <div
+                className={
+                  this.state.facilitiesOpen
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("facilitiesOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-table-large menu-icon"></i>
+                </span>
+                <span className="menu-title">
+                  <span>Facilities</span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.facilitiesOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/facilities/info")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/facilities/info/new"
+                    >
+                      <span>New Facility</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/facilities/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/facilities/list"
+                    >
+                      <span>Facility list</span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
+          {this.user !== null && this.user.itemadmin && (
+            <li
               className={
-                this.state.itemsOpen ? "nav-link menu-expanded" : "nav-link"
+                this.isPathActive("/items") ? "nav-item active" : "nav-item"
               }
-              onClick={() => this.toggleMenuState("itemsOpen")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-table-large menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>Items</span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.itemsOpen}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/info")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/info/new"
-                  >
-                    <span>New Item</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/list"
-                  >
-                    <span>Item list</span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
+              <div
+                className={
+                  this.state.itemsOpen ? "nav-link menu-expanded" : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("itemsOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-table-large menu-icon"></i>
+                </span>
+                <span className="menu-title">
+                  <span>Items</span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.itemsOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/info")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/info/new"
+                    >
+                      <span>New Item</span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/list"
+                    >
+                      <span>Item list</span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
           <li
             className={
               this.isPathActive("/hr") ? "nav-item active" : "nav-item"
@@ -231,7 +238,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          {this.user !== null && this.user.admin && (
+          {this.user !== null && this.user.useradmin && (
             <li
               className={
                 this.isPathActive("/user") ? "nav-item active" : "nav-item"

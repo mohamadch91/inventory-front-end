@@ -130,53 +130,46 @@ function Pqs3() {
       const bstr = evt.target.result;
       const wb = XLSX.read(bstr, { type: "binary" });
       const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      const data = XLSX.utils.sheet_to_json(ws);
-      console.log(data);
-      setExcel(data);
+       const ws = wb.Sheets[wsname];
+       setExcel(ws);
     };
     reader.readAsBinaryString(file);
   };
   const handleExcel = () => {
     let pqs = [];
-    console.log(excel);
-    for (let i = 4; i < excel.length; i++) {
+    const len = XLSX.utils.sheet_to_json(excel).length + 2;
+    console.log(len)
+    for (let i = 7; i < len; i++) {
       let x = 0.0;
       let y = 0.0;
       let z = 0.0;
-      if(excel[i]["__EMPTY_18"] ==='###' || excel[i]["__EMPTY_18"] ===' '){
-        x=0.0
+      if (excel["Z" + i] === "###" || excel["Z" + i] === undefined) {
+        x = 0.0;
+      } else {
+        x = parseFloat(excel["Z" + i]);
+      }
+    if (excel["AA" + i] === "###" || excel["AA" + i] === undefined) {
+      y = 0.0;
+    } else {
+      y = parseFloat(excel["AA" + i]);
     }
-      else{
-      x = parseFloat(excel[i]["__EMPTY_18"]);
+    if (excel["AB" + i] === "###" || excel["AB" + i] === undefined) {
+      z = 0.0;
+    } else {
+      z = parseFloat(excel["AB" + i]);
     }
-    if(excel[i]["__EMPTY_19"] ==='###' || excel[i]["__EMPTY_19"] ===' '){
-        y=0.0
-    }
-      else{
-      y = parseFloat(excel[i]["__EMPTY_19"]);
-    }
-    if(excel[i]["__EMPTY_20"] ==='###' || excel[i]["__EMPTY_20"] ===' '){
-        z=0.0
-    }
-      else{
-      z = parseFloat(excel[i]["__EMPTY_20"]);
-    }
-    console.log(excel[i]["Nbr. of products listed:"]);
     
     
       const data = {
-        description:
-          excel[i][
-            "http://apps.who.int/immunization_standards/vaccine_quality/pqs_catalogue/categorypage.aspx?id_cat=17"
-          ],
-        make: excel[i]["__EMPTY"],
-        model: excel[i]["__EMPTY_1"],
-        pqscode: excel[i]["__EMPTY_2"],
-        refrigerant: excel[i]["__EMPTY_4"],
-        refrigeratorcapacity: excel[i]["__EMPTY_7"],
-        freezercapacity: excel[i]["Nbr. of products listed:"],
-        kg_24_hrs: excel[i]["__EMPTY_9"]===' '?0:excel[i]["__EMPTY_9"],
+        description: excel["A" + i] === undefined ? "" : excel["A" + i].v,
+        make: excel["B" + i] === undefined ? "" : excel["B" + i].v,
+        model: excel["C" + i] === undefined ? "" : excel["C" + i].v,
+        pqscode: excel["D" + i] === undefined ? "" : excel["D" + i].v,
+        refrigerant: excel["F" + i] === undefined ? "" : excel["F" + i].v,
+        refrigeratorcapacity:
+          excel["I" + i] === undefined ? 0.0 : excel["I" + i].v,
+        freezercapacity: excel["J" + i] === undefined ? 0.0 : excel["J" + i].v,
+        kg_24_hrs: excel["M" + i] === undefined ? 0.0 : excel["M" + i].v,
         h: x,
         w: y,
         l: z,
