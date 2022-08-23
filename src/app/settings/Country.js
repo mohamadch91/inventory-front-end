@@ -80,7 +80,6 @@ export class Country extends Component {
     const form = event.currentTarget;
     if (!this.countryvalidator() || !this.CV()) {
       this.setState({ validated: false });
-      console.log("salam");
       event.preventDefault();
       event.stopPropagation();
       toast.error("complete form correctly");
@@ -97,7 +96,6 @@ export class Country extends Component {
       formData.append("codecountry", this.state.CountryCode);
       formData.append("currency", this.state.Currency);
       formData.append("levels", this.state.levels);
-      console.log(typeof this.state.logo);
       if (this.state.logo !== null && typeof this.state.logo !== "string") {
         formData.append("logo", this.state.logo);
       }
@@ -115,8 +113,6 @@ export class Country extends Component {
 
       if (this.state.user.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
-        console.log(this.state.targetpopulation);
-
         UserService.editcountry(formData)
           .then((res) => {
             const perviuscountry = JSON.parse(localStorage.getItem("country"));
@@ -141,7 +137,6 @@ export class Country extends Component {
                   country: 1,
                   parent: perviuscountry.levels + i - 1,
                 };
-                console.log("hello");
                 UserService.addlevel(data)
                   .then((res) => {
                     console.log(res);
@@ -169,8 +164,6 @@ export class Country extends Component {
             toast.success("Country changed successfully");
           })
           .catch((err) => {
-            // console.log(formData)
-            // console.log(err)
             this.alerthandle("Country changed unsuccessfully", "error");
             toast.error("Country changed unsuccessfully");
           });
@@ -223,7 +216,6 @@ export class Country extends Component {
             });
           })
           .catch((err) => {
-            // console.log(err)
             this.alerthandle("Country added unsuccessfully", "error");
             toast.error("Country added unsuccessfully");
           });

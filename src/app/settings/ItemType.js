@@ -12,11 +12,13 @@ import "../styles/inputs.scss";
 
 function ItemType() {
   const [itemTypes, setItemTypes] = useState([]);
+  const [filteredItemTypes, setFilteredItemTypes] = useState([]);
   const [itemClasses, setItemClasses] = useState([]);
   const [editFormData, setEditFormData] = useState({});
   const [addRowFormData, setAddRowFormData] = useState({});
   const [editableRowId, setEditableRowId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedItemClass, setSelectedItemClass] = useState(0);
 
   function getItemClasses() {
     ItemsService.getItemClasses()
@@ -35,6 +37,7 @@ function ItemType() {
     ItemsService.getItemTypes()
       .then((res) => {
         setItemTypes(res.data);
+        setFilteredItemTypes(res.data);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -46,6 +49,18 @@ function ItemType() {
   useEffect(() => {
     getItemClasses();
   }, []);
+
+  useEffect(() => {
+    if (selectedItemClass && selectedItemClass !== "0") {
+      setFilteredItemTypes(
+        itemTypes?.filter(
+          (item) => item.itemclass === parseInt(selectedItemClass)
+        )
+      );
+    } else {
+      setFilteredItemTypes(itemTypes);
+    }
+  }, [selectedItemClass]);
 
   useEffect(() => {
     setAddRowFormData({
@@ -148,6 +163,27 @@ function ItemType() {
         <Spinner />
       ) : (
         <>
+          <div className="mb-4">
+            <div className="mb-2">
+              <h4 className="page-title">Item class</h4>
+            </div>
+            <div className="">
+              <select
+                name="itemclass"
+                onChange={(e) => {
+                  setSelectedItemClass(e.target.value);
+                }}
+                value={selectedItemClass}
+              >
+                <option value={0}>All</option>
+                {itemClasses.map((itemClass, index) => (
+                  <option key={itemClass.id} value={itemClass.id}>
+                    {itemClass.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           <h3 className="page-title mb-3">item category list</h3>
           <div>
             <SharedTable>
@@ -163,7 +199,7 @@ function ItemType() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {itemTypes.map((itemType, index) => (
+                {filteredItemTypes?.map((itemType, index) => (
                   <>
                     {editableRowId !== itemType.id ? (
                       <TableRow>
