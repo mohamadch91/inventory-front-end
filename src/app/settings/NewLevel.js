@@ -217,7 +217,6 @@ const headCells = [
   },
 ];
 
-
 const EnhancedTableToolbar = (props) => {
   const { numSelected } = props;
 
@@ -262,7 +261,6 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-
 export default function DataTable() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -274,36 +272,27 @@ export default function DataTable() {
   const [isEdit, setEdit] = React.useState(false);
   const [disable, setDisable] = React.useState(true);
   const [showConfirm, setShowConfirm] = React.useState(false);
-  const [isFormValid, setIsFormValid] = React.useState(true);
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+  const isMinpopMaxpopValid = (text) => {
+    if (
+      text.toString().length > 0 &&
+      parseInt(text) >= 0 &&
+      parseInt(text) <= 100000000 &&
+      !text.toString().includes(".")
+    ) {
+      return true;
     }
-    setOpen(false);
+    return false;
   };
-  const handleEdit = (i) => {
-    // If edit mode is true setEdit will
-    // set it to false and vice versa
-    setEdit(!isEdit);
-  };
-  const handleAdd = () => {
-    setRows([
-      ...rows,
-      {
-        id: rows.length + 1,
-        firstname: "",
-        lastname: "",
-        city: "",
-      },
-    ]);
-    setEdit(true);
-  };
+
   const handleSave = () => {
     setEdit(!isEdit);
     setRows(rows);
     setDisable(true);
-    if (!isFormValid) {
+    if (
+      !isMinpopMaxpopValid(rows[editableRowId - 1].maxpop) ||
+      !isMinpopMaxpopValid(rows[editableRowId - 1].minpop)
+    ) {
       toast.error("Please fill the fields with right format");
     } else {
       UserService.putLevels(rows)
@@ -338,16 +327,11 @@ export default function DataTable() {
           // console.log(e);
         });
       setOpen(true);
+      setEditableRowId(null);
+      setEditFormData({});
     }
-     setEditableRowId(null);
-     setEditFormData({});
   };
   const handleInputChange = (e, index) => {
-    if (e.target.name !== "name") {
-      if (isNaN(e.target.value)) {
-        setIsFormValid(false);
-      }
-    }
     let number = e.target.value;
     setDisable(false);
     const flag = number.split(".").length;
@@ -433,18 +417,7 @@ export default function DataTable() {
       return true;
     }
   };
-  const minpopValidator = (text) => {
-    if (text.toString().length > 0) {
-      return true;
-    }
-  };
-  const maxpopValidator = (text) => {
-    if (text.toString().length > 0) {
-      return true;
-    }
-  };
   const capacityValidator = (text) => {
-    // console.log(text)
     const check = parseFloat(text);
     if (check < 0) {
       return false;
@@ -457,31 +430,31 @@ export default function DataTable() {
   const [excel, setExcel] = React.useState(null);
   const [editFormData, setEditFormData] = React.useState({});
   const [editableRowId, setEditableRowId] = React.useState(null);
-    function handleEdit1(i) {
-      const formData = rows.find((item) => item.id === i.id);
-      setEditFormData(formData);
-      setEditableRowId(i.id);
-    }
+  function handleEdit1(i) {
+    const formData = rows.find((item) => item.id === i.id);
+    setEditFormData(formData);
+    setEditableRowId(i.id);
+  }
   const handleImport = (e) => {
-      const [file] = e.target.files;
-      const reader = new FileReader();
-      reader.onload = (evt) => {
-        const bstr = evt.target.result;
-        const wb = XLSX.read(bstr, { type: "binary" });
-        const wsname = wb.SheetNames[3];
-        const ws = wb.Sheets[wsname];
-        console.log(ws)
-        const data = XLSX.utils.sheet_to_json(ws);
-        console.log(data);
-        setExcel(data);
-      };
-      reader.readAsBinaryString(file);
+    const [file] = e.target.files;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const bstr = evt.target.result;
+      const wb = XLSX.read(bstr, { type: "binary" });
+      const wsname = wb.SheetNames[3];
+      const ws = wb.Sheets[wsname];
+      console.log(ws);
+      const data = XLSX.utils.sheet_to_json(ws);
+      console.log(data);
+      setExcel(data);
+    };
+    reader.readAsBinaryString(file);
   };
-  const handleExcel = ()=>{ 
-    let levels=[]
+  const handleExcel = () => {
+    let levels = [];
     const country = JSON.parse(localStorage.getItem("country"));
-    for (let i = 0; i < country.levels; i++){
-      let data=excel[i]
+    for (let i = 0; i < country.levels; i++) {
+      let data = excel[i];
       let level = {
         name: data["__EMPTY_2"],
         id: data["__EMPTY_3"],
@@ -497,44 +470,45 @@ export default function DataTable() {
           data["Dry store_1"] === "" ? 0.0 : data["Dry store_1"].toFixed(2),
         m70vol: data["-70°C"] === "" ? 0.0 : data["-70°C"].toFixed(2),
       };
-    levels.push(level)
-  }
-  UserService.putLevels(levels).then((response)=>{
-    toast.success("Levels imported successfully")
-       let row = [];
-       for (let i = 0; i < country.levels; i++) {
-         row.push(
-           createData(
-             response.data[i].id,
-             response.data[i].name,
-             parseInt(response.data[i].maxpop),
-             parseInt(response.data[i].minpop),
-             response.data[i].uppervol,
-             response.data[i].undervol,
-             response.data[i].m25vol,
-             response.data[i].m70vol,
-             response.data[i].dryvol,
-             response.data[i].m25volnew,
-             response.data[i].m70volnew,
-             response.data[i].uppervolnew,
-             response.data[i].undervolnew,
-             response.data[i].dryvolnew,
-             response.data[i].country,
-             response.data[i].parent
-           )
-         );
-       }
+      levels.push(level);
+    }
+    UserService.putLevels(levels)
+      .then((response) => {
+        toast.success("Levels imported successfully");
+        let row = [];
+        for (let i = 0; i < country.levels; i++) {
+          row.push(
+            createData(
+              response.data[i].id,
+              response.data[i].name,
+              parseInt(response.data[i].maxpop),
+              parseInt(response.data[i].minpop),
+              response.data[i].uppervol,
+              response.data[i].undervol,
+              response.data[i].m25vol,
+              response.data[i].m70vol,
+              response.data[i].dryvol,
+              response.data[i].m25volnew,
+              response.data[i].m70volnew,
+              response.data[i].uppervolnew,
+              response.data[i].undervolnew,
+              response.data[i].dryvolnew,
+              response.data[i].country,
+              response.data[i].parent
+            )
+          );
+        }
 
-       setRows(row);
-
-  }).catch((err)=>{
-    toast.error("Levels import failed")
-  }).finally(()=>{
-    setExcel(null)
-  }
-  )
-  console.log(levels)
-  }
+        setRows(row);
+      })
+      .catch((err) => {
+        toast.error("Levels import failed");
+      })
+      .finally(() => {
+        setExcel(null);
+      });
+    console.log(levels);
+  };
   React.useEffect(() => {
     // get
     UserService.getLevels()
@@ -960,26 +934,30 @@ export default function DataTable() {
                       <TableCell padding="none" align="center">
                         <input
                           required
-                          isValid={minpopValidator(rows[i].minpop)}
                           value={separator(rows[i].minpop)}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="minpop"
                           type="number"
+                          min="0"
+                          max="100000000"
+                          step="1"
                         />
                         <span></span>
                       </TableCell>
                       <TableCell padding="none" align="center">
                         <input
                           required
-                          isValid={maxpopValidator(row.maxpop)}
                           value={separator(row.maxpop)}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="maxpop"
                           type="number"
+                          min="0"
+                          max="100000000"
+                          step="1"
                         />
                       </TableCell>
                     </TableRow>
