@@ -22,7 +22,6 @@ function MangeHelp() {
     },
     {
       enabled: false,
-      staleTime: Infinity,
       onSuccess(data) {
         setHelpContent(data.abr);
       },

@@ -51,7 +51,7 @@ function ItemTypeLevel() {
       return fieldsValueClone;
     },
     {
-      staleTime: 5 * 60 * 1000, // cache data about 5 minutes
+      refetchOnMount: true,
     }
   );
 

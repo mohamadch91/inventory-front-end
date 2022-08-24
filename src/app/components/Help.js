@@ -10,9 +10,6 @@ function Help(props) {
     async () => {
       const res = await helpService.getHelpContent(selectedLang, selectedPage);
       return res.data.length > 0 ? res.data[0] : {};
-    },
-    {
-      staleTime: Infinity,
     }
   );
 

@@ -5,22 +5,36 @@ const DynamicInput = (props) => {
   if (field.type === "select") {
     return (
       <Form.Control
-        onChange={(e) => onChangeHandler(e, field)}
+        onSelect={(e) => onChangeHandler(e, field)}
         defaultValue={defaultValue}
         className="form-control"
         as="select"
-        disabled={field.disabled}
+        disabled={field.active ? !field.active : field.disabled}
         id={`field-${field.id}`}
       >
         <option value="" selected disabled>
           Please select
         </option>
         {field.params.map((param) => (
-          <option disabled={!param.enabled} value={param.id}>
+          <option
+            disabled={param.enabled ? !param.enabled : !param.active}
+            value={param.id}
+          >
             {param.name || param.describe}
           </option>
         ))}
       </Form.Control>
+    );
+  }
+
+  if (field.type === "bool") {
+    return (
+      <input
+        type="checkbox"
+        defaultChecked={defaultValue}
+        onChange={(e) => onChangeHandler(e, field)}
+        disabled={field.active ? !field.active : field.disabled}
+      />
     );
   }
 
@@ -31,7 +45,8 @@ const DynamicInput = (props) => {
       className="form-control"
       id={`field-${field.id}`}
       type={field.type}
-      disabled={field.disabled}
+      disabled={field.active ? !field.active : field.disabled}
+      min={0}
     />
   );
 };

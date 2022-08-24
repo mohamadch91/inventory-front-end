@@ -16,7 +16,6 @@ function ItemList() {
       return res.data;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
     }
   );
@@ -29,7 +28,6 @@ function ItemList() {
         return res.data.filter((item) => item.item_type.length > 0);
       },
       {
-        staleTime: Infinity,
         refetchOnMount: true,
       }
     );

@@ -30,7 +30,6 @@ function Facility() {
       return res.data;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
       onSuccess(data) {
         setFieldValue(data);
@@ -93,7 +92,6 @@ function Facility() {
       return result;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
     }
   );
@@ -160,7 +158,7 @@ function Facility() {
               <Stepper activeStep={activeStep}>
                 {Object.keys(facilityFields).map((topic, index) => {
                   return (
-                    <Step key={topic} onClick={() => handleStep(index)}>
+                    <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
                         {topic}
                       </StepLabel>

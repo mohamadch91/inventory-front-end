@@ -34,7 +34,6 @@ function Item() {
       return res.data[0];
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
       onSuccess(data) {
         setFieldValue(data);
@@ -50,7 +49,6 @@ function Item() {
         return res.data.filter((item) => item.item_type.length > 0);
       },
       {
-        staleTime: Infinity,
         refetchOnMount: true,
         onSuccess(data) {
           setSelectedItemClass(data[0]);
@@ -78,9 +76,11 @@ function Item() {
           fieldTopicInResult.push(field.field);
           result[field.field.topic] = fieldTopicInResult;
         }
-        const firstTopic = Object.keys(result)[0];
+        const firstTopic = Object.keys(result)[0] ?? "Type";
+        if (result[firstTopic] === undefined) {
+          result[firstTopic] = [];
+        }
         //static fields
-
         result[firstTopic].unshift({
           id: "code",
           name: "Item code:",
@@ -107,7 +107,6 @@ function Item() {
       return result;
     },
     {
-      staleTime: Infinity,
       enabled: !!selectedItemType,
     }
   );
@@ -143,6 +142,7 @@ function Item() {
   };
 
   const onChangeHandler = (e, field) => {
+    console.log(field);
     const value = e.target.value;
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
@@ -204,7 +204,7 @@ function Item() {
               <Stepper activeStep={activeStep}>
                 {Object.keys(itemFields).map((topic, index) => {
                   return (
-                    <Step key={topic} onClick={() => handleStep(index)}>
+                    <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
                         {topic}
                       </StepLabel>
