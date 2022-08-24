@@ -10,11 +10,12 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
 import DynamicInput from "../components/DynamicInput";
+import { hasValidationError } from "../helpers/validation-checker";
 
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
-  const [fieldErrors, setFieldErrors] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const { id } = useParams();
 
@@ -101,15 +102,15 @@ function Facility() {
   }
 
   const hasRequiredErrors = () => {
-    const _fieldErrors = [];
+    const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(facilityFields)[activeStep];
     currentStepFields.forEach((field) => {
       if (field.required && !fieldsValue[field.stateName]) {
-        _fieldErrors.push(field.id);
+        _fieldErrors[field.id] = "this field is required!";
       }
     });
     setFieldErrors(_fieldErrors);
-    return _fieldErrors.length > 0;
+    return Object(_fieldErrors).keys.length > 0;
   };
 
   const handleNext = () => {
@@ -122,19 +123,18 @@ function Facility() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => {
-    setActiveStep(step);
-  };
-
   const onChangeHandler = (e, field) => {
     const value = e.target.value;
+    const validationErr = hasValidationError(value, field.validation[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
     setFieldValue(cloneFieldsValue);
-    if (value && fieldErrors.indexOf(field.id) >= 0) {
-      setFieldErrors((preState) =>
-        preState.filter((fieldEId) => fieldEId !== field.id)
-      );
+    //check validation and required
+    const _fieldErrors = { ...fieldErrors };
+    if (validationErr) {
+      _fieldErrors[field.id] = validationErr;
+    } else {
+      delete _fieldErrors[field.id];
     }
   };
 
@@ -183,7 +183,7 @@ function Facility() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={fieldErrors.length > 0}
+                    disabled={Object(fieldErrors).keys.length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -200,7 +200,7 @@ function Facility() {
         <div className="card">
           <div className="card-body">
             {Object.values(facilityFields)[activeStep]?.map((field) => {
-              const hasRequiredError = fieldErrors.indexOf(field.id) >= 0;
+              const hasRequiredError = !!fieldErrors[field.id];
               return (
                 <div className="row" key={field.name}>
                   <Form.Group className="row mb-0">
@@ -210,7 +210,7 @@ function Facility() {
                       }`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}

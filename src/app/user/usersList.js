@@ -71,7 +71,7 @@ function UsersList() {
   }, [facilities]);
 
   function handleEdit(i) {
-    const formData = list.find((item) => item.idnumber === i.idnumber);
+    const formData = list.find((item) => item.pk === i.pk);
     setEditFormData(formData);
     setIsEditModalOpen(true);
   }
@@ -96,6 +96,7 @@ function UsersList() {
     } else {
       setIsLoading(true);
       let formToPut = (({
+        pk,
         password,
         is_superuser,
         facilityid,
@@ -107,7 +108,8 @@ function UsersList() {
         itemadmin,
         reportadmin,
         useradmin,
-      }) => ({
+      }) => ({pk,
+
         password,
         is_superuser,
         facilityid,
@@ -120,6 +122,7 @@ function UsersList() {
         reportadmin,
         useradmin,
       }))(editFormData);
+      console.log(editFormData);
       UserListService.updateUser(formToPut)
         .then((res) => {
           setIsLoading(true);
@@ -127,6 +130,7 @@ function UsersList() {
           setEditFormData({});
           setIsEditModalOpen(false);
           setActiveStep(0);
+          toast.success("user edit succesfuly")
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -173,6 +177,7 @@ function UsersList() {
       }))(addRowFormData);
       UserListService.addUser(formToPost)
         .then((res) => {
+          toast.success("user add succesfully")
           setIsLoading(true);
           getList(selectedFacility);
           setAddRowFormData({
@@ -203,7 +208,7 @@ function UsersList() {
 
   return (
     <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">HR by Facility</h3>
+      <h3 className="page-title mb-3">User by Facility</h3>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -253,7 +258,7 @@ function UsersList() {
                     list.map((item, index) => (
                       <>
                         <TableRow>
-                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>{item.pk}</TableCell>
                           <TableCell>{item.name}</TableCell>
                           <TableCell>{item.username}</TableCell>
                           <TableCell>
@@ -321,7 +326,7 @@ function UsersList() {
               {activeStep === 0 ? (
                 <>
                   <h3 className="mb-3 text-center">
-                    Human Resource Information
+                   Edit user
                   </h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -526,7 +531,7 @@ function UsersList() {
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            Human Resource Information
+            User add
           </button>
           <Modal
             show={isAddModalOpen}
@@ -539,7 +544,7 @@ function UsersList() {
               {activeStep === 0 ? (
                 <>
                   <h3 className="mb-3 text-center">
-                    Human Resource Information
+                   Add user
                   </h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>

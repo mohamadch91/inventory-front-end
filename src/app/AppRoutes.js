@@ -29,9 +29,9 @@ const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
-const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const Parameters = lazy(() => import("./settings/Parameters"));
 const Pqs4 = lazy(() => import("./settings/Pqs4"));
+const Pqs3 = lazy(() => import("./settings/Pqs3"));
 const ParameterDescription = lazy(() =>
   import("./settings/ParameterDescription")
 );
@@ -46,9 +46,10 @@ const Facility = lazy(() => import("./facilities/Facility"));
 const FacilityList = lazy(() => import("./facilities/FacilityList"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
+const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
+const EditLanguage = lazy(() => import("./settings/editLanguage"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
-
 class AppRoutes extends Component {
   render() {
     return (
@@ -70,6 +71,12 @@ class AppRoutes extends Component {
           <Route exact path="/settings/params" component={Parameters} />
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
+          <Route exact path="/settings/pqs3" component={Pqs3} />
+          <Route
+            exact
+            path="/settings/language/edit"
+            component={EditLanguage}
+          />
           <Route
             exact
             path="/settings/params/:id"

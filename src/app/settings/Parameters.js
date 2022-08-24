@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 
 function Parameters() {
   const [data, setData] = useState({});

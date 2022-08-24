@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 import RelatedService from "../services/related.service";
-
+import "../styles/inputs.scss";
 function FieldsFacility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldsValue] = useState([]);

@@ -7,6 +7,10 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
+import "../styles/hr.scss";
+import "./itemClass.scss";
+import "./itemType.scss";
+
 import ItemsService from "../services/items.service";
 
 function Manufacturer() {
@@ -106,7 +110,7 @@ function Manufacturer() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "" && editFormData[key] !== null;
+      return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
       toast.error("Please fill all the fields");

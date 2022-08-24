@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 
 const API_URL = "http://5.182.47.38:8001/settings/";
-const URL="http://5.182.47.38:8001";
+const URL = "http://5.182.47.38:8001";
 class UserService {
   getPublicContent() {
     return axios.get(API_URL + "all");
@@ -52,9 +52,29 @@ class UserService {
       headers: { Authorization: authHeader() },
     });
   }
-  getUserimage(url){
-    return axios.get(URL+url, {
-      headers: { Authorization: authHeader()}
+  getUserimage(url) {
+    return axios.get(URL + url, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getpqs4() {
+    return axios.get(URL + "/pqs/4", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  addpqs4(data) {
+    return axios.post(URL + "/pqs/4", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getpqs3() {
+    return axios.get(URL + "/pqs/3", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  addpqs3(data) {
+    return axios.post(URL + "/pqs/3", data, {
+      headers: { Authorization: authHeader() },
     });
   }
 }

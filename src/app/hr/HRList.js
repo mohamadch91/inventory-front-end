@@ -200,7 +200,7 @@ function HRList() {
 
   return (
     <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">HR by Facility</h3>
+      <h3 className="page-title mb-3">HR Information by Facility</h3>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -381,7 +381,7 @@ function HRList() {
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            Human Resource Information
+            Human Resource add 
           </button>
           <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
             <form onSubmit={handleSubmitNew}>

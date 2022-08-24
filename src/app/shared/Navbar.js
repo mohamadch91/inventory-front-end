@@ -18,10 +18,11 @@ class Navbar extends Component {
   }
   componentDidMount() {
         let country=JSON.parse(localStorage.getItem("country"));
-    console.log(country)
-
+   
+    if(country!==null){
     this.state.logo1=country.logo;
     this.state.logo2 = country.secondLogo;
+    }
     if (this.state.logo1 !== null) {
       this.setState({
         logo1: `http://5.182.47.38:8001${this.state.logo1}`,

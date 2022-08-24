@@ -11,11 +11,12 @@ import { Form } from "react-bootstrap";
 import ItemService from "../services/item.service";
 import DynamicInput from "../components/DynamicInput";
 import { fromPQSFields } from "../constants/item";
+import { hasValidationError } from "../helpers/validation-checker";
 
 function Item() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
-  const [fieldErrors, setFieldErrors] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [selectedItemClass, setSelectedItemClass] = useState(null);
   const [selectedItemType, setSelectedItemType] = useState(null);
   const [isFromPQS, setIsFromPQS] = useState(false);
@@ -116,15 +117,15 @@ function Item() {
   }, [selectedItemType]);
 
   const hasRequiredErrors = () => {
-    const _fieldErrors = [];
+    const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
-      if (field.required && !fieldsValue[field.state]) {
-        _fieldErrors.push(field.id);
+      if (field.required && !fieldsValue[field.stateName]) {
+        _fieldErrors[field.id] = "this field is required!";
       }
     });
     setFieldErrors(_fieldErrors);
-    return _fieldErrors.length > 0;
+    return Object(_fieldErrors).keys.length > 0;
   };
 
   const handleNext = () => {
@@ -137,20 +138,18 @@ function Item() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => {
-    setActiveStep(step);
-  };
-
   const onChangeHandler = (e, field) => {
-    console.log(field);
     const value = e.target.value;
+    const validationErr = hasValidationError(value, field.validation[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
     setFieldValue(cloneFieldsValue);
-    if (value && fieldErrors.indexOf(field.id) >= 0) {
-      setFieldErrors((preState) =>
-        preState.filter((fieldEId) => fieldEId !== field.id)
-      );
+    //check validation and required
+    const _fieldErrors = { ...fieldErrors };
+    if (validationErr) {
+      _fieldErrors[field.id] = validationErr;
+    } else {
+      delete _fieldErrors[field.id];
     }
   };
 
@@ -229,7 +228,7 @@ function Item() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={fieldErrors.length > 0}
+                    disabled={Object(fieldErrors).keys.length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -250,10 +249,10 @@ function Item() {
                 <div className="row">
                   <Form.Group className="row mb-0">
                     <label
-                      className={`col-sm-4 text-right`}
+                      className={`col-sm-4 text-left`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}
@@ -282,7 +281,7 @@ function Item() {
                       className={`col-sm-4 text-right`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}
@@ -311,7 +310,7 @@ function Item() {
                           className={`col-sm-4 text-right`}
                           style={{
                             display: "flex",
-                            justifyContent: "flex-end",
+                            justifyContent: "flex-start",
                             alignItems: "center",
                             lineHeight: "1.4",
                           }}
@@ -339,7 +338,7 @@ function Item() {
                               }`}
                               style={{
                                 display: "flex",
-                                justifyContent: "flex-end",
+                                justifyContent: "flex-start",
                                 alignItems: "center",
                                 lineHeight: "1.4",
                               }}
@@ -362,7 +361,7 @@ function Item() {
               </>
             )}
             {Object.values(itemFields)[activeStep]?.map((field) => {
-              const hasRequiredError = fieldErrors.indexOf(field.id) >= 0;
+              const hasRequiredError = !!fieldErrors[field.id];
               return (
                 <div className="row" key={field.name}>
                   <Form.Group className="row mb-0">
@@ -372,7 +371,7 @@ function Item() {
                       }`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-end",
+                        justifyContent: "flex-start",
                         alignItems: "center",
                         lineHeight: "1.4",
                       }}

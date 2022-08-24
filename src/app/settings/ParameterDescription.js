@@ -7,11 +7,13 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 import RelatedService from "../services/related.service";
 import { useParams } from "react-router-dom";
 
 function ParameterDescription() {
   const [descriptions, setDescriptions] = useState([]);
+  const [paramName, setParamName] = useState("");
   const [editFormData, setEditFormData] = useState({});
   const [addRowFormData, setAddRowFormData] = useState({
     name: "",
@@ -25,7 +27,8 @@ function ParameterDescription() {
   function getData(type, id) {
     RelatedService.getParameterDescriptions(id, type)
       .then((res) => {
-        setDescriptions(res.data);
+        setDescriptions(res.data["description"]);
+        setParamName(res.data["name"]);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -92,7 +95,7 @@ function ParameterDescription() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "" && editFormData[key] !== null;
+      return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
       toast.error("Please fill all the fields");
@@ -125,7 +128,12 @@ function ParameterDescription() {
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Parameter Descriptions</h3>
+      <h2 className="page-title mb-3">
+        {id?.split("-")[0]} Parameter Descriptions 
+      </h2>
+      <h3 className="page-title mb-3">
+         {paramName}
+      </h3>
       <div className="add-row mt-4 mb-4">
         <h3>Insert parameter In this row!</h3>
         <form onSubmit={handleSubmitNew}>
