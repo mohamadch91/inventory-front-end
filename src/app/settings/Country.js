@@ -1,21 +1,13 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import bsCustomFileInput from "bs-custom-file-input";
 import UserService from "../services/user.service";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "./country.css";
 import * as XLSX from "xlsx";
 import { toast } from "react-hot-toast";
 import Map from "./Map";
+import "./country.scss";
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -46,6 +38,9 @@ export class Country extends Component {
       put: false,
       snackopen: false,
       type: "success",
+      isCountyValid: false,
+      isCountyCodeValid: false,
+      isCurrencyValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -372,7 +367,6 @@ export class Country extends Component {
                             onChange={(e) => {
                               const code = e.target.value;
                               const x = code.toString().toUpperCase();
-
                               this.setState({ CountryCode: x });
                             }}
                             placeholder="Example: ABC"
@@ -640,11 +634,12 @@ export class Country extends Component {
                     </div>
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label ">
+                        <label className="col-sm-3 col-form-label control-label">
                           Require Capacity
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
+                            required
                             disabled={!this.state.user.admin}
                             onChange={(e) => {
                               const value =
