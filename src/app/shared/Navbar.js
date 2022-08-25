@@ -28,7 +28,6 @@ class Navbar extends Component {
         logo1: `http://5.182.47.38:8001${this.state.logo1}`,
       });
     }
-    console.log(this.state.logo2);
     if (this.state.logo2 !== null) {
       this.setState({
         logo2: `http://5.182.47.38:8001${this.state.logo2}`,

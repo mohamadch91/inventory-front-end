@@ -20,7 +20,7 @@ i18n
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
     backend: {
-      loadPath: "http://5.182.47.38:8001/media/{{lng}}/translation.json",
+      loadPath: "http://5.182.47.38:8001/media/{{lng}}/{{ns}}.json",
       crossDomain: true,
     },
     debug: true,
