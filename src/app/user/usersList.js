@@ -12,6 +12,7 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
+import { Trans } from "react-i18next";
 
 function UsersList() {
   const [list, setList] = useState([]);
@@ -108,7 +109,8 @@ function UsersList() {
         itemadmin,
         reportadmin,
         useradmin,
-      }) => ({pk,
+      }) => ({
+        pk,
 
         password,
         is_superuser,
@@ -130,7 +132,7 @@ function UsersList() {
           setEditFormData({});
           setIsEditModalOpen(false);
           setActiveStep(0);
-          toast.success("user edit succesfuly")
+          toast.success("user edit succesfuly");
         })
         .catch((err) => {
           toast.error("There is a problem sending data");
@@ -177,7 +179,7 @@ function UsersList() {
       }))(addRowFormData);
       UserListService.addUser(formToPost)
         .then((res) => {
-          toast.success("user add succesfully")
+          toast.success("user added succesfully");
           setIsLoading(true);
           getList(selectedFacility);
           setAddRowFormData({
@@ -208,14 +210,18 @@ function UsersList() {
 
   return (
     <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">User by Facility</h3>
+      <h3 className="page-title mb-3">
+        <Trans>User by Facility</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4 className="page-title">Main Facility</h4>
+              <h4 className="page-title">
+                <Trans>Main Facility</Trans>
+              </h4>
             </div>
             <div className="col-md-10 d-flex">
               <select
@@ -241,16 +247,36 @@ function UsersList() {
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Facility Name</TableCell>
-                    <TableCell>Manage Facilities</TableCell>
-                    <TableCell>Manage Items</TableCell>
-                    <TableCell>View Reports</TableCell>
-                    <TableCell>Manage Users</TableCell>
-                    <TableCell>Super User</TableCell>
-                    <TableCell>Position</TableCell>
-                    <TableCell>Edit</TableCell>
+                    <TableCell>
+                      <Trans>Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Username</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Facility Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Facilities</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Items</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>View Reports</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Users</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Super User</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Position</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Edit</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -326,7 +352,7 @@ function UsersList() {
               {activeStep === 0 ? (
                 <>
                   <h3 className="mb-3 text-center">
-                   Edit user
+                    <Trans>Edit user</Trans>
                   </h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -521,17 +547,17 @@ function UsersList() {
                     className="save-btn w-100"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
-                    Back
+                    <Trans>Back</Trans>
                   </button>
                   <button className="save-btn w-100" type="submit">
-                    Save
+                    <Trans>Save</Trans>
                   </button>
                 </>
               )}
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            User add
+            <Trans>Add user</Trans>
           </button>
           <Modal
             show={isAddModalOpen}
@@ -543,16 +569,16 @@ function UsersList() {
             <form onSubmit={handleSubmitNew}>
               {activeStep === 0 ? (
                 <>
-                  <h3 className="mb-3 text-center">
-                   Add user
-                  </h3>
+                  <h3 className="mb-3 text-center">Add user</h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
 
                   <div className="d-flex flex-column align-items-center">
-                    <label>Facility</label>
+                    <label>
+                      <Trans>Facility</Trans>
+                    </label>
                     <select
                       name="facilityid"
                       onChange={handleChangeAdd}
@@ -570,7 +596,9 @@ function UsersList() {
                     </select>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Name</label>
+                    <label>
+                      <Trans>Name</Trans>
+                    </label>
                     <input
                       name="name"
                       type="text"
@@ -580,7 +608,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Username</label>
+                    <label>
+                      <Trans>Username</Trans>
+                    </label>
                     <input
                       name="username"
                       type="text"
@@ -590,7 +620,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Password</label>
+                    <label>
+                      <Trans>Password</Trans>
+                    </label>
                     <input
                       name="password"
                       type="password"
@@ -600,7 +632,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Confirm Password</label>
+                    <label>
+                      <Trans>Confirm Password</Trans>
+                    </label>
                     <input
                       name="conf_password"
                       type="password"
@@ -613,7 +647,6 @@ function UsersList() {
                     className="save-btn w-100"
                     onClick={(e) => {
                       e.preventDefault();
-
                       if (
                         addRowFormData?.password ===
                         addRowFormData?.conf_password
@@ -630,7 +663,9 @@ function UsersList() {
               ) : (
                 <>
                   <div className="d-flex flex-column align-items-center">
-                    <label>ID Number</label>
+                    <label>
+                      <Trans>ID Number</Trans>
+                    </label>
                     <input
                       name="idnumber"
                       type="number"
@@ -640,7 +675,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Position</label>
+                    <label>
+                      <Trans>Position</Trans>
+                    </label>
                     <input
                       name="position"
                       type="text"
@@ -650,7 +687,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Phone Number</label>
+                    <label>
+                      <Trans>Phone Number</Trans>
+                    </label>
                     <input
                       name="phone"
                       type="tel"
@@ -661,7 +700,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Super user</label>
+                      <label className="m-0 mr-2">
+                        <Trans>Super user</Trans>
+                      </label>
                       <input
                         name="is_superuser"
                         type="checkbox"
@@ -675,7 +716,9 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Manage Facilities</label>
+                      <label className="m-0 mr-2">
+                        <Trans>Manage Facilities</Trans>
+                      </label>
                       <input
                         name="facadmin"
                         type="checkbox"
@@ -691,7 +734,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">Manage Items</label>
+                      <label className="m-0 mr-1">
+                        <Trans>Manage Items</Trans>
+                      </label>
                       <input
                         name="itemadmin"
                         type="checkbox"
@@ -705,7 +750,9 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">View Reports</label>
+                      <label className="m-0 mr-2">
+                        <Trans>View Reports</Trans>
+                      </label>
                       <input
                         name="reportadmin"
                         type="checkbox"
@@ -721,7 +768,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">Manage Users</label>
+                      <label className="m-0 mr-2">
+                        <Trans>Manage Users</Trans>
+                      </label>
                       <input
                         name="useradmin"
                         type="checkbox"
@@ -739,10 +788,10 @@ function UsersList() {
                     className="save-btn w-100"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
-                    Back
+                    <Trans>Back</Trans>
                   </button>
                   <button className="save-btn w-100" type="submit">
-                    Save
+                    <Trans>Save</Trans>
                   </button>
                 </>
               )}

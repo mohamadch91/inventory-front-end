@@ -7,6 +7,7 @@ import { MultiSelect } from "react-multi-select-component";
 import "../styles/inputs.scss";
 import "./message.scss";
 import "../settings/itemClass.scss";
+import { Trans } from "react-i18next";
 
 function NewMessage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,9 +67,13 @@ function NewMessage() {
       ) : (
         <div className="container">
           <form onSubmit={handleSubmit}>
-            <h3 className="mb-1">Send Message</h3>
+            <h3 className="mb-1 page-title">
+              <Trans>Send Message</Trans>
+            </h3>
             <div className="d-flex flex-column">
-              <label>Receivers</label>
+              <label>
+                <Trans>Receivers</Trans>
+              </label>
               <MultiSelect
                 options={facilities.map((item) => {
                   return { label: item.name, value: item.id };
@@ -76,10 +81,13 @@ function NewMessage() {
                 value={selected}
                 onChange={setSelected}
                 labelledBy="Select"
+                className="multi-select"
               />
             </div>
             <div className="d-flex flex-column">
-              <label>Subject</label>
+              <label>
+                <Trans>Subject</Trans>
+              </label>
               <input
                 onChange={handleChange}
                 type="text"
@@ -88,11 +96,13 @@ function NewMessage() {
               />
             </div>
             <div className="d-flex flex-column">
-              <label>Message Body</label>
+              <label>
+                <Trans>Message Body</Trans>
+              </label>
               <textarea onChange={handleChange} name="body" required />
             </div>
             <button type="submit" className="w-100 save-btn mt-4">
-              Send
+              <Trans>Send</Trans>
             </button>
           </form>
         </div>

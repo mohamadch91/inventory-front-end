@@ -1037,4 +1037,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withRouter(withTranslation()(Sidebar)));
+export default connect(mapStateToProps)(withRouter(Sidebar));

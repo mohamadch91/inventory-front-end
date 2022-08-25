@@ -7,6 +7,7 @@ import SharedTable from "../shared/SharedTable";
 import EditIcon from "../shared/EditIcon";
 import { Link } from "react-router-dom";
 import ItemService from "../services/item.service";
+import { Trans } from "react-i18next";
 
 function ItemList() {
   const { data: items, isLoading: isItemsDefaultLoading } = useQuery(
@@ -42,7 +43,9 @@ function ItemList() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Item list</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Item list</Trans>
+      </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
@@ -50,12 +53,24 @@ function ItemList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-2">Item class</TableCell>
-                    <TableCell className="col-sm-2">Item type</TableCell>
-                    <TableCell className="col-sm-2">Code </TableCell>
-                    <TableCell className="col-sm-2">Manufacturer</TableCell>
-                    <TableCell className="col-sm-2">Last Changes On</TableCell>
-                    <TableCell className="col-sm-2">Edit</TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Item class</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Item type</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Code</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Manufacturer</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Last Changes On</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Edit</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

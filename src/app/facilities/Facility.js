@@ -13,6 +13,7 @@ import DynamicInput from "../components/DynamicInput";
 import { hasValidationError } from "../helpers/validation-checker";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
 import Map from "../settings/Map";
+import { Trans } from "react-i18next";
 
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
@@ -146,8 +147,6 @@ function Facility() {
     setFieldErrors(_fieldErrors);
   };
 
-  console.log(fieldsValue);
-
   const onSaveHandler = async (e) => {
     e.preventDefault();
     if (hasRequiredErrors()) {
@@ -175,7 +174,9 @@ function Facility() {
 
   return (
     <form onSubmit={onSaveHandler}>
-      <h3 className="page-title mb-3">Facility information</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Facility information</Trans>
+      </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body pb-3">
@@ -201,7 +202,7 @@ function Facility() {
                   sx={{ mr: 1 }}
                   type="button"
                 >
-                  Back
+                  <Trans>Back</Trans>
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
                 {activeStep === Object.keys(facilityFields).length - 1 ? (
@@ -213,7 +214,7 @@ function Facility() {
                     type="button"
                     sx={{ mr: 1 }}
                   >
-                    Next
+                    <Trans>Next</Trans>
                   </Button>
                 )}
               </Box>
@@ -255,7 +256,6 @@ function Facility() {
                     ) : (
                       <DynamicInput
                         field={field}
-                        
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}
                         separator={

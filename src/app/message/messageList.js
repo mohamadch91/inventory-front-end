@@ -15,6 +15,7 @@ import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import "./message.scss";
 import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 function MessageList() {
   const [list, setList] = useState([]);
@@ -96,14 +97,18 @@ function MessageList() {
 
   return (
     <div className="item-class-page hr-page message-page">
-      <h3 className="page-title mb-3">Messages List</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Messages List</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-3 d-flex align-items-center">
-              <h4 className="page-title">Received or Sent messages</h4>
+              <h4 className="page-title">
+                <Trans>Received or Sent messages</Trans>
+              </h4>
             </div>
             <div className="col-md-9 d-flex">
               <select
@@ -115,8 +120,12 @@ function MessageList() {
                 }}
                 value={sentOrReceived}
               >
-                <option value="s">Sent</option>
-                <option value="r">Received</option>
+                <Trans>
+                  <option value="s">Sent</option>
+                </Trans>
+                <Trans>
+                  <option value="r">Received</option>
+                </Trans>
               </select>
             </div>
           </div>
@@ -129,10 +138,18 @@ function MessageList() {
                     <TableCell>
                       {sentOrReceived === "s" ? "Receiver" : "Sender"}
                     </TableCell>
-                    <TableCell>Subject</TableCell>
-                    <TableCell>Body</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Edit</TableCell>
+                    <TableCell>
+                      <Trans>Subject</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Body</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Date</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Edit</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -171,9 +188,13 @@ function MessageList() {
             onHide={() => setIsEditModalOpen(false)}
           >
             <form onSubmit={handleSubmitEdit}>
-              <h3 className="mb-1">Edit Message</h3>
+              <h3 className="mb-1">
+                <Trans>Edit Message</Trans>
+              </h3>
               <div className="d-flex flex-column">
-                <label>Subject</label>
+                <label>
+                  <Trans>Subject</Trans>
+                </label>
                 <input
                   onChange={handleChangeEdit}
                   type="text"
@@ -183,7 +204,9 @@ function MessageList() {
                 />
               </div>
               <div className="d-flex flex-column">
-                <label>Message Body</label>
+                <label>
+                  <Trans>Message Body</Trans>
+                </label>
                 <textarea
                   onChange={handleChangeEdit}
                   value={editFormData.body}
@@ -192,14 +215,16 @@ function MessageList() {
                 />
               </div>
               <button type="submit" className="w-100 save-btn mt-4">
-                Send
+                <Trans>Send</Trans>
               </button>
             </form>
           </Modal>
         </>
       )}
       <Link to="/message/new">
-        <button className="save-btn mt-4">Send Message</button>
+        <button className="save-btn mt-4">
+          <Trans>Send Message</Trans>
+        </button>
       </Link>
     </div>
   );

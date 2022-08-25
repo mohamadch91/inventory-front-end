@@ -11,6 +11,7 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
+import { Trans } from "react-i18next";
 
 function HRList() {
   const genders = ["male", "female"];
@@ -200,7 +201,9 @@ function HRList() {
 
   return (
     <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">HR Information by Facility</h3>
+      <h3 className="page-title mb-3">
+        <Trans>HR Information by Facility</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -233,14 +236,30 @@ function HRList() {
                 <TableHead>
                   <TableRow>
                     <TableCell></TableCell>
-                    <TableCell>Full Name</TableCell>
-                    <TableCell>Facility</TableCell>
-                    <TableCell>HR Position Levels</TableCell>
-                    <TableCell>Gender</TableCell>
-                    <TableCell>HR Education Levels</TableCell>
-                    <TableCell>Total Years In Service</TableCell>
-                    <TableCell>Total Year In This Position</TableCell>
-                    <TableCell>Edit</TableCell>
+                    <TableCell>
+                      <Trans>Full Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Facility</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>HR Position Levels</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Gender</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>HR Education Levels</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Total Years In Service</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Total Year In This Position</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Edit</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -278,14 +297,18 @@ function HRList() {
             onHide={() => setIsEditModalOpen(false)}
           >
             <form onSubmit={handleSubmitEdit}>
-              <h3 className="mb-1">Human Resource Information</h3>
+              <h3 className="mb-1">
+                <Trans>Human Resource Information</Trans>
+              </h3>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
 
               <div className="d-flex flex-column align-items-center">
-                <label>Facility</label>
+                <label>
+                  <Trans>Facility</Trans>
+                </label>
                 <select
                   name="facility"
                   onChange={handleChangeEdit}
@@ -303,7 +326,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Full Name</label>
+                <label>
+                  <Trans>Full Name</Trans>
+                </label>
                 <input
                   name="full_name"
                   type="text"
@@ -314,7 +339,9 @@ function HRList() {
               </div>
 
               <div className="d-flex flex-column align-items-center">
-                <label>HR Position Levels</label>
+                <label>
+                  <TableCell>HR Position Levels</TableCell>
+                </label>
                 <select
                   name="position_level"
                   onChange={handleChangeEdit}
@@ -328,7 +355,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>HR Education Levels</label>
+                <label>
+                  <Trans>HR Education Levels</Trans>
+                </label>
                 <select
                   name="educatioin_level"
                   onChange={handleChangeEdit}
@@ -342,7 +371,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Gender</label>
+                <label>
+                  <Trans>Gender</Trans>
+                </label>
                 <select
                   name="genders"
                   onChange={handleChangeEdit}
@@ -356,7 +387,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Total Years In Service</label>
+                <label>
+                  <Trans>Total Years In Service</Trans>
+                </label>
                 <input
                   name="years_in_service"
                   type="number"
@@ -366,7 +399,9 @@ function HRList() {
                 ></input>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Total Years In This Position</label>
+                <label>
+                  <Trans>Total Years In This Position</Trans>
+                </label>
                 <input
                   name="year_in_position"
                   type="number"
@@ -376,12 +411,12 @@ function HRList() {
                 ></input>
               </div>
               <button className="save-btn w-100" type="submit">
-                Save
+                <Trans>Save</Trans>
               </button>
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            Human Resource add 
+            <Trans>Human Resource add</Trans>
           </button>
           <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
             <form onSubmit={handleSubmitNew}>
@@ -392,7 +427,9 @@ function HRList() {
               <div className="d-flex flex-column align-items-center"></div>
 
               <div className="d-flex flex-column align-items-center">
-                <label>Facility</label>
+                <label>
+                  <Trans>Facility</Trans>
+                </label>
                 <select
                   name="facility"
                   onChange={handleChangeAdd}
@@ -410,7 +447,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Full Name</label>
+                <label>
+                  <Trans>Full Name</Trans>
+                </label>
                 <input
                   name="full_name"
                   type="text"
@@ -421,7 +460,9 @@ function HRList() {
               </div>
 
               <div className="d-flex flex-column align-items-center">
-                <label>HR Position Levels</label>
+                <label>
+                  <Trans>HR Position Levels</Trans>
+                </label>
                 <select
                   name="position_level"
                   onChange={handleChangeAdd}
@@ -435,7 +476,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>HR Education Levels</label>
+                <label>
+                  <Trans>HR Education Levels</Trans>
+                </label>
                 <select
                   name="educatioin_level"
                   onChange={handleChangeAdd}
@@ -449,7 +492,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Gender</label>
+                <label>
+                  <Trans>Gender</Trans>
+                </label>
                 <select
                   name="genders"
                   onChange={handleChangeAdd}
@@ -463,7 +508,9 @@ function HRList() {
                 </select>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Total Years In Service</label>
+                <label>
+                  <Trans>Total Years In Service</Trans>
+                </label>
                 <input
                   name="years_in_service"
                   type="number"
@@ -473,7 +520,9 @@ function HRList() {
                 ></input>
               </div>
               <div className="d-flex flex-column align-items-center">
-                <label>Total Years In This Position</label>
+                <label>
+                  <Trans>Total Years In This Position</Trans>
+                </label>
                 <input
                   name="year_in_position"
                   type="number"
@@ -483,7 +532,7 @@ function HRList() {
                 ></input>
               </div>
               <button className="save-btn w-100" type="submit">
-                Save
+                <Trans>Save</Trans>
               </button>
             </form>
           </Modal>

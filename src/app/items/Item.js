@@ -12,6 +12,7 @@ import ItemService from "../services/item.service";
 import DynamicInput from "../components/DynamicInput";
 import { fromPQSFields } from "../constants/item";
 import { hasValidationError } from "../helpers/validation-checker";
+import { Trans } from "react-i18next";
 
 function Item() {
   const [activeStep, setActiveStep] = useState(0);
@@ -233,7 +234,9 @@ function Item() {
 
   return (
     <form onSubmit={onSaveHandler}>
-      <h3 className="page-title mb-3">Item information</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Item information</Trans>
+      </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body pb-3">
@@ -259,7 +262,7 @@ function Item() {
                   sx={{ mr: 1 }}
                   type="button"
                 >
-                  Back
+                  <Trans>Back</Trans>
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
                 {activeStep === Object.keys(itemFields).length - 1 ? (
@@ -271,7 +274,7 @@ function Item() {
                     type="button"
                     sx={{ mr: 1 }}
                   >
-                    Next
+                    <Trans>Next</Trans>
                   </Button>
                 )}
               </Box>
@@ -295,7 +298,7 @@ function Item() {
                         lineHeight: "1.4",
                       }}
                     >
-                      Item class
+                      <Trans>Item class</Trans>
                     </label>
                     <div className="col-sm-8">
                       <Form.Control
@@ -329,7 +332,7 @@ function Item() {
                         lineHeight: "1.4",
                       }}
                     >
-                      Item Type
+                      <Trans>Item Type</Trans>
                     </label>
                     <div className="col-sm-6">
                       <Form.Control
@@ -361,7 +364,7 @@ function Item() {
                             lineHeight: "1.4",
                           }}
                         >
-                          Is this item from PQS/PIS list?
+                          <Trans>Is this item from PQS/PIS list?</Trans>
                         </label>
                         <div className="col-sm-6">
                           <input
@@ -427,7 +430,7 @@ function Item() {
                                   onClick={loadPQSData}
                                   type="button"
                                 >
-                                  load
+                                  <Trans>Load</Trans>
                                 </button>
                               </div>
                             )}

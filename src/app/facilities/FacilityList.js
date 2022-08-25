@@ -8,6 +8,7 @@ import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
 import MenuIcon from "../shared/MenuIcon";
 import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 function FacilityList() {
   const [selectedParentId, setSelectedParentId] = useState(null);
@@ -78,7 +79,9 @@ function FacilityList() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Facility list</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Facility list</Trans>
+      </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
@@ -86,15 +89,25 @@ function FacilityList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-2">Facility name</TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Facility name</Trans>
+                    </TableCell>
                     <TableCell className="col-sm-1">Level</TableCell>
                     <TableCell className="col-sm-2">
-                      Number of lower level facility
+                      <Trans>Number of lower level facility</Trans>
                     </TableCell>
-                    <TableCell className="col-sm-1">Code</TableCell>
-                    <TableCell className="col-sm-2">Type</TableCell>
-                    <TableCell className="col-sm-2">Last Changes On</TableCell>
-                    <TableCell className="col-sm-2">Tool box</TableCell>
+                    <TableCell className="col-sm-1">
+                      <Trans>Code</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Type</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Last Changes On</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-2">
+                      <Trans>Tool box</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
