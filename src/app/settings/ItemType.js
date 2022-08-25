@@ -166,7 +166,9 @@ function ItemType() {
         <>
           <div className="mb-4">
             <div className="mb-2">
-              <h4 className="page-title"><Trans>Item class</Trans></h4>
+              <h4 className="page-title">
+                <Trans>Item class</Trans>
+              </h4>
             </div>
             <div className="">
               <select
@@ -185,18 +187,109 @@ function ItemType() {
               </select>
             </div>
           </div>
-          <h3 className="page-title mb-3"><Trans>item category list</Trans></h3>
-          <div >
+
+          <div className="add-row mt-4 mb-2">
+            <h3>
+              {" "}
+              <Trans>Insert new Item category</Trans>
+            </h3>
+
+            <div className="row">
+              <div className="col-md-4 flex-column d-flex">
+                <label>
+                  <Trans>Title</Trans>
+                </label>
+                <input
+                  name="title"
+                  type="text"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.title}
+                  required
+                ></input>
+              </div>
+              <div className="col-md-4 flex-column d-flex">
+                <label>
+                  <Trans>Item class</Trans>
+                </label>
+                <select
+                  name="itemClass"
+                  onChange={handleChangeAdd}
+                  value={addRowFormData?.itemClass}
+                >
+                  {itemClasses.map((item, index) => (
+                    <option
+                      key={item.id}
+                      value={item.id}
+                      selected={index === 0}
+                    >
+                      {item.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-md-4 d-flex justify-content-center align-items-center">
+                <label>
+                  <Trans>Active</Trans>
+                </label>
+                <input
+                  name="active"
+                  className="mr-4"
+                  type="checkbox"
+                  onChange={() =>
+                    setAddRowFormData({
+                      ...addRowFormData,
+                      active: !addRowFormData.active,
+                    })
+                  }
+                  checked={addRowFormData?.active}
+                ></input>
+                <label>
+                  <Trans>Have PQS?</Trans>
+                </label>
+                <input
+                  name="havePQS"
+                  className="mr-4"
+                  type="checkbox"
+                  onChange={() =>
+                    setAddRowFormData({
+                      ...addRowFormData,
+                      havePQS: !addRowFormData.havePQS,
+                    })
+                  }
+                  checked={addRowFormData?.havePQS}
+                ></input>
+                <button className="save-btn" onClick={handleSubmitNew}>
+                  <Trans>Save</Trans>
+                </button>
+              </div>
+            </div>
+          </div>
+          <h3 className="page-title mb-3">
+            <Trans>Item category list</Trans>
+          </h3>
+          <div className="mb-2">
             <SharedTable>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  <TableCell><Trans>Title</Trans></TableCell>
-                  <TableCell><Trans>Item class</Trans></TableCell>
-                  <TableCell><Trans>Code</Trans></TableCell>
-                  <TableCell><Trans>Active</Trans></TableCell>
-                  <TableCell><Trans>Have PQS?</Trans></TableCell>
-                  <TableCell><Trans>Edit</Trans></TableCell>
+                  <TableCell>
+                    <Trans>Title</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Item class</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Code</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Active</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Have PQS?</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -294,7 +387,7 @@ function ItemType() {
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                          <Trans>  Save</Trans>
+                            <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"
@@ -309,70 +402,6 @@ function ItemType() {
                 ))}
               </TableBody>
             </SharedTable>
-          </div>
-          <div className="add-row mt-4">
-            <h3>Submit new</h3>
-            <div className="row">
-              <div className="col-md-4 flex-column d-flex">
-                <label>item category</label>
-                <input
-                  name="title"
-                  type="text"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.title}
-                  required
-                ></input>
-              </div>
-              <div className="col-md-4 flex-column d-flex">
-                <label>Item class</label>
-                <select
-                  name="itemClass"
-                  onChange={handleChangeAdd}
-                  value={addRowFormData?.itemClass}
-                >
-                  {itemClasses.map((item, index) => (
-                    <option
-                      key={item.id}
-                      value={item.id}
-                      selected={index === 0}
-                    >
-                      {item.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-4 d-flex justify-content-center align-items-center">
-                <label>Active</label>
-                <input
-                  name="active"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      active: !addRowFormData.active,
-                    })
-                  }
-                  checked={addRowFormData?.active}
-                ></input>
-                <label>Have PQS?</label>
-                <input
-                  name="havePQS"
-                  className="mr-4"
-                  type="checkbox"
-                  onChange={() =>
-                    setAddRowFormData({
-                      ...addRowFormData,
-                      havePQS: !addRowFormData.havePQS,
-                    })
-                  }
-                  checked={addRowFormData?.havePQS}
-                ></input>
-                <button className="save-btn" onClick={handleSubmitNew}>
-                  Save
-                </button>
-              </div>
-            </div>
           </div>
         </>
       )}

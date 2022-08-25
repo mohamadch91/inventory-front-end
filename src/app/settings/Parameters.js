@@ -31,12 +31,14 @@ function Parameters() {
   }, []);
 
   return (
-    <div className="item-class-page">
+    <div className="item-class-page-param">
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <h2 className="page-title mb-3"><Trans>Facility:</Trans></h2>
+          <h2 className="page-title mb-3">
+            <Trans>Facility:</Trans>
+          </h2>
           <div>
             <SharedTable>
               <TableHead>
@@ -65,13 +67,19 @@ function Parameters() {
               </TableBody>
             </SharedTable>
           </div>
-          <h2 className="page-title mb-3 mt-5"><Trans>Item:</Trans></h2>
+          <h2 className="page-title-param text-left mb-3 mt-5">
+            <Trans>Item</Trans>:
+          </h2>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell><Trans>Description</Trans></TableCell>
-                  <TableCell><Trans>Show order</Trans></TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Show order</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

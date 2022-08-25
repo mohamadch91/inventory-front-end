@@ -13,6 +13,8 @@ import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 import RelatedService from "../services/related.service";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
+
 function FieldsFacility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldsValue] = useState([]);
@@ -100,7 +102,9 @@ function FieldsFacility() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Fields related to facilities</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Fields related to</Trans> <Trans>facilities</Trans>
+      </h3>
       {isRelatedFacilityLoading ? (
         <Spinner />
       ) : (
@@ -132,7 +136,7 @@ function FieldsFacility() {
                       onClick={handleBack}
                       sx={{ mr: 1 }}
                     >
-                      Back
+                      <Trans>Back</Trans>
                     </Button>
                     <Box sx={{ flex: "1 1 auto" }} />
                     <Button
@@ -142,13 +146,13 @@ function FieldsFacility() {
                       onClick={handleNext}
                       sx={{ mr: 1 }}
                     >
-                      Next
+                      <Trans>Next</Trans>
                     </Button>
                     <button
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      Save
+                      <Trans>Save</Trans>
                     </button>
                   </Box>
                 </div>
@@ -165,12 +169,16 @@ function FieldsFacility() {
                     <SharedTable>
                       <TableHead>
                         <TableRow>
-                          <TableCell className="col-sm-4">Field name</TableCell>
-                          <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item category?
+                            <Trans>Field name</Trans>
                           </TableCell>
-                          <TableCell className="col-sm-2">Edit</TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Enable</Trans>
+                          </TableCell>
+                          <TableCell className="col-sm-4">
+                            <Trans>Is this required field for</Trans> <Trans>item category?</Trans>
+                          </TableCell>
+                          <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -229,7 +237,7 @@ function FieldsFacility() {
                                         className="save-btn"
                                         onClick={handleSubmitEdit}
                                       >
-                                        Save
+                                        <Trans>Save</Trans>
                                       </button>
                                       <button
                                         className="close-btn"
