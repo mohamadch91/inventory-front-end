@@ -9,6 +9,7 @@ import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function ItemType() {
   const [itemTypes, setItemTypes] = useState([]);
@@ -165,7 +166,7 @@ function ItemType() {
         <>
           <div className="mb-4">
             <div className="mb-2">
-              <h4 className="page-title">Item class</h4>
+              <h4 className="page-title"><Trans>Item class</Trans></h4>
             </div>
             <div className="">
               <select
@@ -184,18 +185,18 @@ function ItemType() {
               </select>
             </div>
           </div>
-          <h3 className="page-title mb-3">item category list</h3>
+          <h3 className="page-title mb-3"><Trans>item category list</Trans></h3>
           <div >
             <SharedTable>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Item class</TableCell>
-                  <TableCell>Code</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell>Have PQS?</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell><Trans>Title</Trans></TableCell>
+                  <TableCell><Trans>Item class</Trans></TableCell>
+                  <TableCell><Trans>Code</Trans></TableCell>
+                  <TableCell><Trans>Active</Trans></TableCell>
+                  <TableCell><Trans>Have PQS?</Trans></TableCell>
+                  <TableCell><Trans>Edit</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -293,7 +294,7 @@ function ItemType() {
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                            Save
+                          <Trans>  Save</Trans>
                           </button>
                           <button
                             className="close-btn"

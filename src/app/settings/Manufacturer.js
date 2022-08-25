@@ -10,6 +10,7 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "./itemClass.scss";
 import "./itemType.scss";
+import { Trans } from "react-i18next";
 
 import ItemsService from "../services/items.service";
 
@@ -145,7 +146,7 @@ function Manufacturer() {
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Manufacturers by Item class</h3>
+      <h3 className="page-title mb-3"><Trans>Manufacturers by Item class</Trans></h3>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -179,11 +180,11 @@ function Manufacturer() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Item class</TableCell>
-                  <TableCell>Show order</TableCell>
-                  <TableCell>Enable</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell><Trans>Description</Trans></TableCell>
+                  <TableCell><Trans>Item class</Trans></TableCell>
+                  <TableCell><Trans>Show order</Trans></TableCell>
+                  <TableCell><Trans>Enable</Trans></TableCell>
+                  <TableCell><Trans>Edit</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -267,7 +268,7 @@ function Manufacturer() {
                               className="save-btn"
                               onClick={handleSubmitEdit}
                             >
-                              Save
+                           <Trans>   Save</Trans>
                             </button>
                             <button
                               className="close-btn"
@@ -285,10 +286,10 @@ function Manufacturer() {
           </div>
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
-              <h3 className="mb-3 mt-3">Insert Manufacturer</h3>
+              <h3 className="mb-3 mt-3"><Trans>Insert Manufacturer</Trans></h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Parameter description</label>
+                  <label><Trans>Name</Trans></label>
                   <input
                     name="describe"
                     type="text"
@@ -298,7 +299,7 @@ function Manufacturer() {
                   ></input>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Item class</label>
+                  <label><Trans>Item class</Trans></label>
                   <select
                     name="itemclass"
                     onChange={handleChangeAdd}
@@ -316,7 +317,7 @@ function Manufacturer() {
                   </select>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Show order</label>
+                  <label><Trans>Show order</Trans></label>
                   <input
                     name="order"
                     type="number"
@@ -326,7 +327,7 @@ function Manufacturer() {
                   ></input>
                 </div>
                 <div className="col-md-3 d-flex justify-content-center align-items-center">
-                  <label>Active</label>
+                  <label><Trans>Active</Trans></label>
                   <input
                     name="active"
                     className="mr-4"

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 import EventBus from "../common/EventBus";
-// import { span } from 'react-i18next';
+// import { Trans } from 'react-i18next';
 import { connect } from "react-redux";
 import userService from "../services/user.service";
 import { Trans, withTranslation } from "react-i18next";

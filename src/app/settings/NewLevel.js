@@ -34,6 +34,8 @@ import "../styles/table.scss";
 import * as XLSX from "xlsx";
 import SharedTable from "../shared/SharedTable";
 import CloseIcon from "../shared/CloseIcon";
+import { Trans } from "react-i18next";
+
 function createData(
   id,
   name,
@@ -561,10 +563,13 @@ export default function DataTable() {
                 component="div"
                 className=" mt-3 item-class-page"
               >
-                import level
+                <Trans> import level</Trans>
               </Typography>
               <div className="col-md-12 item-class-page">
-                <label>upload excel to change levels data</label>
+                <label>
+                  
+                  <Trans>upload excel to change levels data
+                  </Trans></label>
                 <div className="row d-flex mb-2 ">
                   <div className="col-md-3">
                     <input
@@ -581,7 +586,7 @@ export default function DataTable() {
                         handleExcel();
                       }}
                     >
-                      sumbit
+                  <Trans>    sumbit</Trans>
                     </Button>
                   </div>
                 </div>
@@ -599,8 +604,9 @@ export default function DataTable() {
               <TableRow>
                 <TableCell colSpan={7.5}></TableCell>
                 <TableCell colSpan={4}>
-                  Target Population :
+              <Trans>    Target Population :
                   {JSON.parse(localStorage.getItem("country")).poptarget}
+                  </Trans>
                 </TableCell>
                 <TableCell colSpan={6}></TableCell>
               </TableRow>
@@ -625,7 +631,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  Planned values (cm3)
+               <Trans>   Planned values (cm3)</Trans>
                 </TableCell>
               </TableRow>
               <TableRow className="item-class-page">
@@ -729,7 +735,7 @@ export default function DataTable() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       <TableCell colSpan={2}>
                         <button className="save-btn" onClick={handleSave}>
-                          Save
+                        <Trans>  Save</Trans>
                         </button>
                         <button
                           className="close-btn"
