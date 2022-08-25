@@ -22,6 +22,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { Trans } from "react-i18next";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -187,16 +188,22 @@ TablePaginationActions.propTypes = {
 
       return (
         <div className="item-class-page">
-          <h3 className="page-title mb-3">Import PQS4/PIS and view</h3>
+          <h3 className="page-title mb-3">
+            <Trans>Import PQS4/PIS and view</Trans>
+          </h3>
           {isLoading ? (
             <Spinner />
           ) : (
             <>
               <div className="add-row mt-4 mb-4">
-                <h3 className="mb-3 mt-3">Insert PQS excel file</h3>
+                <h3 className="mb-3 mt-3">
+                  <Trans>Insert PQS excel file</Trans>
+                </h3>
                 <div className="row">
                   <div className="col-md-4 flex-column d-flex">
-                    <label>excel file</label>
+                    <label className="mb-3">
+                      <Trans>Excel file</Trans>
+                    </label>
                     <input
                       name="describe"
                       type="file"
@@ -205,31 +212,50 @@ TablePaginationActions.propTypes = {
                     ></input>
                   </div>
                   <div className="col-md-4 flex-column d-flex mt-2">
-                    <label>If you sumbit all old datas erased</label>
+                    <label className="mb-3">
+                      <Trans>If you sumbit all old datas erased</Trans>
+                    </label>
                     <button onClick={handleExcel} className="save-btn">
-                      sumbit
+                      <Trans>Sumbit</Trans>
                     </button>
                   </div>
                 </div>
               </div>
               <div className="row mb-4 mt-4">
                 <div className="col-md-2 d-flex align-items-center">
-                  <h4>PQS list</h4>
+                  <h4>
+                    <Trans>PQS list</Trans>
+                  </h4>
                 </div>
               </div>
               <div>
                 <SharedTable>
                   <TableHead>
                     <TableRow>
-                      <TableCell>PQS code</TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Manufacturer</TableCell>
-                      <TableCell>Model</TableCell>
-                      <TableCell>VaccineNetStorageCapacity</TableCell>
-                      <TableCell>CoolantPack Nominal Capacity (lit.)</TableCell>
-
-                      <TableCell>Number of CoolantPacks</TableCell>
-                      <TableCell>Gross volume (lit.):</TableCell>
+                      <TableCell>
+                        <Trans>PQS code</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>Type</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>Manufacturer</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>Model</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>VaccineNetStorageCapacity</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>CoolantPack Nominal Capacity (lit.)</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>Number of CoolantPacks</Trans>
+                      </TableCell>
+                      <TableCell>
+                        <Trans>Gross volume (lit.)</Trans>:
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
