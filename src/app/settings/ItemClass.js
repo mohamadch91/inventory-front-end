@@ -78,7 +78,7 @@ function ItemClass() {
       ) : (
         <>
           <h3 className="page-title mb-3">Item class list</h3>
-          <div>
+          <div >
             <SharedTable>
               <TableHead>
                 <TableRow>

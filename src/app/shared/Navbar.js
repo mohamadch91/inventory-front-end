@@ -1,45 +1,52 @@
-import React, { Component } from 'react';
-import { Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Dropdown } from "react-bootstrap";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import i18n from "../../i18n";
 // import { span } from 'react-i18next';
-import eventBus from '../common/EventBus';
-import userService from '../services/user.service';
+import eventBus from "../common/EventBus";
+import userService from "../services/user.service";
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-     user:JSON.parse(localStorage.getItem("user")),
-     logo1:null,
-      logo2:null,
+      user: JSON.parse(localStorage.getItem("user")),
+      logo1: null,
+      logo2: null,
     };
-
-  
   }
   componentDidMount() {
-        let country=JSON.parse(localStorage.getItem("country"));
-   
-    if(country!==null){
-    this.state.logo1=country.logo;
-    this.state.logo2 = country.secondLogo;
+    let country = JSON.parse(localStorage.getItem("country"));
+
+    if (country !== null) {
+      this.state.logo1 = country.logo;
+      this.state.logo2 = country.secondLogo;
     }
     if (this.state.logo1 !== null) {
       this.setState({
         logo1: `http://5.182.47.38:8001${this.state.logo1}`,
+      });
     }
-    )
+    if (this.state.logo2 !== null) {
+      this.setState({
+        logo2: `http://5.182.47.38:8001${this.state.logo2}`,
+      });
+    }
   }
-  console.log(this.state.logo2)
-  if (this.state.logo2 !== null) {
-    this.setState({
-      logo2: `http://5.182.47.38:8001${this.state.logo2}`,
-    })
-  }
-}
   toggleOffcanvas() {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
+  languages = {
+    en: "English",
+    fr: "Français",
+    ar: "العربية",
+    fa: "فارسی",
+    es: "Español",
+    ru: "Русский",
+  };
   render() {
+    console.log(i18n.language);
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
@@ -47,10 +54,7 @@ class Navbar extends Component {
             <img src={this.state.logo1} alt="logo" />
           </Link>
           <Link className="navbar-brand brand-logo-mini" to="/dashboard">
-            <img
-              src={this.state.logo2}
-              alt="logo"
-            />
+            <img src={this.state.logo2} alt="logo" />
           </Link>
         </div>
         <div className="navbar-menu-wrapper d-flex align-items-stretch">
@@ -140,57 +144,30 @@ class Navbar extends Component {
             <li className="nav-item nav-profile nav-language d-none d-lg-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
-                  <div className="nav-language-icon">
-                    <i
-                      className="flag-icon flag-icon-us"
-                      title="us"
-                      id="us"
-                    ></i>
-                  </div>
                   <div className="nav-language-text">
                     <p className="mb-1 text-black">
-                      <span>English</span>
+                      <span>{this.languages[i18n.language]}</span>
                     </p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="nav-language-icon mr-2">
-                      <i
-                        className="flag-icon flag-icon-ae"
-                        title="ae"
-                        id="ae"
-                      ></i>
-                    </div>
-                    <div className="nav-language-text">
-                      <p className="mb-1 text-black">
-                        <span>Arabic</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="nav-language-icon mr-2">
-                      <i
-                        className="flag-icon flag-icon-gb"
-                        title="GB"
-                        id="gb"
-                      ></i>
-                    </div>
-                    <div className="nav-language-text">
-                      <p className="mb-1 text-black">
-                        <span>English</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
+                  {Object.keys(this.languages).map((key) => (
+                    <Dropdown.Item
+                      className="dropdown-item d-flex align-items-center"
+                      href="!#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        i18n.changeLanguage(key);
+                        window.location.reload();
+                      }}
+                    >
+                      <div className="nav-language-text">
+                        <p className="mb-1 text-black">
+                          <span>{this.languages[key]}</span>
+                        </p>
+                      </div>
+                    </Dropdown.Item>
+                  ))}
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -206,7 +183,11 @@ class Navbar extends Component {
                   </div>
                   <div className="nav-profile-text">
                     <p className="mb-1 text-black">
-                      <span>{this.state.user==null ? "":this.state.user.username}</span>
+                      <span>
+                        {this.state.user == null
+                          ? ""
+                          : this.state.user.username}
+                      </span>
                     </p>
                   </div>
                 </Dropdown.Toggle>
@@ -459,4 +440,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withTranslation("translation")(Navbar);

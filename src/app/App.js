@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { withRouter } from "react-router-dom";
 import "./App.scss";
 import { connect } from "react-redux";
@@ -7,13 +7,12 @@ import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
 import SettingsPanel from "./shared/SettingsPanel";
 import Footer from "./shared/Footer";
-// import { withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
 import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
-import { Redirect } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -47,8 +46,8 @@ class App extends Component {
     this.onRouteChanged();
   }
   logOut() {
-    console.log("salam")
-     
+    console.log("salam");
+
     this.props.dispatch(logout());
     this.setState({
       showModeratorBoard: false,
@@ -68,20 +67,21 @@ class App extends Component {
     );
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
-      <div className="container-scroller">
-        <Toaster />
-        {navbarComponent}
-        <div className="container-fluid page-body-wrapper">
-          {sidebarComponent}
-          <div className="main-panel">
-            <div className="content-wrapper">
-              <AppRoutes />
-              {SettingsPanelComponent}
+      
+        <div className="container-scroller">
+          <Toaster />
+          {navbarComponent}
+          <div className="container-fluid page-body-wrapper">
+            {sidebarComponent}
+            <div className="main-panel">
+              <div className="content-wrapper">
+                <AppRoutes />
+                {SettingsPanelComponent}
+              </div>
+              {footerComponent}
             </div>
-            {footerComponent}
           </div>
         </div>
-      </div>
     );
   }
 
@@ -92,7 +92,7 @@ class App extends Component {
   }
 
   onRouteChanged() {
-    // const { i18n } = this.props;
+    const { i18n } = this.props;
     // const body = document.querySelector('body');
     // if(this.props.location.pathname === '/layout/RtlLayout') {
     //   body.classList.add('rtl');
@@ -140,4 +140,6 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withRouter(App));
+export default connect(mapStateToProps)(
+  withTranslation("translation")(withRouter(App))
+);

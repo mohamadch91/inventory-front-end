@@ -246,7 +246,7 @@ function Facility() {
                   </label>
                   <div className="col-sm-8">
                     {field.stateName === "gpsCordinate" ? (
-                      <div className="map">
+                      <div className="map h-50">
                         <Map
                           loca={fieldsValue[field.stateName]}
                           handleChange={handleMapClick}
@@ -255,6 +255,7 @@ function Facility() {
                     ) : (
                       <DynamicInput
                         field={field}
+                        
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}
                         separator={
