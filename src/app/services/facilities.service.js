@@ -14,6 +14,13 @@ class FacilitiesService {
       params,
     });
   }
+  getSubFacilities(id) {
+    const params = { id };
+    return axios.get(API_URL + "parent", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getFacilityFields() {
     return axios.get(API_URL + "facility-field", {
       headers: { Authorization: authHeader() },

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
 import Spinner from "../shared/Spinner";
@@ -6,22 +6,70 @@ import { useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
 import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
+import MenuIcon from "../shared/MenuIcon";
 import { Link } from "react-router-dom";
 
 function FacilityList() {
-  const { data: Facilities, isLoading: isFacilityDefaultLoading } = useQuery(
-    ["facility-default-value"],
-    async () => {
-      const res = await FacilitiesService.getFacilities();
-      return res.data;
-    },
-    {
-      refetchOnMount: true,
+  const [selectedParentId, setSelectedParentId] = useState(null);
+  const [allFacility, setAllFacility] = useState([]);
+
+  const { isLoading: isFacilityDefaultLoading, refetch: refetchFacilities } =
+    useQuery(
+      ["facility-default-value", selectedParentId],
+      async () => {
+        const res = await FacilitiesService.getFacilities();
+        return res.data;
+      },
+      {
+        enabled: false,
+        onSuccess(data) {
+          setAllFacility(data);
+        },
+      }
+    );
+
+  console.log(selectedParentId);
+
+  const { isLoading: isGetSubFacilityLoading, refetch: fetchSubFacilities } =
+    useQuery(
+      ["sub-facilities", selectedParentId],
+      async () => {
+        const res = await FacilitiesService.getSubFacilities(selectedParentId);
+        return res.data;
+      },
+      {
+        refetchOnMount: false,
+        enabled: false,
+        onSuccess(data) {
+          const _allFacility = [...allFacility];
+          const parentIndex = _allFacility.findIndex(
+            (fac) => fac.id === selectedParentId
+          );
+          for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            if (!_allFacility.find((fac) => fac.id === element.id)) {
+              _allFacility.splice(parentIndex + i + 1, 0, element);
+            }
+          }
+          setAllFacility(_allFacility);
+        },
+      }
+    );
+
+  useEffect(() => {
+    refetchFacilities();
+  }, []);
+
+  useEffect(() => {
+    if (selectedParentId) {
+      fetchSubFacilities();
     }
-  );
+  }, [selectedParentId]);
 
   const convertDate = (date) => {
-    return new Date(date).toISOString().split("T")[0];
+    if (date) {
+      return new Date(date).toISOString().split("T")[0];
+    }
   };
 
   if (isFacilityDefaultLoading) {
@@ -50,9 +98,9 @@ function FacilityList() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {Facilities.map((facility) => {
+                  {allFacility.map((facility, index) => {
                     return (
-                      <TableRow key={facility.id}>
+                      <TableRow key={index}>
                         <TableCell className="col-sm-2">
                           {facility.name ?? "-"}
                         </TableCell>
@@ -73,10 +121,24 @@ function FacilityList() {
                         </TableCell>
                         <TableCell className="col-sm-2">
                           <Link to={`/facilities/info/${facility.id}`}>
-                            <div style={{ width: "20px", height: "20px" }}>
+                            <button className="edit-btn">
                               <EditIcon />
-                            </div>
+                            </button>
                           </Link>
+                          {facility.parentid && (
+                            <button
+                              className="edit-btn"
+                              disabled={
+                                isGetSubFacilityLoading &&
+                                facility.parentid === selectedParentId
+                              }
+                              onClick={() =>
+                                setSelectedParentId(facility.parentid)
+                              }
+                            >
+                              <MenuIcon />
+                            </button>
+                          )}
                         </TableCell>
                       </TableRow>
                     );
