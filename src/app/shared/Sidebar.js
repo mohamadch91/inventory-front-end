@@ -5,6 +5,7 @@ import EventBus from "../common/EventBus";
 // import { span } from 'react-i18next';
 import { connect } from "react-redux";
 import userService from "../services/user.service";
+import { Trans } from "react-i18next";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -91,7 +92,9 @@ class Sidebar extends Component {
                 <i className="mdi mdi-cube menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Dashboard</span>
+                <span>
+                  <Trans>Overview dashboard</Trans>
+                </span>
               </span>
             </Link>
           </li>

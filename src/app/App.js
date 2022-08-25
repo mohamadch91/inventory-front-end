@@ -13,7 +13,6 @@ import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
-import { Redirect } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
@@ -47,8 +46,8 @@ class App extends Component {
     this.onRouteChanged();
   }
   logOut() {
-    console.log("salam")
-     
+    console.log("salam");
+
     this.props.dispatch(logout());
     this.setState({
       showModeratorBoard: false,

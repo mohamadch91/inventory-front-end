@@ -6,7 +6,7 @@ import App from "./app/App";
 import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store";
-// import i18n from './i18n';
+import "./i18n-sample";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient({
