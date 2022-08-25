@@ -185,7 +185,7 @@ function ItemType() {
             </div>
           </div>
           <h3 className="page-title mb-3">item category list</h3>
-          <div>
+          <div >
             <SharedTable>
               <TableHead>
                 <TableRow>
