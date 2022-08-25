@@ -8,6 +8,7 @@ import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function Parameters() {
   const [data, setData] = useState({});
@@ -35,13 +36,17 @@ function Parameters() {
         <Spinner />
       ) : (
         <>
-          <h2 className="page-title mb-3">Facility:</h2>
+          <h2 className="page-title mb-3"><Trans>Facility:</Trans></h2>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Show order</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -60,13 +65,13 @@ function Parameters() {
               </TableBody>
             </SharedTable>
           </div>
-          <h2 className="page-title mb-3 mt-5">Item:</h2>
+          <h2 className="page-title mb-3 mt-5"><Trans>Item:</Trans></h2>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
+                  <TableCell><Trans>Description</Trans></TableCell>
+                  <TableCell><Trans>Show order</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

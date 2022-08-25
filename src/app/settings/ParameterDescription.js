@@ -10,6 +10,7 @@ import "./itemType.scss";
 import "../styles/inputs.scss";
 import RelatedService from "../services/related.service";
 import { useParams } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 function ParameterDescription() {
   const [descriptions, setDescriptions] = useState([]);
@@ -128,18 +129,18 @@ function ParameterDescription() {
 
   return (
     <div className="item-class-page">
-      <h2 className="page-title mb-3">
-        {id?.split("-")[0]} Parameter Descriptions 
+      <h2 className="page-title mb-3"><Trans>
+        {id?.split("-")[0]} Parameter Descriptions </Trans>
       </h2>
       <h3 className="page-title mb-3">
          {paramName}
       </h3>
       <div className="add-row mt-4 mb-4">
-        <h3>Insert parameter In this row!</h3>
+        <h3><Trans>Insert parameter In this row!</Trans></h3>
         <form onSubmit={handleSubmitNew}>
           <div className="row">
             <div className="col-md-4 flex-column d-flex">
-              <label>Parameter description</label>
+              <label><Trans>Parameter description</Trans></label>
               <input
                 name="name"
                 type="text"
@@ -149,7 +150,7 @@ function ParameterDescription() {
               ></input>
             </div>
             <div className="col-md-4 flex-column d-flex">
-              <label>Show order</label>
+              <label><Trans>Show order</Trans></label>
               <input
                 name="order"
                 type="number"
@@ -159,7 +160,7 @@ function ParameterDescription() {
               ></input>
             </div>
             <div className="col-md-4 d-flex justify-content-center align-items-center">
-              <label>Enable</label>
+              <label><Trans>Enable</Trans></label>
               <input
                 name="enabled"
                 className="mr-4"
@@ -173,7 +174,7 @@ function ParameterDescription() {
                 checked={addRowFormData?.enabled}
               ></input>
               <button className="save-btn" type="submit">
-                Save
+              <Trans>  Save</Trans>
               </button>
             </div>
           </div>
@@ -187,10 +188,10 @@ function ParameterDescription() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
-                  <TableCell>Enable</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell><Trans>Description</Trans></TableCell>
+                  <TableCell><Trans>Show order</Trans></TableCell>
+                  <TableCell><Trans>Enable</Trans></TableCell>
+                  <TableCell><Trans>Edit</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -254,7 +255,7 @@ function ParameterDescription() {
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                            Save
+                         <Trans>   Save</Trans>
                           </button>
                           <button
                             className="close-btn"

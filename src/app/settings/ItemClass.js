@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function ItemClass() {
   const [itemClasses, setItemClasses] = useState([]);
@@ -77,16 +78,16 @@ function ItemClass() {
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Item class list</h3>
+          <h3 className="page-title mb-3"><Trans>Item class list</Trans></h3>
           <div >
             <SharedTable>
               <TableHead>
                 <TableRow>
                   <TableCell></TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Code</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell><Trans>Title</Trans></TableCell>
+                  <TableCell><Trans>Code</Trans></TableCell>
+                  <TableCell><Trans>Active</Trans></TableCell>
+                  <TableCell><Trans>Edit</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -141,7 +142,7 @@ function ItemClass() {
                         </TableCell>
                         <TableCell>
                           <button className="save-btn" onClick={handleSubmit}>
-                            Save
+                          <Trans>  Save</Trans>
                           </button>
                           <button
                             className="close-btn"
