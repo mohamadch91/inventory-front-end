@@ -81,7 +81,9 @@ class Sidebar extends Component {
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
           <li className="nav-item nav-category">
-            <span>Main</span>
+            <span>
+              <Trans>Main</Trans>
+            </span>
           </li>
           <li
             className={
@@ -94,7 +96,7 @@ class Sidebar extends Component {
               </span>
               <span className="menu-title">
                 <span>
-                  <Trans>dashboard</Trans>
+                  <Trans>Dashboard</Trans>
                 </span>
               </span>
             </Link>
@@ -117,7 +119,9 @@ class Sidebar extends Component {
                 <i className="mdi mdi-table-large menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Facilities</span>
+                <span>
+                  <Trans>Facilities</Trans>
+                </span>
               </span>
               <i className="menu-arrow"></i>
             </div>
@@ -132,7 +136,9 @@ class Sidebar extends Component {
                     }
                     to="/facilities/info/new"
                   >
-                    <span>New Facility</span>
+                    <span>
+                      <Trans>New Facility</Trans>
+                    </span>
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -144,7 +150,9 @@ class Sidebar extends Component {
                     }
                     to="/facilities/list"
                   >
-                    <span>Facility list</span>
+                    <span>
+                      <Trans>Facility list</Trans>
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -166,7 +174,9 @@ class Sidebar extends Component {
                 <i className="mdi mdi-table-large menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Items</span>
+                <span>
+                  <Trans>Items</Trans>
+                </span>
               </span>
               <i className="menu-arrow"></i>
             </div>
@@ -181,7 +191,9 @@ class Sidebar extends Component {
                     }
                     to="/items/info/new"
                   >
-                    <span>New Item</span>
+                    <span>
+                      <Trans>New Item</Trans>
+                    </span>
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -193,7 +205,9 @@ class Sidebar extends Component {
                     }
                     to="/items/list"
                   >
-                    <span>Item list</span>
+                    <span>
+                      <Trans>Item list</Trans>
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -216,7 +230,9 @@ class Sidebar extends Component {
                   <i className="mdi mdi-account-multiple menu-icon"></i>
                 </span>
                 <span className="menu-title">
-                  <span>Human Resource</span>
+                  <span>
+                    <Trans>Human Resource</Trans>
+                  </span>
                 </span>
                 <i className="menu-arrow"></i>
               </div>
@@ -232,7 +248,9 @@ class Sidebar extends Component {
                       }
                       to="/hr/list"
                     >
-                      <span>HR View</span>
+                      <span>
+                        <Trans>HR View</Trans>
+                      </span>
                     </Link>
                   </li>
                 </ul>
@@ -259,7 +277,9 @@ class Sidebar extends Component {
                   <i className="mdi mdi-account menu-icon"></i>
                 </span>
                 <span className="menu-title">
-                  <span>User</span>
+                  <span>
+                    <Trans>User</Trans>
+                  </span>
                 </span>
                 <i className="menu-arrow"></i>
               </div>
@@ -275,7 +295,9 @@ class Sidebar extends Component {
                       }
                       to="/user/list"
                     >
-                      <span>Users View</span>
+                      <span>
+                        <Trans>Users View</Trans>
+                      </span>
                     </Link>
                   </li>
                 </ul>
@@ -301,7 +323,9 @@ class Sidebar extends Component {
                 <i className="mdi mdi-message-text menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Message</span>
+                <span>
+                  <Trans>Message</Trans>
+                </span>
               </span>
               <i className="menu-arrow"></i>
             </div>
@@ -317,7 +341,9 @@ class Sidebar extends Component {
                     }
                     to="/message/new"
                   >
-                    <span>New Message</span>
+                    <span>
+                      <Trans>New Message</Trans>
+                    </span>
                   </Link>
                 </li>
                 <li className="nav-item">
@@ -330,7 +356,9 @@ class Sidebar extends Component {
                     }
                     to="/message/list"
                   >
-                    <span>Message List</span>
+                    <span>
+                      <Trans>Message List</Trans>
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -340,7 +368,9 @@ class Sidebar extends Component {
           {this.user !== null && this.user.admin && (
             <>
               <li className="nav-item nav-category">
-                <span>Admin setting </span>
+                <span>
+                  <Trans>Admin setting</Trans>
+                </span>
               </li>
 
               <li
@@ -361,7 +391,9 @@ class Sidebar extends Component {
                     <i className="mdi mdi-settings menu-icon"></i>
                   </span>
                   <span className="menu-title">
-                    <span>Settings</span>
+                    <span>
+                      <Trans>Settings</Trans>
+                    </span>
                   </span>
                   <i className="menu-arrow"></i>
                 </div>
@@ -377,35 +409,11 @@ class Sidebar extends Component {
                         }
                         to="/settings/country"
                       >
-                        <span>Country setting</span>
+                        <span>
+                          <Trans>Country setting</Trans>
+                        </span>
                       </Link>
                     </li>
-                    {/* <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/settings/level")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/level"
-                  >
-                    <span>level setting</span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  {" "}
-                  <Link
-                    className={
-                      this.isPathActive("/settings/level-list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/settings/level-list"
-                  >
-                    <span>level list</span>
-                  </Link>
-                </li> */}
                     <li className="nav-item">
                       {" "}
                       <Link
@@ -416,7 +424,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/new-level-list"
                       >
-                        <span>Level setting</span>
+                        <span>
+                          <Trans>Level setting</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -429,7 +439,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-class"
                       >
-                        <span>Item class</span>
+                        <span>
+                          <Trans>Item class</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -442,7 +454,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-type"
                       >
-                        <span>item category</span>
+                        <span>
+                          <Trans>Item category</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -454,7 +468,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-t-level"
                       >
-                        <span>"item category" In different levels</span>
+                        <span>
+                          <Trans>"Item category" In different levels</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -466,7 +482,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/item-fields"
                       >
-                        <span>Fields of "item category"</span>
+                        <span>
+                          <Trans>Fields of "Item category"</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -478,7 +496,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/facility-fields"
                       >
-                        <span>Fields related to facilities</span>
+                        <span>
+                          <Trans>Fields related to facilities</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -490,7 +510,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/params"
                       >
-                        <span>Parameters</span>
+                        <span>
+                          <Trans>Parameters</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -503,7 +525,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/manufacturer"
                       >
-                        <span>Manufacturer by Item class</span>
+                        <span>
+                          <Trans>Manufacturer by Item class</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -516,7 +540,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/pqs4"
                       >
-                        <span>Import PQS4/PIS</span>
+                        <span>
+                          <Trans>Import PQS4/PIS</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -529,7 +555,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/pqs3"
                       >
-                        <span>Import PQS3/PIS</span>
+                        <span>
+                          <Trans>Import PQS3/PIS</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -542,7 +570,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/language/edit"
                       >
-                        <span>Edit Language</span>
+                        <span>
+                          <Trans>Edit Language</Trans>
+                        </span>
                       </Link>
                     </li>
                     <li className="nav-item">
@@ -554,7 +584,9 @@ class Sidebar extends Component {
                         }
                         to="/settings/manage-help"
                       >
-                        <span>Manage Help</span>
+                        <span>
+                          <Trans>Manage Help</Trans>
+                        </span>
                       </Link>
                     </li>
                   </ul>
@@ -578,7 +610,9 @@ class Sidebar extends Component {
                     <i className="mdi mdi-table-large menu-icon"></i>
                   </span>
                   <span className="menu-title">
-                    <span>About IGA</span>
+                    <span>
+                      <Trans>About IGA</Trans>
+                    </span>
                   </span>
                   <i className="menu-arrow"></i>
                 </div>
@@ -593,7 +627,9 @@ class Sidebar extends Component {
                         }
                         to="/about-iga"
                       >
-                        <span>About IGA</span>
+                        <span>
+                          <Trans>About IGA</Trans>
+                        </span>
                       </Link>
                     </li>
                   </ul>
