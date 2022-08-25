@@ -92,7 +92,7 @@ class App extends Component {
   }
 
   onRouteChanged() {
-    // const { i18n } = this.props;
+    const { i18n } = this.props;
     // const body = document.querySelector('body');
     // if(this.props.location.pathname === '/layout/RtlLayout') {
     //   body.classList.add('rtl');
@@ -140,4 +140,6 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withTranslation()(withRouter(App)));
+export default connect(mapStateToProps)(
+  withTranslation("translation")(withRouter(App))
+);

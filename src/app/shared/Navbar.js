@@ -441,4 +441,4 @@ class Navbar extends Component {
   }
 }
 
-export default withTranslation()(Navbar);
+export default withTranslation("translation")(Navbar);
