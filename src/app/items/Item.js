@@ -28,10 +28,10 @@ function Item() {
     async () => {
       const user = JSON.parse(localStorage.getItem("user"));
 
-      if (id === "new") return { "facility-name": user?.facility_id };
+      if (id === "new") return { facility: user?.facility_id };
 
       const res = await ItemService.getItems(id);
-      res.data[0]["facility-name"] = user?.facility_id;
+      res.data[0]["facility"] = user?.facility_id;
       return res.data[0];
     },
     {
@@ -189,6 +189,8 @@ function Item() {
         }
       }
     }
+    _fieldsValue["item_class"] = selectedItemClass.item_class.id;
+    _fieldsValue["item_type"] = selectedItemType.id;
     const res = await (id === "new"
       ? ItemService.postItem(_fieldsValue)
       : ItemService.putItem(_fieldsValue));
