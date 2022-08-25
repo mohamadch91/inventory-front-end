@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import { withRouter } from "react-router-dom";
 import "./App.scss";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
+import { withTranslation } from "react-i18next";
 
 class App extends Component {
   constructor(props) {
@@ -67,20 +68,22 @@ class App extends Component {
     );
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
-      <div className="container-scroller">
-        <Toaster />
-        {navbarComponent}
-        <div className="container-fluid page-body-wrapper">
-          {sidebarComponent}
-          <div className="main-panel">
-            <div className="content-wrapper">
-              <AppRoutes />
-              {SettingsPanelComponent}
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="container-scroller">
+          <Toaster />
+          {navbarComponent}
+          <div className="container-fluid page-body-wrapper">
+            {sidebarComponent}
+            <div className="main-panel">
+              <div className="content-wrapper">
+                <AppRoutes />
+                {SettingsPanelComponent}
+              </div>
+              {footerComponent}
             </div>
-            {footerComponent}
           </div>
         </div>
-      </div>
+      </Suspense>
     );
   }
 
@@ -139,4 +142,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withRouter(App));
+export default connect(mapStateToProps)(withTranslation()(withRouter(App)));

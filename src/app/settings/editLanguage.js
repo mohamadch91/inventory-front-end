@@ -18,6 +18,7 @@ import "../styles/hr.scss";
 import "./itemClass.scss";
 import "./itemType.scss";
 import "./editLang.scss";
+import { useTranslation } from "react-i18next";
 
 function EditLanguage() {
   const languages = [
@@ -42,6 +43,7 @@ function EditLanguage() {
   const [pageNum, setPageNum] = useState(1);
   const [page, setPage] = useState(1);
   const [searchParam, setSearchParam] = useState("");
+  const { t } = useTranslation();
 
   function getData(query) {
     LanguageService.getTranslations()
@@ -160,7 +162,7 @@ function EditLanguage() {
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Manufacturers by Item class</h3>
+      <h3 className="page-title mb-3">{t("translation.Settings")}</h3>
       {isLoading ? (
         <Spinner />
       ) : (

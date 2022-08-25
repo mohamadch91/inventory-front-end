@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import i18n from "../../i18n-sample";
+import i18n from "../../i18n";
 // import { span } from 'react-i18next';
 import eventBus from "../common/EventBus";
 import userService from "../services/user.service";
@@ -46,6 +46,7 @@ class Navbar extends Component {
     ru: "Русский",
   };
   render() {
+    console.log(i18n.language);
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">

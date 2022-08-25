@@ -5,7 +5,7 @@ import EventBus from "../common/EventBus";
 // import { span } from 'react-i18next';
 import { connect } from "react-redux";
 import userService from "../services/user.service";
-import { Trans } from "react-i18next";
+import { Trans, withTranslation } from "react-i18next";
 class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -93,7 +93,7 @@ class Sidebar extends Component {
               </span>
               <span className="menu-title">
                 <span>
-                  <Trans>Overview dashboard</Trans>
+                  <Trans>Settings</Trans>
                 </span>
               </span>
             </Link>
@@ -897,7 +897,7 @@ class Sidebar extends Component {
                 <i className="mdi mdi-file-document-box menu-icon"></i>
               </span>
               <span className="menu-title">
-                <span>Documentation</span>
+                <span>Documentation </span>
               </span>
             </a>
           </li>
@@ -1000,4 +1000,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withRouter(Sidebar));
+export default connect(mapStateToProps)(withRouter(withTranslation()(Sidebar)));
