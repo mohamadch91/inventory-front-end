@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
 import DynamicInput from "../components/DynamicInput";
 import { hasValidationError } from "../helpers/validation-checker";
+import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
+import Map from "../settings/Map";
 
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
@@ -110,7 +112,7 @@ function Facility() {
       }
     });
     setFieldErrors(_fieldErrors);
-    return Object(_fieldErrors).keys.length > 0;
+    return Object.keys(_fieldErrors).length > 0;
   };
 
   const handleNext = () => {
@@ -123,9 +125,8 @@ function Facility() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onChangeHandler = (e, field) => {
-    const value = e.target.value;
-    const validationErr = hasValidationError(value, field.validation[0]);
+  const onChangeHandler = (value, field) => {
+    const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
     setFieldValue(cloneFieldsValue);
@@ -136,6 +137,7 @@ function Facility() {
     } else {
       delete _fieldErrors[field.id];
     }
+    setFieldErrors(_fieldErrors);
   };
 
   const onSaveHandler = async (e) => {
@@ -143,10 +145,27 @@ function Facility() {
     if (hasRequiredErrors()) {
       return;
     }
+    const _fieldsValue = { ...fieldsValue };
+    for (const key in relatedFields) {
+      const fields = relatedFields[key];
+      if (fieldsValue[key] === false) {
+        fields.forEach((field) => {
+          delete _fieldsValue[field];
+        });
+      }
+    }
     const res = await (id === "new"
-      ? FacilitiesService.postFacility(fieldsValue)
-      : FacilitiesService.putFacility(fieldsValue));
+      ? FacilitiesService.postFacility(_fieldsValue)
+      : FacilitiesService.putFacility(_fieldsValue));
   };
+
+  const handleMapClick = (e) => {
+    const cloneFieldsValue = { ...fieldsValue };
+    cloneFieldsValue["gpsCordinate"] = { mainlocation: e.latlng };
+    setFieldValue(cloneFieldsValue);
+  };
+
+  console.log(fieldsValue);
 
   return (
     <form onSubmit={onSaveHandler}>
@@ -183,7 +202,7 @@ function Facility() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={Object(fieldErrors).keys.length > 0}
+                    disabled={Object.keys(fieldErrors).length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -200,43 +219,53 @@ function Facility() {
         <div className="card">
           <div className="card-body">
             {Object.values(facilityFields)[activeStep]?.map((field) => {
+              if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
+                return null;
+              }
               const hasRequiredError = !!fieldErrors[field.id];
               return (
-                <div className="row" key={field.name}>
-                  <Form.Group className="row mb-0">
-                    <label
-                      className={`col-sm-4 text-right ${
-                        field.required ? "control-label" : ""
-                      }`}
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        lineHeight: "1.4",
-                      }}
-                    >
-                      {field.name}
-                    </label>
-                    <div className="col-sm-8">
+                <Form.Group className="row mb-0" key={field.name}>
+                  <label
+                    className={`col-sm-4 text-right ${
+                      field.required ? "control-label" : ""
+                    }`}
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    {field.name}
+                  </label>
+                  <div className="col-sm-8">
+                    {field.stateName === "gpsCordinate" ? (
+                      <div className="map">
+                        <Map
+                          loca={fieldsValue[field.stateName]}
+                          handleChange={handleMapClick}
+                        />
+                      </div>
+                    ) : (
                       <DynamicInput
                         field={field}
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}
                       />
-                    </div>
-                    {hasRequiredError && (
-                      <div className="row">
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          <p className="my-1 ml-2 text-danger">
-                            this field is required!
-                          </p>
-                        </div>
-                      </div>
                     )}
-                    <hr className="my-3" />
-                  </Form.Group>
-                </div>
+                  </div>
+                  {hasRequiredError && (
+                    <div className="row">
+                      <div className="col-sm-4"></div>
+                      <div className="col-sm-8">
+                        <p className="my-1 ml-2 text-danger">
+                          {fieldErrors[field.id]}{" "}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <hr className="my-3" />
+                </Form.Group>
               );
             })}
           </div>

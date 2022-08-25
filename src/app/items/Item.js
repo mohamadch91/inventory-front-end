@@ -125,7 +125,7 @@ function Item() {
       }
     });
     setFieldErrors(_fieldErrors);
-    return Object(_fieldErrors).keys.length > 0;
+    return Object.keys(_fieldErrors).length > 0;
   };
 
   const handleNext = () => {
@@ -138,8 +138,7 @@ function Item() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onChangeHandler = (e, field) => {
-    const value = e.target.value;
+  const onChangeHandler = (value, field) => {
     const validationErr = hasValidationError(value, field.validation[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
@@ -151,6 +150,7 @@ function Item() {
     } else {
       delete _fieldErrors[field.id];
     }
+    setFieldErrors(_fieldErrors);
   };
 
   const onSaveHandler = async (e) => {
@@ -228,7 +228,7 @@ function Item() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={Object(fieldErrors).keys.length > 0}
+                    disabled={Object.keys(fieldErrors).length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -390,7 +390,7 @@ function Item() {
                         <div className="col-sm-4"></div>
                         <div className="col-sm-8">
                           <p className="my-1 ml-2 text-danger">
-                            this field is required!
+                            {fieldErrors[field.id]}
                           </p>
                         </div>
                       </div>
