@@ -13,7 +13,6 @@ import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
-import { withTranslation } from "react-i18next";
 
 class App extends Component {
   constructor(props) {
@@ -142,4 +141,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withTranslation()(withRouter(App)));
+export default connect(mapStateToProps)(withRouter(App));

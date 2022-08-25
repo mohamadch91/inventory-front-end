@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
+import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import i18n from "../../i18n";
 // import { span } from 'react-i18next';
@@ -440,4 +441,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withTranslation()(Navbar);
