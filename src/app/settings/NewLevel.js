@@ -402,7 +402,7 @@ export default function DataTable() {
   };
 
   const separator = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   const handleChangeDense = (event) => {
@@ -934,7 +934,7 @@ export default function DataTable() {
                       <TableCell padding="none" align="center">
                         <input
                           required
-                          value={separator(rows[i].minpop)}
+                          value={rows[i].minpop}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
@@ -949,7 +949,7 @@ export default function DataTable() {
                       <TableCell padding="none" align="center">
                         <input
                           required
-                          value={separator(row.maxpop)}
+                          value={rows[i].maxpop}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
