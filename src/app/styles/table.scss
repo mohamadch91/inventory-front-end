@@ -4,6 +4,7 @@
     text-align: left;
   }
   th {
+    
     background: rgb(40, 136, 254);
     color: white;
   }
@@ -25,3 +26,25 @@
     width: 2rem;
   }
 }
+.tableFixHead {
+      width: 500px;
+      table-layout: fixed;
+      border-collapse: collapse;
+    }
+      .tableFixHead tbody {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      height: 50px;
+    }
+    .tableFixHead thead tr {
+      display: block;
+    }
+    .tableFixHead th,
+    .tableFixHead  td {
+      padding: 5px 10px;
+      width: 200px;
+    }
+    th {
+      background: #ABDD93;
+    }

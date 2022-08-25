@@ -655,7 +655,7 @@ export class Country extends Component {
                       <Form.Group className="mt-5">
                         <div className="col-sm-12">
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled
                             value={this.state.mainlocation}
                             onChange={(e) => {
                               this.setState({ mainlocation: e.target.value });

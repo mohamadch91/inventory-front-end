@@ -10,11 +10,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
 import DynamicInput from "../components/DynamicInput";
+import { hasValidationError } from "../helpers/validation-checker";
+import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
+import Map from "../settings/Map";
 
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
-  const [fieldErrors, setFieldErrors] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const { id } = useParams();
 
@@ -30,7 +33,6 @@ function Facility() {
       return res.data;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
       onSuccess(data) {
         setFieldValue(data);
@@ -93,7 +95,6 @@ function Facility() {
       return result;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
     }
   );
@@ -103,15 +104,15 @@ function Facility() {
   }
 
   const hasRequiredErrors = () => {
-    const _fieldErrors = [];
+    const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(facilityFields)[activeStep];
     currentStepFields.forEach((field) => {
       if (field.required && !fieldsValue[field.stateName]) {
-        _fieldErrors.push(field.id);
+        _fieldErrors[field.id] = "this field is required!";
       }
     });
     setFieldErrors(_fieldErrors);
-    return _fieldErrors.length > 0;
+    return Object.keys(_fieldErrors).length > 0;
   };
 
   const handleNext = () => {
@@ -124,20 +125,19 @@ function Facility() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => {
-    setActiveStep(step);
-  };
-
-  const onChangeHandler = (e, field) => {
-    const value = e.target.value;
+  const onChangeHandler = (value, field) => {
+    const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
     setFieldValue(cloneFieldsValue);
-    if (value && fieldErrors.indexOf(field.id) >= 0) {
-      setFieldErrors((preState) =>
-        preState.filter((fieldEId) => fieldEId !== field.id)
-      );
+    //check validation and required
+    const _fieldErrors = { ...fieldErrors };
+    if (validationErr) {
+      _fieldErrors[field.id] = validationErr;
+    } else {
+      delete _fieldErrors[field.id];
     }
+    setFieldErrors(_fieldErrors);
   };
 
   const onSaveHandler = async (e) => {
@@ -145,10 +145,27 @@ function Facility() {
     if (hasRequiredErrors()) {
       return;
     }
+    const _fieldsValue = { ...fieldsValue };
+    for (const key in relatedFields) {
+      const fields = relatedFields[key];
+      if (fieldsValue[key] === false) {
+        fields.forEach((field) => {
+          delete _fieldsValue[field];
+        });
+      }
+    }
     const res = await (id === "new"
-      ? FacilitiesService.postFacility(fieldsValue)
-      : FacilitiesService.putFacility(fieldsValue));
+      ? FacilitiesService.postFacility(_fieldsValue)
+      : FacilitiesService.putFacility(_fieldsValue));
   };
+
+  const handleMapClick = (e) => {
+    const cloneFieldsValue = { ...fieldsValue };
+    cloneFieldsValue["gpsCordinate"] = { mainlocation: e.latlng };
+    setFieldValue(cloneFieldsValue);
+  };
+
+  console.log(fieldsValue);
 
   return (
     <form onSubmit={onSaveHandler}>
@@ -160,7 +177,7 @@ function Facility() {
               <Stepper activeStep={activeStep}>
                 {Object.keys(facilityFields).map((topic, index) => {
                   return (
-                    <Step key={topic} onClick={() => handleStep(index)}>
+                    <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
                         {topic}
                       </StepLabel>
@@ -185,7 +202,7 @@ function Facility() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={fieldErrors.length > 0}
+                    disabled={Object.keys(fieldErrors).length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -202,43 +219,54 @@ function Facility() {
         <div className="card">
           <div className="card-body">
             {Object.values(facilityFields)[activeStep]?.map((field) => {
-              const hasRequiredError = fieldErrors.indexOf(field.id) >= 0;
+              if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
+                return null;
+              }
+              const hasRequiredError = !!fieldErrors[field.id];
               return (
-                <div className="row" key={field.name}>
-                  <Form.Group className="row mb-0">
-                    <label
-                      className={`col-sm-4 text-right ${
-                        field.required ? "control-label" : ""
-                      }`}
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        lineHeight: "1.4",
-                      }}
-                    >
-                      {field.name}
-                    </label>
-                    <div className="col-sm-8">
+                <Form.Group className="row mb-0" key={field.name}>
+                  <label
+                    className={`col-sm-4 text-right ${
+                      field.required ? "control-label" : ""
+                    }`}
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      lineHeight: "1.4",
+                    }}
+                  >
+                    {field.name}
+                  </label>
+                  <div className="col-sm-8">
+                    {field.stateName === "gpsCordinate" ? (
+                      <div className="map h-50">
+                        <Map
+                          loca={fieldsValue[field.stateName]}
+                          handleChange={handleMapClick}
+                        />
+                      </div>
+                    ) : (
                       <DynamicInput
                         field={field}
+                        
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}
                       />
-                    </div>
-                    {hasRequiredError && (
-                      <div className="row">
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-8">
-                          <p className="my-1 ml-2 text-danger">
-                            this field is required!
-                          </p>
-                        </div>
-                      </div>
                     )}
-                    <hr className="my-3" />
-                  </Form.Group>
-                </div>
+                  </div>
+                  {hasRequiredError && (
+                    <div className="row">
+                      <div className="col-sm-4"></div>
+                      <div className="col-sm-8">
+                        <p className="my-1 ml-2 text-danger">
+                          {fieldErrors[field.id]}{" "}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <hr className="my-3" />
+                </Form.Group>
               );
             })}
           </div>

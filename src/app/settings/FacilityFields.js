@@ -30,7 +30,6 @@ function FieldsFacility() {
       return res.data;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
     }
   );

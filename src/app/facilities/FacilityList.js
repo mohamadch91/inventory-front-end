@@ -16,7 +16,6 @@ function FacilityList() {
       return res.data;
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
     }
   );

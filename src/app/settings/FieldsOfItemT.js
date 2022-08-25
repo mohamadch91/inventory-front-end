@@ -51,9 +51,7 @@ function FieldsOfItemT() {
       const res = await RelatedService.getItemFields();
       return res.data;
     },
-    {
-      staleTime: Infinity,
-    }
+    {}
   );
 
   const { data: relatedItemType } = useQuery(
@@ -64,7 +62,6 @@ function FieldsOfItemT() {
     },
     {
       enabled: !isItemClassesLoading,
-      staleTime: 5 * 60 * 1000, // cache data about 5 minutes
     }
   );
 

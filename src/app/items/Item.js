@@ -11,11 +11,12 @@ import { Form } from "react-bootstrap";
 import ItemService from "../services/item.service";
 import DynamicInput from "../components/DynamicInput";
 import { fromPQSFields } from "../constants/item";
+import { hasValidationError } from "../helpers/validation-checker";
 
 function Item() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
-  const [fieldErrors, setFieldErrors] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [selectedItemClass, setSelectedItemClass] = useState(null);
   const [selectedItemType, setSelectedItemType] = useState(null);
   const [isFromPQS, setIsFromPQS] = useState(false);
@@ -34,7 +35,6 @@ function Item() {
       return res.data[0];
     },
     {
-      staleTime: Infinity,
       refetchOnMount: true,
       onSuccess(data) {
         setFieldValue(data);
@@ -50,7 +50,6 @@ function Item() {
         return res.data.filter((item) => item.item_type.length > 0);
       },
       {
-        staleTime: Infinity,
         refetchOnMount: true,
         onSuccess(data) {
           setSelectedItemClass(data[0]);
@@ -78,11 +77,11 @@ function Item() {
           fieldTopicInResult.push(field.field);
           result[field.field.topic] = fieldTopicInResult;
         }
-       let firstTopic =[]
-        if(result!==[] ) {
-         firstTopic = Object.keys(result)[0];
-        //static fields}
+        const firstTopic = Object.keys(result)[0] ?? "Type";
+        if (result[firstTopic] === undefined) {
+          result[firstTopic] = [];
         }
+        //static fields
         result[firstTopic].unshift({
           id: "code",
           name: "Item code:",
@@ -109,7 +108,6 @@ function Item() {
       return result;
     },
     {
-      staleTime: Infinity,
       enabled: !!selectedItemType,
     }
   );
@@ -119,15 +117,15 @@ function Item() {
   }, [selectedItemType]);
 
   const hasRequiredErrors = () => {
-    const _fieldErrors = [];
+    const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
-      if (field.required && !fieldsValue[field.state]) {
-        _fieldErrors.push(field.id);
+      if (field.required && !fieldsValue[field.stateName]) {
+        _fieldErrors[field.id] = "this field is required!";
       }
     });
     setFieldErrors(_fieldErrors);
-    return _fieldErrors.length > 0;
+    return Object.keys(_fieldErrors).length > 0;
   };
 
   const handleNext = () => {
@@ -140,20 +138,19 @@ function Item() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStep = (step) => {
-    setActiveStep(step);
-  };
-
-  const onChangeHandler = (e, field) => {
-    const value = e.target.value;
+  const onChangeHandler = (value, field) => {
+    const validationErr = hasValidationError(value, field.validation[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
     setFieldValue(cloneFieldsValue);
-    if (value && fieldErrors.indexOf(field.id) >= 0) {
-      setFieldErrors((preState) =>
-        preState.filter((fieldEId) => fieldEId !== field.id)
-      );
+    //check validation and required
+    const _fieldErrors = { ...fieldErrors };
+    if (validationErr) {
+      _fieldErrors[field.id] = validationErr;
+    } else {
+      delete _fieldErrors[field.id];
     }
+    setFieldErrors(_fieldErrors);
   };
 
   const onSaveHandler = async (e) => {
@@ -206,7 +203,7 @@ function Item() {
               <Stepper activeStep={activeStep}>
                 {Object.keys(itemFields).map((topic, index) => {
                   return (
-                    <Step key={topic} onClick={() => handleStep(index)}>
+                    <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
                         {topic}
                       </StepLabel>
@@ -231,7 +228,7 @@ function Item() {
                   <button className="btn btn-primary ">Save</button>
                 ) : (
                   <Button
-                    disabled={fieldErrors.length > 0}
+                    disabled={Object.keys(fieldErrors).length > 0}
                     onClick={handleNext}
                     type="button"
                     sx={{ mr: 1 }}
@@ -364,7 +361,7 @@ function Item() {
               </>
             )}
             {Object.values(itemFields)[activeStep]?.map((field) => {
-              const hasRequiredError = fieldErrors.indexOf(field.id) >= 0;
+              const hasRequiredError = !!fieldErrors[field.id];
               return (
                 <div className="row" key={field.name}>
                   <Form.Group className="row mb-0">
@@ -393,7 +390,7 @@ function Item() {
                         <div className="col-sm-4"></div>
                         <div className="col-sm-8">
                           <p className="my-1 ml-2 text-danger">
-                            this field is required!
+                            {fieldErrors[field.id]}
                           </p>
                         </div>
                       </div>
