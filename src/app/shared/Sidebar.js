@@ -6,6 +6,7 @@ import EventBus from "../common/EventBus";
 import { connect } from "react-redux";
 import userService from "../services/user.service";
 import { Trans, withTranslation } from "react-i18next";
+
 class Sidebar extends Component {
   constructor(props) {
     super(props);
