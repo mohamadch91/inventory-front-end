@@ -11,7 +11,7 @@ export const hasValidationError = (value, validation) => {
   }
   if (
     validation.digits !== -1 &&
-    value.toString().replace(".", "").length !==
+    value.toString().replaceAll(",", "").replaceAll(".", "").length !==
       validation.digits + (validation.floating > 0 ? validation.floating : 0)
   ) {
     console.log("----------");

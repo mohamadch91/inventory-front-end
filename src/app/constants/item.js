@@ -44,15 +44,4 @@ export const fromPQSFields = [
     state: "PQSPISRefrigerantGas",
     params: [],
   },
-  {
-    id: "PQSPISTemperatureWorkingZone",
-    name: "PQS/PIS-Temperature Zone",
-    topic: "",
-    type: "text",
-    active: true,
-    disabled: false,
-    required: false,
-    state: "PQSPISTemperatureWorkingZone",
-    params: [],
-  },
 ];

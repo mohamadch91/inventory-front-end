@@ -59,12 +59,35 @@ function Item() {
     );
 
   const {
+    data: pqsData,
+    isLoading: isPqsLoading,
+    refetch: loadPQSData,
+  } = useQuery(
+    ["pqs", selectedItemType?.id],
+    async () => {
+      const res = await ItemService.getPQS(selectedItemType.id);
+      return res.data.map((item) => ({
+        enabled: true,
+        id: item.id,
+        name: item.pqsnumber ?? item.pqscode,
+        order: 1,
+        pararmid: item.id,
+        pqsData: item,
+      }));
+    },
+    {
+      refetchOnMount: false,
+      enabled: false,
+    }
+  );
+
+  const {
     data: itemFields,
     isLoading: isItemsFieldsLoading,
     isIdle: isItemsFieldsIdle,
     refetch: refetchItemFields,
   } = useQuery(
-    ["item-fields", selectedItemClass, selectedItemType],
+    ["item-fields", selectedItemClass?.item_class.id, selectedItemType?.id],
     async () => {
       const res = await ItemService.getItemFields(
         selectedItemClass.item_class.id,
@@ -87,7 +110,7 @@ function Item() {
           name: "Item code:",
           topic: firstTopic,
           type: "text",
-          active: true,
+          active: false,
           disabled: true,
           required: false,
           state: "code",
@@ -98,7 +121,7 @@ function Item() {
           name: "Facility Name:",
           topic: firstTopic,
           type: "text",
-          active: true,
+          active: false,
           disabled: true,
           required: false,
           state: "facility-name",
@@ -139,7 +162,7 @@ function Item() {
   };
 
   const onChangeHandler = (value, field) => {
-    const validationErr = hasValidationError(value, field.validation[0]);
+    const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
     setFieldValue(cloneFieldsValue);
@@ -159,9 +182,11 @@ function Item() {
       return;
     }
     const _fieldsValue = { ...fieldsValue };
-    for (const key in fieldsValue) {
-      if (fromPQSFields.find((pqsField) => pqsField.state === key)) {
-        delete _fieldsValue[key];
+    if (!isFromPQS) {
+      for (const key in fieldsValue) {
+        if (fromPQSFields.find((pqsField) => pqsField.state === key)) {
+          delete _fieldsValue[key];
+        }
       }
     }
     const res = await (id === "new"
@@ -184,11 +209,22 @@ function Item() {
     setIsFromPQS((preChecked) => !preChecked);
   };
 
+  const selectPQSHandler = (value) => {
+    const cloneFieldsValue = { ...fieldsValue };
+    const selectedPqs = pqsData.find((pqs) => pqs.id === value);
+    cloneFieldsValue["PQSPISType"] = selectedPqs?.model;
+    cloneFieldsValue["PQSPISManufacturer"] =
+      selectedPqs?.manufacturer ?? selectedPqs?.make;
+    cloneFieldsValue["PQSPISRefrigerantGas"] = selectedPqs?.refrigerant;
+    setFieldValue(cloneFieldsValue);
+  };
+
   if (
     isItemDefaultLoading ||
     isItemClassesAndTypesLoading ||
     isItemsFieldsLoading ||
-    isItemsFieldsIdle
+    isItemsFieldsIdle ||
+    isPqsLoading
   ) {
     return <Spinner />;
   }
@@ -201,7 +237,7 @@ function Item() {
           <div className="card-body pb-3">
             <div className="row pb-4" style={{ overflow: "auto" }}>
               <Stepper activeStep={activeStep}>
-                {Object.keys(itemFields).map((topic, index) => {
+                {Object.keys(itemFields).map((topic) => {
                   return (
                     <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
@@ -264,6 +300,11 @@ function Item() {
                         onChange={selectItemClassHandler}
                         className="form-select"
                         as="select"
+                        value={itemClassesAndTypes?.findIndex(
+                          (i) =>
+                            i?.item_class.id ===
+                            selectedItemClass?.item_class.id
+                        )}
                       >
                         {itemClassesAndTypes.map((itemClass, index) => (
                           <option value={index}>
@@ -293,6 +334,9 @@ function Item() {
                         onChange={selectItemTypeHandler}
                         className="form-select"
                         as="select"
+                        value={selectedItemClass?.item_type.findIndex(
+                          (i) => i?.id === selectedItemType?.id
+                        )}
                       >
                         {selectedItemClass?.item_type.map((itemType, index) => (
                           <option value={index}>{itemType.title}</option>
@@ -302,7 +346,7 @@ function Item() {
                     <hr className="my-3" />
                   </Form.Group>
                 </div>
-                {!selectedItemType.havepqs && (
+                {selectedItemType.havepqs && (
                   <>
                     <div className="row">
                       <Form.Group className="row mb-0">
@@ -345,13 +389,46 @@ function Item() {
                             >
                               {pqsField.name}
                             </label>
-                            <div className="col-sm-8">
-                              <DynamicInput
-                                field={pqsField}
-                                onChangeHandler={onChangeHandler}
-                                defaultValue={fieldsValue[pqsField.state]}
-                              />
+
+                            <div
+                              className={`${
+                                pqsField.state === "PQSPISCode"
+                                  ? "col-sm-7"
+                                  : "col-sm-8"
+                              }`}
+                            >
+                              {pqsData && pqsField.state === "PQSPISCode" ? (
+                                <DynamicInput
+                                  field={{
+                                    ...pqsField,
+                                    type: "select",
+                                    params: pqsData,
+                                  }}
+                                  onChangeHandler={(value, field) => {
+                                    onChangeHandler(value, field);
+                                    selectPQSHandler(value);
+                                  }}
+                                  defaultValue={fieldsValue[pqsField.state]}
+                                />
+                              ) : (
+                                <DynamicInput
+                                  field={pqsField}
+                                  onChangeHandler={onChangeHandler}
+                                  defaultValue={fieldsValue[pqsField.state]}
+                                />
+                              )}
                             </div>
+                            {pqsField.state === "PQSPISCode" && (
+                              <div className="col-sm-1">
+                                <button
+                                  className="btn btn-primary w-100 h-100"
+                                  onClick={loadPQSData}
+                                  type="button"
+                                >
+                                  load
+                                </button>
+                              </div>
+                            )}
                             <hr className="my-3" />
                           </Form.Group>
                         </div>

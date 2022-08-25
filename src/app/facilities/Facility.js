@@ -26,10 +26,16 @@ function Facility() {
     async () => {
       const user = JSON.parse(localStorage.getItem("user"));
 
-      if (id === "new") return { "parent-facility": user?.facility_id };
+      if (id === "new")
+        return {
+          "parent-facility": user?.facility_id,
+          completerstaffname: user?.username,
+          updated_at: new Date().toISOString().split("T")[0],
+        };
 
       const res = await FacilitiesService.getFacilities(id);
       res.data["parent-facility"] = user?.facility_id;
+      res.data["updated_at"] = new Date().toISOString().split("T")[0];
       return res.data;
     },
     {
@@ -74,7 +80,7 @@ function Facility() {
           name: "Facility code:",
           topic: firstTopic,
           type: "text",
-          active: true,
+          active: false,
           disabled: true,
           required: false,
           stateName: "code",
@@ -85,7 +91,7 @@ function Facility() {
           name: "Parent facility:",
           topic: firstTopic,
           type: "text",
-          active: true,
+          active: false,
           disabled: true,
           required: false,
           stateName: "parent-facility",
@@ -140,6 +146,8 @@ function Facility() {
     setFieldErrors(_fieldErrors);
   };
 
+  console.log(fieldsValue);
+
   const onSaveHandler = async (e) => {
     e.preventDefault();
     if (hasRequiredErrors()) {
@@ -164,8 +172,6 @@ function Facility() {
     cloneFieldsValue["gpsCordinate"] = { mainlocation: e.latlng };
     setFieldValue(cloneFieldsValue);
   };
-
-  console.log(fieldsValue);
 
   return (
     <form onSubmit={onSaveHandler}>
@@ -251,6 +257,10 @@ function Facility() {
                         field={field}
                         onChangeHandler={onChangeHandler}
                         defaultValue={fieldsValue[field.stateName]}
+                        separator={
+                          field.stateName === "childrennumber" ||
+                          field.stateName === "loverlevelfac"
+                        }
                       />
                     )}
                   </div>

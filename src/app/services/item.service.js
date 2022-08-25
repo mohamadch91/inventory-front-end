@@ -19,6 +19,13 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getPQS(id) {
+    const params = { id };
+    return axios.get(API_URL + "itempqs", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getItemFields(class_id, type_id) {
     const params = {
       class_id,

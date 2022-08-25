@@ -1,7 +1,7 @@
 import { Form } from "react-bootstrap";
-
+const numericKeys = "0123456789";
 const DynamicInput = (props) => {
-  const { field, onChangeHandler, defaultValue } = props;
+  const { field, onChangeHandler, defaultValue, separator } = props;
   if (field.type === "select") {
     return (
       <Form.Control
@@ -41,11 +41,21 @@ const DynamicInput = (props) => {
   const validation = field.validation?.[0];
   return (
     <Form.Control
+      onKeyPress={(e) => {
+        e.persist();
+        if (field.type === "number") {
+          if (numericKeys.indexOf(e.key) === -1) {
+            e.preventDefault();
+            return;
+          }
+        }
+        onChangeHandler(e.target.value, field);
+      }}
       onChange={(e) => onChangeHandler(e.target.value, field)}
-      defaultValue={defaultValue}
+      value={defaultValue}
       className="form-control"
       id={`field-${field.id}`}
-      type={field.type}
+      type={separator ? "text" : field.type}
       disabled={field.active ? !field.active : field.disabled}
       min={validation && validation?.min !== -1 ? validation.min : undefined}
       max={validation && validation?.max !== -1 ? validation.max : undefined}
@@ -57,6 +67,16 @@ const DynamicInput = (props) => {
       maxLength={
         validation && validation?.digits !== -1 ? validation.digits : undefined
       }
+      onBlur={(e) => {
+        e.persist();
+        if (separator) {
+          const formatted = e.target.value
+            .toString()
+            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          console.log(formatted);
+          onChangeHandler(formatted, field);
+        }
+      }}
     />
   );
 };
