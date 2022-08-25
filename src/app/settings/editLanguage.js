@@ -19,7 +19,7 @@ import "./itemClass.scss";
 import "./itemType.scss";
 import "./editLang.scss";
 import { useTranslation } from "react-i18next";
-import { Trans } from 'react-i18next';
+import { Trans } from "react-i18next";
 function EditLanguage() {
   const languages = [
     { label: "English", value: "en" },
@@ -154,7 +154,7 @@ function EditLanguage() {
     setIsLoading(true);
     setPage(p);
     getData(
-      `?pnum=${page}&name=${selectedLanguage}${
+      `?pnum=${p}&name=${selectedLanguage}${
         searchParam.length > 0 ? "&search=" + searchParam : ""
       }`
     );
@@ -171,7 +171,9 @@ function EditLanguage() {
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4 className="page-title"><Trans>Language</Trans></h4>
+              <h4 className="page-title">
+                <Trans>Language</Trans>
+              </h4>
             </div>
             <div className="col-md-2 d-flex">
               <select
@@ -190,7 +192,9 @@ function EditLanguage() {
               </select>
             </div>
             <div className="col-md-2 d-flex align-items-center justify-content-end">
-              <h4 className="page-title"><Trans>Search</Trans></h4>
+              <h4 className="page-title">
+                <Trans>Search</Trans>
+              </h4>
             </div>
             <div className="col-md-4 d-flex">
               <input
@@ -220,9 +224,15 @@ function EditLanguage() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell><Trans>Cluase</Trans></TableCell>
-                  <TableCell><Trans>Value</Trans></TableCell>
-                  <TableCell><Trans>Edit</Trans></TableCell>
+                  <TableCell>
+                    <Trans>Cluase</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Value</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -265,8 +275,8 @@ function EditLanguage() {
                             <button
                               className="save-btn"
                               onClick={handleSubmitEdit}
-                            ><Trans>
-                              Save</Trans>
+                            >
+                              <Trans>Save</Trans>
                             </button>
                             <button
                               className="close-btn"
@@ -292,10 +302,14 @@ function EditLanguage() {
           </div>
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
-              <h3 className="mb-3 mt-3"><Trans>Insert translation</Trans></h3>
+              <h3 className="mb-3 mt-3">
+                <Trans>Insert translation</Trans>
+              </h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">
-                  <label><Trans>Clause</Trans></label>
+                  <label>
+                    <Trans>Clause</Trans>
+                  </label>
                   <input
                     name="word"
                     type="text"
@@ -305,7 +319,9 @@ function EditLanguage() {
                   ></input>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label><Trans>Value</Trans></label>
+                  <label>
+                    <Trans>Value</Trans>
+                  </label>
                   <input
                     name="translate"
                     type="text"
@@ -315,7 +331,9 @@ function EditLanguage() {
                   ></input>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label><Trans>Language</Trans></label>
+                  <label>
+                    <Trans>Language</Trans>
+                  </label>
                   <select
                     name="language"
                     onChange={handleChangeAdd}
@@ -334,7 +352,7 @@ function EditLanguage() {
                 </div>
                 <div className="col-md-3 d-flex justify-content-center align-items-center">
                   <button className="save-btn" type="submit">
-                   <Trans>Save</Trans>
+                    <Trans>Save</Trans>
                   </button>
                 </div>
               </div>
