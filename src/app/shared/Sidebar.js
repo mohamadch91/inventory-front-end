@@ -94,7 +94,7 @@ class Sidebar extends Component {
               </span>
               <span className="menu-title">
                 <span>
-                  <Trans>Settings</Trans>
+                  <Trans>dashboard</Trans>
                 </span>
               </span>
             </Link>

@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import App from "./app/App";
+import  { Component, Suspense } from "react";
+
 // import "./i18n";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
@@ -18,7 +20,9 @@ ReactDOM.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter basename="">
-        <App />
+        <Suspense fallback={<div>Loading...</div>}>
+          <App />
+        </Suspense>
       </BrowserRouter>
     </QueryClientProvider>
   </Provider>,

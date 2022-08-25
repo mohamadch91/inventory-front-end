@@ -7,7 +7,7 @@ import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
 import SettingsPanel from "./shared/SettingsPanel";
 import Footer from "./shared/Footer";
-// import { withTranslation } from "react-i18next";
+import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
 import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
@@ -67,7 +67,7 @@ class App extends Component {
     );
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      
         <div className="container-scroller">
           <Toaster />
           {navbarComponent}
@@ -82,7 +82,6 @@ class App extends Component {
             </div>
           </div>
         </div>
-      </Suspense>
     );
   }
 
@@ -141,4 +140,4 @@ function mapStateToProps(state) {
     user,
   };
 }
-export default connect(mapStateToProps)(withRouter(App));
+export default connect(mapStateToProps)(withTranslation()(withRouter(App)));
