@@ -9,7 +9,6 @@ import EditIcon from "../shared/EditIcon";
 import CloseIcon from "../shared/CloseIcon";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
@@ -96,7 +95,7 @@ function FieldsOfItemT() {
         field.itemtypeid === selectedItemType.id &&
         field.fieldid === currentField.id
     );
-    console.log(kind)
+    console.log(kind);
     if (fieldIndex === -1) {
       //for the first time
       fieldValuesClone.push({
