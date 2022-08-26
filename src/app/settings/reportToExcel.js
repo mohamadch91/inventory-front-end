@@ -48,12 +48,14 @@ function ReportToExcel() {
               them in the Download folder of your PC.
             </Trans>
           </p>
-          <a href={API_URL + data.facility} download>
-            <Trans>Export Facilities</Trans>
-          </a>
-          <a href={API_URL + data.item} download>
-            <Trans>Export Items</Trans>
-          </a>
+          <div className="mt-4">
+            <a href={API_URL + data.facility} download>
+              <Trans>Export Facilities</Trans>
+            </a>
+            <a href={API_URL + data.item} download>
+              <Trans>Export Items</Trans>
+            </a>
+          </div>
         </div>
       )}
     </>

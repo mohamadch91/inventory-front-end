@@ -30,8 +30,6 @@ function FacilityList() {
       }
     );
 
-  console.log(selectedParentId);
-
   const { isLoading: isGetSubFacilityLoading, refetch: fetchSubFacilities } =
     useQuery(
       ["sub-facilities", selectedParentId],

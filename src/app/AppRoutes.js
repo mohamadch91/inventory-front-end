@@ -44,6 +44,7 @@ const UsersList = lazy(() => import("./user/usersList"));
 const AboutIGA = lazy(() => import("./about-iga"));
 const Facility = lazy(() => import("./facilities/Facility"));
 const FacilityList = lazy(() => import("./facilities/FacilityList"));
+const PrintFacility = lazy(() => import("./facilities/PrintFacility"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
 const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
@@ -109,6 +110,7 @@ class AppRoutes extends Component {
 
           <Route exact path="/facilities/info/:id" component={Facility} />
           <Route exact path="/facilities/list" component={FacilityList} />
+          <Route exact path="/facilities/print" component={PrintFacility} />
 
           <Route exact path="/items/info/:id" component={Item} />
           <Route exact path="/items/list" component={ItemList} />
