@@ -30,7 +30,7 @@ function Facility() {
       if (id === "new")
         return {
           "parent-facility": user?.facility_id,
-          completerstaffname: user?.username,
+          completerstaffname: user?.pk,
           updated_at: new Date().toISOString().split("T")[0],
         };
 
@@ -74,6 +74,8 @@ function Facility() {
             order: 1,
             enabled: true,
             paramid: level.id,
+            minpop:level.minpop,
+            maxpop:level.maxpop
           })),
         });
         result[firstTopic].unshift({
@@ -95,7 +97,7 @@ function Facility() {
           active: false,
           disabled: true,
           required: false,
-          stateName: "parent-facility",
+          stateName: "parentid",
           params: [],
         });
       }
@@ -136,6 +138,9 @@ function Facility() {
     const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
+    if(field.stateName==='level'){
+      cloneFieldsValue[field.stateName] = parseInt(value);
+    }
     setFieldValue(cloneFieldsValue);
     //check validation and required
     const _fieldErrors = { ...fieldErrors };
@@ -168,12 +173,13 @@ function Facility() {
 
   const handleMapClick = (e) => {
     const cloneFieldsValue = { ...fieldsValue };
-    cloneFieldsValue["gpsCordinate"] = { mainlocation: e.latlng };
+    cloneFieldsValue["gpsCordinate"] =  e.latlng ;
     setFieldValue(cloneFieldsValue);
   };
 
   return (
     <form onSubmit={onSaveHandler}>
+      
       <h3 className="page-title mb-3">
         <Trans>Facility information</Trans>
       </h3>
@@ -224,6 +230,7 @@ function Facility() {
       </div>
       <div className="mt-3">
         <div className="card">
+        
           <div className="card-body">
             {Object.values(facilityFields)[activeStep]?.map((field) => {
               if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
@@ -233,7 +240,7 @@ function Facility() {
               return (
                 <Form.Group className="row mb-0" key={field.name}>
                   <label
-                    className={`col-sm-4 text-right ${
+                    className={`col-sm-4  ${
                       field.required ? "control-label" : ""
                     }`}
                     style={{
@@ -247,7 +254,14 @@ function Facility() {
                   </label>
                   <div className="col-sm-8">
                     {field.stateName === "gpsCordinate" ? (
-                      <div className="map h-50">
+                      <div className="map  ">
+                        <div className="mb-2">
+                          <Form.Control
+                            type="text"
+                            disabled
+                            value={fieldsValue[field.stateName]}
+                          />
+                        </div>
                         <Map
                           loca={fieldsValue[field.stateName]}
                           handleChange={handleMapClick}
@@ -260,10 +274,32 @@ function Facility() {
                         defaultValue={fieldsValue[field.stateName]}
                         separator={
                           field.stateName === "childrennumber" ||
-                          field.stateName === "loverlevelfac"
+                          field.stateName === "loverlevelfac" ||
+                          field.stateName === "populationnumber"
                         }
                       />
                     )}
+                    <br />
+                    {field.stateName === "populationnumber" &&
+                      facilityFields["Facility general information"][2][
+                        "params"
+                      ][fieldsValue["level"] - 2] && (
+                        <p>
+                          range(
+                          {
+                            facilityFields["Facility general information"][2][
+                              "params"
+                            ][fieldsValue["level"] - 2].minpop
+                          }
+                          -{" "}
+                          {
+                            facilityFields["Facility general information"][2][
+                              "params"
+                            ][fieldsValue["level"] - 2].maxpop
+                          }
+                          )
+                        </p>
+                      )}
                   </div>
                   {hasRequiredError && (
                     <div className="row">

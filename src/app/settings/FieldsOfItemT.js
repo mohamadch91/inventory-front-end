@@ -15,6 +15,7 @@ import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 import RelatedService from "../services/related.service";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function FieldsOfItemT() {
   const [activeStep, setActiveStep] = useState(0);
@@ -142,7 +143,9 @@ function FieldsOfItemT() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Fields of "item category"</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Fields of</Trans> <Trans>"item category"</Trans>
+      </h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (
@@ -152,7 +155,9 @@ function FieldsOfItemT() {
               <div className="row">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Item class</label>
+                    <label className="col-sm-12">
+                      <Trans>Item class</Trans>{" "}
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemClassHandler}
@@ -170,7 +175,9 @@ function FieldsOfItemT() {
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="col-sm-12">item category</label>
+                    <label className="col-sm-12">
+                      <Trans>Item category</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemTypeHandler}
@@ -223,7 +230,7 @@ function FieldsOfItemT() {
                       onClick={handleBack}
                       sx={{ mr: 1 }}
                     >
-                      Back
+                      <Trans>Back</Trans>
                     </Button>
                     <Box sx={{ flex: "1 1 auto" }} />
                     <Button
@@ -239,7 +246,7 @@ function FieldsOfItemT() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      Save
+                      <Trans>Save</Trans>
                     </button>
                   </Box>
                 </div>
@@ -256,12 +263,18 @@ function FieldsOfItemT() {
                     <SharedTable>
                       <TableHead>
                         <TableRow>
-                          <TableCell className="col-sm-4">Field name</TableCell>
-                          <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item category?
+                            <Trans>Field name</Trans>
                           </TableCell>
-                          <TableCell className="col-sm-2">Edit</TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Enable</Trans>
+                          </TableCell>
+                          <TableCell className="col-sm-4">
+                            <Trans>
+                              Is this required field for</Trans> <Trans>item category</Trans>
+                            ?
+                          </TableCell>
+                          <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -323,7 +336,7 @@ function FieldsOfItemT() {
                                       className="save-btn"
                                       onClick={handleSubmitEdit}
                                     >
-                                      Save
+                                      <Trans>Save</Trans>
                                     </button>
                                     <button
                                       className="close-btn"
@@ -344,7 +357,7 @@ function FieldsOfItemT() {
                                         setNewFieldName(field.name);
                                       }}
                                     >
-                                      <EditIcon />
+                                      <EditIcon  sx={{"marginLeft":"0"}}/>
                                     </button>
                                   </TableCell>
                                 )}

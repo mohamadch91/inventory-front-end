@@ -2,7 +2,9 @@ import { useEffect,useState } from 'react';
 import { MapContainer, useMap, TileLayer, Marker, Popup ,useMapEvents} from "react-leaflet";
 import L from 'leaflet';
 // import tileLayer from '../util/tileLayer';
-
+// import "leaflet/dist/leaflet.css";
+import './map.css'
+import "leaflet/dist/leaflet.css";
 const center = [52.22977, 21.01178];
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -16,6 +18,7 @@ function LocationMarker() {
   const map = useMapEvents({
     click() {
       map.locate();
+      map.invalidateSize();
     },
     locationfound(e) {
       setPosition(e.latlng);
@@ -36,18 +39,20 @@ const GetCoordinates = (props) => {
   useEffect(() => {
     if (!map) return;
     const info = L.DomUtil.create("div", "legend");
-
+     
     const positon = L.Control.extend({
       options: {
         position: "bottomleft",
       },
 
       onAdd: function () {
-        info.textContent = "Click on map";
+        info.textContent = "Click on map too add location";
         return info;
       },
     });
-
+    map.on("load", (e)=>{
+console.log("salam")
+    })
     map.on("click", (e) => {
         window.navigator.geolocation.getCurrentPosition(console.log, console.log);
       info.textContent = e.latlng;
@@ -62,37 +67,92 @@ const GetCoordinates = (props) => {
 
 const MapWrapper = (props) => {
     const [map, setMap] = useState(null);
+    const [Current,sercurrent] = useState([])
+    const [x1, setx1] = useState(
+      (JSON.parse(localStorage.getItem("country")) === null)
+        ? 35
+        : (JSON.parse(localStorage.getItem("country"))["mainlocation"]===undefined) ?35 :(JSON.parse(localStorage.getItem("country"))["mainlocation"]?.split("(")[1]?.split(",")[0])
+    );
+    const [x2, setx2] = useState(
+      JSON.parse(localStorage.getItem("country")) === null
+        ? 51
+        : JSON.parse(localStorage.getItem("country"))["mainlocation"] ===
+          undefined
+        ? 51
+        : JSON.parse(
+            localStorage
+              .getItem("country"))
+              ["mainlocation"]?.split(",")[1]?.split(")")[0]
+          
+    );
+
     const handl = (e)=>{
         props.handleChange(e)
         setMap(e.latlng)
     }
-  return (
-    <MapContainer
-      center={[52.22, 21.01178]}
-      zoom={13}
-      scrollWheelZoom={true}
-      //   onClick={this.handlemapclick}
-    >
-      <TileLayer
-        {...{
-          attribution:
-            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        }}
-      />
+    useEffect(
+      ()=>{
+        const country =
+          JSON.parse(localStorage.getItem("country")) === null
+            ? undefined
+            : JSON.parse(localStorage.getItem("country"))["mainlocation"];
+        console.log(country)
+        let ans=[]
+        if(country===undefined){
+          ans=[50,50]
+        }
+        else{
+          console.log(country)
+          let temp=country?.split("(")[1]?.split(",")[0]
+          let temp1 = country?.split("(")[1]?.split(",")[1]?.split(")")[0];
+          if(temp===undefined || temp1===undefined){
+            setx1(35)
+            setx2(51)
+          }
+          else{
+          setx1(parseFloat(temp))
+          setx2(parseFloat(temp1))
+          }
+        }
+        console.log(ans)
+        sercurrent(ans)
 
-      <GetCoordinates change={handl} />
-      <>
-        {map && (
-          <Marker position={map} draggable={true}>
-            <Popup position={map}>
-              Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
-            </Popup>
-          </Marker>
+      },[]
+    )
+  return (
+    <div className="map">
+      {Current !== null &&
+        x1 &&
+        x2&& (
+          <MapContainer
+            center={[x1, x2]}
+            zoom={10}
+            scrollWheelZoom={true}
+            style={{ width: "100%", height: "450px" }}
+
+            //   onClick={this.handlemapclick}
+          >
+            <TileLayer
+              {...{
+                url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                width: 500,
+              }}
+            />
+
+            <GetCoordinates change={handl} />
+            <>
+              {map && (
+                <Marker position={map} draggable={true}>
+                  <Popup position={map}>
+                    Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
+                  </Popup>
+                </Marker>
+              )}
+            </>
+            <LocationMarker />
+          </MapContainer>
         )}
-      </>
-      <LocationMarker />
-    </MapContainer>
+    </div>
   );
 };
 

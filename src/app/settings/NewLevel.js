@@ -143,7 +143,7 @@ const headCells = [
     id: "name",
     numeric: false,
     disablePadding: true,
-    label: "name",
+    label: "Name",
   },
   {
     id: "m25vol",
@@ -552,50 +552,50 @@ export default function DataTable() {
       <div className="page-header">
         <h1 className="page-title"> Level Configurations </h1>
       </div>
-      <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
-          <div>
-            <div className="item-class-page row mr-5 mt-2 mb-3 ml-5">
-              <Typography
-                sx={{ flex: "1 1 100%" }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-                className=" mt-3 item-class-page"
-              >
-                <Trans> import level</Trans>
-              </Typography>
-              <div className="col-md-12 item-class-page">
-                <label>
-                  
-                  <Trans>upload excel to change levels data
-                  </Trans></label>
-                <div className="row d-flex mb-2 ">
-                  <div className="col-md-3">
-                    <input
-                      type="file"
-                      className="form-control"
-                      onChange={handleImport}
-                    />
-                  </div>
-                  <div className="col-md-3 ml-2 mt-1">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        handleExcel();
-                      }}
-                    >
-                  <Trans>    sumbit</Trans>
-                    </Button>
+      {JSON.parse(localStorage.getItem("country")).usingtool && (
+        <Box sx={{ width: "100%" }}>
+          <Paper sx={{ width: "100%", mb: 2 }}>
+            <div>
+              <div className="item-class-page row mr-5 mt-2 mb-3 ml-5">
+                <Typography
+                  sx={{ flex: "1 1 100%" }}
+                  variant="h6"
+                  id="tableTitle"
+                  component="div"
+                  className=" mt-3 item-class-page"
+                >
+                  <Trans>import level</Trans>
+                </Typography>
+                <div className="col-md-12 item-class-page">
+                  <label>
+                    <Trans>upload excel to change levels data</Trans>
+                  </label>
+                  <div className="row d-flex mb-2 ">
+                    <div className="col-md-3">
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={handleImport}
+                      />
+                    </div>
+                    <div className="col-md-3 ml-2 mt-1">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          handleExcel();
+                        }}
+                      >
+                        <Trans>Sumbit</Trans>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </Paper>
-      </Box>
-
+          </Paper>
+        </Box>
+      )}
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />
@@ -604,8 +604,9 @@ export default function DataTable() {
               <TableRow>
                 <TableCell colSpan={7.5}></TableCell>
                 <TableCell colSpan={4}>
-              <Trans>    Target Population :
-                  {JSON.parse(localStorage.getItem("country")).poptarget}
+                  <Trans>Target Population :</Trans>
+                  <Trans>
+                    {JSON.parse(localStorage.getItem("country")).poptarget}
                   </Trans>
                 </TableCell>
                 <TableCell colSpan={6}></TableCell>
@@ -620,7 +621,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  Current values (cm3)
+                  <Trans>Current values</Trans> <Trans>(cm3)</Trans>
                 </TableCell>
                 <TableCell
                   sx={{
@@ -631,7 +632,18 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-               <Trans>   Planned values (cm3)</Trans>
+                  <Trans>Planned values</Trans> <Trans>(cm3)</Trans>
+                </TableCell>
+                <TableCell
+                  sx={{
+                    backgroundColor: "#2f7ebf",
+                    textAlign: "center",
+                    borderLeft: "1px solid black",
+                    borderRight: "1px solid black",
+                  }}
+                  colSpan={2}
+                >
+                  <Trans>Population</Trans>
                 </TableCell>
               </TableRow>
               <TableRow className="item-class-page">
@@ -647,7 +659,7 @@ export default function DataTable() {
                     }
                     key={headCell.id}
                   >
-                    {headCell.label}
+                    <Trans>{headCell.label}</Trans>
                   </TableCell>
                 ))}
               </TableRow>
@@ -735,7 +747,7 @@ export default function DataTable() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                       <TableCell colSpan={2}>
                         <button className="save-btn" onClick={handleSave}>
-                        <Trans>  Save</Trans>
+                          <Trans>Save</Trans>
                         </button>
                         <button
                           className="close-btn"

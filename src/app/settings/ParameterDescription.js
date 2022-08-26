@@ -128,9 +128,9 @@ function ParameterDescription() {
   }
 
   return (
-    <div className="item-class-page">
+    <div className="item-class-page-param">
       <h2 className="page-title mb-3"><Trans>
-        {id?.split("-")[0]} Parameter Descriptions </Trans>
+        {id?.split("-")[0]}</Trans><Trans>Parameter Descriptions</Trans>
       </h2>
       <h3 className="page-title mb-3">
          {paramName}
@@ -174,7 +174,7 @@ function ParameterDescription() {
                 checked={addRowFormData?.enabled}
               ></input>
               <button className="save-btn" type="submit">
-              <Trans>  Save</Trans>
+              <Trans>Save</Trans>
               </button>
             </div>
           </div>
@@ -255,7 +255,7 @@ function ParameterDescription() {
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                         <Trans>   Save</Trans>
+                         <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"

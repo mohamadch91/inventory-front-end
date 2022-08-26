@@ -107,7 +107,7 @@ function ItemTypeLevel() {
 
   return (
     <div>
-      <h3 className="page-title mb-3"><Trans>"Item category" In different levels</Trans></h3>
+      <h3 className="page-title mb-3"><Trans>"Item category"</Trans><Trans>In different levels</Trans></h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (
@@ -155,7 +155,7 @@ function ItemTypeLevel() {
                     className="btn btn-primary w-100 mt-4"
                     onClick={onSaveHandler}
                   >
-               <Trans>     Save</Trans>
+               <Trans>Save</Trans>
                   </button>
                 </div>
               </div>
@@ -166,7 +166,7 @@ function ItemTypeLevel() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-10"><Trans>Title</Trans></TableCell>
+                    <TableCell className="col-sm-10"><Trans>Item category</Trans></TableCell>
                     <TableCell><Trans>Enable</Trans></TableCell>
                   </TableRow>
                 </TableHead>

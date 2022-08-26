@@ -22,6 +22,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
+import { Trans } from "react-i18next";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -202,16 +203,16 @@ function Pqs3() {
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Import PQS/PIS3 and view</h3>
+      <h3 className="page-title mb-3"><Trans>Import PQS/PIS3 and view</Trans></h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="add-row mt-4 mb-4">
-            <h3 className="mb-3 mt-3">Insert PQS excel file</h3>
+            <h3 className="mb-3 mt-3"><Trans>Insert PQS excel file</Trans></h3>
             <div className="row">
               <div className="col-md-3 flex-column d-flex">
-                <label>excel file</label>
+                <label className="mb-3">Excel file</label>
                 <input
                   name="describe"
                   type="file"
@@ -220,38 +221,36 @@ function Pqs3() {
                 ></input>
               </div>
               <div className="col-md-3 flex-column d-flex mt-2">
-                <label>If you sumbit all old datas erased</label>
+                <label className="mb-3"><Trans>If you sumbit all old datas erased</Trans></label>
                 <button onClick={handleExcel} className="save-btn">
-                  sumbit
+                 <Trans>Sumbit</Trans>
                 </button>
               </div>
             </div>
           </div>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4>PQS list</h4>
+              <h4><Trans>PQS list</Trans></h4>
             </div>
           </div>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>PQS code</TableCell>
-                  <TableCell>PQS/PIS Type</TableCell>
-                  <TableCell>Manufacturer</TableCell>
-                  <TableCell>Model</TableCell>
-
-                  <TableCell>Refrigerant gas</TableCell>
-
-                  <TableCell>Net vaccine storage capacity (lit.)</TableCell>
-                  <TableCell>Net freeze capacity at -20 C (lit.)</TableCell>
+                  <TableCell><Trans>PQS code</Trans></TableCell>
+                  <TableCell><Trans>PQS/PIS Type</Trans></TableCell>
+                  <TableCell><Trans>Manufacturer</Trans></TableCell>
+                  <TableCell><Trans>Model</Trans></TableCell>
+                  <TableCell><Trans>Refrigerant gas</Trans></TableCell>
+                  <TableCell><Trans>Net vaccine storage capacity</Trans> <Trans>(lit.)</Trans></TableCell>
+                  <TableCell><Trans>Net freeze capacity at -20 C</Trans> <Trans>(lit.)</Trans></TableCell>
                   <TableCell>
-                    Coolant pack production capacity (Kg/24 hours)
+                    <Trans>Coolant pack production capacity</Trans> (Kg/24 hours)
                   </TableCell>
 
-                  <TableCell>Height (cm)</TableCell>
-                  <TableCell>Width (cm)</TableCell>
-                  <TableCell>Length (cm)</TableCell>
+                  <TableCell><Trans>Height</Trans> <Trans>(cm)</Trans></TableCell>
+                  <TableCell><Trans>Width</Trans> <Trans>(cm)</Trans></TableCell>
+                  <TableCell><Trans>Length</Trans> <Trans>(cm)</Trans></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

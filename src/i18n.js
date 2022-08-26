@@ -21,8 +21,11 @@ i18n
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
     backend: {
       loadPath: "http://5.182.47.38:8001/media/{{lng}}/{{ns}}.json",
-      addPath:null,
+      addPath: null,
       crossDomain: true,
+      requestOptions: {
+        cache: "no-store",
+      },
     },
     debug: true,
   });

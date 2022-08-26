@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
 import "../styles/table.scss";
 import Spinner from "../shared/Spinner";
 import { useQuery } from "react-query";
@@ -42,17 +43,17 @@ function FacilityList() {
         refetchOnMount: false,
         enabled: false,
         onSuccess(data) {
-          const _allFacility = [...allFacility];
-          const parentIndex = _allFacility.findIndex(
-            (fac) => fac.id === selectedParentId
-          );
-          for (let i = 0; i < data.length; i++) {
-            const element = data[i];
-            if (!_allFacility.find((fac) => fac.id === element.id)) {
-              _allFacility.splice(parentIndex + i + 1, 0, element);
-            }
-          }
-          setAllFacility(_allFacility);
+          // const _allFacility = [...allFacility];
+          // const parentIndex = _allFacility.findIndex(
+          //   (fac) => fac.id === selectedParentId
+          // );
+          // for (let i = 0; i < data.length; i++) {
+          //   const element = data[i];
+          //   if (!_allFacility.find((fac) => fac.id === element.id)) {
+          //     _allFacility.splice(parentIndex + i + 1, 0, element);
+          //   }
+          // }
+          setAllFacility(data);
         },
       }
     );
@@ -134,23 +135,27 @@ function FacilityList() {
                         </TableCell>
                         <TableCell className="col-sm-2">
                           <Link to={`/facilities/info/${facility.id}`}>
-                            <button className="edit-btn">
-                              <EditIcon />
-                            </button>
+                            <Tooltip title="edit">
+                              <button className="edit-btn">
+                                <EditIcon />
+                              </button>
+                            </Tooltip>
                           </Link>
                           {facility.parentid && (
-                            <button
-                              className="edit-btn"
-                              disabled={
-                                isGetSubFacilityLoading &&
-                                facility.parentid === selectedParentId
-                              }
-                              onClick={() =>
-                                setSelectedParentId(facility.parentid)
-                              }
-                            >
-                              <MenuIcon />
-                            </button>
+                            <Tooltip title="Sub facilities">
+                              <button
+                                className="edit-btn"
+                                disabled={
+                                  isGetSubFacilityLoading &&
+                                  facility.parentid === selectedParentId
+                                }
+                                onClick={() =>
+                                  setSelectedParentId(facility.parentid)
+                                }
+                              >
+                                <MenuIcon />
+                              </button>
+                            </Tooltip>
                           )}
                         </TableCell>
                       </TableRow>

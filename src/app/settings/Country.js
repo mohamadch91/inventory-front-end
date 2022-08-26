@@ -108,7 +108,7 @@ export class Country extends Component {
       formData.append("usingtool", this.state.requiredcapacities);
       formData.append("usingmaintenance", this.state.enableMaintaining);
 
-      if (this.state.user.admin && Object.keys(this.state.country).length) {
+      if (this.state.user?.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
         UserService.editcountry(formData)
           .then((res) => {
@@ -305,10 +305,10 @@ export class Country extends Component {
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title">
+          <h1 className="page-title">
             {" "}
             <Trans>Settings</Trans>{" "}
-          </h3>
+          </h1>
         </div>
         <div className="row">
           <div className="col-12 grid-margin">
@@ -325,13 +325,13 @@ export class Country extends Component {
                 >
                   <h3 className=" card-description text-bold">
                     {" "}
-                    <Trans>Country info </Trans>
+                    <Trans>Country info</Trans>
                   </h3>
                   <div className="row">
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label control-label">
-                          <Trans> Country</Trans>
+                          <Trans>Country</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -351,11 +351,11 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Country code</Trans>
+                          <Trans>Country code</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             required
                             isInvalid={!this.isCountryCodeValid()}
                             isValid={this.isCountryCodeValid()}
@@ -376,13 +376,13 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Currency</Trans>
+                          <Trans>Currency</Trans>
                         </label>
                         <div className="col-sm-9">
                           <div className="input-group">
                             <Form.Control
                               required
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               isInvalid={!this.isCurrencyValid()}
                               isValid={this.isCurrencyValid()}
                               value={this.state.Currency}
@@ -401,14 +401,14 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Allow levels</Trans>
+                          <Trans>Allow levels</Trans>
                         </label>
                         <div
                           style={{ marginTop: "2.5%" }}
                           className="col-sm-9 "
                         >
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             required
                             onChange={(e) => {
                               this.setState({ levels: e.target.value });
@@ -421,7 +421,7 @@ export class Country extends Component {
                           />
 
                           <label className="col-sm-3 col-form-label  ">
-                            <Trans> value :</Trans> {this.state.levels}{" "}
+                            <Trans>value :</Trans> {this.state.levels}{" "}
                           </label>
                         </div>
                       </Form.Group>
@@ -443,7 +443,7 @@ export class Country extends Component {
                               onChange={(e) => {
                                 this.setState({ logo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang"
@@ -481,7 +481,7 @@ export class Country extends Component {
                               onChange={(e) => {
                                 this.setState({ slogo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang1"
@@ -509,12 +509,12 @@ export class Country extends Component {
                     <div className="col-md-6 ">
                       <Form.Group className=" row  ">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Annual Population Growth Rate</Trans>
+                          <Trans>Annual Population Growth Rate</Trans>
                         </label>
                         <div className="col-sm-9">
                           <div className="input-group ">
                             <Form.Control
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               required
                               isValid={true}
                               value={this.state.growthRate}
@@ -551,11 +551,11 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          <Trans> Enable HR</Trans>
+                          <Trans>Enable HR</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             checked={this.state.enableHR}
                             value={this.state.enableHR}
                             onChange={(e) => {
@@ -572,12 +572,12 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          <Trans> Enable Maintenance</Trans>
+                          <Trans>Enable Maintenance</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
                             checked={this.state.enableMaintaining}
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 enableMaintaining:
@@ -601,7 +601,7 @@ export class Country extends Component {
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 targetpopulation: e.target.value,
@@ -612,10 +612,10 @@ export class Country extends Component {
                             as="select"
                           >
                             <option value="General population">
-                              <Trans> General population</Trans>
+                             General population
                             </option>
                             <option value="Under-1 Population">
-                              <Trans> Under-1 Population</Trans>
+                          Under-1 Population
                             </option>
                           </Form.Control>
                         </div>
@@ -624,12 +624,12 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Require Capacity</Trans>
+                          <Trans>Require Capacity</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               const value =
                                 e.target.value === "true" ? true : false;
@@ -641,14 +641,17 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option value={true}>
-                              <Trans>
-                                {" "}
+                            <option
+                              data-i18n="[html]content.body"
+                              value={true}
+                              key="Estimate required capacity (in MS Excel)"
+                            >
+                              
                                 Estimate required capacity (in MS Excel)
-                              </Trans>
                             </option>
+
                             <option value={false}>
-                              <Trans> Enter required capacity manually</Trans>
+                            Enter required capacity manually
                             </option>
                           </Form.Control>
                         </div>
@@ -658,7 +661,7 @@ export class Country extends Component {
                   <Form.Group className="row">
                     <div className="col-md-6">
                       <label className="col-sm-3 col-form-label ">
-                        <Trans> Main Location</Trans>
+                        <Trans>Main Location</Trans>
                       </label>
                       <div className="map">
                         <Map
@@ -685,9 +688,9 @@ export class Country extends Component {
 
                   {this.state.country !== [] &&
                   this.state.country !== undefined &&
-                  this.state.user.admin ? (
+                  this.state.user?.admin ? (
                     <button type="submit" className="btn btn-primary mr-2">
-                      <Trans> Save</Trans>
+                      <Trans>Save</Trans>
                     </button>
                   ) : (
                     <button
@@ -695,7 +698,7 @@ export class Country extends Component {
                       disabled
                       className="btn btn-primary mr-2"
                     >
-                      <Trans> Save</Trans>
+                      <Trans>Save</Trans>
                     </button>
                   )}
                 </Form>

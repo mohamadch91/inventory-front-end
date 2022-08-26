@@ -13,6 +13,7 @@ import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
+import Map from './settings/Map'
 
 class App extends Component {
   constructor(props) {
@@ -67,21 +68,26 @@ class App extends Component {
     );
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
-      
-        <div className="container-scroller">
-          <Toaster />
-          {navbarComponent}
-          <div className="container-fluid page-body-wrapper">
-            {sidebarComponent}
-            <div className="main-panel">
-              <div className="content-wrapper">
-                <AppRoutes />
-                {SettingsPanelComponent}
-              </div>
-              {footerComponent}
+      <div className="container-scroller">
+        <div className="map " style={{"display":"none"}}>
+          <Map
+            loca={this.state.mainlocation}
+            handleChange={this.handlemapclick}
+          />
+        </div>
+        <Toaster />
+        {navbarComponent}
+        <div className="container-fluid page-body-wrapper">
+          {sidebarComponent}
+          <div className="main-panel">
+            <div className="content-wrapper">
+              <AppRoutes />
+              {SettingsPanelComponent}
             </div>
+            {footerComponent}
           </div>
         </div>
+      </div>
     );
   }
 
