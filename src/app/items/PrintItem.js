@@ -2,10 +2,10 @@ import * as React from "react";
 import { Col, Row } from "react-bootstrap";
 import { Trans } from "react-i18next";
 import { useReactToPrint } from "react-to-print";
-import ItemToPrint from "./FacilityToPrint";
+import ItemToPrint from "./ItemToPrint";
 import "./print.scss";
 
-const PrintFacility = () => {
+const PrintItem = () => {
   const componentRef = React.useRef(null);
 
   const onBeforeGetContentResolve = React.useRef(null);
@@ -56,4 +56,4 @@ const PrintFacility = () => {
   );
 };
 
-export default PrintFacility;
+export default PrintItem;

@@ -5,7 +5,7 @@ import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
 
-const FacilityToPrint = forwardRef((props, ref) => {
+const ItemToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,4 +65,4 @@ const FacilityToPrint = forwardRef((props, ref) => {
   );
 });
 
-export default FacilityToPrint;
+export default ItemToPrint;

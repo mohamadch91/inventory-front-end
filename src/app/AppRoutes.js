@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
+import PrintItem from "./items/PrintItem";
 
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
@@ -132,6 +133,7 @@ class AppRoutes extends Component {
 
           <Route exact path="/items/info/:id" component={Item} />
           <Route exact path="/items/list" component={ItemList} />
+          <Route exact path="/items/print" component={PrintItem} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 
