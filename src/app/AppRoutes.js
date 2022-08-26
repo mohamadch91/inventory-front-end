@@ -48,6 +48,7 @@ const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
 const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const EditLanguage = lazy(() => import("./settings/editLanguage"));
+const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
 class AppRoutes extends Component {
@@ -72,6 +73,11 @@ class AppRoutes extends Component {
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
           <Route exact path="/settings/pqs3" component={Pqs3} />
+          <Route
+            exact
+            path="/settings/reports/excel"
+            component={ReportToExcel}
+          />
           <Route
             exact
             path="/settings/language/edit"

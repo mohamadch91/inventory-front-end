@@ -155,6 +155,20 @@ class Sidebar extends Component {
                     </span>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/facilities/print")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/facilities/print"
+                  >
+                    <span>
+                      <Trans>Print Facility Form</Trans>
+                    </span>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>
@@ -207,6 +221,20 @@ class Sidebar extends Component {
                   >
                     <span>
                       <Trans>Item list</Trans>
+                    </span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/items/print")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/items/print"
+                  >
+                    <span>
+                      <Trans>Print Item Form</Trans>
                     </span>
                   </Link>
                 </li>
@@ -586,6 +614,20 @@ class Sidebar extends Component {
                       >
                         <span>
                           <Trans>Manage Help</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/settings/reports/excel")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/settings/reports/excel"
+                      >
+                        <span>
+                          <Trans>Export all data to MS Excel</Trans>
                         </span>
                       </Link>
                     </li>
