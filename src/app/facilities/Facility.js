@@ -30,7 +30,7 @@ function Facility() {
       if (id === "new")
         return {
           "parent-facility": user?.facility_id,
-          completerstaffname: user?.username,
+          completerstaffname: user?.pk,
           updated_at: new Date().toISOString().split("T")[0],
         };
 
@@ -97,7 +97,7 @@ function Facility() {
           active: false,
           disabled: true,
           required: false,
-          stateName: "parent-facility",
+          stateName: "parentid",
           params: [],
         });
       }
@@ -138,6 +138,9 @@ function Facility() {
     const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
+    if(field.stateName==='level'){
+      cloneFieldsValue[field.stateName] = parseInt(value);
+    }
     setFieldValue(cloneFieldsValue);
     //check validation and required
     const _fieldErrors = { ...fieldErrors };

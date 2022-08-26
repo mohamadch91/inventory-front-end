@@ -62,37 +62,77 @@ const GetCoordinates = (props) => {
 
 const MapWrapper = (props) => {
     const [map, setMap] = useState(null);
+    const [Current,sercurrent] = useState([])
+    const [x1, setx1] = useState(
+      parseFloat(
+        JSON.parse(localStorage.getItem("country"))
+          ["mainlocation"].split("(")[1]
+          .split(",")[0]
+      )
+    );
+    const [x2, setx2] = useState(
+      parseFloat(
+        JSON.parse(localStorage.getItem("country"))
+          ["mainlocation"].split("(")[1].split(",")[1].split(")")[0]
+      )
+    );
+
     const handl = (e)=>{
         props.handleChange(e)
         setMap(e.latlng)
     }
-  return (
-    <MapContainer
-      center={[52.22, 21.01178]}
-      zoom={13}
-      scrollWheelZoom={true}
-      //   onClick={this.handlemapclick}
-    >
-      <TileLayer
-        {...{
-          attribution:
-            '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        }}
-      />
+    useEffect(
+      ()=>{
+        const country=JSON.parse(localStorage.getItem("country"))['mainlocation']
+        console.log(country)
+        let ans=[]
+        if(country===undefined){
+          ans=[50,50]
+        }
+        else{
+          let temp=country.split("(")[1].split(",")[0]
+          let temp1 = country.split("(")[1].split(",")[1].split(")")[0];
+          ans=[temp,temp1]
+          setx1(parseFloat(temp))
+          setx2(parseFloat(temp1))
 
-      <GetCoordinates change={handl} />
-      <>
-        {map && (
-          <Marker position={map} draggable={true}>
-            <Popup position={map}>
-              Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
-            </Popup>
-          </Marker>
-        )}
-      </>
-      <LocationMarker />
-    </MapContainer>
+        }
+        console.log(ans)
+        sercurrent(ans)
+
+      },[]
+    )
+  return (
+    <>
+      {Current !== null && (
+        <MapContainer
+          center={[x1, x2]}
+          zoom={10}
+          scrollWheelZoom={true}
+          //   onClick={this.handlemapclick}
+        >
+          <TileLayer
+            {...{
+              attribution:
+                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            }}
+          />
+
+          <GetCoordinates change={handl} />
+          <>
+            {map && (
+              <Marker position={map} draggable={true}>
+                <Popup position={map}>
+                  Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
+                </Popup>
+              </Marker>
+            )}
+          </>
+          <LocationMarker />
+        </MapContainer>
+      )}
+    </>
   );
 };
 
