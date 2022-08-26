@@ -53,6 +53,9 @@ const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
 const MtnsSetting = lazy(() => import("./settings/Maintenance"));
 const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
+const MaintenanceServiceGroup = lazy(() =>
+  import("./settings/MaintenanceServiceGroup")
+);
 class AppRoutes extends Component {
   render() {
     return (
@@ -113,6 +116,11 @@ class AppRoutes extends Component {
             exact
             path="/settings/mtns_setting1"
             component={MtnsSettingService}
+          />
+          <Route
+            exact
+            path="/settings/mtns_setting2"
+            component={MaintenanceServiceGroup}
           />
 
           <Route exact path="/about-iga" component={AboutIGA} />

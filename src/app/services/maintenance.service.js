@@ -16,8 +16,20 @@ class MaintenanceService {
       params,
     });
   }
+  getMaintenanceActive(item_class, item_type) {
+    const params = { item_class, item_type };
+    return axios.get(API_URL + "active", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   postMaintenance(payload) {
     return axios.post(API_URL, payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  postMaintenanceActive(payload) {
+    return axios.post(API_URL + "active", payload, {
       headers: { Authorization: authHeader() },
     });
   }
