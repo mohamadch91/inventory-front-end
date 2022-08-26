@@ -74,6 +74,8 @@ function Facility() {
             order: 1,
             enabled: true,
             paramid: level.id,
+            minpop:level.minpop,
+            maxpop:level.maxpop
           })),
         });
         result[firstTopic].unshift({
@@ -233,7 +235,7 @@ function Facility() {
               return (
                 <Form.Group className="row mb-0" key={field.name}>
                   <label
-                    className={`col-sm-4 text-right ${
+                    className={`col-sm-4  ${
                       field.required ? "control-label" : ""
                     }`}
                     style={{
@@ -264,6 +266,27 @@ function Facility() {
                         }
                       />
                     )}
+                    <br />
+                    {field.stateName === "populationnumber" &&
+                      facilityFields["Facility general information"][2][
+                        "params"
+                      ][fieldsValue["level"] - 2] && (
+                        <p>
+                          range(
+                          {
+                            facilityFields["Facility general information"][2][
+                              "params"
+                            ][fieldsValue["level"] - 2].minpop
+                          }
+                          -{" "}
+                          {
+                            facilityFields["Facility general information"][2][
+                              "params"
+                            ][fieldsValue["level"] - 2].maxpop
+                          }
+                          )
+                        </p>
+                      )}
                   </div>
                   {hasRequiredError && (
                     <div className="row">
