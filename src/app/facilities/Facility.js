@@ -173,12 +173,13 @@ function Facility() {
 
   const handleMapClick = (e) => {
     const cloneFieldsValue = { ...fieldsValue };
-    cloneFieldsValue["gpsCordinate"] = { mainlocation: e.latlng };
+    cloneFieldsValue["gpsCordinate"] =  e.latlng ;
     setFieldValue(cloneFieldsValue);
   };
 
   return (
     <form onSubmit={onSaveHandler}>
+      
       <h3 className="page-title mb-3">
         <Trans>Facility information</Trans>
       </h3>
@@ -229,6 +230,7 @@ function Facility() {
       </div>
       <div className="mt-3">
         <div className="card">
+        
           <div className="card-body">
             {Object.values(facilityFields)[activeStep]?.map((field) => {
               if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
@@ -252,7 +254,14 @@ function Facility() {
                   </label>
                   <div className="col-sm-8">
                     {field.stateName === "gpsCordinate" ? (
-                      <div className="map h-50">
+                      <div className="map  ">
+                        <div className="mb-2">
+                          <Form.Control
+                            type="text"
+                            disabled
+                            value={fieldsValue[field.stateName]}
+                          />
+                        </div>
                         <Map
                           loca={fieldsValue[field.stateName]}
                           handleChange={handleMapClick}
@@ -265,7 +274,8 @@ function Facility() {
                         defaultValue={fieldsValue[field.stateName]}
                         separator={
                           field.stateName === "childrennumber" ||
-                          field.stateName === "loverlevelfac"
+                          field.stateName === "loverlevelfac" ||
+                          field.stateName === "populationnumber"
                         }
                       />
                     )}

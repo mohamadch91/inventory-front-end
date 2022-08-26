@@ -2,7 +2,9 @@ import { useEffect,useState } from 'react';
 import { MapContainer, useMap, TileLayer, Marker, Popup ,useMapEvents} from "react-leaflet";
 import L from 'leaflet';
 // import tileLayer from '../util/tileLayer';
-
+// import "leaflet/dist/leaflet.css";
+import './map.css'
+import "leaflet/dist/leaflet.css";
 const center = [52.22977, 21.01178];
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -16,6 +18,7 @@ function LocationMarker() {
   const map = useMapEvents({
     click() {
       map.locate();
+      map.invalidateSize();
     },
     locationfound(e) {
       setPosition(e.latlng);
@@ -36,18 +39,20 @@ const GetCoordinates = (props) => {
   useEffect(() => {
     if (!map) return;
     const info = L.DomUtil.create("div", "legend");
-
+     
     const positon = L.Control.extend({
       options: {
         position: "bottomleft",
       },
 
       onAdd: function () {
-        info.textContent = "Click on map";
+        info.textContent = "Click on map too add location";
         return info;
       },
     });
-
+    map.on("load", (e)=>{
+console.log("salam")
+    })
     map.on("click", (e) => {
         window.navigator.geolocation.getCurrentPosition(console.log, console.log);
       info.textContent = e.latlng;
@@ -103,19 +108,20 @@ const MapWrapper = (props) => {
       },[]
     )
   return (
-    <>
+    <div className="map" >
       {Current !== null && (
         <MapContainer
           center={[x1, x2]}
           zoom={10}
           scrollWheelZoom={true}
+          style={{ width: "100%", height: "450px" }}
+
           //   onClick={this.handlemapclick}
         >
           <TileLayer
             {...{
-              attribution:
-                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
               url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              width: 500,
             }}
           />
 
@@ -132,7 +138,7 @@ const MapWrapper = (props) => {
           <LocationMarker />
         </MapContainer>
       )}
-    </>
+    </div>
   );
 };
 
