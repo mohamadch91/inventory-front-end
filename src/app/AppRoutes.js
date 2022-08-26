@@ -50,6 +50,8 @@ const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const EditLanguage = lazy(() => import("./settings/editLanguage"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
+const MtnsSetting = lazy(() => import("./settings/Maintenance"));
+const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 class AppRoutes extends Component {
   render() {
     return (
@@ -99,6 +101,14 @@ class AppRoutes extends Component {
             component={NewLevelList}
           />
           <Route exact path="/settings/manage-help" component={MangeHelp} />
+
+          <Route exact path="/settings/mtns_setting" component={MtnsSetting} />
+          <Route
+            exact
+            path="/settings/mtns_setting1"
+            component={MtnsSettingService}
+          />
+
           <Route exact path="/about-iga" component={AboutIGA} />
 
           <Route exact path="/facilities/info/:id" component={Facility} />
