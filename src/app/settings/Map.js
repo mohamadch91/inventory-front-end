@@ -69,17 +69,21 @@ const MapWrapper = (props) => {
     const [map, setMap] = useState(null);
     const [Current,sercurrent] = useState([])
     const [x1, setx1] = useState(
-      parseFloat(
-        JSON.parse(localStorage.getItem("country"))
-          ["mainlocation"].split("(")[1]
-          .split(",")[0]
-      )
+      (JSON.parse(localStorage.getItem("country")) === null)
+        ? 35
+        : (JSON.parse(localStorage.getItem("country"))["mainlocation"]===undefined) ?35 :(JSON.parse(localStorage.getItem("country"))["mainlocation"]?.split("(")[1]?.split(",")[0])
     );
     const [x2, setx2] = useState(
-      parseFloat(
-        JSON.parse(localStorage.getItem("country"))
-          ["mainlocation"].split("(")[1].split(",")[1].split(")")[0]
-      )
+      JSON.parse(localStorage.getItem("country")) === null
+        ? 51
+        : JSON.parse(localStorage.getItem("country"))["mainlocation"] ===
+          undefined
+        ? 51
+        : JSON.parse(
+            localStorage
+              .getItem("country"))
+              ["mainlocation"]?.split(",")[1]?.split(")")[0]
+          
     );
 
     const handl = (e)=>{
@@ -88,19 +92,27 @@ const MapWrapper = (props) => {
     }
     useEffect(
       ()=>{
-        const country=JSON.parse(localStorage.getItem("country"))['mainlocation']
+        const country =
+          JSON.parse(localStorage.getItem("country")) === null
+            ? undefined
+            : JSON.parse(localStorage.getItem("country"))["mainlocation"];
         console.log(country)
         let ans=[]
         if(country===undefined){
           ans=[50,50]
         }
         else{
-          let temp=country.split("(")[1].split(",")[0]
-          let temp1 = country.split("(")[1].split(",")[1].split(")")[0];
-          ans=[temp,temp1]
+          console.log(country)
+          let temp=country?.split("(")[1]?.split(",")[0]
+          let temp1 = country?.split("(")[1]?.split(",")[1]?.split(")")[0];
+          if(temp===undefined || temp1===undefined){
+            setx1(35)
+            setx2(51)
+          }
+          else{
           setx1(parseFloat(temp))
           setx2(parseFloat(temp1))
-
+          }
         }
         console.log(ans)
         sercurrent(ans)
@@ -108,36 +120,38 @@ const MapWrapper = (props) => {
       },[]
     )
   return (
-    <div className="map" >
-      {Current !== null && (
-        <MapContainer
-          center={[x1, x2]}
-          zoom={10}
-          scrollWheelZoom={true}
-          style={{ width: "100%", height: "450px" }}
+    <div className="map">
+      {Current !== null &&
+        x1 &&
+        x2&& (
+          <MapContainer
+            center={[x1, x2]}
+            zoom={10}
+            scrollWheelZoom={true}
+            style={{ width: "100%", height: "450px" }}
 
-          //   onClick={this.handlemapclick}
-        >
-          <TileLayer
-            {...{
-              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              width: 500,
-            }}
-          />
+            //   onClick={this.handlemapclick}
+          >
+            <TileLayer
+              {...{
+                url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                width: 500,
+              }}
+            />
 
-          <GetCoordinates change={handl} />
-          <>
-            {map && (
-              <Marker position={map} draggable={true}>
-                <Popup position={map}>
-                  Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
-                </Popup>
-              </Marker>
-            )}
-          </>
-          <LocationMarker />
-        </MapContainer>
-      )}
+            <GetCoordinates change={handl} />
+            <>
+              {map && (
+                <Marker position={map} draggable={true}>
+                  <Popup position={map}>
+                    Current location: <pre>{JSON.stringify(map, null, 2)}</pre>
+                  </Popup>
+                </Marker>
+              )}
+            </>
+            <LocationMarker />
+          </MapContainer>
+        )}
     </div>
   );
 };

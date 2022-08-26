@@ -108,7 +108,7 @@ export class Country extends Component {
       formData.append("usingtool", this.state.requiredcapacities);
       formData.append("usingmaintenance", this.state.enableMaintaining);
 
-      if (this.state.user.admin && Object.keys(this.state.country).length) {
+      if (this.state.user?.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
         UserService.editcountry(formData)
           .then((res) => {
@@ -355,7 +355,7 @@ export class Country extends Component {
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             required
                             isInvalid={!this.isCountryCodeValid()}
                             isValid={this.isCountryCodeValid()}
@@ -382,7 +382,7 @@ export class Country extends Component {
                           <div className="input-group">
                             <Form.Control
                               required
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               isInvalid={!this.isCurrencyValid()}
                               isValid={this.isCurrencyValid()}
                               value={this.state.Currency}
@@ -408,7 +408,7 @@ export class Country extends Component {
                           className="col-sm-9 "
                         >
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             required
                             onChange={(e) => {
                               this.setState({ levels: e.target.value });
@@ -443,7 +443,7 @@ export class Country extends Component {
                               onChange={(e) => {
                                 this.setState({ logo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang"
@@ -481,7 +481,7 @@ export class Country extends Component {
                               onChange={(e) => {
                                 this.setState({ slogo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang1"
@@ -514,7 +514,7 @@ export class Country extends Component {
                         <div className="col-sm-9">
                           <div className="input-group ">
                             <Form.Control
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               required
                               isValid={true}
                               value={this.state.growthRate}
@@ -555,7 +555,7 @@ export class Country extends Component {
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             checked={this.state.enableHR}
                             value={this.state.enableHR}
                             onChange={(e) => {
@@ -577,7 +577,7 @@ export class Country extends Component {
                         <div className="col-sm-7">
                           <Form.Check
                             checked={this.state.enableMaintaining}
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 enableMaintaining:
@@ -601,7 +601,7 @@ export class Country extends Component {
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 targetpopulation: e.target.value,
@@ -629,7 +629,7 @@ export class Country extends Component {
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               const value =
                                 e.target.value === "true" ? true : false;
@@ -688,7 +688,7 @@ export class Country extends Component {
 
                   {this.state.country !== [] &&
                   this.state.country !== undefined &&
-                  this.state.user.admin ? (
+                  this.state.user?.admin ? (
                     <button type="submit" className="btn btn-primary mr-2">
                       <Trans>Save</Trans>
                     </button>
