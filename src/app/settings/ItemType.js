@@ -167,7 +167,7 @@ function ItemType() {
           <div className="mb-4">
             <div className="mb-2">
               <h4 className="page-title">
-                <Trans>Item class</Trans>
+                <Trans>Item class Filter to list categories</Trans>
               </h4>
             </div>
             <div className="">

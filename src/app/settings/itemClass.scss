@@ -1,5 +1,10 @@
 .item-class-page {
-  h3 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: black;
   }
   label {
@@ -12,7 +17,6 @@
   th {
     background: rgb(40, 136, 254);
     color: white;
-    
   }
   tr:nth-child(even) {
     background: #ffffff;
@@ -43,7 +47,6 @@
   th {
     background: rgb(40, 136, 254);
     color: white;
-    
   }
   tr:nth-child(even) {
     background: #ffffff;
@@ -78,19 +81,19 @@
   }
 }
 .tableFixHead {
-      table-layout: fixed;
-      border-collapse: collapse;
-    }
-      .tableFixHead tbody {
-      display: block;
-      overflow: auto;
-      height: 300px;
-    }
-    .tableFixHead thead tr {
-      display: block;
-    }
-    .tableFixHead th,
-    .tableFixHead  td {
-      padding: 5px 10px;
-      width: 150px;
-    }
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.tableFixHead tbody {
+  display: block;
+  overflow: auto;
+  height: 300px;
+}
+.tableFixHead thead tr {
+  display: block;
+}
+.tableFixHead th,
+.tableFixHead td {
+  padding: 5px 10px;
+  width: 150px;
+}

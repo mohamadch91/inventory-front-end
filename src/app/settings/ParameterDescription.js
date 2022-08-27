@@ -129,18 +129,21 @@ function ParameterDescription() {
 
   return (
     <div className="item-class-page-param">
-      <h2 className="page-title mb-3"><Trans>
-        {id?.split("-")[0]}</Trans><Trans>Parameter Descriptions</Trans>
+      <h2 className="page-title mb-3">
+        <Trans>{id?.split("-")[0]}</Trans>
+        <Trans>Parameter Descriptions</Trans>
       </h2>
-      <h3 className="page-title mb-3">
-         {paramName}
-      </h3>
+      <h3 className="mb-3">{paramName}</h3>
       <div className="add-row mt-4 mb-4">
-        <h3><Trans>Insert parameter In this row!</Trans></h3>
+        <h3>
+          <Trans>Insert parameter In this row!</Trans>
+        </h3>
         <form onSubmit={handleSubmitNew}>
           <div className="row">
             <div className="col-md-4 flex-column d-flex">
-              <label><Trans>Parameter description</Trans></label>
+              <label>
+                <Trans>Parameter description</Trans>
+              </label>
               <input
                 name="name"
                 type="text"
@@ -150,7 +153,9 @@ function ParameterDescription() {
               ></input>
             </div>
             <div className="col-md-4 flex-column d-flex">
-              <label><Trans>Show order</Trans></label>
+              <label>
+                <Trans>Show order</Trans>
+              </label>
               <input
                 name="order"
                 type="number"
@@ -160,7 +165,9 @@ function ParameterDescription() {
               ></input>
             </div>
             <div className="col-md-4 d-flex justify-content-center align-items-center">
-              <label><Trans>Enable</Trans></label>
+              <label>
+                <Trans>Enable</Trans>
+              </label>
               <input
                 name="enabled"
                 className="mr-4"
@@ -174,7 +181,7 @@ function ParameterDescription() {
                 checked={addRowFormData?.enabled}
               ></input>
               <button className="save-btn" type="submit">
-              <Trans>Save</Trans>
+                <Trans>Save</Trans>
               </button>
             </div>
           </div>
@@ -188,10 +195,18 @@ function ParameterDescription() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell><Trans>Description</Trans></TableCell>
-                  <TableCell><Trans>Show order</Trans></TableCell>
-                  <TableCell><Trans>Enable</Trans></TableCell>
-                  <TableCell><Trans>Edit</Trans></TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Show order</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Enable</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -255,7 +270,7 @@ function ParameterDescription() {
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                         <Trans>Save</Trans>
+                            <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"
