@@ -18,7 +18,7 @@ export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {
   for (const key in relatedFields) {
     const fields = relatedFields[key];
     if (fields.indexOf(currentFieldStateName) >= 0) {
-      if(key===is_suitable){
+      if(key==="is_suitable"){
         return !fieldsValue[key]
       }
       return fieldsValue[key];
