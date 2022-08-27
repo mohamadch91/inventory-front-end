@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-const numericKeys = "0123456789";
+const numericKeys = "0123456789.:";
 const DynamicInput = (props) => {
   const { field, onChangeHandler, defaultValue, separator } = props;
   if (field.type === "select") {
@@ -55,7 +55,6 @@ const DynamicInput = (props) => {
       value={defaultValue}
       className="form-control"
       id={`field-${field.id}`}
-      type={separator ? "text" : field.type}
       disabled={field.active ? !field.active : field.disabled}
       min={validation && validation?.min !== -1 ? validation.min : undefined}
       max={validation && validation?.max !== -1 ? validation.max : undefined}
@@ -73,7 +72,6 @@ const DynamicInput = (props) => {
           const formatted = e.target.value
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-          console.log(formatted);
           onChangeHandler(formatted, field);
         }
       }}

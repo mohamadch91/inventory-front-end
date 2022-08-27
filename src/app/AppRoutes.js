@@ -19,6 +19,7 @@ const Mdi = lazy(() => import("./icons/Mdi"));
 
 const ChartJs = lazy(() => import("./charts/ChartJs"));
 
+const Error403 = lazy(() => import("./error-pages/Error403"));
 const Error404 = lazy(() => import("./error-pages/Error404"));
 const Error500 = lazy(() => import("./error-pages/Error500"));
 
@@ -155,6 +156,7 @@ class AppRoutes extends Component {
           <Route path="/login" component={Login} />
           <Route path="/user-pages/register-1" component={Register1} />
 
+          <Route path="/error-pages/error-403" component={Error403} />
           <Route path="/error-pages/error-404" component={Error404} />
           <Route path="/error-pages/error-500" component={Error500} />
 
