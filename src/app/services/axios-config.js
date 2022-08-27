@@ -4,41 +4,21 @@ import { responseMessages } from "../constants/response-messages";
 
 const ApiManager = axios.create({});
 
-ApiManager.interceptors.request.use(async (request) => {
-  if (request.method !== "get")
-    request.headers["xId"] = toast.loading("loading...");
-  return request;
-});
-
 ApiManager.interceptors.response.use(
   (response) => {
-    const toastId = response.config.headers?.xId;
-    if (toastId) {
+    if (response.config.method !== "get") {
       const message =
         responseMessages[response.status]?.fa || responseMessages.success.fa;
-
-      toast.success(message, {
-        id: toastId,
-      });
+      toast.success(message);
     }
     return response;
   },
   (error) => {
     const { response } = error;
+    const message =
+      responseMessages[response.status]?.fa || responseMessages.failed.fa;
+    toast.error(message);
 
-    if (response) {
-      const toastId = response.config.headers?.xId;
-      if (toastId) {
-        const message =
-          responseMessages[response.status]?.fa || responseMessages.failed.fa;
-
-        toast.error(message, {
-          id: toastId,
-        });
-      }
-    } else {
-      toast.remove();
-    }
     return Promise.reject(error);
   }
 );

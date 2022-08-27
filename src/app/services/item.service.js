@@ -1,4 +1,4 @@
-import axios from "axios";
+import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
 const API_URL = "http://5.182.47.38:8001/item/";
@@ -9,19 +9,19 @@ class ItemService {
     if (id) {
       params.id = id;
     }
-    return axios.get(API_URL, {
+    return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,
     });
   }
   getItemClassesAndTypes() {
-    return axios.get(API_URL + "item-field", {
+    return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },
     });
   }
   getPQS(id) {
     const params = { id };
-    return axios.get(API_URL + "itempqs", {
+    return ApiManager.get(API_URL + "itempqs", {
       headers: { Authorization: authHeader() },
       params,
     });
@@ -31,18 +31,18 @@ class ItemService {
       class_id,
       type_id,
     };
-    return axios.get(API_URL + "item-field", {
+    return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },
       params,
     });
   }
   postItem(payload) {
-    return axios.post(API_URL, payload, {
+    return ApiManager.post(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
   }
   putItem(payload) {
-    return axios.put(API_URL, payload, {
+    return ApiManager.put(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
   }

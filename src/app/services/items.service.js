@@ -1,4 +1,3 @@
-import axios from "axios";
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
@@ -6,40 +5,40 @@ const API_URL = "http://5.182.47.38:8001/items/";
 
 class ItemService {
   getItemClasses() {
-    return axios.get(API_URL + "itemClass", {
+    return ApiManager.get(API_URL + "itemClass", {
       headers: { Authorization: authHeader() },
     });
   }
   getActiveItemClasses() {
-    return axios.get(API_URL + "class-helper", {
+    return ApiManager.get(API_URL + "class-helper", {
       headers: { Authorization: authHeader() },
     });
   }
   putItemClass(data) {
     // change item class
-    return axios.put(API_URL + "itemClass", data, {
+    return ApiManager.put(API_URL + "itemClass", data, {
       headers: { Authorization: authHeader() },
     });
   }
   getItemTypes() {
-    return axios.get(API_URL + "itemType", {
+    return ApiManager.get(API_URL + "itemType", {
       headers: { Authorization: authHeader() },
     });
   }
   postItemType(data) {
     // add item category
-    return axios.post(API_URL + "itemType", data, {
+    return ApiManager.post(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
   }
   putItemTypes(data) {
     // change item category
-    return axios.put(API_URL + "itemType", data, {
+    return ApiManager.put(API_URL + "itemType", data, {
       headers: { Authorization: authHeader() },
     });
   }
   getItemTypesOfItemClass(itemClassId) {
-    return axios.get(API_URL + "itembyclass?id=" + itemClassId, {
+    return ApiManager.get(API_URL + "itembyclass?id=" + itemClassId, {
       headers: { Authorization: authHeader() },
     });
   }
@@ -48,7 +47,7 @@ class ItemService {
     if (itemClassId) {
       params["id"] = itemClassId;
     }
-    return axios.get(API_URL + "itembyclass", {
+    return ApiManager.get(API_URL + "itembyclass", {
       headers: { Authorization: authHeader() },
       params,
     });
@@ -58,28 +57,28 @@ class ItemService {
     if (level) {
       params["level"] = level;
     }
-    return axios.get(API_URL + "itemTinLevels", {
+    return ApiManager.get(API_URL + "itemTinLevels", {
       headers: { Authorization: authHeader() },
       params,
     });
   }
   putItemTypeInClass(payload) {
-    return axios.put(API_URL + "itemTinLevels", payload, {
+    return ApiManager.put(API_URL + "itemTinLevels", payload, {
       headers: { Authorization: authHeader() },
     });
   }
   getManufacturers(id) {
-    return axios.get(API_URL + "manufacturer?id=" + id, {
+    return ApiManager.get(API_URL + "manufacturer?id=" + id, {
       headers: { Authorization: authHeader() },
     });
   }
   postManufacturer(data) {
-    return axios.post(API_URL + "manufacturer", data, {
+    return ApiManager.post(API_URL + "manufacturer", data, {
       headers: { Authorization: authHeader() },
     });
   }
   putManufacturer(data) {
-    return axios.put(API_URL + "manufacturer", data, {
+    return ApiManager.put(API_URL + "manufacturer", data, {
       headers: { Authorization: authHeader() },
     });
   }
