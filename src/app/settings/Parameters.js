@@ -46,9 +46,6 @@ function Parameters() {
                   <TableCell>
                     <Trans>Description</Trans>
                   </TableCell>
-                  <TableCell>
-                    <Trans>Show order</Trans>
-                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -57,10 +54,9 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/facility-${item.id}`}>
-                          {item.name}
+                          {item.name} ({item.description})
                         </Link>
                       </TableCell>
-                      <TableCell>{item.order}</TableCell>
                     </TableRow>
                   </>
                 ))}
@@ -77,9 +73,6 @@ function Parameters() {
                   <TableCell>
                     <Trans>Description</Trans>
                   </TableCell>
-                  <TableCell>
-                    <Trans>Show order</Trans>
-                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -88,10 +81,9 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/type-${item.id}`}>
-                          {item.name}
+                          {item.name} ({item.description})
                         </Link>
                       </TableCell>
-                      <TableCell>{item.order}</TableCell>
                     </TableRow>
                   </>
                 ))}

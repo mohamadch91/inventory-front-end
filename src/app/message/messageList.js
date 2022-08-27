@@ -106,7 +106,7 @@ function MessageList() {
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-3 d-flex align-items-center">
-              <h4 className="page-title">
+              <h4>
                 <Trans>Received or Sent messages</Trans>
               </h4>
             </div>
