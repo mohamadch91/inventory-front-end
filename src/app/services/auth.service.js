@@ -48,7 +48,6 @@ class AuthService {
             if (country === undefined) {
               country = {};
             }
-            console.log(country);
             user.id = res.data.User.pk;
             user.admin = res.data.User.is_superuser;
             user.name = res.data.User.name;

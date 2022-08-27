@@ -38,8 +38,8 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
-  getItemClassesOfAnItemType(itemTypeId) {
-    return axios.get(API_URL + "itembyclass?id=" + itemTypeId, {
+  getItemTypesOfItemClass(itemClassId) {
+    return axios.get(API_URL + "itembyclass?id=" + itemClassId, {
       headers: { Authorization: authHeader() },
     });
   }

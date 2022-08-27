@@ -5,17 +5,22 @@ textarea {
   border: 1px solid #ababab70;
   border-radius: 5px;
   padding: 0.5rem;
+
   &:invalid:focus {
     border-color: #ff0000;
   }
 }
+
 textarea {
   height: 10rem;
 }
+
 label {
   color: black;
 }
+
 .multi-select {
+
   button,
   label {
     margin-top: 0 !important;

@@ -27,7 +27,6 @@ i18n
         cache: "no-store",
       },
     },
-    debug: true,
   });
 
 export default i18n;

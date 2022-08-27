@@ -46,7 +46,6 @@ class Navbar extends Component {
     ru: "Русский",
   };
   render() {
-    console.log(i18n.language);
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">

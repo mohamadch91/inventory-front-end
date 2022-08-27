@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
+import PrintItem from "./items/PrintItem";
 
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 
@@ -44,12 +45,19 @@ const UsersList = lazy(() => import("./user/usersList"));
 const AboutIGA = lazy(() => import("./about-iga"));
 const Facility = lazy(() => import("./facilities/Facility"));
 const FacilityList = lazy(() => import("./facilities/FacilityList"));
+const PrintFacility = lazy(() => import("./facilities/PrintFacility"));
 const NewMessage = lazy(() => import("./message/newMessage"));
 const MessageList = lazy(() => import("./message/messageList"));
 const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
 const EditLanguage = lazy(() => import("./settings/editLanguage"));
+const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
+const MtnsSetting = lazy(() => import("./settings/Maintenance"));
+const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
+const MaintenanceServiceGroup = lazy(() =>
+  import("./settings/MaintenanceServiceGroup")
+);
 class AppRoutes extends Component {
   render() {
     return (
@@ -72,6 +80,11 @@ class AppRoutes extends Component {
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
           <Route exact path="/settings/pqs3" component={Pqs3} />
+          <Route
+            exact
+            path="/settings/reports/excel"
+            component={ReportToExcel}
+          />
           <Route
             exact
             path="/settings/language/edit"
@@ -99,13 +112,28 @@ class AppRoutes extends Component {
             component={NewLevelList}
           />
           <Route exact path="/settings/manage-help" component={MangeHelp} />
+
+          <Route exact path="/settings/mtns_setting" component={MtnsSetting} />
+          <Route
+            exact
+            path="/settings/mtns_setting1"
+            component={MtnsSettingService}
+          />
+          <Route
+            exact
+            path="/settings/mtns_setting2"
+            component={MaintenanceServiceGroup}
+          />
+
           <Route exact path="/about-iga" component={AboutIGA} />
 
           <Route exact path="/facilities/info/:id" component={Facility} />
           <Route exact path="/facilities/list" component={FacilityList} />
+          <Route exact path="/facilities/print" component={PrintFacility} />
 
           <Route exact path="/items/info/:id" component={Item} />
           <Route exact path="/items/list" component={ItemList} />
+          <Route exact path="/items/print" component={PrintItem} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 
