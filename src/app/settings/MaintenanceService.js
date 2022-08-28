@@ -192,6 +192,8 @@ function MaintenanceServiceComponent() {
               </label>
               <div className="col-sm-8">
                 <Form.Control
+                  type="number"
+                  min="0"
                   onChange={(e) => {
                     e.persist();
                     setSelectedToEdit((preState) => ({
@@ -217,6 +219,8 @@ function MaintenanceServiceComponent() {
               </label>
               <div className="col-sm-8">
                 <Form.Control
+                  type="number"
+                  min={1}
                   onChange={(e) => {
                     e.persist();
                     setSelectedToEdit((preState) => ({

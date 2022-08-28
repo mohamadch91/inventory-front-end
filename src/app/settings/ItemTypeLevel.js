@@ -18,8 +18,8 @@ function ItemTypeLevel() {
     useQuery(
       ["active-item-classes-with-item-type"],
       async () => {
-        const res = await ItemService.getItemClassesAndTypes();
-        return res.data.filter((item) => item.item_type.length !== 0);
+        const res = await ItemsService.getActiveItemClassesWithFields();
+        return res.data;
       },
       {
         onSuccess(data) {

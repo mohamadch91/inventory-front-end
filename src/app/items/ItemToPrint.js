@@ -135,14 +135,23 @@ const FacilityToPrint = forwardRef((props, ref) => {
                 <Row>
                   {data?.map((item, index) => (
                     <>
-                      <Col md={6}>
+                      <div style={{"width":"50%"}} md={6}>
                         <h6>{item.field.name}</h6>
-                        <div className="box mb-3">
+                        <div style={{ "border" : "gray 1px solid",
+    "padding": "1rem",
+    "border-radius": "5px",
+    "marginButtom":"5px"}} className="box mb-3">
                           {item.field.params.map((param) => (
-                            <div className="param">
-                              <span>{param.name}</span>
+                            <div style={{ "display": "inline-block"}} className="param">
+                              <span style={{"color" :"blue"}}>{param.name? param.name :param.describe}</span>
                               <input
-                                className="m-1 mr-3"
+                              style={{ "Background": "white",
+  "Border" :"1px solid #ababab70",
+  "BorderRadius": "5px",
+  "Padding": "0.5rem",
+  "marginRight":"5px"
+}}
+                                className=""
                                 type="checkbox"
                                 checked={param.active}
                                 disabled
@@ -150,7 +159,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
                             </div>
                           ))}
                         </div>
-                      </Col>
+                      </div>
                     </>
                   ))}
                 </Row>

@@ -20,7 +20,8 @@ const facilityField = {
   type: "text",
   active: false,
   disabled: true,
-  state: "facility-name",
+  state: "facility",
+  name:""
 };
 
 function Item() {
@@ -37,13 +38,13 @@ function Item() {
     ["item-default-value", id],
     async () => {
       const defaultData = {
-        code: "uniq code",
+        code: "uniqe code",
       };
 
       if (id === "new") return defaultData;
 
       const res = await ItemService.getItems(id);
-      return { ...res.data[0], ...defaultData };
+      return { ...res.data[1], ...defaultData };
     },
     {
       refetchOnMount: true,
@@ -58,7 +59,12 @@ function Item() {
       ["item-classes-and-types"],
       async () => {
         const res = await ItemService.getItemClassesAndTypes();
-        return res.data.filter((item) => item.item_type.length > 0);
+        // facilityField.name=res.data.facility.name
+        // facilityField.id=res.data.facility.id
+        // const cloneFieldsValue = { ...fieldsValue };
+        // cloneFieldsValue['facility'] = res.data.facility.id;
+        // setFieldValue(cloneFieldsValue);
+        return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
         refetchOnMount: true,
@@ -291,7 +297,7 @@ function Item() {
                 <div className={"col-sm-8"}>
                   <DynamicInput
                     field={facilityField}
-                    defaultValue={fieldsValue["facility-name"]}
+                    defaultValue={facilityField["name"]}
                   />
                 </div>
               </Form.Group>

@@ -28,6 +28,7 @@ function ParameterDescription() {
   function getData(type, id) {
     RelatedService.getParameterDescriptions(id, type)
       .then((res) => {
+        console.log(res.data)
         setDescriptions(res.data["description"]);
         setParamName(res.data["name"]);
         setIsLoading(false);
