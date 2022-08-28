@@ -355,7 +355,7 @@ function Item() {
                         lineHeight: "1.4",
                       }}
                     >
-                      <Trans>Item Type</Trans>
+                      <Trans>Item Category</Trans>
                     </label>
                     <div className="col-sm-6">
                       <Form.Control
