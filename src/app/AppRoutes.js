@@ -64,7 +64,7 @@ class AppRoutes extends Component {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
 
           <Route exact path="/hr/list" component={HRList} />
 
@@ -153,7 +153,7 @@ class AppRoutes extends Component {
 
           <Route path="/charts/chart-js" component={ChartJs} />
 
-          <Route path="/login" component={Login} />
+          <Route path="/" component={Login} />
           <Route path="/user-pages/register-1" component={Register1} />
 
           <Route path="/error-pages/error-403" component={Error403} />

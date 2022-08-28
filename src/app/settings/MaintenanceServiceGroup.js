@@ -57,6 +57,7 @@ function MaintenanceServiceGroup() {
         selectedItemClassAndItemTypes?.item_class.id,
         selectedItemType?.id
       );
+      console.log(res.data)
       return res.data;
     },
     { enabled: false }
@@ -234,7 +235,7 @@ function MaintenanceServiceGroup() {
                       return (
                         <TableRow key={field.id}>
                           <TableCell className="col-sm-9">
-                            {field.maintance.name}
+                            {field.maintance?.name}
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <input

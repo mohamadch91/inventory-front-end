@@ -176,7 +176,7 @@ function FieldsFacility() {
                             <Trans>Enable</Trans>
                           </TableCell>
                           <TableCell className="col-sm-4">
-                            <Trans>Is this required field for</Trans> <Trans>item category?</Trans>
+                            <Trans>Is this required field for</Trans> <Trans> facility?</Trans>
                           </TableCell>
                           <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
                         </TableRow>

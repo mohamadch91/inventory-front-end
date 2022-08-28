@@ -63,7 +63,7 @@ function Parameters() {
               </TableBody>
             </SharedTable>
           </div>
-          <h2 className="page-title-param text-left mb-3 mt-5">
+          <h2 className="page-title text-left mb-3 mt-5">
             <Trans>Item</Trans>:
           </h2>
           <div>

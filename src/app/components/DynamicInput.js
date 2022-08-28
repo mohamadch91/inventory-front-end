@@ -1,5 +1,6 @@
 import { Form } from "react-bootstrap";
 const numericKeys = "0123456789.:";
+const num1 = "0123456789";
 const DynamicInput = (props) => {
   const { field, onChangeHandler, defaultValue, separator } = props;
   if (field.type === "select") {
@@ -44,10 +45,17 @@ const DynamicInput = (props) => {
       onKeyPress={(e) => {
         e.persist();
         if (field.type === "number") {
-          if (numericKeys.indexOf(e.key) === -1) {
-            e.preventDefault();
-            return;
-          }
+          if (validation && validation?.float){
+            if (numericKeys.indexOf(e.key) === -1) {
+              e.preventDefault();
+              return;
+            }}
+          else if(validation && validation?.float===false){
+            if (num1.indexOf(e.key) === -1) {
+              e.preventDefault();
+              return;
+            }
+          }  
         }
         onChangeHandler(e.target.value, field);
       }}
@@ -71,7 +79,7 @@ const DynamicInput = (props) => {
         if (separator) {
           const formatted = e.target.value
             .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
           onChangeHandler(formatted, field);
         }
       }}
