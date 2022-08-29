@@ -7,7 +7,7 @@ import ItemsService from "../services/items.service.js";
 import Spinner from "../shared/Spinner";
 import "../styles/inputs.scss";
 
-const FacilityToPrint = forwardRef((props, ref) => {
+const ItemToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [itemClasses, setItemClasses] = useState([]);
@@ -140,13 +140,13 @@ const FacilityToPrint = forwardRef((props, ref) => {
                         <div className="box mb-3">
                           {item.field.params.map((param) => (
                             <div className="param">
-                              <span>{param.name}</span>
                               <input
-                                className="m-1 mr-3"
+                                className="m-1"
                                 type="checkbox"
-                                checked={param.active}
+                                checked={false}
                                 disabled
                               />
+                              <span className="mr-3">{param.name}</span>
                             </div>
                           ))}
                         </div>
@@ -163,4 +163,4 @@ const FacilityToPrint = forwardRef((props, ref) => {
   );
 });
 
-export default FacilityToPrint;
+export default ItemToPrint;

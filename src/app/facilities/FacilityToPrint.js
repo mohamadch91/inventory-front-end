@@ -5,7 +5,7 @@ import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
 
-const ItemToPrint = forwardRef((props, ref) => {
+const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,6 +31,14 @@ const ItemToPrint = forwardRef((props, ref) => {
       ) : (
         <div ref={ref}>
           <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <h4>{window.location.origin}</h4>
+              </div>
+              <div className="col-md-6">
+                <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
+              </div>
+            </div>
             <h2 className="mb-4">
               <Trans>Facility information:</Trans>
             </h2>
@@ -43,13 +51,13 @@ const ItemToPrint = forwardRef((props, ref) => {
                       <div className="box mb-3">
                         {item.params.map((param) => (
                           <div className="param">
-                            <span>{param.name}</span>
                             <input
-                              className="m-1 mr-3"
+                              className="m-1"
                               type="checkbox"
-                              checked={param.enabled}
+                              checked={false}
                               disabled
                             />
+                            <span className="mr-3">{param.name}</span>
                           </div>
                         ))}
                       </div>
@@ -65,4 +73,4 @@ const ItemToPrint = forwardRef((props, ref) => {
   );
 });
 
-export default ItemToPrint;
+export default FacilityToPrint;
