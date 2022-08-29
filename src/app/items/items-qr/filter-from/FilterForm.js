@@ -2,6 +2,7 @@ import React from "react";
 import FilterFormDD from "./FilterFormDD";
 import FilterFormCheckbox from "./FilterFormCheckbox";
 import FilterFormYearsInput from "./FilterFormYearsInput";
+import FilterFromTextInput from "./FilterFromTextInput";
 
 const dummyOptions = [
   {
@@ -21,14 +22,20 @@ const FilterForm = () => {
         <FilterFormDD label={"Main Facility"} options={dummyOptions} />
         <FilterFormDD label={"Item type"} options={dummyOptions} />
         <FilterFormDD label={"Item class"} options={dummyOptions} />
+        <FilterFormDD label={"Working status"} options={dummyOptions} />
+        <FilterFormDD label={"Physical condition"} options={dummyOptions} />
       </div>
 
       <div className="col-sm-3  ml-5">
-        <FilterFormCheckbox label={"Is functioning"} />
-        <FilterFormCheckbox label={"Working"} />
-        <FilterFormCheckbox label={"Good physical condition"} />
-        <hr className="my-3" />
         <FilterFormYearsInput />
+        <hr className="my-1" />
+        <FilterFromTextInput />
+        <hr className="my-1" />
+        <FilterFormCheckbox label={"Is functioning"} />
+
+        <button type="button" className="btn btn-primary btn-fw mt-3 w-75">
+          Search QR code
+        </button>
       </div>
     </div>
   );

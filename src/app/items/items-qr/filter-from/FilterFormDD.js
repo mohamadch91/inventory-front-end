@@ -31,6 +31,7 @@ const FilterFormDD = (props) => {
           as="select"
           value={value}
         >
+          <option value="-1"> Please select </option>
           {props.options.map((el) => {
             return <option value={el.id}>{el.name}</option>;
           })}
