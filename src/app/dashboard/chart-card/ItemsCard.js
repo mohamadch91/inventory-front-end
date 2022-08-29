@@ -7,6 +7,7 @@ import { getItemsAndTypes } from "../dashboard-api";
 import useHttp from "../../shared/custom-hooks/use-http";
 
 import classes from "./ItemCard.module.css";
+import toast from "react-hot-toast";
 
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
@@ -14,7 +15,7 @@ const ItemsCard = () => {
   const [chartData, setChartData] = useState({ workings: 0, totalItems: 0 });
 
   // api call to get items and types
-  const { sendRequest, status, data, err } = useHttp(getItemsAndTypes);
+  const { sendRequest, status, data, error: err } = useHttp(getItemsAndTypes);
 
   useEffect(() => {
     sendRequest();
@@ -29,9 +30,10 @@ const ItemsCard = () => {
       </div>
     );
   }
-  // TODO: add ERR css
+  // TODO: Remove error message at production
   if (err) {
-    return <div>{err}</div>;
+    toast.error("There was a problem loading data");
+    return <p>{err}</p>;
   }
 
   // ----------- Feeding to app

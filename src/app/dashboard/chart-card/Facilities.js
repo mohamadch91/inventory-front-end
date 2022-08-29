@@ -5,12 +5,13 @@ import classes from "./Facilities.module.css";
 import Card from "../../shared/UI/Card";
 import useHttp from "../../shared/custom-hooks/use-http";
 import { getFacilities } from "../dashboard-api";
+import toast from "react-hot-toast";
 
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState({ defined: 0, subFacilities: 0 });
 
-  const { sendRequest, status, data, err } = useHttp(getFacilities);
+  const { sendRequest, status, data, error: err } = useHttp(getFacilities);
 
   useEffect(() => {
     sendRequest();
@@ -25,9 +26,11 @@ const Facilities = () => {
       </div>
     );
   }
-  // TODO: add ERR css
+
+  // TODO: Remove error message at production
   if (err) {
-    return <div>{err}</div>;
+    toast.error("There was a problem loading data");
+    return <p>{err}</p>;
   }
 
   if (status === "completed" && facilities.length === 0) {

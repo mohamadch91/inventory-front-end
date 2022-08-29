@@ -4,9 +4,10 @@ import SubFacilitiesTable from "./sub-facilities/SubFacilitiesTable";
 import useHttp from "../../shared/custom-hooks/use-http";
 import { getTablesData } from "../dashboard-api";
 import LevelsTable from "./level/LevelsTable";
+import toast from "react-hot-toast";
 
 const DashboardTables = () => {
-  const { sendRequest, status, data, err } = useHttp(getTablesData);
+  const { sendRequest, status, data, error: err } = useHttp(getTablesData);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
@@ -20,9 +21,11 @@ const DashboardTables = () => {
       </div>
     );
   }
-  // TODO: add ERR css
+  console.log("error object", err);
+  // TODO: Remove error message at production
   if (err) {
-    return <div>{err}</div>;
+    toast.error("There was a problem loading data");
+    return <p>{err}</p>;
   }
 
   if (status === "completed" && !dataLoaded) {
