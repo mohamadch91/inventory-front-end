@@ -46,6 +46,12 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+
+  getQrHelper() {
+    return ApiManager.get(API_URL + "qr/helper", {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ItemService();

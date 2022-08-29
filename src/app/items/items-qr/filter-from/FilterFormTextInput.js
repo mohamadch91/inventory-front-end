@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-const FilterFromTextInput = () => {
+const FilterFormTextInput = (props) => {
   return (
     <Form.Group className="ml-2">
       <label className="py-2"> Item Code </label>
@@ -11,9 +11,10 @@ const FilterFromTextInput = () => {
         className="form-control mt-2 "
         placeholder="12345..."
         aria-label="from-year"
+        onChange={props.onChange}
       />
     </Form.Group>
   );
 };
 
-export default FilterFromTextInput;
+export default FilterFormTextInput;

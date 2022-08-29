@@ -11,6 +11,7 @@ const FilterFormYearsInput = (props) => {
         className="form-control col-sm-3 mt-2 ml-3"
         placeholder="from"
         aria-label="from-year"
+        onChange={props.onFromChange}
       />
       <Form.Control
         style={{ width: "30%" }}
@@ -18,6 +19,7 @@ const FilterFormYearsInput = (props) => {
         className="form-control mt-2 col-sm-3 ml-3"
         placeholder="to"
         aria-label="from-year"
+        onChange={props.onToChange}
       />
     </Form.Group>
   );

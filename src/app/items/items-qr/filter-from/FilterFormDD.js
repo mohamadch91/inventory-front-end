@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 import { Trans } from "react-i18next";
 
@@ -12,10 +12,8 @@ const labelStyle = {
 // Options come from props.
 // just select and tell what is selected
 const FilterFormDD = (props) => {
-  const [value, setValue] = useState("");
-
   const onChangeHandler = (e) => {
-    setValue(e.target.value);
+    props.onChange(e);
   };
 
   return (
@@ -29,11 +27,14 @@ const FilterFormDD = (props) => {
           onChange={onChangeHandler}
           className="form-select"
           as="select"
-          value={value}
         >
           <option value="-1"> Please select </option>
           {props.options.map((el) => {
-            return <option value={el.id}>{el.name}</option>;
+            return (
+              <option key={el.id} value={el.id}>
+                {el.op}
+              </option>
+            );
           })}
         </Form.Control>
       </div>
