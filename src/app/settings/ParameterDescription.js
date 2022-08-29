@@ -28,7 +28,6 @@ function ParameterDescription() {
   function getData(type, id) {
     RelatedService.getParameterDescriptions(id, type)
       .then((res) => {
-        console.log(res.data)
         setDescriptions(res.data["description"]);
         setParamName(res.data["name"]);
         setIsLoading(false);
@@ -131,10 +130,9 @@ function ParameterDescription() {
   return (
     <div className="item-class-page-param">
       <h2 className="page-title mb-3">
-        <Trans>{id?.split("-")[0]}</Trans>
-        <Trans>Parameter Descriptions</Trans>
+        <Trans>{id?.split("-")[0]}</Trans> <Trans>Parameter Descriptions</Trans>
       </h2>
-      <h3 className="mb-3">{paramName}</h3>
+      <h3 className="mb-3 param-name">{paramName}</h3>
       <div className="add-row mt-4 mb-4">
         <h3>
           <Trans>Insert parameter In this row!</Trans>
