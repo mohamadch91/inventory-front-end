@@ -1,0 +1,13 @@
+
+.charts{
+    display: flex;
+    flex-direction: row;
+    color: black;
+    justify-content: space-between;
+
+}
+
+ .warning {
+    margin :4rem;
+}
+

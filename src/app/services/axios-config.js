@@ -15,6 +15,9 @@ ApiManager.interceptors.response.use(
   },
   (error) => {
     const { response } = error;
+    if (response?.status === 403) {
+      window.location.href = `/error-pages/error-403`;
+    }
     const message =
       responseMessages[response.status]?.fa || responseMessages.failed.fa;
     toast.error(message);

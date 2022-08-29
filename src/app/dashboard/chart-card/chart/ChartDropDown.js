@@ -1,0 +1,19 @@
+import classes from "./ChartDropDown.module.css";
+
+const ChartDropDown = (props) => {
+  return (
+    <div className={classes.drop}>
+      <select onChange={props.onChange}>
+        <option value="">Select Item Class</option>
+
+        {props.options.map((el, i) => (
+          <option key={i} value={el.id}>
+            {el.op}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+export default ChartDropDown;

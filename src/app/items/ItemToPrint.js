@@ -135,9 +135,17 @@ const ItemToPrint = forwardRef((props, ref) => {
                 <Row>
                   {data?.map((item, index) => (
                     <>
-                      <Col md={6}>
+                      <div style={{ width: "50%" }} md={6}>
                         <h6>{item.field.name}</h6>
-                        <div className="box mb-3">
+                        <div
+                          style={{
+                            border: "gray 1px solid",
+                            padding: "1rem",
+                            "border-radius": "5px",
+                            marginButtom: "5px",
+                          }}
+                          className="box mb-3"
+                        >
                           {item.field.params.map((param) => (
                             <div className="param">
                               <input
@@ -150,7 +158,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                             </div>
                           ))}
                         </div>
-                      </Col>
+                      </div>
                     </>
                   ))}
                 </Row>

@@ -13,6 +13,16 @@ import DynamicInput from "../components/DynamicInput";
 import { fromPQSFields } from "../constants/item";
 import { hasValidationError } from "../helpers/validation-checker";
 import { Trans } from "react-i18next";
+import Select from "react-select";
+
+const facilityField = {
+  id: "facility",
+  type: "text",
+  active: false,
+  disabled: true,
+  state: "facility",
+  name:""
+};
 
 function Item() {
   const [activeStep, setActiveStep] = useState(0);
@@ -27,13 +37,14 @@ function Item() {
   const { isLoading: isItemDefaultLoading } = useQuery(
     ["item-default-value", id],
     async () => {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const defaultData = {
+        code: "uniqe code",
+      };
 
-      if (id === "new") return { facility: user?.facility_id };
+      if (id === "new") return defaultData;
 
       const res = await ItemService.getItems(id);
-      res.data[0]["facility"] = user?.facility_id;
-      return res.data[0];
+      return { ...res.data[1], ...defaultData };
     },
     {
       refetchOnMount: true,
@@ -48,7 +59,12 @@ function Item() {
       ["item-classes-and-types"],
       async () => {
         const res = await ItemService.getItemClassesAndTypes();
-        return res.data.filter((item) => item.item_type.length > 0);
+        // facilityField.name=res.data.facility.name
+        // facilityField.id=res.data.facility.id
+        // const cloneFieldsValue = { ...fieldsValue };
+        // cloneFieldsValue['facility'] = res.data.facility.id;
+        // setFieldValue(cloneFieldsValue);
+        return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
         refetchOnMount: true,
@@ -59,26 +75,17 @@ function Item() {
       }
     );
 
-  const {
-    data: pqsData,
-    isLoading: isPqsLoading,
-    refetch: loadPQSData,
-  } = useQuery(
+  const { data: pqsData, isLoading: isPqsLoading } = useQuery(
     ["pqs", selectedItemType?.id],
     async () => {
       const res = await ItemService.getPQS(selectedItemType.id);
       return res.data.map((item) => ({
-        enabled: true,
-        id: item.id,
-        name: item.pqsnumber ?? item.pqscode,
-        order: 1,
-        pararmid: item.id,
-        pqsData: item,
+        label: item.pqsnumber ?? item.pqscode,
+        value: item,
       }));
     },
     {
-      refetchOnMount: false,
-      enabled: false,
+      refetchOnMount: true,
     }
   );
 
@@ -115,17 +122,6 @@ function Item() {
           disabled: true,
           required: false,
           state: "code",
-          params: [],
-        });
-        result[firstTopic].unshift({
-          id: "facility-name",
-          name: "Facility Name:",
-          topic: firstTopic,
-          type: "text",
-          active: false,
-          disabled: true,
-          required: false,
-          state: "facility-name",
           params: [],
         });
       }
@@ -284,13 +280,40 @@ function Item() {
       </div>
       <div className="mt-3">
         <div className="card">
+          <div className="card-body pb-3">
+            <div className="row">
+              <Form.Group className="row mb-0">
+                <label
+                  className={`col-sm-4 text-right`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                    lineHeight: "1.4",
+                  }}
+                >
+                  Facility Name:
+                </label>
+                <div className={"col-sm-8"}>
+                  <DynamicInput
+                    field={facilityField}
+                    defaultValue={facilityField["name"]}
+                  />
+                </div>
+              </Form.Group>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-3">
+        <div className="card">
           <div className="card-body">
             {activeStep === 0 && (
               <>
                 <div className="row">
                   <Form.Group className="row mb-0">
                     <label
-                      className={`col-sm-4 text-left`}
+                      className={`col-sm-4 text-left control-label`}
                       style={{
                         display: "flex",
                         justifyContent: "flex-start",
@@ -324,7 +347,7 @@ function Item() {
                 <div className="row">
                   <Form.Group className="row mb-0">
                     <label
-                      className={`col-sm-4 text-right`}
+                      className={`col-sm-4 text-right control-label`}
                       style={{
                         display: "flex",
                         justifyContent: "flex-start",
@@ -332,7 +355,7 @@ function Item() {
                         lineHeight: "1.4",
                       }}
                     >
-                      <Trans>Item Type</Trans>
+                      <Trans>Item Category</Trans>
                     </label>
                     <div className="col-sm-6">
                       <Form.Control
@@ -427,7 +450,7 @@ function Item() {
                               <div className="col-sm-1">
                                 <button
                                   className="btn btn-primary w-100 h-100"
-                                  onClick={loadPQSData}
+                                  onClick={() => {}}
                                   type="button"
                                 >
                                   <Trans>Load</Trans>

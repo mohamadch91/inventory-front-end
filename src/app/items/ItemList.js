@@ -26,7 +26,7 @@ function ItemList() {
       ["item-classes-and-types"],
       async () => {
         const res = await ItemService.getItemClassesAndTypes();
-        return res.data.filter((item) => item.item_type.length > 0);
+        return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
         refetchOnMount: true,
@@ -57,7 +57,7 @@ function ItemList() {
                       <Trans>Item class</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Item type</Trans>
+                      <Trans>Item category</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Code</Trans>
@@ -82,6 +82,7 @@ function ItemList() {
                     const itemType = itemClass?.item_type.find(
                       (itemT) => itemT.id === item.item_type
                     );
+                    console.log(itemType)
                     return (
                       <TableRow key={item.id}>
                         <TableCell className="col-sm-2">
@@ -102,7 +103,7 @@ function ItemList() {
                             : "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          <Link to={`/facilities/info/${item.id}`}>
+                          <Link to={`/items/info/${item.id}`}>
                             <div style={{ width: "20px", height: "20px" }}>
                               <EditIcon />
                             </div>

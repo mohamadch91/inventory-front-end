@@ -34,6 +34,7 @@ const PrintItem = () => {
     documentTitle: "AwesomeFileName",
     onBeforeGetContent: handleOnBeforeGetContent,
     removeAfterPrint: true,
+    
   });
 
   React.useEffect(() => {

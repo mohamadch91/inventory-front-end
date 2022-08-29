@@ -1,0 +1,20 @@
+
+.drop select {
+    background: white;
+    border: 1px solid #ababab70;
+    border-radius: 5px;
+    padding: 0.3rem;
+    margin: .5rem 0;
+    width: 100%;
+}
+
+
+.drop select:invalid:focus {
+     border-color: #ff0000;
+ }
+
+
+.drop label {
+    color: black;
+}
+

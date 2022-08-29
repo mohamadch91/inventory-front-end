@@ -19,6 +19,7 @@ const Mdi = lazy(() => import("./icons/Mdi"));
 
 const ChartJs = lazy(() => import("./charts/ChartJs"));
 
+const Error403 = lazy(() => import("./error-pages/Error403"));
 const Error404 = lazy(() => import("./error-pages/Error404"));
 const Error500 = lazy(() => import("./error-pages/Error500"));
 
@@ -53,6 +54,7 @@ const EditLanguage = lazy(() => import("./settings/editLanguage"));
 const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
+const ItemsQR = lazy(() => import("./items/items-qr/ItemsQR"));
 const MtnsSetting = lazy(() => import("./settings/Maintenance"));
 const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
@@ -63,7 +65,7 @@ class AppRoutes extends Component {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
 
           <Route exact path="/hr/list" component={HRList} />
 
@@ -134,6 +136,7 @@ class AppRoutes extends Component {
           <Route exact path="/items/info/:id" component={Item} />
           <Route exact path="/items/list" component={ItemList} />
           <Route exact path="/items/print" component={PrintItem} />
+          <Route exact path="/items/qr" component={ItemsQR} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 
@@ -152,9 +155,10 @@ class AppRoutes extends Component {
 
           <Route path="/charts/chart-js" component={ChartJs} />
 
-          <Route path="/login" component={Login} />
+          <Route path="/" component={Login} />
           <Route path="/user-pages/register-1" component={Register1} />
 
+          <Route path="/error-pages/error-403" component={Error403} />
           <Route path="/error-pages/error-404" component={Error404} />
           <Route path="/error-pages/error-500" component={Error500} />
 
