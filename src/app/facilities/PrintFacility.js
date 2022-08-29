@@ -2,7 +2,7 @@ import * as React from "react";
 import { Col, Row } from "react-bootstrap";
 import { Trans } from "react-i18next";
 import { useReactToPrint } from "react-to-print";
-import ItemToPrint from "./FacilityToPrint";
+import FacilityToPrint from "./FacilityToPrint";
 import "./print.scss";
 
 const PrintFacility = () => {
@@ -51,7 +51,7 @@ const PrintFacility = () => {
           </button>
         </Col>
       </Row>
-      <ItemToPrint ref={componentRef} />
+      <FacilityToPrint ref={componentRef} />
     </div>
   );
 };

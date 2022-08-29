@@ -5,7 +5,7 @@ import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
 
-const ItemToPrint = forwardRef((props, ref) => {
+const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,6 +31,14 @@ const ItemToPrint = forwardRef((props, ref) => {
       ) : (
         <div ref={ref}>
           <div className="container">
+            <div className="row">
+              <div className="col-md-6">
+                <h4>{window.location.origin}</h4>
+              </div>
+              <div className="col-md-6">
+                <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
+              </div>
+            </div>
             <h2 className="mb-4">
               <Trans>Facility information:</Trans>
             </h2>
@@ -40,21 +48,9 @@ const ItemToPrint = forwardRef((props, ref) => {
                   <>
                     <div style={{ width: "50%" }}>
                       <h6>{item.name}</h6>
-                      <div
-                        style={{
-                          border: "gray 1px solid",
-                          padding: "1rem",
-                          "border-radius": "5px",
-                          marginButtom: "5px",
-                        }}
-                        className="box mb-3"
-                      >
+                      <div className="box mb-3" style={{ display: "flex" }}>
                         {item.params.map((param) => (
-                          <div
-                            style={{ display: "inline-block" }}
-                            className="param"
-                          >
-                            <span style={{ color: "blue" }}>{param.name}</span>
+                          <div className="param">
                             <input
                               style={{
                                 Background: "white",
@@ -63,11 +59,12 @@ const ItemToPrint = forwardRef((props, ref) => {
                                 Padding: "0.5rem",
                                 marginRight: "5px",
                               }}
-                              className="m-1 mr-3"
+                              className="m-1"
                               type="checkbox"
-                              checked={param.enabled}
+                              checked={false}
                               disabled
                             />
+                            <span className="mr-3">{param.name}</span>
                           </div>
                         ))}
                       </div>
@@ -83,4 +80,4 @@ const ItemToPrint = forwardRef((props, ref) => {
   );
 });
 
-export default ItemToPrint;
+export default FacilityToPrint;
