@@ -15,5 +15,11 @@ class DashboardService {
       headers: { Authorization: authHeader() },
     });
   }
+
+  getAllTablesData() {
+    return ApiManager.get(API_URL + "/table", {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 export default new DashboardService();

@@ -1,15 +1,16 @@
 import React from "react";
 
 const LevelsTableRow = (props) => {
+  console.log(props._key);
   return (
     <tr>
-      <td>
+      <td key={"A"}>
         <label className="badge badge-info"> {props.level} </label>{" "}
       </td>
-      <td>{props.levelName}</td>
-      <td>{props.facilitiesNum}</td>
-      <td>{props.subFacilitiesNum}</td>
-      <td>{props.defSubFacilitiesNum}</td>
+      <td key={"B"}>{props.levelName}</td>
+      <td key={"C"}>{props.facilitiesNum}</td>
+      <td key={"D"}>{props.subFacilitiesNum}</td>
+      <td key={"E"}>{props.defSubFacilitiesNum}</td>
     </tr>
   );
 };

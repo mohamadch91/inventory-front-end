@@ -21,3 +21,13 @@ export async function getFacilities() {
 
   return res.data;
 }
+
+export async function getTablesData() {
+  const res = await DashboardService.getAllTablesData();
+
+  if (res.status !== 200) {
+    throw new Error("Error fetching data from back-end");
+  }
+
+  return res.data;
+}

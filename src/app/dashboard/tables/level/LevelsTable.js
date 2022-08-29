@@ -1,36 +1,9 @@
 import LevelsTableRow from "./LevelsTableRow";
 import React from "react";
-const DUMMY = [
-  {
-    level: 1,
-    levelName: "Central 1",
-    facilitiesNum: 11,
-    subFacilitiesNum: 21,
-    defSubFacilitiesNum: 141,
-  },
-  {
-    level: 2,
-    levelName: "Directorare",
-    facilitiesNum: 21,
-    subFacilitiesNum: 321,
-    defSubFacilitiesNum: 221,
-  },
-  {
-    level: 2,
-    levelName: "Directorare",
-    facilitiesNum: 21,
-    subFacilitiesNum: 321,
-    defSubFacilitiesNum: 221,
-  },
-  {
-    level: 2,
-    levelName: "Directorare",
-    facilitiesNum: 21,
-    subFacilitiesNum: 321,
-    defSubFacilitiesNum: 221,
-  },
-];
-const FacilitiesTable = () => {
+
+const LevelsTable = (props) => {
+  console.log("here");
+  console.log(props.data);
   return (
     <div>
       <h4 className="card-title"> 🏢 Facilities</h4>
@@ -47,14 +20,15 @@ const FacilitiesTable = () => {
             </tr>
           </thead>
           <tbody>
-            {DUMMY.map((item) => {
+            {props.data.map((item, i) => {
               return (
                 <LevelsTableRow
-                  level={item.level}
-                  levelName={item.levelName}
-                  facilitiesNum={item.facilitiesNum}
-                  subFacilitiesNum={item.subFacilitiesNum}
-                  defSubFacilitiesNum={item.defSubFacilitiesNum}
+                  key={i}
+                  level={item.level_id}
+                  levelName={item.level_name}
+                  facilitiesNum={item.total}
+                  subFacilitiesNum={item.sub}
+                  defSubFacilitiesNum={item.def}
                 />
               );
             })}
@@ -64,4 +38,4 @@ const FacilitiesTable = () => {
     </div>
   );
 };
-export default FacilitiesTable;
+export default LevelsTable;
