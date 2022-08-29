@@ -1,4 +1,6 @@
 import { Form } from "react-bootstrap";
+import { separator as thousandSeparator } from "../helpers/separator";
+
 const numericKeys = "0123456789.:";
 const num1 = "0123456789";
 const DynamicInput = (props) => {
@@ -30,12 +32,15 @@ const DynamicInput = (props) => {
 
   if (field.type === "bool") {
     return (
-      <input
-        type="checkbox"
-        defaultChecked={defaultValue}
-        onChange={(e) => onChangeHandler(e.target.checked, field)}
-        disabled={field.active ? !field.active : field.disabled}
-      />
+      <>
+        <input
+          type="checkbox"
+          defaultChecked={defaultValue}
+          onChange={(e) => onChangeHandler(e.target.checked, field)}
+          disabled={field.active ? !field.active : field.disabled}
+        />
+        <i style={{ marginLeft: "4px" }}>yes</i>
+      </>
     );
   }
 
@@ -45,17 +50,17 @@ const DynamicInput = (props) => {
       onKeyPress={(e) => {
         e.persist();
         if (field.type === "number") {
-          if (validation && validation?.float){
+          if (validation && validation?.float) {
             if (numericKeys.indexOf(e.key) === -1) {
               e.preventDefault();
               return;
-            }}
-          else if(validation && validation?.float===false){
+            }
+          } else if (validation && validation?.float === false) {
             if (num1.indexOf(e.key) === -1) {
               e.preventDefault();
               return;
             }
-          }  
+          }
         }
         onChangeHandler(e.target.value, field);
       }}
@@ -77,9 +82,7 @@ const DynamicInput = (props) => {
       onBlur={(e) => {
         e.persist();
         if (separator) {
-          const formatted = e.target.value
-            .toString()
-            .replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+          const formatted = thousandSeparator(e.target.value);
           onChangeHandler(formatted, field);
         }
       }}
