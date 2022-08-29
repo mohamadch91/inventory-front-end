@@ -521,14 +521,12 @@ export class Country extends Component {
                               onChange={(e) => {
                                 let number = e.target.value;
                                 const flag = number.split(".").length;
-                                console.log(flag);
                                 if (flag > 1) {
                                   const num = number.split(".")[0];
                                   const floatpoint = number
                                     .split(".")[1]
                                     .slice(0, 2);
                                   number = num + "." + floatpoint;
-                                  console.log(number);
                                 }
 
                                 this.setState({

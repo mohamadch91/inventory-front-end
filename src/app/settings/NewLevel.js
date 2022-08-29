@@ -552,7 +552,7 @@ export default function DataTable() {
       <div className="page-header">
         <h1 className="page-title"> Level Configurations </h1>
       </div>
-      {JSON.parse(localStorage.getItem("country")).usingtool && (
+      {JSON.parse(localStorage.getItem("country"))?.usingtool && (
         <Box sx={{ width: "100%" }}>
           <Paper sx={{ width: "100%", mb: 2 }}>
             <div>
@@ -606,7 +606,7 @@ export default function DataTable() {
                 <TableCell colSpan={4}>
                   <Trans>Target Population :</Trans>
                   <Trans>
-                    {JSON.parse(localStorage.getItem("country")).poptarget}
+                    {JSON.parse(localStorage.getItem("country"))?.poptarget}
                   </Trans>
                 </TableCell>
                 <TableCell colSpan={6}></TableCell>

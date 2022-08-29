@@ -5,8 +5,6 @@ import Spinner from "../shared/Spinner";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
 import ItemService from "../services/item.service";
 import DynamicInput from "../components/DynamicInput";
@@ -14,6 +12,7 @@ import { fromPQSFields } from "../constants/item";
 import { hasValidationError } from "../helpers/validation-checker";
 import { Trans } from "react-i18next";
 import Select from "react-select";
+import StepOperations from "../components/StepOperations";
 
 const facilityField = {
   id: "facility",
@@ -21,7 +20,7 @@ const facilityField = {
   active: false,
   disabled: true,
   state: "facility",
-  name:""
+  name: "",
 };
 
 function Item() {
@@ -59,11 +58,10 @@ function Item() {
       ["item-classes-and-types"],
       async () => {
         const res = await ItemService.getItemClassesAndTypes();
-        // facilityField.name=res.data.facility.name
-        // facilityField.id=res.data.facility.id
-        // const cloneFieldsValue = { ...fieldsValue };
-        // cloneFieldsValue['facility'] = res.data.facility.id;
-        // setFieldValue(cloneFieldsValue);
+        setFieldValue((preValues) => ({
+          ...preValues,
+          facility: res.data.facility.name,
+        }));
         return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
@@ -88,6 +86,10 @@ function Item() {
       refetchOnMount: true,
     }
   );
+
+  console.log("------------------------------------------------");
+  console.log("fieldErrors", fieldErrors);
+  console.log("fieldsValue", fieldsValue);
 
   const {
     data: itemFields,
@@ -140,8 +142,8 @@ function Item() {
     const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
-      if (field.required && !fieldsValue[field.stateName]) {
-        _fieldErrors[field.id] = "this field is required!";
+      if (field.required && !fieldsValue[field.state]) {
+        _fieldErrors[field.state] = "this field is required!";
       }
     });
     setFieldErrors(_fieldErrors);
@@ -166,9 +168,9 @@ function Item() {
     //check validation and required
     const _fieldErrors = { ...fieldErrors };
     if (validationErr) {
-      _fieldErrors[field.id] = validationErr;
+      _fieldErrors[field.state] = validationErr;
     } else {
-      delete _fieldErrors[field.id];
+      delete _fieldErrors[field.state];
     }
     setFieldErrors(_fieldErrors);
   };
@@ -208,7 +210,14 @@ function Item() {
     setIsFromPQS((preChecked) => !preChecked);
   };
 
-  const selectPQSHandler = (value) => {
+  const selectPQSHandler = () => {
+    const value = pqsData.find(
+      (pqs) => pqs.label === fieldsValue["PQSPISCode"]
+    )?.value;
+    if (value === undefined) {
+      //TODO: show a correct massage to user
+      return;
+    }
     const cloneFieldsValue = { ...fieldsValue };
     const selectedPqs = pqsData.find((pqs) => pqs.id === value);
     cloneFieldsValue["PQSPISType"] = selectedPqs?.model;
@@ -249,32 +258,13 @@ function Item() {
                 })}
               </Stepper>
             </div>
-            <div className="row mt-2">
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                  type="button"
-                >
-                  <Trans>Back</Trans>
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-                {activeStep === Object.keys(itemFields).length - 1 ? (
-                  <button className="btn btn-primary ">Save</button>
-                ) : (
-                  <Button
-                    disabled={Object.keys(fieldErrors).length > 0}
-                    onClick={handleNext}
-                    type="button"
-                    sx={{ mr: 1 }}
-                  >
-                    <Trans>Next</Trans>
-                  </Button>
-                )}
-              </Box>
-            </div>
+            <StepOperations
+              handleBack={handleBack}
+              handleNext={handleNext}
+              activeStep={activeStep}
+              stepsLength={Object.keys(itemFields).length - 1}
+              isNextDisabled={Object.keys(fieldErrors).length > 0}
+            />
           </div>
         </div>
       </div>
@@ -287,9 +277,10 @@ function Item() {
                   className={`col-sm-4 text-right`}
                   style={{
                     display: "flex",
-                    justifyContent: "flex-start",
+                    justifyContent: "flex-end",
                     alignItems: "center",
                     lineHeight: "1.4",
+                    textAlign: "right",
                   }}
                 >
                   Facility Name:
@@ -297,8 +288,73 @@ function Item() {
                 <div className={"col-sm-8"}>
                   <DynamicInput
                     field={facilityField}
-                    defaultValue={facilityField["name"]}
+                    defaultValue={fieldsValue["facility"]}
                   />
+                </div>
+              </Form.Group>
+            </div>
+            <div className="row mt-3">
+              <Form.Group className="row mb-0">
+                <label
+                  className={`col-sm-4 text-left control-label`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    lineHeight: "1.4",
+                    textAlign: "right",
+                  }}
+                >
+                  <Trans>Item class</Trans>
+                </label>
+                <div className="col-sm-8">
+                  <Form.Control
+                    onChange={selectItemClassHandler}
+                    className="form-select"
+                    as="select"
+                    value={itemClassesAndTypes?.findIndex(
+                      (i) =>
+                        i?.item_class.id === selectedItemClass?.item_class.id
+                    )}
+                    disabled={activeStep !== 0}
+                  >
+                    {itemClassesAndTypes.map((itemClass, index) => (
+                      <option value={index}>
+                        {itemClass.item_class.title}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </div>
+              </Form.Group>
+            </div>
+            <div className="row mt-3">
+              <Form.Group className="row mb-0">
+                <label
+                  className={`col-sm-4 text-right control-label`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    lineHeight: "1.4",
+                    textAlign: "right",
+                  }}
+                >
+                  <Trans>Item Category</Trans>
+                </label>
+                <div className="col-sm-8">
+                  <Form.Control
+                    onChange={selectItemTypeHandler}
+                    className="form-select"
+                    as="select"
+                    value={selectedItemClass?.item_type.findIndex(
+                      (i) => i?.id === selectedItemType?.id
+                    )}
+                    disabled={activeStep !== 0}
+                  >
+                    {selectedItemClass?.item_type.map((itemType, index) => (
+                      <option value={index}>{itemType.title}</option>
+                    ))}
+                  </Form.Control>
                 </div>
               </Form.Group>
             </div>
@@ -310,70 +366,6 @@ function Item() {
           <div className="card-body">
             {activeStep === 0 && (
               <>
-                <div className="row">
-                  <Form.Group className="row mb-0">
-                    <label
-                      className={`col-sm-4 text-left control-label`}
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        lineHeight: "1.4",
-                      }}
-                    >
-                      <Trans>Item class</Trans>
-                    </label>
-                    <div className="col-sm-8">
-                      <Form.Control
-                        onChange={selectItemClassHandler}
-                        className="form-select"
-                        as="select"
-                        value={itemClassesAndTypes?.findIndex(
-                          (i) =>
-                            i?.item_class.id ===
-                            selectedItemClass?.item_class.id
-                        )}
-                      >
-                        {itemClassesAndTypes.map((itemClass, index) => (
-                          <option value={index}>
-                            {itemClass.item_class.title}
-                          </option>
-                        ))}
-                      </Form.Control>
-                    </div>
-                    <hr className="my-3" />
-                  </Form.Group>
-                </div>
-                <div className="row">
-                  <Form.Group className="row mb-0">
-                    <label
-                      className={`col-sm-4 text-right control-label`}
-                      style={{
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        lineHeight: "1.4",
-                      }}
-                    >
-                      <Trans>Item Category</Trans>
-                    </label>
-                    <div className="col-sm-6">
-                      <Form.Control
-                        onChange={selectItemTypeHandler}
-                        className="form-select"
-                        as="select"
-                        value={selectedItemClass?.item_type.findIndex(
-                          (i) => i?.id === selectedItemType?.id
-                        )}
-                      >
-                        {selectedItemClass?.item_type.map((itemType, index) => (
-                          <option value={index}>{itemType.title}</option>
-                        ))}
-                      </Form.Control>
-                    </div>
-                    <hr className="my-3" />
-                  </Form.Group>
-                </div>
                 {selectedItemType.havepqs && (
                   <>
                     <div className="row">
@@ -382,9 +374,10 @@ function Item() {
                           className={`col-sm-4 text-right`}
                           style={{
                             display: "flex",
-                            justifyContent: "flex-start",
+                            justifyContent: "flex-end",
                             alignItems: "center",
                             lineHeight: "1.4",
+                            textAlign: "right",
                           }}
                         >
                           <Trans>Is this item from PQS/PIS list?</Trans>
@@ -410,9 +403,10 @@ function Item() {
                               }`}
                               style={{
                                 display: "flex",
-                                justifyContent: "flex-start",
+                                justifyContent: "flex-end",
                                 alignItems: "center",
                                 lineHeight: "1.4",
+                                textAlign: "right",
                               }}
                             >
                               {pqsField.name}
@@ -426,19 +420,38 @@ function Item() {
                               }`}
                             >
                               {pqsData && pqsField.state === "PQSPISCode" ? (
-                                <DynamicInput
-                                  field={{
-                                    ...pqsField,
-                                    type: "select",
-                                    params: pqsData,
+                                <Select
+                                  options={pqsData}
+                                  onChange={(e) => {
+                                    onChangeHandler(e.label, pqsField);
                                   }}
-                                  onChangeHandler={(value, field) => {
-                                    onChangeHandler(value, field);
-                                    selectPQSHandler(value);
+                                  value={{
+                                    label: fieldsValue["PQSPISCode"],
+                                    value: pqsData.find(
+                                      (pqs) =>
+                                        pqs.label === fieldsValue["PQSPISCode"]
+                                    )?.value,
                                   }}
-                                  defaultValue={fieldsValue[pqsField.state]}
+                                  onBlur={(e) => {
+                                    const value = e.target.value;
+                                    if (value.length > 0) {
+                                      onChangeHandler(value, pqsField);
+                                    }
+                                  }}
                                 />
                               ) : (
+                                // <DynamicInput
+                                //   field={{
+                                //     ...pqsField,
+                                //     type: "select",
+                                //     params: pqsData,
+                                //   }}
+                                //   onChangeHandler={(value, field) => {
+                                //     onChangeHandler(value, field);
+                                //     selectPQSHandler(value);
+                                //   }}
+                                //   defaultValue={fieldsValue[pqsField.state]}
+                                // />
                                 <DynamicInput
                                   field={pqsField}
                                   onChangeHandler={onChangeHandler}
@@ -450,7 +463,7 @@ function Item() {
                               <div className="col-sm-1">
                                 <button
                                   className="btn btn-primary w-100 h-100"
-                                  onClick={() => {}}
+                                  onClick={selectPQSHandler}
                                   type="button"
                                 >
                                   <Trans>Load</Trans>
@@ -466,7 +479,7 @@ function Item() {
               </>
             )}
             {Object.values(itemFields)[activeStep]?.map((field) => {
-              const hasRequiredError = !!fieldErrors[field.id];
+              const hasRequiredError = !!fieldErrors[field.state];
               return (
                 <div className="row" key={field.name}>
                   <Form.Group className="row mb-0">
@@ -476,9 +489,10 @@ function Item() {
                       }`}
                       style={{
                         display: "flex",
-                        justifyContent: "flex-start",
+                        justifyContent: "flex-end",
                         alignItems: "center",
                         lineHeight: "1.4",
+                        textAlign: "right",
                       }}
                     >
                       {field.name}
@@ -495,7 +509,7 @@ function Item() {
                         <div className="col-sm-4"></div>
                         <div className="col-sm-8">
                           <p className="my-1 ml-2 text-danger">
-                            {fieldErrors[field.id]}
+                            {fieldErrors[field.state]}
                           </p>
                         </div>
                       </div>
@@ -505,6 +519,19 @@ function Item() {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </div>
+      <div className="mt-3">
+        <div className="card">
+          <div className="card-body py-3">
+            <StepOperations
+              handleBack={handleBack}
+              handleNext={handleNext}
+              activeStep={activeStep}
+              stepsLength={Object.keys(itemFields).length - 1}
+              isNextDisabled={Object.keys(fieldErrors).length > 0}
+            />
           </div>
         </div>
       </div>
