@@ -1,27 +1,19 @@
-
-import React, {useState} from "react";
-
 import classes from "./ChartDropDown.module.css";
 
-const ChartDropDown = (props) =>{
-    const [selectedValue, setSelectedValue] = useState('Facilities');
+const ChartDropDown = (props) => {
+  return (
+    <div className={classes.drop}>
+      <select onChange={props.onChange}>
+        <option value="">Select Item Class</option>
 
-    const ddChangeHandler = (e) =>{
-        setSelectedValue(e.target.value);
-    }
-
-
-return(
-    <div className={classes.drop} >
-            <select value={selectedValue} onChange={ddChangeHandler}>
-                {props.options.map((option) => (
-                    <option value={option.value}>{option.label}</option>
-                ))}
-            </select>
-
+        {props.options.map((el, i) => (
+          <option key={i} value={el.id}>
+            {el.op}
+          </option>
+        ))}
+      </select>
     </div>
-
-)
-}
+  );
+};
 
 export default ChartDropDown;
