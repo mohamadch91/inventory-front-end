@@ -8,6 +8,7 @@ import useHttp from "../../shared/custom-hooks/use-http";
 
 import classes from "./ItemCard.module.css";
 import toast from "react-hot-toast";
+import Spinner from "../../shared/Spinner";
 
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
@@ -22,11 +23,11 @@ const ItemsCard = () => {
   }, []);
 
   // Handling api response
-  // TODO: add loading spinner
+
   if (status === "pending") {
     return (
       <div className={"centered"}>
-        <h1> --PLACE LOADING SPINNER-- </h1>
+        <Spinner />
       </div>
     );
   }

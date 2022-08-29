@@ -1,26 +1,28 @@
+import React from "react";
+import { ProgressBar } from "react-bootstrap";
+const SubFacilitiesTableRow = (props) => {
+  const updatedOn = props.updatedOn.split("T")[0].replace(/-/g, " / ");
 
-import React from 'react'
-import {ProgressBar} from "react-bootstrap";
-const SubFacilitiesTableRow = (props)=>{
+  return (
+    <tr>
+      <td key={"E"}> {props.num} </td>
 
-    return(
-        <tr>
-            <td> {props.num} </td>
+      <td key={"F"} className="py-1">
+        {props.name}
+      </td>
 
-            <td className="py-1">
-                {props.name}
-            </td>
+      <td key={"G"}>
+        <label className="badge badge-info"> {props.level} </label>
+      </td>
+      <td key={"Z"} className="py-1">
+        {` ${props.levelName}`}
+      </td>
 
-            <td>
-                <label className="badge badge-info"> {props.level} </label> {`   ${props.levelName}`} </td>
-            <td>
-                <ProgressBar variant={props.variant} now={props.registered} />
-            </td>
-            <td> {props.total} </td>
-            <td> {props.lastChangesOn} </td>
-            <td> {props.lastLogin} </td>
-
-        </tr>
-    )
-}
+      <td key={"H"}>
+        <ProgressBar variant={props.variant} now={props.registered} />
+      </td>
+      <td key={"J"}> {updatedOn} </td>
+    </tr>
+  );
+};
 export default SubFacilitiesTableRow;

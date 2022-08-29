@@ -6,6 +6,7 @@ import Card from "../../shared/UI/Card";
 import useHttp from "../../shared/custom-hooks/use-http";
 import { getFacilities } from "../dashboard-api";
 import toast from "react-hot-toast";
+import Spinner from "../../shared/Spinner";
 
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
@@ -18,13 +19,8 @@ const Facilities = () => {
   }, []);
 
   // Handling api response
-  // TODO: add loading spinner
   if (status === "pending") {
-    return (
-      <div className={"centered"}>
-        <h1> --PLACE LOADING SPINNER-- </h1>
-      </div>
-    );
+    return <Spinner />;
   }
 
   // TODO: Remove error message at production
