@@ -5,8 +5,8 @@ import ItemsCard from "./chart-card/ItemsCard";
 import Warnings from "./warnings/Warnings";
 
 import classes from "./Dashbord.module.css";
-import SubFacilitiesTable from "./sub-facilities/SubFacilitiesTable";
-import FacilitiesTable from "./facilities/FacilitiesTable";
+
+import DashboardTables from "./tables/DashboardTables";
 
 const Dashboard = () => {
   return (
@@ -19,12 +19,8 @@ const Dashboard = () => {
       <section className={classes.warning}>
         <Warnings />
       </section>
-      <section className={classes.facilities}>
-        <FacilitiesTable />
-      </section>
-      <section className={classes["sub-facilities"]}>
-        <SubFacilitiesTable />
-      </section>
+
+      <DashboardTables />
     </main>
   );
 };
