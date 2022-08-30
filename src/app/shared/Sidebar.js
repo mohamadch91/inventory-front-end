@@ -65,6 +65,8 @@ class Sidebar extends Component {
       { path: "/pqs4", state: "pqs4MenuOpen" },
       { path: "/pqs3", state: "pqs4MenuOpen" },
       { path: "/language", state: "languageMenuOpen" },
+      { path: "/map", state: "mapOpen" },
+
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -97,6 +99,22 @@ class Sidebar extends Component {
               <span className="menu-title">
                 <span>
                   <Trans>Dashboard</Trans>
+                </span>
+              </span>
+            </Link>
+          </li>
+            <li
+            className={
+              this.isPathActive("/map") ? "nav-item active" : "nav-item"
+            }
+          >
+            <Link className="nav-link" to="/map">
+              <span className="icon-bg">
+                <i className="mdi mdi-cube menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>
+                  <Trans>map</Trans>
                 </span>
               </span>
             </Link>

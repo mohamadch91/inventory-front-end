@@ -60,6 +60,10 @@ const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
   import("./settings/MaintenanceServiceGroup")
 );
+const Map = lazy(() =>
+  import("./shared/sharedMap")
+);
+
 class AppRoutes extends Component {
   render() {
     return (
@@ -128,6 +132,7 @@ class AppRoutes extends Component {
           />
 
           <Route exact path="/about-iga" component={AboutIGA} />
+          <Route exact path="/map" component={Map} />
 
           <Route exact path="/facilities/info/:id" component={Facility} />
           <Route exact path="/facilities/list" component={FacilityList} />

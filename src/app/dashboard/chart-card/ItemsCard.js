@@ -9,6 +9,7 @@ import useHttp from "../../shared/custom-hooks/use-http";
 import classes from "./ItemCard.module.css";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/Spinner";
+import GaugeChart from "react-gauge-chart";
 
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
@@ -92,12 +93,18 @@ const ItemsCard = () => {
         />
 
         <ChartDropDown onChange={itemChangeHandler} options={items} />
-
-        <CircularChart
-          percentage={chartData.working || 0}
-          text={"Defined!"}
-          color={"#ffc542"}
+        <GaugeChart
+          className="pt-3"
+          id="gauge-chart6"
+          animate={true}
+          nrOfLevels={10}
+          percent={chartData.working || 0}
+          needleColor="#345243"
+          colors={[ "#EA4228","#F5CD19", "#5BE12C"]}
+          textColor={"#000000"}
+          animDelay={100}
         />
+
         <span>{chartData.totalItems}</span>
         <p>Items</p>
       </Card>
