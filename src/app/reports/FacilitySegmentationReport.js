@@ -58,8 +58,6 @@ function FacilitySegmentationReport() {
     }
   );
 
-  console.log(filterValues);
-
   if (isFacSegHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
@@ -71,7 +69,12 @@ function FacilitySegmentationReport() {
       <div className="mt-3">
         <div className="card">
           <div className="card-body py-3">
-            <form>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetchReports();
+              }}
+            >
               <h4>
                 <Trans>Filter</Trans>
               </h4>
@@ -296,11 +299,7 @@ function FacilitySegmentationReport() {
               </div>
               <div className="row mt-4">
                 <div className="col-sm-1">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={fetchReports}
-                  >
+                  <button type="submit" className="btn btn-primary">
                     Reports
                   </button>
                 </div>

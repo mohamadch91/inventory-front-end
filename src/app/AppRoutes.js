@@ -62,8 +62,12 @@ const MaintenanceServiceGroup = lazy(() =>
   import("./settings/MaintenanceServiceGroup")
 );
 const Map = lazy(() => import("./shared/sharedMap"));
+
 const FacilitySegmentationReport = lazy(() =>
   import("./reports/FacilitySegmentationReport")
+);
+const SubFacilityPopulationDataReport = lazy(() =>
+  import("./reports/SubFacilityPopulationDataReport")
 );
 
 class AppRoutes extends Component {
@@ -71,8 +75,6 @@ class AppRoutes extends Component {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          {/* <Route exact path="/" component={Home} /> */}
-
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
@@ -150,6 +152,11 @@ class AppRoutes extends Component {
             exact
             path="/reports/fac-seg"
             component={FacilitySegmentationReport}
+          />
+          <Route
+            exact
+            path="/reports/subfac-pop-data"
+            component={SubFacilityPopulationDataReport}
           />
 
           <Route exact path="/dashboard" component={Dashboard} />

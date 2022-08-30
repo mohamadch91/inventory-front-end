@@ -15,6 +15,12 @@ class ReportService {
       params,
     });
   }
+  getSubFacPop(params) {
+    return ApiManager.get(API_URL + "subfacpop", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
 }
 
 export default new ReportService();
