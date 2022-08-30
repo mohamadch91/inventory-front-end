@@ -55,6 +55,7 @@ const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
 const ItemsQR = lazy(() => import("./items/items-qr/ItemsQR"));
+const scanQR = lazy(() => import("./items/scan-qr/ScanQR"));
 const MtnsSetting = lazy(() => import("./settings/Maintenance"));
 const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
@@ -137,6 +138,7 @@ class AppRoutes extends Component {
           <Route exact path="/items/list" component={ItemList} />
           <Route exact path="/items/print" component={PrintItem} />
           <Route exact path="/items/qr" component={ItemsQR} />
+          <Route exact path="/items/scan-qr" component={scanQR} />
 
           <Route exact path="/dashboard" component={Dashboard} />
 

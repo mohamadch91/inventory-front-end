@@ -59,6 +59,12 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+  getQrData(payload) {
+    console.log("now requesting to ", API_URL + "qr/getqr?" + payload);
+    return ApiManager.get(API_URL + "qr/list?" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ItemService();

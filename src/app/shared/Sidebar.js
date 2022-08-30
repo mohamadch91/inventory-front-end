@@ -252,6 +252,20 @@ class Sidebar extends Component {
                     </span>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/items/scan-qr")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/items/scan-qr"
+                  >
+                    <span>
+                      <Trans> Scan QR </Trans>
+                    </span>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>
