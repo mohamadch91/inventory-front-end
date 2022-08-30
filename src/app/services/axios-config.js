@@ -18,6 +18,10 @@ ApiManager.interceptors.response.use(
     if (response?.status === 403) {
       window.location.href = `/error-pages/error-403`;
     }
+    if (response?.status === 401) {
+      localStorage.removeItem("user");
+      window.location.href = `/login`;
+    }
     const message =
       responseMessages[response.status]?.fa || responseMessages.failed.fa;
     toast.error(message);
