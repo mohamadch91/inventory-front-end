@@ -61,8 +61,9 @@ const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
   import("./settings/MaintenanceServiceGroup")
 );
-const Map = lazy(() =>
-  import("./shared/sharedMap")
+const Map = lazy(() => import("./shared/sharedMap"));
+const FacilitySegmentationReport = lazy(() =>
+  import("./reports/FacilitySegmentationReport")
 );
 
 class AppRoutes extends Component {
@@ -144,6 +145,12 @@ class AppRoutes extends Component {
           <Route exact path="/items/print" component={PrintItem} />
           <Route exact path="/items/qr" component={ItemsQR} />
           <Route exact path="/items/scan-qr" component={scanQR} />
+
+          <Route
+            exact
+            path="/reports/fac-seg"
+            component={FacilitySegmentationReport}
+          />
 
           <Route exact path="/dashboard" component={Dashboard} />
 

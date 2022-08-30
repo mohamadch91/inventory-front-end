@@ -73,7 +73,7 @@ class Sidebar extends Component {
       { path: "/pqs3", state: "pqs4MenuOpen" },
       { path: "/language", state: "languageMenuOpen" },
       { path: "/map", state: "mapOpen" },
-
+      { path: "/reports", state: "reportsOpen" },
     ];
 
     dropdownPaths.forEach((obj) => {
@@ -86,7 +86,6 @@ class Sidebar extends Component {
   user = JSON.parse(localStorage.getItem("user"));
   country = JSON.parse(localStorage.getItem("country"));
   render() {
-    
     return (
       <nav className="sidebar sidebar-offcanvas" id="sidebar">
         <ul className="nav">
@@ -452,6 +451,50 @@ class Sidebar extends Component {
                       >
                         <span>
                           <Trans>Message List</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
+                </Collapse>
+              </li>
+
+              <li
+                className={
+                  this.isPathActive("/reports") ? "nav-item active" : "nav-item"
+                }
+              >
+                <div
+                  className={
+                    this.state.reportsOpen
+                      ? "nav-link menu-expanded"
+                      : "nav-link"
+                  }
+                  onClick={() => this.toggleMenuState("reportsOpen")}
+                  data-toggle="collapse"
+                >
+                  <span className="icon-bg">
+                    <i className="mdi mdi-table-large menu-icon"></i>
+                  </span>
+                  <span className="menu-title">
+                    <span>
+                      <Trans>Reports</Trans>
+                    </span>
+                  </span>
+                  <i className="menu-arrow"></i>
+                </div>
+                <Collapse in={this.state.reportsOpen}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/reports/fac-seg")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/fac-seg"
+                      >
+                        <span>
+                          <Trans>Facility Segmentation</Trans>
                         </span>
                       </Link>
                     </li>

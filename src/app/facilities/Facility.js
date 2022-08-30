@@ -6,8 +6,6 @@ import Spinner from "../shared/Spinner";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { Form } from "react-bootstrap";
 import DynamicInput from "../components/DynamicInput";
 import { hasValidationError } from "../helpers/validation-checker";
@@ -165,7 +163,7 @@ function Facility() {
       field.stateName === "populationnumber" ||
       field.stateName === "childrennumber"
     ) {
-      console.log(+selectedLevel)
+      console.log(+selectedLevel);
       validation.min = +selectedLevel?.minpop;
       validation.max = +selectedLevel?.maxpop;
     }
@@ -211,10 +209,7 @@ function Facility() {
     setFieldValue(cloneFieldsValue);
   };
 
-  const selectedLevel =
-   levels[fieldsValue["level"] - 2]
-    ;
-
+  const selectedLevel = levels[fieldsValue["level"] - 2];
   return (
     <form onSubmit={onSaveHandler}>
       <h3 className="page-title mb-3">
@@ -397,7 +392,7 @@ function Facility() {
                       field.stateName === "childrennumber") &&
                       levels[fieldsValue["level"] - 2] && (
                         <p>
-                          range: {separator(selectedLevel?.minpop)}{" "}-{" "}
+                          range: {separator(selectedLevel?.minpop)} -{" "}
                           {separator(selectedLevel?.maxpop)}
                         </p>
                       )}

@@ -9,6 +9,12 @@ class ReportService {
       headers: { Authorization: authHeader() },
     });
   }
+  getFacSeg(params) {
+    return ApiManager.get(API_URL + "facseg", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
 }
 
 export default new ReportService();

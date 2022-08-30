@@ -3,7 +3,6 @@ import { useState } from "react";
 import SharedTable from "../shared/SharedTable";
 import { Form } from "react-bootstrap";
 import ItemsService from "../services/items.service";
-import ItemService from "../services/item.service";
 import { useQuery } from "react-query";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
