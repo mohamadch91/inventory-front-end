@@ -63,7 +63,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
                     <Trans>Item category</Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
-                    <Trans> PQS code</Trans>
+                    <Trans>Model</Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
                     <Trans>code</Trans>

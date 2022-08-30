@@ -128,6 +128,17 @@ const ItemToPrint = forwardRef((props, ref) => {
           </div>
           <div ref={ref}>
             <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <h4>Inventory and Gap Analysis System (IGA)</h4>
+                </div>
+                <div className="col-md-6">
+                  <h4>
+                    Country :{" "}
+                    {JSON.parse(localStorage.getItem("country"))?.country}
+                  </h4>
+                </div>
+              </div>
               <h2 className="mb-4">
                 <Trans>Item information:</Trans>
               </h2>
@@ -137,7 +148,15 @@ const ItemToPrint = forwardRef((props, ref) => {
                     <>
                       <div style={{ width: "50%" }} md={6}>
                         <h6>{item.field.name}</h6>
-                        <div style={{ display: "flex" }} className="box mb-3">
+                        <div
+                          style={{
+                            border: "gray 1px solid",
+                            padding: "1rem",
+                            "border-radius": "5px",
+                            marginButtom: "5px",
+                          }}
+                          className="box mb-3"
+                        >
                           {item.field.params.map((param) => (
                             <div className="param">
                               <input
@@ -145,8 +164,17 @@ const ItemToPrint = forwardRef((props, ref) => {
                                 type="checkbox"
                                 checked={false}
                                 disabled
+                                style={{
+                                  Background: "white",
+                                  Border: "1px solid #ababab70",
+                                  BorderRadius: "5px",
+                                  Padding: "0.5rem",
+                                  marginRight: "5px",
+                                }}
                               />
-                              <span className="mr-3">{param.name}</span>
+                              <span className="mr-3">
+                                {param.name || param.describe}
+                              </span>
                             </div>
                           ))}
                         </div>
