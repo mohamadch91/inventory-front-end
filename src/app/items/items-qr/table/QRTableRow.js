@@ -1,17 +1,19 @@
 import React from "react";
-import { TableCell, TableRow } from "@mui/material";
+import { TableCell } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
+import "../../../styles/table.scss";
+
 const QRTableRow = (props) => {
   return (
-    <TableRow>
+    <tr>
       <TableCell className="col-sm-2">{props.itemClass}</TableCell>
-      <TableCell className="col-sm-2">{props.itemCategory}</TableCell>
+      <TableCell className="col-sm-2">{props.itemType}</TableCell>
+      <TableCell className="col-sm-2">{props.pqsCode}</TableCell>
       <TableCell className="col-sm-2">{props.code}</TableCell>
-      <TableCell className="col-sm-2">{props.model}</TableCell>
-      <TableCell className="col-sm-2">
-        <QRCodeSVG value={"test"} />
+      <TableCell className="qr">
+        <QRCodeSVG value={props.qr} size={128} />
       </TableCell>
-    </TableRow>
+    </tr>
   );
 };
 
