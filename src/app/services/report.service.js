@@ -21,6 +21,12 @@ class ReportService {
       params,
     });
   }
+  getFacMap(params) {
+    return ApiManager.get(API_URL + "facmap", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
 }
 
 export default new ReportService();

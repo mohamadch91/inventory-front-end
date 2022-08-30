@@ -512,6 +512,20 @@ class Sidebar extends Component {
                         </span>
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/reports/fac-map-based")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/fac-map-based"
+                      >
+                        <span>
+                          <Trans>Facility Map-Based Report</Trans>
+                        </span>
+                      </Link>
+                    </li>
                   </ul>
                 </Collapse>
               </li>

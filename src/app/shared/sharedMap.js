@@ -70,6 +70,7 @@ const GetCoordinates = (props) => {
 };
 
 const MapWrapper = (props) => {
+  const { locations } = props;
   const [map, setMap] = useState(null);
   const [Current, sercurrent] = useState([]);
   const [x1, setx1] = useState(
@@ -120,20 +121,7 @@ const MapWrapper = (props) => {
     }
     sercurrent(ans);
   }, []);
-  const locations = [
-    {
-      cordinates: [35.695229, 51.387348],
-    },
-    {
-      cordinates: [35., 51.387348],
-    },
-    {
-      cordinates: [34, 51.],
-    },
-    {
-      cordinates: [35.695229, 51.387348],
-    },
-  ];
+
   return (
     <div className="map">
       {Current !== null && x1 && x2 && (
@@ -154,21 +142,17 @@ const MapWrapper = (props) => {
 
           <GetCoordinates change={handl} />
           <>
-            {locations.map((e, i) => {
-                return (
-                  
-                    <Marker key={i} position={e.cordinates}>
-                      <Popup>
-                        <span>{e.cordinates}</span>
-                      </Popup>
-                    </Marker>
-                  
-                );
-            }
-            )}
-            </>
-          
-        
+            {locations?.map((e, i) => {
+              return (
+                <Marker key={i} position={e.cordinates}>
+                  <Popup>
+                    <span>{e.cordinates}</span>
+                  </Popup>
+                </Marker>
+              );
+            })}
+          </>
+
           <LocationMarker />
         </MapContainer>
       )}
