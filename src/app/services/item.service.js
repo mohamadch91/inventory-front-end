@@ -46,6 +46,25 @@ class ItemService {
       headers: { Authorization: authHeader() },
     });
   }
+
+  getQrHelper() {
+    return ApiManager.get(API_URL + "qr/helper", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+
+  getQrTableData(payload) {
+    console.log("now requesting to ", API_URL + "qr/list?" + payload);
+    return ApiManager.get(API_URL + "qr/list?" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getQrData(payload) {
+    console.log("now requesting to ", API_URL + "qr/getqr?" + payload);
+    return ApiManager.get(API_URL + "qr/list?" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ItemService();

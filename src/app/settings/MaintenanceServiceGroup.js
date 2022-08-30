@@ -3,29 +3,18 @@ import { useState } from "react";
 import SharedTable from "../shared/SharedTable";
 import { useQuery } from "react-query";
 import Spinner from "../shared/Spinner";
-import EditIcon from "../shared/EditIcon";
 import { Form } from "react-bootstrap";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
 import { useEffect } from "react";
 import MaintenanceService from "../services/maintenance.service";
 
-const defaultValues = {
-  maintance: {
-    name: "",
-    freq: "",
-    freq_in_loc: "",
-    enable: false,
-    requires: false,
-  },
-  assigned: false,
-};
-
 function MaintenanceServiceGroup() {
   const [selectedItemClassAndItemTypes, setSelectedItemClassAndItemTypes] =
     useState();
   const [selectedItemType, setSelectedItemType] = useState();
-  const [selectedToEdit, setSelectedToEdit] = useState(defaultValues);
+  const [selectedGp, setSelectedGp] = useState();
+  const [editedFields, setEditedFields] = useState([]);
 
   const { data: itemClassesWithItemTypes, isLoading: isItemClassesLoading } =
     useQuery(
@@ -38,6 +27,7 @@ function MaintenanceServiceGroup() {
         onSuccess(data) {
           setSelectedItemClassAndItemTypes(data[0]);
           setSelectedItemType(data[0].item_type[0]);
+          setSelectedGp(data[0].item_type[0].maintancegp[0]);
         },
       }
     );
@@ -51,29 +41,32 @@ function MaintenanceServiceGroup() {
       "get-maintenances",
       selectedItemType?.id,
       selectedItemClassAndItemTypes?.item_class.id,
+      selectedGp?.id,
     ],
     async () => {
       const res = await MaintenanceService.getMaintenanceActive(
         selectedItemClassAndItemTypes?.item_class.id,
-        selectedItemType?.id
+        selectedItemType?.id,
+        selectedGp?.id
       );
-      console.log(res.data)
       return res.data;
     },
     { enabled: false }
   );
 
   useEffect(() => {
-    if (selectedItemType && selectedItemClassAndItemTypes) {
+    if (selectedItemType && selectedItemClassAndItemTypes && selectedGp) {
       fetchMaintenance();
     }
-  }, [selectedItemType]);
+  }, [selectedGp]);
 
   const selectItemClassHandler = (e) => {
-    console.log();
     setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
     setSelectedItemType(
       itemClassesWithItemTypes[e.target.value].item_type?.[0]
+    );
+    setSelectedGp(
+      itemClassesWithItemTypes[e.target.value].item_type?.[0]?.maintancegp?.[0]
     );
   };
 
@@ -81,18 +74,19 @@ function MaintenanceServiceGroup() {
     setSelectedItemType(
       selectedItemClassAndItemTypes.item_type[e.target.value]
     );
+    setSelectedGp(
+      selectedItemClassAndItemTypes.item_type[e.target.value].maintancegp?.[0]
+    );
+  };
+
+  const selectGpHandler = (e) => {
+    setSelectedGp(selectedItemType.maintancegp[e.target.value]);
   };
 
   const onAcceptHandler = async () => {
-    const payload = [
-      {
-        id: selectedToEdit.maintance.id,
-        enable: selectedToEdit.assigned,
-      },
-    ];
-    const res = await MaintenanceService.postMaintenanceActive(payload);
+    const res = await MaintenanceService.postMaintenanceActive(editedFields);
     fetchMaintenance();
-    setSelectedToEdit(defaultValues);
+    setEditedFields([]);
   };
 
   if (isItemClassesLoading || isMaintenancesLoading) {
@@ -106,7 +100,7 @@ function MaintenanceServiceGroup() {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-sm-12 col-lg-6">
+              <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
                   <label className="col-sm-12">Item class</label>
                   <div className="col-sm-12">
@@ -124,7 +118,7 @@ function MaintenanceServiceGroup() {
                   </div>
                 </Form.Group>
               </div>
-              <div className="col-sm-12 col-lg-6">
+              <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
                   <label className="col-sm-12">item type</label>
                   <div className="col-sm-12">
@@ -143,117 +137,87 @@ function MaintenanceServiceGroup() {
                   </div>
                 </Form.Group>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="mt-3">
-        <div className="card">
-          <div className="card-body">
-            <h3 className="page-title mb-3">Edit Maintenance Service Group</h3>
-            <Form.Group className="row">
-              <label
-                className="col-sm-4"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                Service/ Maintenance items
-              </label>
-              <div className="col-sm-8">
-                <Form.Control
-                  disabled={true}
-                  className="form-control"
-                  value={selectedToEdit?.maintance?.name}
-                />
-              </div>
-            </Form.Group>
-            <Form.Group className="row">
-              <label
-                className="col-sm-4"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                Enable
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="checkbox"
-                  checked={selectedToEdit?.assigned}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      assigned: e.target.checked,
-                    }));
-                  }}
-                />
-              </div>
-            </Form.Group>
-            <div className="row">
-              <div className="col-sm-1">
-                <button className="btn btn-primary" onClick={onAcceptHandler}>
-                  Accept
-                </button>
-              </div>
-              <div className="col-sm-1">
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    setSelectedToEdit(defaultValues);
-                  }}
-                >
-                  Return
-                </button>
+              <div className="col-sm-12 col-lg-4">
+                <Form.Group className="row">
+                  <label className="col-sm-12">Maintenance Group</label>
+                  <div className="col-sm-12">
+                    <Form.Control
+                      onChange={selectGpHandler}
+                      className="form-select"
+                      disabled={selectedItemType === null}
+                      as="select"
+                    >
+                      {selectedItemType?.maintancegp.map((gp, index) => (
+                        <option value={index} key={gp.id} disabled={!gp.enable}>
+                          {gp.name}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </div>
+                </Form.Group>
               </div>
             </div>
           </div>
         </div>
       </div>
+
       <div className="mt-3">
         <div className="card">
           <div className="card-body p-3">
+            <div
+              className="row"
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <div className="col-sm-2">
+                <button
+                  disabled={editedFields.length === 0}
+                  className="btn btn-primary"
+                  onClick={onAcceptHandler}
+                >
+                  Save changes
+                </button>
+              </div>
+            </div>
             <div className="row">
-              <div className="mt-5 table-container">
+              <div className="mt-3 table-container">
                 <SharedTable>
                   <TableHead>
                     <TableRow>
-                      <TableCell className="col-sm-9">
+                      <TableCell className="col-sm-10">
                         Service/ Maintenance items
                       </TableCell>
                       <TableCell className="col-sm-2">Enable</TableCell>
-                      <TableCell className="col-sm-1">Edit</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {maintenances?.map((field) => {
                       return (
                         <TableRow key={field.id}>
-                          <TableCell className="col-sm-9">
+                          <TableCell className="col-sm-10">
                             {field.maintance?.name}
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <input
                               type="checkbox"
-                              disabled={true}
-                              checked={field.assigned}
-                            />
-                          </TableCell>
-                          <TableCell className="col-sm-1">
-                            <button
-                              type="button"
-                              className="edit-btn"
-                              onClick={() => {
-                                setSelectedToEdit(field);
+                              defaultChecked={field.assigned}
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                const _fieldsClone = [...editedFields];
+                                const index = _fieldsClone.findIndex(
+                                  (f) => f.id === field.id
+                                );
+                                if (index >= 0) {
+                                  _fieldsClone[index].enable = checked;
+                                } else {
+                                  _fieldsClone.push({
+                                    id: field.maintance.id,
+                                    gp: selectedGp.id,
+                                    enable: checked,
+                                  });
+                                }
+                                setEditedFields(_fieldsClone);
                               }}
-                            >
-                              <EditIcon />
-                            </button>
+                            />
                           </TableCell>
                         </TableRow>
                       );

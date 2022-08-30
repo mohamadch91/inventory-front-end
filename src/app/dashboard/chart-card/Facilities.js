@@ -7,7 +7,7 @@ import useHttp from "../../shared/custom-hooks/use-http";
 import { getFacilities } from "../dashboard-api";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/Spinner";
-
+import GaugeChart from "react-gauge-chart";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState({ defined: 0, subFacilities: 0 });
@@ -58,11 +58,15 @@ const Facilities = () => {
       <Card>
         <h3>🏢 Facilities </h3>
         <ChartDropDown onChange={ddChangeHandler} options={facilities} />
-        <CircularChart
-          percentage={chartData.defined}
-          text={"Defined!"}
-          color={"#44ce42"}
-          maxOne={true}
+        <GaugeChart
+          id="gauge-chart6"
+          animate={true}
+          nrOfLevels={10}
+          percent={chartData.defined}
+          needleColor="#345243"
+          colors={["#EA4228", "#F5CD19", "#5BE12C"]}
+          textColor={"#000000"}
+          animDelay={100}
         />
         <span>{chartData.subFacilities}</span>
         <p> Subset Facilities </p>

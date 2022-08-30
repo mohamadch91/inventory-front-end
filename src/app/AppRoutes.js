@@ -55,18 +55,31 @@ const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
 const Item = lazy(() => import("./items/Item"));
 const ItemList = lazy(() => import("./items/ItemList"));
 const ItemsQR = lazy(() => import("./items/items-qr/ItemsQR"));
+const scanQR = lazy(() => import("./items/scan-qr/ScanQR"));
 const MtnsSetting = lazy(() => import("./settings/Maintenance"));
 const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
   import("./settings/MaintenanceServiceGroup")
 );
+const MaintenanceGroup = lazy(() => import("./settings/MaintenanceGroup"));
+
+const Map = lazy(() => import("./shared/sharedMap"));
+
+const FacilitySegmentationReport = lazy(() =>
+  import("./reports/FacilitySegmentationReport")
+);
+const SubFacilityPopulationDataReport = lazy(() =>
+  import("./reports/SubFacilityPopulationDataReport")
+);
+const FacilityMapBasedReport = lazy(() =>
+  import("./reports/FacilityMapBasedReport")
+);
+
 class AppRoutes extends Component {
   render() {
     return (
       <Suspense fallback={<Spinner />}>
         <Switch>
-          {/* <Route exact path="/" component={Home} /> */}
-
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
@@ -126,8 +139,14 @@ class AppRoutes extends Component {
             path="/settings/mtns_setting2"
             component={MaintenanceServiceGroup}
           />
+          <Route
+            exact
+            path="/settings/mtns_setting3"
+            component={MaintenanceGroup}
+          />
 
           <Route exact path="/about-iga" component={AboutIGA} />
+          <Route exact path="/map" component={Map} />
 
           <Route exact path="/facilities/info/:id" component={Facility} />
           <Route exact path="/facilities/list" component={FacilityList} />
@@ -137,6 +156,23 @@ class AppRoutes extends Component {
           <Route exact path="/items/list" component={ItemList} />
           <Route exact path="/items/print" component={PrintItem} />
           <Route exact path="/items/qr" component={ItemsQR} />
+          <Route exact path="/items/scan-qr" component={scanQR} />
+
+          <Route
+            exact
+            path="/reports/fac-seg"
+            component={FacilitySegmentationReport}
+          />
+          <Route
+            exact
+            path="/reports/subfac-pop-data"
+            component={SubFacilityPopulationDataReport}
+          />
+          <Route
+            exact
+            path="/reports/fac-map-based"
+            component={FacilityMapBasedReport}
+          />
 
           <Route exact path="/dashboard" component={Dashboard} />
 
