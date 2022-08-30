@@ -14,7 +14,7 @@ function thousandSeparator(n, sep) {
   var rx = /(\d{3}(?!.*\.|$))/g;
 
   if (!sep) {
-    sep = ",";
+    sep = " ";
   }
 
   return reverse(reverse(n.toString()).replace(rx, "$1" + sep));

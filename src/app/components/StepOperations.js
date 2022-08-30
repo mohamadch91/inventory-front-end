@@ -18,7 +18,7 @@ function StepOperations(props) {
           sx={{ mr: 1 }}
           type="button"
         >
-          <LeftArrowIcon />
+          <LeftArrowIcon sx={{ mr: 2 }} />
           <Trans>Back</Trans>
         </Button>
         <Box sx={{ flex: "1 1 auto" }} />
