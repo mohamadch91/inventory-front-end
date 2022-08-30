@@ -184,7 +184,7 @@ const FilterForm = (props) => {
         />
       </div>
 
-      <div className="col-sm-3 ml-5">
+      <div className="col-sm-4 ml-5">
         <FilterFormYearsInput
           onFromChange={yearFromChangeHandler}
           onToChange={yearToChangeHandler}

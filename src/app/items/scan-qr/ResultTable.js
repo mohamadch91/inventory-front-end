@@ -34,10 +34,10 @@ const ResultTable = (props) => {
         </thead>
         <tbody>
           <tr>
-            <td>{data[0].item_class}</td>
-            <td>{data[0].item_type}</td>
-            <td>{data[0].pqs_code}</td>
-            <td>{data[0].code}</td>
+            <td>{data[0]?.item_class}</td>
+            <td>{data[0]?.item_type}</td>
+            <td>{data[0]?.pqs_code}</td>
+            <td>{data[0]?.code}</td>
           </tr>
         </tbody>
       </table>

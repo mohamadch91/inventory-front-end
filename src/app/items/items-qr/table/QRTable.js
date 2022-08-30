@@ -15,7 +15,7 @@ const QRTable = (props) => {
       const res = await ItemService.getQrTableData(props.query);
       console.log("res.data is");
       console.log(res.data);
-      return res.data;
+      return res?.data;
     },
     {
       refetchOnMount: true,
@@ -30,11 +30,11 @@ const QRTable = (props) => {
     return (
       <QRTableRow
         key={i}
-        itemClass={el.item_class}
-        itemType={el.item_type}
-        pqsCode={el.pqs_code}
-        code={el.code}
-        qr={el.qr}
+        itemClass={el?.item_class}
+        itemType={el?.item_type}
+        pqsCode={el?.pqs_code}
+        code={el?.code}
+        qr={el?.qr}
       />
     );
   });
