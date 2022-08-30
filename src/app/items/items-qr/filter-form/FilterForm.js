@@ -25,8 +25,7 @@ const FilterForm = (props) => {
       refetchOnMount: true,
     }
   );
-  console.log("filter data is ");
-  console.log(data);
+
   if (formDataIsLoading || data.length === 0) {
     return <Spinner />;
   }
@@ -137,7 +136,7 @@ const FilterForm = (props) => {
       filterState.item_class === undefined ||
       filterState.item_class === "-1"
     ) {
-      toast.error("Please select facility and item class");
+      toast.error("Please select  item class");
     }
     props.onSubmit(filterState);
   };

@@ -8,7 +8,7 @@ import ItemService from "../../../services/item.service";
 import Spinner from "../../../shared/Spinner";
 import QRTableRow from "./QRTableRow";
 
-const QRTable = (props) => {
+const QRTable = React.forwardRef((props, refToPrint) => {
   const { data, isLoading } = useQuery(
     ["filter"],
     async () => {
@@ -38,11 +38,21 @@ const QRTable = (props) => {
       />
     );
   });
+
   return (
-    <div>
+    <div ref={refToPrint} className={"mt-5 "} style={{ color: "#000" }}>
+      <div className={"text-center"}>
+        <div>
+          <h4>Inventory and Gap Analysis System (IGA)</h4>
+        </div>
+        <div>
+          <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
+        </div>
+      </div>
+
       <div className="card mt-4">
         <div className="card-body">
-          <div className="table-container">
+          <div className="table-container-to-print">
             <SharedTable>
               <TableHead>
                 <TableRow>
@@ -70,5 +80,5 @@ const QRTable = (props) => {
       </div>
     </div>
   );
-};
+});
 export default QRTable;
