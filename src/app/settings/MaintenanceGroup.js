@@ -12,13 +12,10 @@ import MaintenanceService from "../services/maintenance.service";
 
 const defaultValues = {
   name: "",
-  freq: "",
-  freq_in_loc: "",
   enable: false,
-  requires: false,
 };
 
-function MaintenanceServiceComponent() {
+function MaintenanceGroupComponent() {
   const [selectedItemClassAndItemTypes, setSelectedItemClassAndItemTypes] =
     useState();
   const [selectedItemType, setSelectedItemType] = useState();
@@ -46,12 +43,12 @@ function MaintenanceServiceComponent() {
     refetch: fetchMaintenance,
   } = useQuery(
     [
-      "get-maintenances",
+      "get-maintenances-gp",
       selectedItemType?.id,
       selectedItemClassAndItemTypes?.item_class.id,
     ],
     async () => {
-      const res = await MaintenanceService.getMaintenance(
+      const res = await MaintenanceService.getMaintenanceGp(
         selectedItemClassAndItemTypes?.item_class.id,
         selectedItemType?.id
       );
@@ -67,7 +64,6 @@ function MaintenanceServiceComponent() {
   }, [selectedItemType]);
 
   const selectItemClassHandler = (e) => {
-    console.log();
     setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
     setSelectedItemType(
       itemClassesWithItemTypes[e.target.value].item_type?.[0]
@@ -87,8 +83,8 @@ function MaintenanceServiceComponent() {
       item_class: selectedItemClassAndItemTypes?.item_class.id,
     };
     const res = (await payload.id)
-      ? MaintenanceService.putMaintenance(payload)
-      : MaintenanceService.postMaintenance(payload);
+      ? MaintenanceService.putMaintenanceGp(payload)
+      : MaintenanceService.postMaintenanceGp(payload);
     fetchMaintenance();
     setSelectedToEdit(defaultValues);
     setIsEditMode(false);
@@ -100,7 +96,7 @@ function MaintenanceServiceComponent() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Maintenance Service</h3>
+      <h3 className="page-title mb-3">Maintenance Group</h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
@@ -150,9 +146,7 @@ function MaintenanceServiceComponent() {
         <div className="card">
           <div className="card-body">
             <h3 className="page-title mb-3">
-              {isEditMode
-                ? "Edit Maintenance Service"
-                : "New Maintenance Service"}
+              {isEditMode ? "Edit Maintenance Group" : "New Maintenance Group"}
             </h3>
             <Form.Group className="row">
               <label
@@ -163,7 +157,7 @@ function MaintenanceServiceComponent() {
                   alignItems: "center",
                 }}
               >
-                Service/ Maintenance items
+                Service/ Maintenance Name
               </label>
               <div className="col-sm-8">
                 <Form.Control
@@ -179,60 +173,7 @@ function MaintenanceServiceComponent() {
                 />
               </div>
             </Form.Group>
-            <Form.Group className="row">
-              <label
-                className="col-sm-4"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                Service Interval (day)
-              </label>
-              <div className="col-sm-8">
-                <Form.Control
-                  type="number"
-                  min="0"
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      freq: e.target.value,
-                    }));
-                  }}
-                  className="form-control"
-                  value={selectedToEdit?.freq}
-                />
-              </div>
-            </Form.Group>
-            <Form.Group className="row">
-              <label
-                className="col-sm-4"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                Interval per location
-              </label>
-              <div className="col-sm-8">
-                <Form.Control
-                  type="number"
-                  min={1}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      freq_in_loc: e.target.value,
-                    }));
-                  }}
-                  className="form-control"
-                  value={selectedToEdit?.freq_in_loc}
-                />
-              </div>
-            </Form.Group>
+
             <Form.Group className="row">
               <label
                 className="col-sm-4"
@@ -253,31 +194,6 @@ function MaintenanceServiceComponent() {
                     setSelectedToEdit((preState) => ({
                       ...preState,
                       enable: e.target.checked,
-                    }));
-                  }}
-                />
-              </div>
-            </Form.Group>
-            <Form.Group className="row">
-              <label
-                className="col-sm-4"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                }}
-              >
-                Required
-              </label>
-              <div className="col-sm-8">
-                <input
-                  type="checkbox"
-                  checked={selectedToEdit?.requires}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      requires: e.target.checked,
                     }));
                   }}
                 />
@@ -316,32 +232,19 @@ function MaintenanceServiceComponent() {
                 <SharedTable>
                   <TableHead>
                     <TableRow>
-                      <TableCell className="col-sm-5">
+                      <TableCell className="col-sm-9">
                         Service/ Maintenance items
                       </TableCell>
-                      <TableCell className="col-sm-2">
-                        Service Interval (day)
-                      </TableCell>
-                      <TableCell className="col-sm-2">
-                        Interval per location
-                      </TableCell>
                       <TableCell className="col-sm-1">Enable</TableCell>
-                      <TableCell className="col-sm-1">Required</TableCell>
-                      <TableCell className="col-sm-1">Edit</TableCell>
+                      <TableCell className="col-sm-2">Edit</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {maintenances?.map((field) => {
                       return (
                         <TableRow key={field.id}>
-                          <TableCell className="col-sm-5">
+                          <TableCell className="col-sm-9">
                             {field.name}
-                          </TableCell>
-                          <TableCell className="col-sm-2">
-                            {field.freq}
-                          </TableCell>
-                          <TableCell className="col-sm-2">
-                            {field.freq_in_loc}
                           </TableCell>
                           <TableCell className="col-sm-1">
                             <input
@@ -350,19 +253,16 @@ function MaintenanceServiceComponent() {
                               checked={field.enable}
                             />
                           </TableCell>
-                          <TableCell className="col-sm-1">
-                            <input
-                              type="checkbox"
-                              disabled={true}
-                              checked={field.requires}
-                            />
-                          </TableCell>
                           <TableCell className="col-sm-2">
                             <button
                               type="button"
                               className="edit-btn"
                               onClick={() => {
-                                setSelectedToEdit(field);
+                                setSelectedToEdit({
+                                  id: field.id,
+                                  enable: field.enable,
+                                  name: field.name,
+                                });
                                 setIsEditMode(true);
                               }}
                             >
@@ -383,4 +283,4 @@ function MaintenanceServiceComponent() {
   );
 }
 
-export default MaintenanceServiceComponent;
+export default MaintenanceGroupComponent;

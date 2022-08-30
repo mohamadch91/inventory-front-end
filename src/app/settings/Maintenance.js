@@ -9,17 +9,24 @@ function Maintenance() {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-sm-12 col-lg-6">
+              <div className="col-sm-12 col-lg-4">
                 <Link to="/settings/mtns_setting1">
                   <button className="btn btn-primary w-100 py-3">
                     Maintenance Service
                   </button>
                 </Link>
               </div>
-              <div className="col-sm-12 col-lg-6">
+              <div className="col-sm-12 col-lg-4">
+                <Link to="/settings/mtns_setting3">
+                  <button className="btn btn-primary w-100 py-3">
+                    Maintenance Group
+                  </button>
+                </Link>
+              </div>
+              <div className="col-sm-12 col-lg-4">
                 <Link to="/settings/mtns_setting2">
                   <button className="btn btn-primary w-100 py-3">
-                    Maintenance Service Group
+                    Maintenance Service Group Assignment
                   </button>
                 </Link>
               </div>

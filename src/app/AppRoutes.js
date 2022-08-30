@@ -61,6 +61,8 @@ const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
 const MaintenanceServiceGroup = lazy(() =>
   import("./settings/MaintenanceServiceGroup")
 );
+const MaintenanceGroup = lazy(() => import("./settings/MaintenanceGroup"));
+
 const Map = lazy(() => import("./shared/sharedMap"));
 
 const FacilitySegmentationReport = lazy(() =>
@@ -136,6 +138,11 @@ class AppRoutes extends Component {
             exact
             path="/settings/mtns_setting2"
             component={MaintenanceServiceGroup}
+          />
+          <Route
+            exact
+            path="/settings/mtns_setting3"
+            component={MaintenanceGroup}
           />
 
           <Route exact path="/about-iga" component={AboutIGA} />
