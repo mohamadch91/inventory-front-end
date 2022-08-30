@@ -9,15 +9,16 @@ const filterFormReducer = (state, action) => {
   }
 
   return {
-    facilityId: -1,
-    itemClassId: -1,
-    itemTypeId: -1,
-    physicalId: -1,
-    workingId: -1,
-    userId: -1,
-    yearFrom: -1,
-    yearTo: -1,
-    functional: false,
+    facility: -1,
+    item_class: -1,
+    item_type: -1,
+    physical: -1,
+    working: -1,
+    user: -1,
+    year_from: -1,
+    year_to: -1,
+    code: -1,
+    func: false,
   };
 };
 // const [filterState, dispatchFilterState] = useReducer(filterFormReducer, {

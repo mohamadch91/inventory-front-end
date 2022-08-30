@@ -7,8 +7,9 @@ import { useQuery } from "react-query";
 import ItemService from "../../../services/item.service";
 import Spinner from "../../../shared/Spinner";
 import filterFormReducer from "./FilterFormReducer";
+import toast from "react-hot-toast";
 
-const FilterForm = () => {
+const FilterForm = (props) => {
   const [itemTypeOptions, setItemTypeOptions] = useState([]);
 
   const [filterState, dispatchFilterState] = useReducer(filterFormReducer, {});
@@ -24,8 +25,9 @@ const FilterForm = () => {
       refetchOnMount: true,
     }
   );
-
-  if (formDataIsLoading) {
+  console.log("filter data is ");
+  console.log(data);
+  if (formDataIsLoading || data.length === 0) {
     return <Spinner />;
   }
 
@@ -49,7 +51,7 @@ const FilterForm = () => {
   const mainFacilityDDHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "facilityId",
+      field: "facility",
       value: e.target.value,
     });
   };
@@ -57,7 +59,7 @@ const FilterForm = () => {
   const itemClassDDHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "itemClassId",
+      field: "item_class",
       value: e.target.value,
     });
 
@@ -77,62 +79,70 @@ const FilterForm = () => {
   const itemTypeDDHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "itemTypeId",
+      field: "item_type",
       value: e.target.value,
     });
   };
   const workingStatusDDHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "workingId",
+      field: "working",
       value: e.target.value,
     });
   };
   const physicalConditionDDHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "physicalId",
+      field: "physical",
       value: e.target.value,
     });
   };
   const userChangeHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "userId",
+      field: "user",
       value: e.target.value,
     });
   };
   const yearFromChangeHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "yearFrom",
+      field: "year_from",
       value: e.target.value,
     });
   };
   const yearToChangeHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "yearTo",
+      field: "year_to",
       value: e.target.value,
     });
   };
   const itemCodeChangeHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "itemCode",
+      field: "code",
       value: e.target.value,
     });
   };
   const functionalChangeHandler = (e) => {
     dispatchFilterState({
       type: "CHANGE",
-      field: "functional",
+      field: "func",
       value: e.target.checked,
     });
   };
+  const submitHandler = () => {
+    if (
+      filterState.item_class === undefined ||
+      filterState.item_class === "-1"
+    ) {
+      toast.error("Please select facility and item class");
+    }
+    props.onSubmit(filterState);
+  };
 
   console.log(filterState);
-
   return (
     <div className="row">
       <div className="col-sm-7">
@@ -187,7 +197,11 @@ const FilterForm = () => {
           label={"Is functioning"}
         />
 
-        <button type="button" className="btn btn-primary btn-fw mt-3 w-75">
+        <button
+          onClick={submitHandler}
+          type="button"
+          className="btn btn-primary btn-fw mt-3 w-75"
+        >
           Search QR code
         </button>
       </div>
