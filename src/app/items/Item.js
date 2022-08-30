@@ -60,7 +60,7 @@ function Item() {
         const res = await ItemService.getItemClassesAndTypes();
         setFieldValue((preValues) => ({
           ...preValues,
-          facility: res.data.facility.name,
+          facility: res.data.facility,
         }));
         return res.data.data.filter((item) => item.item_type.length > 0);
       },
@@ -76,7 +76,7 @@ function Item() {
   const { data: pqsData, isLoading: isPqsLoading } = useQuery(
     ["pqs", selectedItemType?.id],
     async () => {
-      const res = await ItemService.getPQS(selectedItemType.id);
+      const res = await ItemService.getPQS(selectedItemType?.id);
       return res.data.map((item) => ({
         label: item.pqsnumber ?? item.pqscode,
         value: item,
@@ -86,10 +86,6 @@ function Item() {
       refetchOnMount: true,
     }
   );
-
-  console.log("------------------------------------------------");
-  console.log("fieldErrors", fieldErrors);
-  console.log("fieldsValue", fieldsValue);
 
   const {
     data: itemFields,
@@ -190,6 +186,7 @@ function Item() {
     }
     _fieldsValue["item_class"] = selectedItemClass.item_class.id;
     _fieldsValue["item_type"] = selectedItemType.id;
+    _fieldsValue["facility"] = _fieldsValue["facility"].id;
     const res = await (id === "new"
       ? ItemService.postItem(_fieldsValue)
       : ItemService.putItem(_fieldsValue));
@@ -288,7 +285,7 @@ function Item() {
                 <div className={"col-sm-8"}>
                   <DynamicInput
                     field={facilityField}
-                    defaultValue={fieldsValue["facility"]}
+                    defaultValue={fieldsValue["facility"].name}
                   />
                 </div>
               </Form.Group>

@@ -1,9 +1,8 @@
 import { separator } from "../helpers/separator";
 
 export const hasValidationError = (value, validation) => {
+  if (typeof value !== "string" || typeof value !== "number") return false;
   const _value = value.replaceAll(" ", "");
-  console.log(_value);
-  console.log(validation);
   if (validation === undefined || !_value) return false;
   if (validation.min !== -1 && validation.min > _value) {
     return `value must greater than ${separator(validation.min)}`;
@@ -31,4 +30,15 @@ export const hasValidationError = (value, validation) => {
     return `value must be ${validation.digits} digits`;
   }
   return false;
+};
+
+export const timeValidationError = (value) => {
+  const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(
+    value
+  );
+
+  if (isValid) {
+    return false;
+  }
+  return "value must be in (hh:mm) format!";
 };

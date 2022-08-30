@@ -85,6 +85,7 @@ function FacilityMapBasedReport() {
                           level: value,
                         }));
                       }}
+                      value={filterValues.level}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -112,6 +113,7 @@ function FacilityMapBasedReport() {
                           type: value,
                         }));
                       }}
+                      value={filterValues.type}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -141,6 +143,7 @@ function FacilityMapBasedReport() {
                           power: value,
                         }));
                       }}
+                      value={filterValues.power}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -168,6 +171,7 @@ function FacilityMapBasedReport() {
                           func: value,
                         }));
                       }}
+                      value={filterValues.func}
                       as="select"
                     >
                       <option value="-1" selected disabled>

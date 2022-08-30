@@ -61,6 +61,7 @@ function FacilitySegmentationReport() {
   if (isFacSegHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
+
   return (
     <div>
       <h3 className="page-title mb-3">
@@ -93,6 +94,7 @@ function FacilitySegmentationReport() {
                           name: value,
                         }));
                       }}
+                      value={filterValues.name}
                     />
                   </Form.Group>
                 </div>
@@ -110,6 +112,7 @@ function FacilitySegmentationReport() {
                           code: value,
                         }));
                       }}
+                      value={filterValues.code}
                     />
                   </Form.Group>
                 </div>
@@ -129,6 +132,7 @@ function FacilitySegmentationReport() {
                           level: value,
                         }));
                       }}
+                      value={filterValues.level}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -156,6 +160,7 @@ function FacilitySegmentationReport() {
                           type: value,
                         }));
                       }}
+                      value={filterValues.type}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -185,6 +190,7 @@ function FacilitySegmentationReport() {
                           power: value,
                         }));
                       }}
+                      value={filterValues.power}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -212,6 +218,7 @@ function FacilitySegmentationReport() {
                           func: value,
                         }));
                       }}
+                      value={filterValues.func}
                       as="select"
                     >
                       <option value="-1" selected disabled>
@@ -242,6 +249,7 @@ function FacilitySegmentationReport() {
                           gfrom: value,
                         }));
                       }}
+                      value={filterValues.gfrom}
                     />
                     <label className="label col-sm-1">
                       <Trans>To:</Trans>
@@ -256,6 +264,7 @@ function FacilitySegmentationReport() {
                           gto: value,
                         }));
                       }}
+                      value={filterValues.gto}
                     />
                   </Form.Group>
                 </div>
@@ -279,6 +288,7 @@ function FacilitySegmentationReport() {
                           underfrom: value,
                         }));
                       }}
+                      value={filterValues.underfrom}
                     />
                     <label className="label col-sm-1">
                       <Trans>To:</Trans>
@@ -293,6 +303,7 @@ function FacilitySegmentationReport() {
                           underto: value,
                         }));
                       }}
+                      value={filterValues.underto}
                     />
                   </Form.Group>
                 </div>

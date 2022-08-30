@@ -39,7 +39,7 @@ const DynamicInput = (props) => {
           onChange={(e) => onChangeHandler(e.target.checked, field)}
           disabled={field.active ? !field.active : field.disabled}
         />
-        <i style={{ marginLeft: "5px" }}>{" "} checked: yes </i>
+        <i style={{ marginLeft: "5px" }}> checked: yes </i>
       </>
     );
   }

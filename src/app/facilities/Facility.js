@@ -8,7 +8,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import { Form } from "react-bootstrap";
 import DynamicInput from "../components/DynamicInput";
-import { hasValidationError } from "../helpers/validation-checker";
+import {
+  hasValidationError,
+  timeValidationError,
+} from "../helpers/validation-checker";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
 import Map from "../settings/Map";
 import { Trans } from "react-i18next";
@@ -44,7 +47,11 @@ function Facility() {
       }
 
       const res = await FacilitiesService.getFacilities(id);
-      return { ...res.data, defaultData };
+      const result = { ...res.data, defaultData };
+      result["populationnumber"] = separator(result["populationnumber"]);
+      result["loverlevelfac"] = separator(result["loverlevelfac"]);
+      result["childrennumber"] = separator(result["childrennumber"]);
+      return result;
     },
     {
       refetchOnMount: true,
@@ -163,11 +170,15 @@ function Facility() {
       field.stateName === "populationnumber" ||
       field.stateName === "childrennumber"
     ) {
-      console.log(+selectedLevel);
       validation.min = +selectedLevel?.minpop;
       validation.max = +selectedLevel?.maxpop;
     }
-    const validationErr = hasValidationError(value, validation);
+    let validationErr;
+    if (field.name.includes("hh:mm")) {
+      validationErr = timeValidationError(value);
+    } else {
+      validationErr = hasValidationError(value, validation);
+    }
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.stateName] = value;
     if (field.stateName === "level") {
@@ -198,6 +209,19 @@ function Facility() {
         });
       }
     }
+    if (_fieldsValue["childrennumber"]) {
+      const _value = _fieldsValue["childrennumber"].replaceAll(" ", "");
+      _fieldsValue["childrennumber"] = +_value;
+    }
+    if (_fieldsValue["populationnumber"]) {
+      const _value = _fieldsValue["populationnumber"].replaceAll(" ", "");
+      _fieldsValue["populationnumber"] = +_value;
+    }
+    if (_fieldsValue["loverlevelfac"]) {
+      const _value = _fieldsValue["loverlevelfac"].replaceAll(" ", "");
+      _fieldsValue["loverlevelfac"] = +_value;
+    }
+
     const res = await (id === "new"
       ? FacilitiesService.postFacility(_fieldsValue)
       : FacilitiesService.putFacility(_fieldsValue));
