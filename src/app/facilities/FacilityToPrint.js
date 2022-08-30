@@ -33,10 +33,13 @@ const FacilityToPrint = forwardRef((props, ref) => {
           <div className="container">
             <div className="row">
               <div className="col-md-6">
-                <h4>{window.location.origin}</h4>
+                <h4>Inventory and Gap Analysis System (IGA)</h4>
               </div>
               <div className="col-md-6">
-                <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
+                <h4>
+                  Country :{" "}
+                  {JSON.parse(localStorage.getItem("country"))?.country}
+                </h4>
               </div>
             </div>
             <h2 className="mb-4">
@@ -48,7 +51,15 @@ const FacilityToPrint = forwardRef((props, ref) => {
                   <>
                     <div style={{ width: "50%" }}>
                       <h6>{item.name}</h6>
-                      <div className="box mb-3" style={{ display: "flex" }}>
+                      <div
+                        className="box mb-3"
+                        style={{
+                          border: "gray 1px solid",
+                          padding: "1rem",
+                          "border-radius": "5px",
+                          marginButtom: "5px",
+                        }}
+                      >
                         {item.params.map((param) => (
                           <div className="param">
                             <input
@@ -64,7 +75,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
                               checked={false}
                               disabled
                             />
-                            <span className="mr-3">{param.name}</span>
+                            <span className="mr-3">{param.name || param.describe}</span>
                           </div>
                         ))}
                       </div>
