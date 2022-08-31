@@ -110,22 +110,7 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>
-          <li
-            className={
-              this.isPathActive("/map") ? "nav-item active" : "nav-item"
-            }
-          >
-            <Link className="nav-link" to="/map">
-              <span className="icon-bg">
-                <i className="mdi mdi-cube menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>
-                  <Trans>map</Trans>
-                </span>
-              </span>
-            </Link>
-          </li>
+      
           {isBrowser && (
             <BrowserView>
               {" "}
