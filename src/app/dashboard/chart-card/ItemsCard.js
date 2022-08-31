@@ -1,6 +1,5 @@
 import Card from "../../shared/UI/Card";
 import ChartDropDown from "./chart/ChartDropDown";
-import CircularChart from "./chart/CircularChart";
 import React, { useEffect, useState } from "react";
 
 import { getItemsAndTypes } from "../dashboard-api";
@@ -26,11 +25,7 @@ const ItemsCard = () => {
   // Handling api response
 
   if (status === "pending") {
-    return (
-      <div className={"centered"}>
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
   // TODO: Remove error message at production
   if (err) {
@@ -77,7 +72,10 @@ const ItemsCard = () => {
     const itemId = e.target.value;
     items.map((el) => {
       if (el.id === +itemId) {
-        setChartData({ working: el.working, totalItems: el.totalItems });
+        setChartData({
+          working: el.working.toFixed(2),
+          totalItems: el.totalItems,
+        });
       }
     });
   };
@@ -93,14 +91,15 @@ const ItemsCard = () => {
         />
 
         <ChartDropDown onChange={itemChangeHandler} options={items} />
+
         <GaugeChart
           className="pt-3"
           id="gauge-chart6"
           animate={true}
           nrOfLevels={10}
-          percent={chartData.working || 0}
+          percent={+chartData.working || 0}
           needleColor="#345243"
-          colors={[ "#EA4228","#F5CD19", "#5BE12C"]}
+          colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}
           animDelay={100}
         />

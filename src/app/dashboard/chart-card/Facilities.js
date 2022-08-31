@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CircularChart from "./chart/CircularChart";
+
 import ChartDropDown from "./chart/ChartDropDown";
 import classes from "./Facilities.module.css";
 import Card from "../../shared/UI/Card";
@@ -42,11 +42,11 @@ const Facilities = () => {
 
   const ddChangeHandler = (e) => {
     e.preventDefault();
-    console.log(facilities);
     facilities.map((el) => {
       if (el.id === +e.target.value) {
+        const definedNum = +el.facility.defined;
         setChartData({
-          defined: el.facility.defined,
+          defined: definedNum.toFixed(2),
           subFacilities: el.facility.sub_fac,
         });
       }
@@ -61,8 +61,8 @@ const Facilities = () => {
         <GaugeChart
           id="gauge-chart6"
           animate={true}
-          nrOfLevels={10}
-          percent={chartData.defined}
+          nrOfLevels={15}
+          percent={+chartData.defined}
           needleColor="#345243"
           colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}
