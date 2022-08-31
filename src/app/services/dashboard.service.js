@@ -21,5 +21,17 @@ class DashboardService {
       headers: { Authorization: authHeader() },
     });
   }
+  getAllWarningsData() {
+    return ApiManager.get(API_URL + "/maintenance", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+
+  getWarningsInfo(payload) {
+    console.log("Now requesting to " + API_URL + "/maintenance" + payload);
+    return ApiManager.get(API_URL + "/todo" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 export default new DashboardService();

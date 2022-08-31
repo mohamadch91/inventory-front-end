@@ -57,6 +57,7 @@ const Warnings = () => {
             badge={warningsData[0].badge}
             count={data.seven_days}
             badgeOp={50}
+            param={"day=7"}
           />
           <WarningItem
             title={warningsData[1].title}
@@ -64,6 +65,7 @@ const Warnings = () => {
             badge={warningsData[1].badge}
             count={data.three_days}
             badgeOp={75}
+            param={"day=3"}
           />
           <WarningItem
             title={warningsData[2].title}
@@ -72,6 +74,7 @@ const Warnings = () => {
             count={data.extended.count}
             maxExtended={data.extended.maxExtended}
             badgeOp={100}
+            param={"day=extended"}
           />
         </div>
       )}
