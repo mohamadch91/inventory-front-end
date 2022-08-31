@@ -34,6 +34,7 @@ function ItemList() {
     );
 
   const convertDate = (date) => {
+    console.log(date);
     return new Date(date).toISOString().split("T")[0];
   };
 
@@ -99,7 +100,7 @@ function ItemList() {
                         </TableCell>
                         <TableCell className="col-sm-2">
                           {item?.updated_at
-                            ? convertDate(itemType.updated_at)
+                            ? convertDate(item.updated_at)
                             : "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
