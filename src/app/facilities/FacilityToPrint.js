@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
@@ -15,7 +15,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
         setData(res.data.related);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -29,15 +29,15 @@ const FacilityToPrint = forwardRef((props, ref) => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div ref={ref}>
+        <div ref={ref} className={"mx-5 my-5"} style={{ color: "#000" }}>
           <div className="container">
-            <div className="row">
-              <div className="col-md-6">
+            <div className=" text-center my-4">
+              <div className="">
                 <h4>Inventory and Gap Analysis System (IGA)</h4>
               </div>
-              <div className="col-md-6">
+              <div className="">
                 <h4>
-                  Country :{" "}
+                  Country:{" "}
                   {JSON.parse(localStorage.getItem("country"))?.country}
                 </h4>
               </div>
@@ -47,7 +47,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
             </h2>
             <div className="wrapper">
               <Row>
-                {data.map((item, index) => (
+                {data.map((item) => (
                   <>
                     <div style={{ width: "50%" }}>
                       <h6>{item.name}</h6>
@@ -75,7 +75,9 @@ const FacilityToPrint = forwardRef((props, ref) => {
                               checked={false}
                               disabled
                             />
-                            <span className="mr-3">{param.name || param.describe}</span>
+                            <span className="mr-3">
+                              {param.name || param.describe}
+                            </span>
                           </div>
                         ))}
                       </div>

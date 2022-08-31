@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Col, Row } from "react-bootstrap";
+
 import { Trans } from "react-i18next";
 import { useReactToPrint } from "react-to-print";
 import FacilityToPrint from "./FacilityToPrint";
-import "./print.scss";
+import { Fragment } from "react";
 
 const PrintFacility = () => {
   const componentRef = React.useRef(null);
@@ -43,16 +43,14 @@ const PrintFacility = () => {
   }, [onBeforeGetContentResolve.current]);
 
   return (
-    <div className="print-page">
-      <Row className="justify-content-center mb-4">
-        <Col md={6} className="justify-content-center">
-          <button className="w-100" onClick={handlePrint}>
-            {loading ? <Trans>Loading...</Trans> : <Trans>Print</Trans>}
-          </button>
-        </Col>
-      </Row>
+    <Fragment>
+      <button className="btn btn-info btn-icon-text px-5" onClick={handlePrint}>
+        <i className="mdi mdi-printer btn-icon-append " />
+        {loading ? <Trans>Loading...</Trans> : <Trans> Print</Trans>}
+      </button>
+
       <FacilityToPrint ref={componentRef} />
-    </div>
+    </Fragment>
   );
 };
 
