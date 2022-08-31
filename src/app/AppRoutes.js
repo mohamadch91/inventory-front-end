@@ -6,6 +6,9 @@ import { connect } from "react-redux";
 import PrintItem from "./items/PrintItem";
 
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
+const WarningsTablePage = lazy(() =>
+  import("./dashboard/warnings/tables/WarningsTablePage")
+);
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
 const Dropdowns = lazy(() => import("./basic-ui/Dropdowns"));
@@ -175,6 +178,11 @@ class AppRoutes extends Component {
           />
 
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route
+            exact
+            path="/dashboard/warnings-info/:wType"
+            component={WarningsTablePage}
+          />
 
           <Route path="/basic-ui/buttons" component={Buttons} />
           <Route path="/basic-ui/dropdowns" component={Dropdowns} />
