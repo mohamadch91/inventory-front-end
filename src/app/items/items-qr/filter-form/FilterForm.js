@@ -132,11 +132,8 @@ const FilterForm = (props) => {
     });
   };
   const submitHandler = () => {
-    if (
-      filterState.item_class === undefined ||
-      filterState.item_class === "-1"
-    ) {
-      toast.error("Please select  item class");
+    if (filterState.facility === undefined || filterState.facility === "-1") {
+      toast.error("Please select a facility");
     }
     props.onSubmit(filterState);
   };
@@ -147,6 +144,7 @@ const FilterForm = (props) => {
       <div className="col-sm-7">
         <FilterFormDD
           key={"A"}
+          isRequired={true}
           label={"Main Facility"}
           options={facilityOptions}
           onChange={mainFacilityDDHandler}

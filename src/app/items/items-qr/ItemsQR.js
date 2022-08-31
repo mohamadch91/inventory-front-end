@@ -33,7 +33,7 @@ const ItemsQR = () => {
             content={() => componentToPrintRef.current}
             documentTitle={"IGA Reports"}
           />
-          <QRTable ref={componentToPrintRef} query={queryString} />
+          <QRTable ref={componentToPrintRef} queryString={queryString} />
         </div>
       )}
     </Fragment>

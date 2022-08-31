@@ -10,10 +10,9 @@ import QRTableRow from "./QRTableRow";
 
 const QRTable = React.forwardRef((props, refToPrint) => {
   const { data, isLoading } = useQuery(
-    ["filter"],
+    ["filter", props.queryString],
     async () => {
-      const res = await ItemService.getQrTableData(props.query);
-      console.log("res.data is");
+      const res = await ItemService.getQrTableData(props.queryString);
       console.log(res.data);
       return res?.data;
     },
@@ -24,6 +23,16 @@ const QRTable = React.forwardRef((props, refToPrint) => {
 
   if (isLoading) {
     return <Spinner />;
+  }
+  if (data.length === 0) {
+    return (
+      <div className="alert alert-danger w-50 text-center m-auto" role="alert">
+        <p className="display-4">
+          {" "}
+          Could not find any data with the information provided 😟
+        </p>
+      </div>
+    );
   }
 
   const tableRows = data.map((el, i) => {
