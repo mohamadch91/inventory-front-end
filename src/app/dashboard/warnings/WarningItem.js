@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const WarningItem = (props) => {
   return (
@@ -14,6 +14,7 @@ const WarningItem = (props) => {
         <Link
           className={"p-0 btn btn-link btn-fw text-muted "}
           style={{ fontSize: "16px", textDecorationColor: "#777" }}
+          to={"dashboard/warnings-info/" + props.param}
         >
           {`  (${props.count})  `}
           {props.title}
