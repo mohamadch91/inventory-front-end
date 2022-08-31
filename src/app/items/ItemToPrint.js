@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import ItemService from "../services/item.service.js";
@@ -22,7 +22,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setData(res.data);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -38,7 +38,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setFilteredItemTypes(filteredItemTypes);
         getData(itemClassId, filteredItemTypes[0].id);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -52,7 +52,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setSelectedItemClass(data[0].id);
         getItemTypes(data[0].id);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -91,7 +91,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                 }}
                 value={selectedItemClass}
               >
-                {itemClasses.map((itemClass, index) => (
+                {itemClasses.map((itemClass) => (
                   <option key={itemClass.id} value={itemClass.id}>
                     {itemClass.title}
                   </option>
@@ -108,7 +108,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                 }}
                 value={selectedItemType}
               >
-                {FilteredItemTypes?.map((itemType, index) => (
+                {FilteredItemTypes?.map((itemType) => (
                   <option key={itemType.id} value={itemType.id}>
                     {itemType.title}
                   </option>
@@ -126,15 +126,15 @@ const ItemToPrint = forwardRef((props, ref) => {
               </div>
             </div>
           </div>
-          <div ref={ref}>
+          <div ref={ref} className={"mx-5 my-5 text-dark"}>
             <div className="container">
-              <div className="row">
-                <div className="col-md-6">
+              <div className={"text-center"}>
+                <div>
                   <h4>Inventory and Gap Analysis System (IGA)</h4>
                 </div>
-                <div className="col-md-6">
+                <div>
                   <h4>
-                    Country :{" "}
+                    Country:{" "}
                     {JSON.parse(localStorage.getItem("country"))?.country}
                   </h4>
                 </div>
@@ -144,9 +144,9 @@ const ItemToPrint = forwardRef((props, ref) => {
               </h2>
               <div className="wrapper">
                 <Row>
-                  {data?.map((item, index) => (
+                  {data?.map((item) => (
                     <>
-                      <div style={{ width: "50%" }} md={6}>
+                      <div style={{ width: "50%" }}>
                         <h6>{item.field.name}</h6>
                         <div
                           style={{
