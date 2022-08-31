@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { QrReader } from "react-qr-reader";
 import ResultTable from "./ResultTable";
+import adapter from "webrtc-adapter";
 
 const ScanQR = () => {
   const [QRString, setQRString] = useState();

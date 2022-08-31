@@ -81,6 +81,7 @@
     "sass-loader": "^13.0.2",
     "simple-line-icons": "^2.4.1",
     "slick-carousel": "^1.8.1",
+    "webrtc-adapter": "^8.1.2",
     "xlsx": "^0.18.5"
   },
   "scripts": {
