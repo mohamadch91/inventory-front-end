@@ -20,7 +20,13 @@ const DynamicInput = (props) => {
         </option>
         {field.params.map((param) => (
           <option
-            disabled={param.enabled ? !param.enabled : !param.active}
+            disabled={
+              param.enabled
+                ? !param.enabled
+                : param.active
+                ? !param.active
+                : !param.enable
+            }
             value={param.id}
           >
             {param.name || param.describe}
