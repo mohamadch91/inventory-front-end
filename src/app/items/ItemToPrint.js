@@ -72,6 +72,11 @@ const ItemToPrint = forwardRef((props, ref) => {
     }
   }, [selectedItemClass]);
 
+  const spaceMaker = (
+    <div>
+      <br />
+    </div>
+  );
   return (
     <>
       {isLoading ? (
@@ -126,7 +131,8 @@ const ItemToPrint = forwardRef((props, ref) => {
               </div>
             </div>
           </div>
-          <div ref={ref} className={"mx-5 my-5 text-dark"}>
+
+          <div ref={ref} className={"mx-5 my-5 text-dark bg-muted"}>
             <div className="container">
               <div className={"text-center"}>
                 <div>
@@ -143,40 +149,38 @@ const ItemToPrint = forwardRef((props, ref) => {
                 <Trans>Item information:</Trans>
               </h2>
               <div className="wrapper">
-                <Row>
+                <Row className={"row"}>
                   {data?.map((item) => (
                     <>
-                      <div style={{ width: "50%" }}>
+                      <div className={"w-50 m-3 col-5 "}>
                         <h6>{item.field.name}</h6>
                         <div
+                          className={" rounded box h-100"}
                           style={{
                             border: "gray 1px solid",
-                            padding: "1rem",
-                            "border-radius": "5px",
-                            marginButtom: "5px",
                           }}
-                          className="box mb-3"
                         >
-                          {item.field.params.map((param) => (
-                            <div className="param">
-                              <input
-                                className="m-1"
-                                type="checkbox"
-                                checked={false}
-                                disabled
-                                style={{
-                                  Background: "white",
-                                  Border: "1px solid #ababab70",
-                                  BorderRadius: "5px",
-                                  Padding: "0.5rem",
-                                  marginRight: "5px",
-                                }}
-                              />
-                              <span className="mr-3">
-                                {param.name || param.describe}
-                              </span>
-                            </div>
-                          ))}
+                          {item.field.params.length !== 0
+                            ? item.field.params.map((param) => (
+                                <div className="param col-md-6">
+                                  <input
+                                    className="m-1  "
+                                    type="checkbox"
+                                    checked={false}
+                                    style={{
+                                      Background: "white",
+                                      Border: "1px solid #ababab70",
+                                      BorderRadius: "5px",
+                                      Padding: "0.5rem",
+                                      marginRight: "5px",
+                                    }}
+                                  />
+                                  <span className="mr-3">
+                                    {param.name || param.describe}
+                                  </span>
+                                </div>
+                              ))
+                            : spaceMaker}
                         </div>
                       </div>
                     </>
