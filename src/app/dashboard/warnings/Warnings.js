@@ -2,45 +2,80 @@ import WarningItem from "./WarningItem";
 import React from "react";
 
 import classes from "./Warnings.module.css";
+import { useQuery } from "react-query";
 
-const DUMMY = [{
-    title: 'Oil facility',
-    text: 'some new staff members are getting sick',
-    date: '05:27 Mon'
-},
-    {
-        title: 'Hospital',
-        text: 'The number of services that must be done in 7 days ( 0 ) Maintenance Service',
-        date: '05:27 Mon'
-    },
-    {
-        title: 'Hospital',
-        text: 'The number of services that were not performed on time ( 0 ) Maintenance Service',
-        date: '05:27 Mon'
-    },
-    {
-        title: 'Hospital',
-        text: 'The number of services that were not performed on time ( 0 ) Maintenance Service',
-        date: '05:27 Mon'
-    },
-    {
-        title: 'Hospital',
-        text: '\n' +
-            'The number of items which the maintenance service is defined ( 0 ) Item',
-        date: '05:27 Mon'
-    }]
+import dashboardService from "../../services/dashboard.service";
+
+const warningsData = [
+  {
+    title: "Maintenance services must be done in   ",
+
+    badge: "7 Days",
+  },
+  {
+    title: "Maintenance services must be done in   ",
+
+    badge: "3 Days",
+  },
+  {
+    title: "Maintenance  services were ",
+    badge: "not performed on time",
+  },
+];
+
 const Warnings = () => {
+  const { data, isLoading: warningData } = useQuery(
+    ["warnings"],
+    async () => {
+      const res = await dashboardService.getAllWarningsData();
+      return res.data;
+    },
+    {
+      refetchOnMount: true,
+    }
+  );
 
-    return(
-            <div className= {`card-body recent-activity ${classes.warnings}` } >
-                <h4 className="card-title" >  Warnings</h4>
-                <p className="card-description"> Warnings that need to be taken cared of </p>
-                {DUMMY.map((item, index) => {
-                    return <WarningItem key={index} title={item.title} text={item.text} date={item.date} />
-                })}
+  if (warningData || data.length === 0) {
+    return null;
+  }
 
-            </div>
-    )
-}
+  console.log(data);
 
+  return (
+    <div className={`card-body recent-activity ${classes.warnings}`}>
+      <h4 className="card-title"> Warnings</h4>
+
+      <p className="card-description">
+        Warnings that need to be taken cared of
+      </p>
+
+      {data && (
+        <div className="activities">
+          <WarningItem
+            title={warningsData[0].title}
+            text={warningsData[0].text}
+            badge={warningsData[0].badge}
+            count={data.seven_days}
+            badgeOp={50}
+          />
+          <WarningItem
+            title={warningsData[1].title}
+            text={warningsData[1].text}
+            badge={warningsData[1].badge}
+            count={data.three_days}
+            badgeOp={75}
+          />
+          <WarningItem
+            title={warningsData[2].title}
+            text={warningsData[2].text}
+            badge={warningsData[2].badge}
+            count={data.extended.count}
+            maxExtended={data.extended.maxExtended}
+            badgeOp={100}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
 export default Warnings;
