@@ -10,7 +10,7 @@ import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
-  const [chartData, setChartData] = useState({ defined: 0, subFacilities: 0 });
+  const [chartData, setChartData] = useState();
 
   const { sendRequest, status, data, error: err } = useHttp(getFacilities);
 
@@ -30,9 +30,6 @@ const Facilities = () => {
   }
 
   if (status === "completed" && facilities.length === 0) {
-    console.log("completed");
-    console.log(data);
-
     let tmp = [];
     data.map((el, i) => {
       tmp.push({ op: el.name, id: i, facility: el });
@@ -62,14 +59,18 @@ const Facilities = () => {
           id="gauge-chart6"
           animate={true}
           nrOfLevels={15}
-          percent={+chartData.defined}
+          percent={chartData ? chartData.defined : ""}
           needleColor="#345243"
           colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}
           animDelay={100}
         />
-        <span>{chartData.subFacilities}</span>
-        <p> Subset Facilities </p>
+        {chartData && (
+          <div>
+            <span>{chartData.subFacilities}</span>
+            <p> Subset Facilities </p>
+          </div>
+        )}
       </Card>
     </div>
   );
