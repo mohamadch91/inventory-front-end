@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
@@ -8,6 +8,7 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
+import API_URL from "../services/APIURL";
 
 const defaultValues = {
   name: "",
@@ -15,28 +16,87 @@ const defaultValues = {
   level: "-1",
   type: "-1",
   power: "-1",
-  item_class: "-1",
-  item_type: "-1",
-  physical: "-1",
-  financial: "-1",
-  working: "-1",
-  item_power: "-1",
-  manufacturer: "-1",
-  pqs: "",
+  degree: "1",
+  option: "1",
   year_from: "-1",
   year_to: "-1",
-  capacity_from: "",
-  capacity_to: "",
+  year_from: "-1",
+  calculate_for: "-1",
 };
 
-function ItemGroupReport() {
-  const [filterValues, setFilterValues] = useState(defaultValues);
-  const [selectedItem, setSelectedItem] = useState(null);
+const degrees = [
+  { id: "1", name: "2-8 C" },
+  { id: "2", name: "-20 C" },
+  { id: "3", name: "-70 C" },
+  { id: "4", name: "+25 C" },
+  { id: "5", name: "Dry" },
+  { id: "6", name: "All" },
+];
 
-  const { data: itemGpHelper, isLoading: isItemGpHelperLoading } = useQuery(
-    ["item-gp-helper"],
+const options = [
+  { id: "1", name: "All Equipment" },
+  { id: "2", name: "Only equipment from PQS/PIS" },
+  { id: "3", name: "Only equipment with installation date" },
+];
+
+const tableData = [
+  {
+    headTitle: "Parent",
+    valueKey: "parent",
+  },
+  {
+    headTitle: "Name",
+    valueKey: "name",
+  },
+  {
+    headTitle: "Level",
+    valueKey: "level",
+  },
+  {
+    headTitle: "Code",
+    valueKey: "code",
+  },
+  {
+    headTitle: "Type",
+    valueKey: "type",
+  },
+  {
+    headTitle: "General",
+    valueKey: "children",
+  },
+  {
+    headTitle: "General",
+    valueKey: "general",
+  },
+];
+
+const tableDegreeData = [
+  {
+    headTitle: "Required Capacity(lit)",
+    valueKey: "req",
+  },
+  {
+    headTitle: "All Total Available (lit)",
+    valueKey: "tcapacity",
+  },
+  {
+    headTitle: "Functioning Total Available (lit)",
+    valueKey: "fcapacity",
+  },
+  {
+    headTitle: "Excess/ Shortage (lit)",
+    valueKey: "excees",
+  },
+];
+
+function GapItemReport() {
+  const [filterValues, setFilterValues] = useState(defaultValues);
+  const [selectedDegree, setSelectedDegree] = useState("1");
+
+  const { data: gapItemHelper, isLoading: isGapItemHelperLoading } = useQuery(
+    ["gap-item-helper"],
     async () => {
-      const res = await ReportService.getItemGp({ help: true });
+      const res = await ReportService.getGapItem({ help: true });
       return res.data;
     }
   );
@@ -46,7 +106,7 @@ function ItemGroupReport() {
     isLoading: isReportsLoading,
     refetch: fetchReports,
   } = useQuery(
-    ["item-gp-report"],
+    ["gap-item-report"],
     async () => {
       const params = {
         help: false,
@@ -57,23 +117,26 @@ function ItemGroupReport() {
           params[key] = filter;
         }
       }
-      const res = await ReportService.getItemGp(params);
+      const res = await ReportService.getGapItem(params);
       return res.data;
     },
     {
       refetchOnMount: false,
       enabled: false,
+      onSuccess() {
+        setSelectedDegree(filterValues.degree);
+      },
     }
   );
 
-  if (isItemGpHelperLoading || isReportsLoading) {
+  if (isGapItemHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
 
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Item Grouped Report</Trans>
+        <Trans>Gap Item Report</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -146,7 +209,7 @@ function ItemGroupReport() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {itemGpHelper?.level.map((lev) => (
+                      {gapItemHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
                         </option>
@@ -174,7 +237,7 @@ function ItemGroupReport() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {itemGpHelper?.type.map((ty) => (
+                      {gapItemHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
                         </option>
@@ -204,7 +267,7 @@ function ItemGroupReport() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {itemGpHelper?.power.map((pow) => (
+                      {gapItemHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
                         </option>
@@ -213,14 +276,11 @@ function ItemGroupReport() {
                   </Form.Group>
                 </div>
               </div>
-              <h4 className="mt-1">
-                <Trans>Item Options</Trans>
-              </h4>
-              <div className="row mt-5">
+              <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Item class:</Trans>
+                      <Trans>Storage condition:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -228,52 +288,13 @@ function ItemGroupReport() {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
                           ...preValues,
-                          item_class: value,
-                          item_type: "-1",
-                          manufacturer: "-1",
+                          degree: value,
                         }));
-                        setSelectedItem(
-                          itemGpHelper.item.find(
-                            (i) => i.item_class_id === +value
-                          )
-                        );
                       }}
                       value={filterValues.item_class}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {itemGpHelper?.item?.map((i) => (
-                        <option key={i.item_class_id} value={i.item_class_id}>
-                          {i.item_class_name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </div>
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Item type:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-select col-sm-8"
-                      disabled={!selectedItem}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          item_type: value,
-                        }));
-                      }}
-                      value={filterValues.item_type}
-                      as="select"
-                    >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {selectedItem?.item_type.map((i) => (
+                      {degrees?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
                         </option>
@@ -282,69 +303,16 @@ function ItemGroupReport() {
                   </Form.Group>
                 </div>
               </div>
-              <div className="row mt-1">
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Physical condition:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-select col-sm-8"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          physical: value,
-                        }));
-                      }}
-                      value={filterValues.physical}
-                      as="select"
-                    >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {itemGpHelper?.physical?.map((i) => (
-                        <option key={i.id} value={i.id}>
-                          {i.name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </div>
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Working condition:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-select col-sm-8"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          working: value,
-                        }));
-                      }}
-                      value={filterValues.working}
-                      as="select"
-                    >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {itemGpHelper?.working?.map((i) => (
-                        <option key={i.id} value={i.id}>
-                          {i.name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </div>
+              <div className="row mt-5">
+                <h4>
+                  <Trans>Item Options</Trans>
+                </h4>
               </div>
               <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Financial source:</Trans>
+                      <Trans>Options:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -352,16 +320,13 @@ function ItemGroupReport() {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
                           ...preValues,
-                          financial: value,
+                          option: value,
                         }));
                       }}
-                      value={filterValues.financial}
+                      value={filterValues.item_class}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {itemGpHelper?.financial?.map((i) => (
+                      {options?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
                         </option>
@@ -371,88 +336,6 @@ function ItemGroupReport() {
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-select col-sm-8"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          item_power: value,
-                        }));
-                      }}
-                      value={filterValues.item_power}
-                      as="select"
-                    >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {itemGpHelper?.item_power?.map((i) => (
-                        <option key={i.id} value={i.id}>
-                          {i.name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </div>
-              </div>
-              <div className="row mt-1">
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>PQS/PIS Code:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-control col-sm-8"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          pqs: value,
-                        }));
-                      }}
-                      value={filterValues.pqs}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-sm-12 col-lg-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Manufacturer:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-select col-sm-8"
-                      disabled={!selectedItem}
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          manufacturer: value,
-                        }));
-                      }}
-                      value={filterValues.manufacturer}
-                      as="select"
-                    >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
-                      {selectedItem?.manufacturer?.map((i) => (
-                        <option key={i.id} value={i.id}>
-                          {i.name}
-                        </option>
-                      ))}
-                    </Form.Control>
-                  </Form.Group>
-                </div>
-              </div>
-              <div className="row mt-1">
-                <div className="col-sm-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Year installed:</Trans>
-                    </label>
                     <label className="label col-sm-2">
                       <Trans>from:</Trans>
                     </label>
@@ -480,7 +363,7 @@ function ItemGroupReport() {
                         );
                       })}
                     </Form.Control>
-                    <label className="label col-sm-2">
+                    <label className="label col-sm-1">
                       <Trans>to:</Trans>
                     </label>
                     <Form.Control
@@ -507,44 +390,33 @@ function ItemGroupReport() {
                         );
                       })}
                     </Form.Control>
-                  </Form.Group>
-                </div>
-                <div className="col-sm-6">
-                  <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Capacity:</Trans>
-                    </label>
-                    <label className="label col-sm-2">
-                      <Trans>from:</Trans>
+                    <label className="label col-sm-3">
+                      <Trans>Calculate for year:</Trans>
                     </label>
                     <Form.Control
-                      className="form-control col-sm-2"
-                      type="number"
+                      className="form-select col-sm-2"
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
                           ...preValues,
-                          capacity_from: value,
+                          calculate_for: value,
                         }));
                       }}
-                      value={filterValues.capacity_from}
-                    />
-
-                    <label className="label col-sm-2">
-                      <Trans>to:</Trans>
-                    </label>
-                    <Form.Control
-                      className="form-control col-sm-2"
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        setFilterValues((preValues) => ({
-                          ...preValues,
-                          capacity_to: value,
-                        }));
-                      }}
-                      value={filterValues.capacity_to}
+                      value={filterValues.calculate_for}
                       as="select"
-                    />
+                    >
+                      <option value="-1" selected disabled>
+                        Please select
+                      </option>
+                      {Array.from({ length: 30 }).map((_, i) => {
+                        const year = new Date().getUTCFullYear() - i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
                   </Form.Group>
                 </div>
               </div>
@@ -575,63 +447,94 @@ function ItemGroupReport() {
             <h4>
               <Trans>Reports</Trans>
             </h4>
-            <div className="mt-3 table-container">
+            <div className="mt-3 table-container ">
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-2">
-                      <Trans>Type</Trans>
+                    <TableCell align="center" colSpan={5}>
+                      Facility information
                     </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Model</Trans>
+                    <TableCell align="center" colSpan={2}>
+                      Populations
                     </TableCell>
-                    <TableCell className="col-sm-1">
-                      <Trans>Manufacturer</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>PQS/PIS Code</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-1">
-                      <Trans>Count</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-4">
-                      <Trans>Facility list</Trans>
-                    </TableCell>
+                    {selectedDegree === "6" ? (
+                      Array.from({ length: 5 }).map((_, i) => (
+                        <TableCell key={i} align="center" colSpan={4}>
+                          {degrees[i].name}
+                        </TableCell>
+                      ))
+                    ) : (
+                      <TableCell align="center" colSpan={4}>
+                        {degrees[+selectedDegree - 1].name}
+                      </TableCell>
+                    )}
+                  </TableRow>
+                  <TableRow>
+                    {tableData.map((data) => (
+                      <TableCell key={data.headTitle}>
+                        <Trans>{data.headTitle}</Trans>
+                      </TableCell>
+                    ))}
+                    {Array.from({ length: selectedDegree === "6" ? 5 : 1 }).map(
+                      (_, i) => (
+                        <Fragment key={i}>
+                          {tableDegreeData.map((td) => (
+                            <TableCell key={`${td.valueKey}${i + 1}`}>
+                              <Trans>{td.headTitle}</Trans>
+                            </TableCell>
+                          ))}
+                        </Fragment>
+                      )
+                    )}
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {reports?.map((report, index) => {
+                  {reports?.data.map((report, index) => {
                     return (
                       <TableRow key={index}>
-                        <TableCell className="col-sm-2">
-                          {report.item_type ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {report.model ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-1">
-                          {report.manufacturer ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {report.pqs ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-1">
-                          {report.count ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-4">
-                          {report.facility?.map(
-                            (fac, i) =>
-                              `${fac.name}${
-                                i === report.facility.length - 1 ? "" : ", "
-                              }`
-                          ) ?? "-"}
-                        </TableCell>
+                        {tableData.map((data) => (
+                          <TableCell key={data.valueKey}>
+                            {report[data.valueKey] ?? "-"}
+                          </TableCell>
+                        ))}
+                        {Array.from({
+                          length: selectedDegree === "6" ? 5 : 1,
+                        }).map((_, i) => (
+                          <Fragment key={i}>
+                            {tableDegreeData.map((td) => (
+                              <TableCell
+                                key={`${td.valueKey}${i + 1}`}
+                                style={{
+                                  color:
+                                    td.valueKey === "excees"
+                                      ? report[`exceed${i + 1}`]
+                                        ? "blue"
+                                        : "red"
+                                      : "unset",
+                                }}
+                              >
+                                {report[`${td.valueKey}${i + 1}`]}
+                              </TableCell>
+                            ))}
+                          </Fragment>
+                        ))}
                       </TableRow>
                     );
                   })}
                 </TableBody>
               </SharedTable>
             </div>
+            {reports?.excel && (
+              <div className="row mt-4">
+                <div className="col-sm-2">
+                  <a href={API_URL + reports.excel} download>
+                    <button className="btn btn-primary">
+                      <Trans>Export to MS Excel</Trans>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -639,4 +542,4 @@ function ItemGroupReport() {
   );
 }
 
-export default ItemGroupReport;
+export default GapItemReport;

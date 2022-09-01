@@ -39,6 +39,12 @@ class ReportService {
       params,
     });
   }
+  getGapItem(params) {
+    return ApiManager.get(API_URL + "gapitem", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getProfOfFac() {
     return ApiManager.get(API_URL + "facprof", {
       headers: { Authorization: authHeader() },

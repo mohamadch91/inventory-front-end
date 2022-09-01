@@ -472,6 +472,20 @@ class Sidebar extends Component {
                     <li className="nav-item">
                       <Link
                         className={
+                          this.isPathActive("/reports/gap-item")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/gap-item"
+                      >
+                        <span>
+                          <Trans>Gap Item Report</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
                           this.isPathActive("/reports/item-fac")
                             ? "nav-link active"
                             : "nav-link"
