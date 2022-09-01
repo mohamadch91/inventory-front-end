@@ -1,4 +1,9 @@
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
   min-height: calc(100vh - #{$navbar-height});
   background: $sidebar-dark-bg;
   font-family: $type1;
@@ -23,9 +28,7 @@
     overflow: hidden;
     flex-wrap: nowrap;
     flex-direction: column;
-    margin-bottom: 60px;
-    
-
+    padding-bottom: 10px;
     .nav-item {
       padding: 0 $sidebar-menu-padding-x;
       @include transition-duration(0.25s);
@@ -371,6 +374,7 @@
 @media screen and (max-width: 991px) {
   .sidebar-offcanvas {
     position: fixed;
+    left: auto;
     max-height: calc(100vh - #{$navbar-height});
     top: $navbar-height;
     bottom: 0;
