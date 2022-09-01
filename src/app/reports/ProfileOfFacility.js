@@ -141,7 +141,7 @@ const ReportTable = (props) => {
                     <TableRow key={index}>
                       {tableData.map((data) => (
                         <TableCell key={data.valueKey}>
-                          {report[data.group][data.valueKey] ?? "-"}
+                          {report[data.valueKey] ?? "-"}
                         </TableCell>
                       ))}
                     </TableRow>
