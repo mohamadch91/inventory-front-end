@@ -7,6 +7,14 @@ import ItemsService from "../services/items.service.js";
 import Spinner from "../shared/Spinner";
 import "../styles/inputs.scss";
 
+export const returnDate = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  const yyyy = today.getFullYear();
+  return yyyy + "-" + mm + "-" + dd;
+};
+
 const ItemToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -145,9 +153,11 @@ const ItemToPrint = forwardRef((props, ref) => {
                   </h4>
                 </div>
               </div>
-              <h2 className="mb-4">
-                <Trans>Item information:</Trans>
+              <h2 className="display-4">
+                {/* TODO Add facility name here*/}
+                <Trans> {`Facility ${"--name--"} Item information:`}</Trans>
               </h2>
+              <p> {returnDate()}</p>
               <div className="wrapper">
                 <Row className={"row"}>
                   {data?.map((item) => (

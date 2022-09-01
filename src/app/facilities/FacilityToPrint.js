@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
+import { returnDate } from "../items/ItemToPrint";
 
 const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
@@ -35,7 +36,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
               <div className="">
                 <h4>Inventory and Gap Analysis System (IGA)</h4>
               </div>
-              <div className="">
+              <div>
                 <h4>
                   Country:{" "}
                   {JSON.parse(localStorage.getItem("country"))?.country}
@@ -43,8 +44,10 @@ const FacilityToPrint = forwardRef((props, ref) => {
               </div>
             </div>
             <h2 className="mb-4">
-              <Trans>Facility information:</Trans>
+              {/* TODO Add facility name here*/}
+              <Trans> {`${data.facility} Facility information:`}</Trans>
             </h2>
+            <p> {returnDate()}</p>
             <div className="wrapper">
               <Row>
                 {data.map((item) => (
