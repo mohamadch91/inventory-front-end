@@ -23,10 +23,10 @@ const LogBookPage = () => {
     <div className="d-flex mb-3">
       <div className="col-lg-12 stretch-card">
         <div className="card">
-          <div className="card-body">
+          <div className="card-body p-2">
             <h4 className="card-title">Warnings Info</h4>
             <div className="table-responsive">
-              <table className="table table-bordered">
+              <table className="table table-bordered p-2 m-2">
                 <thead>
                   <tr>
                     <th className={"col-3"}> # </th>

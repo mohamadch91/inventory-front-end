@@ -1,0 +1,26 @@
+@media (max-width: 768px) {
+.inputResponsive{
+    margin: .5rem;
+    width: 30%;
+}
+    .codeInputResponsive{
+        width: 100%;
+    }
+
+    .buttonResponsive{
+        width: 100%;
+    }
+    .scanPage{
+        padding: 1rem;
+    }
+}
+.buttonResponsive{
+    width: 75%;
+}
+.scanPage{
+    padding: 1rem;
+}
+
+
+
+

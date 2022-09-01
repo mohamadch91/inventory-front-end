@@ -26,9 +26,11 @@ const ItemsQR = () => {
         <div>
           <ReactToPrint
             trigger={() => (
-              <button className={"btn btn-info btn-icon-text"}>
-                Print <i className="mdi mdi-printer btn-icon-append" />
-              </button>
+              <div className={"d-flex justify-content-center py-3"}>
+                <button className={"btn btn-info btn-icon-text "}>
+                  Print <i className="mdi mdi-printer btn-icon-append" />
+                </button>
+              </div>
             )}
             content={() => componentToPrintRef.current}
             documentTitle={"IGA Reports"}

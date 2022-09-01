@@ -3,7 +3,7 @@ import React from "react";
 
 const LevelsTable = (props) => {
   return (
-    <div>
+    <div className={"px-2 py-5"}>
       <h4 className="card-title"> 🏢 Facilities</h4>
       <p className="card-description"> Facilities owned separated by levels</p>
       <div className="table-responsive">

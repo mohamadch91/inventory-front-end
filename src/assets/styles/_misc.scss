@@ -62,6 +62,10 @@ body {
   @media (max-width: 991px) {
     padding: 2rem 2rem 0 2rem;
   }
+    @media (max-width: 767px) {
+        padding: 1rem .5rem;
+
+    }
 }
 
 .container-scroller {
@@ -103,7 +107,7 @@ code {
     height: 36px;
     border-radius: 4px;
     text-align: center;
-    box-shadow: 0px 3px 8.3px 0.7px rgba(163, 93, 255, 0.35);
+    box-shadow: 0 3px 8.3px 0.7px rgba(163, 93, 255, 0.35);
     i {
       font-size: .9375rem;
       line-height: 36px;

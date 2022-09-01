@@ -60,7 +60,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
       </div>
 
       <div className="card mt-4">
-        <div className="card-body">
+        <div className="card-body p-3 ">
           <div className="table-container-to-print">
             <SharedTable>
               <TableHead>

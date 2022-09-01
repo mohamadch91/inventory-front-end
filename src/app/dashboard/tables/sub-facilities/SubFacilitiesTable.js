@@ -1,8 +1,6 @@
 import React from "react";
 import SubFacilitiesTableRow from "./SubFacilitiesTableRow";
 
-import Card from "../../../shared/UI/Card";
-
 const SubFacilitiesTable = (props) => {
   const generateRows = () => {
     let rows = [];
@@ -25,7 +23,7 @@ const SubFacilitiesTable = (props) => {
     return rows;
   };
   return (
-    <Card>
+    <div className={"py-2 px-2"}>
       <h4 className="card-title"> Sub Facilities</h4>
       <p className="card-description">
         {" "}
@@ -47,7 +45,7 @@ const SubFacilitiesTable = (props) => {
           <tbody>{generateRows()}</tbody>
         </table>
       </div>
-    </Card>
+    </div>
   );
 };
 
