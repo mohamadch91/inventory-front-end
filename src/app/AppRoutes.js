@@ -83,6 +83,7 @@ const FacilityMapBasedReport = lazy(() =>
   import("./reports/FacilityMapBasedReport")
 );
 const ItemGroupReport = lazy(() => import("./reports/ItemGroupReport"));
+const ItemFacilityReport = lazy(() => import("./reports/ItemFacilityReport"));
 
 class AppRoutes extends Component {
   render() {
@@ -183,6 +184,11 @@ class AppRoutes extends Component {
             component={FacilityMapBasedReport}
           />
           <Route exact path="/reports/item-gp" component={ItemGroupReport} />
+          <Route
+            exact
+            path="/reports/item-fac"
+            component={ItemFacilityReport}
+          />
 
           <Route exact path="/dashboard" component={Dashboard} />
           <Route

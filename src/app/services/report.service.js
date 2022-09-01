@@ -33,6 +33,12 @@ class ReportService {
       params,
     });
   }
+  getItemFac(params) {
+    return ApiManager.get(API_URL + "itemfac", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
 }
 
 export default new ReportService();

@@ -110,7 +110,7 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>
-      
+
           {isBrowser && (
             <BrowserView>
               {" "}
@@ -469,6 +469,20 @@ class Sidebar extends Component {
                 </div>
                 <Collapse in={this.state.reportsOpen}>
                   <ul className="nav flex-column sub-menu">
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/reports/item-fac")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/item-fac"
+                      >
+                        <span>
+                          <Trans>Item Report By Facility</Trans>
+                        </span>
+                      </Link>
+                    </li>
                     <li className="nav-item">
                       <Link
                         className={
