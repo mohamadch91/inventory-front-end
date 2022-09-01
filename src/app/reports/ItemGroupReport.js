@@ -12,16 +12,16 @@ import "../styles/table.scss";
 const defaultValues = {
   name: "",
   code: "",
-  level: "",
-  type: "",
-  power: "",
-  item_class: "",
-  item_type: "",
-  physical: "",
-  financial: "",
-  working: "",
-  item_power: "",
-  manufacturer: "",
+  level: "-1",
+  type: "-1",
+  power: "-1",
+  item_class: "-1",
+  item_type: "-1",
+  physical: "-1",
+  financial: "-1",
+  working: "-1",
+  item_power: "-1",
+  manufacturer: "-1",
   pqs: "",
   year_from: "",
   year_to: "",
@@ -31,6 +31,7 @@ const defaultValues = {
 
 function ItemGroupReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const { data: itemGpHelper, isLoading: isItemGpHelperLoading } = useQuery(
     ["item-gp-helper"],
@@ -52,7 +53,7 @@ function ItemGroupReport() {
       };
       for (const key in filterValues) {
         const filter = filterValues[key];
-        if (filter.length > 0) {
+        if (filter.length > 0 && filter !== "-1") {
           params[key] = filter;
         }
       }
@@ -228,7 +229,14 @@ function ItemGroupReport() {
                         setFilterValues((preValues) => ({
                           ...preValues,
                           item_class: value,
+                          item_type: "-1",
+                          manufacturer: "-1",
                         }));
+                        setSelectedItem(
+                          itemGpHelper.item.find(
+                            (i) => i.item_class_id === +value
+                          )
+                        );
                       }}
                       value={filterValues.item_class}
                       as="select"
@@ -236,9 +244,9 @@ function ItemGroupReport() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {itemGpHelper?.item_class?.map((i) => (
-                        <option key={i.id} value={i.id}>
-                          {i.name}
+                      {itemGpHelper?.item?.map((i) => (
+                        <option key={i.item_class_id} value={i.item_class_id}>
+                          {i.item_class_name}
                         </option>
                       ))}
                     </Form.Control>
@@ -251,6 +259,7 @@ function ItemGroupReport() {
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
+                      disabled={!selectedItem}
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
@@ -264,7 +273,7 @@ function ItemGroupReport() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {itemGpHelper?.item_type?.map((i) => (
+                      {selectedItem?.item_type.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
                         </option>
@@ -273,7 +282,7 @@ function ItemGroupReport() {
                   </Form.Group>
                 </div>
               </div>
-              <div className="row mt-5">
+              <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
@@ -331,7 +340,7 @@ function ItemGroupReport() {
                   </Form.Group>
                 </div>
               </div>
-              <div className="row mt-5">
+              <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
@@ -389,42 +398,152 @@ function ItemGroupReport() {
                   </Form.Group>
                 </div>
               </div>
-
               <div className="row mt-1">
-                <div className="col-sm-12">
+                <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-2">
-                      <Trans>General population:</Trans>
-                    </label>
-                    <label className="label col-sm-1">
-                      <Trans>From:</Trans>
+                    <label className="label col-sm-4">
+                      <Trans>PQS/PIS Code:</Trans>
                     </label>
                     <Form.Control
-                      className="form-control col-sm-4"
-                      type="number"
+                      className="form-control col-sm-8"
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
                           ...preValues,
-                          gfrom: value,
+                          pqs: value,
                         }));
                       }}
-                      value={filterValues.gfrom}
+                      value={filterValues.pqs}
                     />
-                    <label className="label col-sm-1">
-                      <Trans>To:</Trans>
+                  </Form.Group>
+                </div>
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4">
+                      <Trans>Manufacturer:</Trans>
                     </label>
                     <Form.Control
-                      className="form-control col-sm-4"
+                      className="form-select col-sm-8"
+                      disabled={!selectedItem}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          manufacturer: value,
+                        }));
+                      }}
+                      value={filterValues.manufacturer}
+                      as="select"
+                    >
+                      <option value="-1" selected disabled>
+                        Please select
+                      </option>
+                      {selectedItem?.manufacturer?.map((i) => (
+                        <option key={i.id} value={i.id}>
+                          {i.name}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4">
+                      <Trans>Year installed:</Trans>
+                    </label>
+                    <label className="label col-sm-2">
+                      <Trans>from:</Trans>
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-2"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          year_from: value,
+                        }));
+                      }}
+                      value={filterValues.year_from}
+                      as="select"
+                    >
+                      <option value="-1" selected disabled>
+                        Please select
+                      </option>
+                      {Array.from({ length: 30 }).map((_, i) => {
+                        const year = new Date().getUTCFullYear() - i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                    <label className="label col-sm-2">
+                      <Trans>to:</Trans>
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-2"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          year_to: value,
+                        }));
+                      }}
+                      value={filterValues.year_to}
+                      as="select"
+                    >
+                      <option value="-1" selected disabled>
+                        Please select
+                      </option>
+                      {Array.from({ length: 30 }).map((_, i) => {
+                        const year = new Date().getUTCFullYear() - i;
+                        return (
+                          <option key={year} value={year}>
+                            {year}
+                          </option>
+                        );
+                      })}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+                <div className="col-sm-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4">
+                      <Trans>Capacity:</Trans>
+                    </label>
+                    <label className="label col-sm-2">
+                      <Trans>from:</Trans>
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-2"
                       type="number"
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
                           ...preValues,
-                          gto: value,
+                          capacity_from: value,
                         }));
                       }}
-                      value={filterValues.gto}
+                      value={filterValues.capacity_from}
+                    />
+
+                    <label className="label col-sm-2">
+                      <Trans>to:</Trans>
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-2"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          capacity_to: value,
+                        }));
+                      }}
+                      value={filterValues.capacity_to}
+                      as="select"
                     />
                   </Form.Group>
                 </div>
@@ -461,28 +580,22 @@ function ItemGroupReport() {
                 <TableHead>
                   <TableRow>
                     <TableCell className="col-sm-2">
-                      <Trans>Facility name</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Facility parent</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-1">
-                      <Trans>Level</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Code</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-1">
                       <Trans>Type</Trans>
                     </TableCell>
-                    <TableCell className="col-sm-1">
-                      <Trans>Power</Trans>
+                    <TableCell className="col-sm-2">
+                      <Trans>Model</Trans>
                     </TableCell>
                     <TableCell className="col-sm-1">
-                      <Trans>owner</Trans>
+                      <Trans>Manufacturer</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Functioning status</Trans>
+                      <Trans>PQS/PIS Code</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-1">
+                      <Trans>Count</Trans>
+                    </TableCell>
+                    <TableCell className="col-sm-4">
+                      <Trans>Facility list</Trans>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -491,28 +604,27 @@ function ItemGroupReport() {
                     return (
                       <TableRow key={index}>
                         <TableCell className="col-sm-2">
-                          {report.name ?? "-"}
+                          {report.item_type ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          {report.parent ?? "-"}
+                          {report.model ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-1">
-                          {report.level ?? "-"}
+                          {report.manufacturer ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-2">
-                          {report.code ?? "-"}
+                          {report.pqs ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-1">
-                          {report.type ?? "-"}
+                          {report.count ?? "-"}
                         </TableCell>
-                        <TableCell className="col-sm-1">
-                          {report.power ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-1">
-                          {report.owner ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {report.func ? "working" : "not working"}
+                        <TableCell className="col-sm-4">
+                          {report.facility?.map(
+                            (fac, i) =>
+                              `${fac.name}${
+                                i === report.facility.length - 1 ? "" : ", "
+                              }`
+                          ) ?? "-"}
                         </TableCell>
                       </TableRow>
                     );
