@@ -21,6 +21,10 @@ const warningsData = [
     title: "Maintenance  services were ",
     badge: "not performed on time",
   },
+  {
+    title: "Maintenance  services were ",
+    badge: "not performed on time",
+  },
 ];
 
 const Warnings = () => {
@@ -71,6 +75,15 @@ const Warnings = () => {
             title={warningsData[2].title}
             text={warningsData[2].text}
             badge={warningsData[2].badge}
+            count={data.extended.count}
+            maxExtended={data.extended.maxExtended}
+            badgeOp={100}
+            param={"day=extended"}
+          />
+          <WarningItem
+            title={warningsData[3].title}
+            text={warningsData[3].text}
+            badge={warningsData[3].badge}
             count={data.extended.count}
             maxExtended={data.extended.maxExtended}
             badgeOp={100}

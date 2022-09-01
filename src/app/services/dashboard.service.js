@@ -33,5 +33,11 @@ class DashboardService {
       headers: { Authorization: authHeader() },
     });
   }
+
+  postWarningsAsDone(payload) {
+    return ApiManager.post(API_URL + "/todo", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 export default new DashboardService();

@@ -1,7 +1,7 @@
 export const responseMessages = {
   //series 2xx
   200: {
-    fa: "درخواست موفقیت آمیز بود",
+    fa: "",
   },
   201: {
     fa: "منابع با موفقیت ایجاد شد",
