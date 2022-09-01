@@ -39,6 +39,11 @@ class ReportService {
       params,
     });
   }
+  getProfOfFac() {
+    return ApiManager.get(API_URL + "facprof", {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ReportService();
