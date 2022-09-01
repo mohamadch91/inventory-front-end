@@ -27,6 +27,12 @@ class ReportService {
       params,
     });
   }
+  getItemGp(params) {
+    return ApiManager.get(API_URL + "item-gp", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
 }
 
 export default new ReportService();
