@@ -5,6 +5,7 @@ import classes from "./Warnings.module.css";
 import { useQuery } from "react-query";
 
 import dashboardService from "../../services/dashboard.service";
+import LogBookItem from "./tables/logbook/LogBookItem";
 
 const warningsData = [
   {
@@ -43,8 +44,6 @@ const Warnings = () => {
     return null;
   }
 
-  console.log(data);
-
   return (
     <div className={`card-body recent-activity ${classes.warnings}`}>
       <h4 className="card-title"> Warnings</h4>
@@ -80,15 +79,7 @@ const Warnings = () => {
             badgeOp={100}
             param={"day=extended"}
           />
-          <WarningItem
-            title={warningsData[3].title}
-            text={warningsData[3].text}
-            badge={warningsData[3].badge}
-            count={data.extended.count}
-            maxExtended={data.extended.maxExtended}
-            badgeOp={100}
-            param={"day=extended"}
-          />
+          <LogBookItem />
         </div>
       )}
     </div>

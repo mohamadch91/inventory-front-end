@@ -28,14 +28,24 @@ class DashboardService {
   }
 
   getWarningsInfo(payload) {
-    console.log("Now requesting to " + API_URL + "/maintenance" + payload);
     return ApiManager.get(API_URL + "/todo" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getMaintenanceLog() {
+    return ApiManager.get(API_URL + "/maintenancelog", {
       headers: { Authorization: authHeader() },
     });
   }
 
   postWarningsAsDone(payload) {
     return ApiManager.post(API_URL + "/todo", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getLogDetails(payload) {
+    console.log(API_URL + "/maintenancelog" + payload);
+    return ApiManager.get(API_URL + "/maintenancelog" + payload, {
       headers: { Authorization: authHeader() },
     });
   }

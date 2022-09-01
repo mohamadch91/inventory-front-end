@@ -9,6 +9,12 @@ const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 const WarningsTablePage = lazy(() =>
   import("./dashboard/warnings/tables/WarningsTablePage")
 );
+const LogBookPage = lazy(() =>
+  import("./dashboard/warnings/tables/logbook/LogBookPage")
+);
+const LogBookDetailsPage = lazy(() =>
+  import("./dashboard/warnings/tables/logbook/LogBookDetailsPage")
+);
 
 const Buttons = lazy(() => import("./basic-ui/Buttons"));
 const Dropdowns = lazy(() => import("./basic-ui/Dropdowns"));
@@ -28,7 +34,6 @@ const Error500 = lazy(() => import("./error-pages/Error500"));
 
 const Login = lazy(() => import("./user-pages/Login"));
 const Register1 = lazy(() => import("./user-pages/Register"));
-const Home = lazy(() => import("./home/Home"));
 const Country = lazy(() => import("./settings/Country"));
 const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
@@ -178,6 +183,16 @@ class AppRoutes extends Component {
           />
 
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route
+            exact
+            path="/dashboard/maintenanceLog"
+            component={LogBookPage}
+          />
+          <Route
+            exact
+            path="/dashboard/maintenanceLog/:id"
+            component={LogBookDetailsPage}
+          />
           <Route
             exact
             path="/dashboard/warnings-info/:wType"

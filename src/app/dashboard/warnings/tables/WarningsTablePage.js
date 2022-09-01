@@ -14,18 +14,17 @@ const WarningsTablePage = () => {
   const params = useParams();
   const history = useHistory();
 
-  console.log(selectedAsDone);
-  const { data, isLoading: warningData } = useQuery(
+  const { data: tableData, isLoading: warningDataIsLoading } = useQuery(
     [],
     async () => {
       const res = await DashboardService.getWarningsInfo("?" + params.wType);
-
       return res.data;
     },
     {
       refetchOnMount: true,
     }
   );
+
   const onMarkAsDoneHandler = async () => {
     const payload = [];
     selectedAsDone.map((el) => {
@@ -46,15 +45,15 @@ const WarningsTablePage = () => {
     }
   };
 
-  if (warningData || data.length === 0 || isLoading) {
+  if (warningDataIsLoading || tableData.length === 0 || isLoading) {
     return <Spinner />;
   }
 
   return (
     <Fragment>
-      {data && (
+      {tableData && (
         <WarningsTable
-          data={data}
+          data={tableData}
           setState={setSelectedAsDone}
           state={selectedAsDone}
           onSubmit={onMarkAsDoneHandler}
