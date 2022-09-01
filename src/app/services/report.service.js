@@ -44,6 +44,14 @@ class ReportService {
       headers: { Authorization: authHeader() },
     });
   }
+  getColdProf(degree) {
+    return ApiManager.get(API_URL + "coldprof", {
+      headers: { Authorization: authHeader() },
+      params: {
+        degree,
+      },
+    });
+  }
 }
 
 export default new ReportService();

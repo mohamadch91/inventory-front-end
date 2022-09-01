@@ -542,6 +542,20 @@ class Sidebar extends Component {
                     <li className="nav-item">
                       <Link
                         className={
+                          this.isPathActive("/reports/prof-cold-chain")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/prof-cold-chain"
+                      >
+                        <span>
+                          <Trans>Profile of Cold Chain</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
                           this.isPathActive("/reports/fac-map-based")
                             ? "nav-link active"
                             : "nav-link"
