@@ -27,6 +27,12 @@ class ReportService {
       params,
     });
   }
+  getGapMap(params) {
+    return ApiManager.get(API_URL + "gapmap", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getItemGp(params) {
     return ApiManager.get(API_URL + "item-gp", {
       headers: { Authorization: authHeader() },

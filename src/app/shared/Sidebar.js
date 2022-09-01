@@ -581,6 +581,20 @@ class Sidebar extends Component {
                         </span>
                       </Link>
                     </li>
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/reports/gap-map-based")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/reports/gap-map-based"
+                      >
+                        <span>
+                          <Trans>Gap Map-Based Report</Trans>
+                        </span>
+                      </Link>
+                    </li>
                   </ul>
                 </Collapse>
               </li>

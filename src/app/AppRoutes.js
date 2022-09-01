@@ -87,6 +87,7 @@ const ItemFacilityReport = lazy(() => import("./reports/ItemFacilityReport"));
 const ProfileOfFacility = lazy(() => import("./reports/ProfileOfFacility"));
 const ProfileOfColdChain = lazy(() => import("./reports/ProfileOfColdChain"));
 const GapItemReport = lazy(() => import("./reports/GapItemReport"));
+const GapMapBasedReport = lazy(() => import("./reports/GapMapBasedReport"));
 
 class AppRoutes extends Component {
   render() {
@@ -191,6 +192,11 @@ class AppRoutes extends Component {
             exact
             path="/reports/item-fac"
             component={ItemFacilityReport}
+          />
+          <Route
+            exact
+            path="/reports/gap-map-based"
+            component={GapMapBasedReport}
           />
           <Route exact path="/reports/fac-prof" component={ProfileOfFacility} />
           <Route exact path="/reports/gap-item" component={GapItemReport} />
