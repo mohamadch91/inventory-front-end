@@ -25,8 +25,7 @@ const FilterForm = (props) => {
       refetchOnMount: true,
     }
   );
-  console.log("filter data is ");
-  console.log(data);
+
   if (formDataIsLoading || data.length === 0) {
     return <Spinner />;
   }
@@ -133,11 +132,8 @@ const FilterForm = (props) => {
     });
   };
   const submitHandler = () => {
-    if (
-      filterState.item_class === undefined ||
-      filterState.item_class === "-1"
-    ) {
-      toast.error("Please select facility and item class");
+    if (filterState.facility === undefined || filterState.facility === "-1") {
+      toast.error("Please select a facility");
     }
     props.onSubmit(filterState);
   };
@@ -148,6 +144,7 @@ const FilterForm = (props) => {
       <div className="col-sm-7">
         <FilterFormDD
           key={"A"}
+          isRequired={true}
           label={"Main Facility"}
           options={facilityOptions}
           onChange={mainFacilityDDHandler}

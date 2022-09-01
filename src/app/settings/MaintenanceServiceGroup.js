@@ -15,7 +15,7 @@ function MaintenanceServiceGroup() {
   const [selectedItemType, setSelectedItemType] = useState();
   const [selectedGp, setSelectedGp] = useState();
   const [editedFields, setEditedFields] = useState([]);
-
+  
   const { data: itemClassesWithItemTypes, isLoading: isItemClassesLoading } =
     useQuery(
       ["active-item-classes-with-item-type"],
@@ -49,9 +49,10 @@ function MaintenanceServiceGroup() {
         selectedItemType?.id,
         selectedGp?.id
       );
+      console.log(res.data);
       return res.data;
     },
-    { enabled: false }
+    { enabled: false, cacheTime: 0 }
   );
 
   useEffect(() => {
@@ -80,6 +81,7 @@ function MaintenanceServiceGroup() {
   };
 
   const selectGpHandler = (e) => {
+    console.log(selectedItemType.maintancegp[e.target.value]);
     setSelectedGp(selectedItemType.maintancegp[e.target.value]);
   };
 
@@ -95,7 +97,7 @@ function MaintenanceServiceGroup() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Maintenance Service Group</h3>
+      <h3 className="page-title mb-3">Maintenance Service Group Assignment</h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
@@ -190,9 +192,14 @@ function MaintenanceServiceGroup() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
+                   
                     {maintenances?.map((field) => {
                       return (
-                        <TableRow key={field.id}>
+                        <TableRow
+                          key={
+                            field.assigned ? field.id : field.maintance?.name
+                          }
+                        >
                           <TableCell className="col-sm-10">
                             {field.maintance?.name}
                           </TableCell>

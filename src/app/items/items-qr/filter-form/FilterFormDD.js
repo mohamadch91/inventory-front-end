@@ -18,7 +18,12 @@ const FilterFormDD = (props) => {
 
   return (
     <Form.Group className="row mb-0">
-      <label className="col-sm-3 text-right control-label" style={labelStyle}>
+      <label
+        className={`col-sm-3 text-right ${
+          props.isRequired ? "control-label" : ""
+        }`}
+        style={labelStyle}
+      >
         <Trans> {props.label} </Trans>
       </label>
       <div className="col-sm-7">

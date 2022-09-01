@@ -1,11 +1,19 @@
 import { forwardRef, useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import ItemService from "../services/item.service.js";
 import ItemsService from "../services/items.service.js";
 import Spinner from "../shared/Spinner";
 import "../styles/inputs.scss";
+
+export const returnDate = () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+  const yyyy = today.getFullYear();
+  return yyyy + "-" + mm + "-" + dd;
+};
 
 const ItemToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
@@ -22,7 +30,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setData(res.data);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -38,7 +46,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setFilteredItemTypes(filteredItemTypes);
         getData(itemClassId, filteredItemTypes[0].id);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -52,7 +60,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         setSelectedItemClass(data[0].id);
         getItemTypes(data[0].id);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -72,6 +80,11 @@ const ItemToPrint = forwardRef((props, ref) => {
     }
   }, [selectedItemClass]);
 
+  const spaceMaker = (
+    <div>
+      <br />
+    </div>
+  );
   return (
     <>
       {isLoading ? (
@@ -91,7 +104,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                 }}
                 value={selectedItemClass}
               >
-                {itemClasses.map((itemClass, index) => (
+                {itemClasses.map((itemClass) => (
                   <option key={itemClass.id} value={itemClass.id}>
                     {itemClass.title}
                   </option>
@@ -108,7 +121,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                 }}
                 value={selectedItemType}
               >
-                {FilteredItemTypes?.map((itemType, index) => (
+                {FilteredItemTypes?.map((itemType) => (
                   <option key={itemType.id} value={itemType.id}>
                     {itemType.title}
                   </option>
@@ -126,29 +139,58 @@ const ItemToPrint = forwardRef((props, ref) => {
               </div>
             </div>
           </div>
-          <div ref={ref}>
+
+          <div ref={ref} className={"mx-5 my-5 text-dark bg-muted"}>
             <div className="container">
-              <h2 className="mb-4">
-                <Trans>Item information:</Trans>
+              <div className={"text-center"}>
+                <div>
+                  <h4>Inventory and Gap Analysis System (IGA)</h4>
+                </div>
+                <div>
+                  <h4>
+                    Country:{" "}
+                    {JSON.parse(localStorage.getItem("country"))?.country}
+                  </h4>
+                </div>
+              </div>
+              <h2 className="display-4">
+                {/* TODO Add facility name here*/}
+                <Trans> {`Facility ${"--name--"} Item information:`}</Trans>
               </h2>
+              <p> {returnDate()}</p>
               <div className="wrapper">
-                <Row>
-                  {data?.map((item, index) => (
+                <Row className={"row"}>
+                  {data?.map((item) => (
                     <>
-                      <div style={{ width: "50%" }} md={6}>
+                      <div className={"w-50 m-3 col-5 "}>
                         <h6>{item.field.name}</h6>
-                        <div style={{ display: "flex" }} className="box mb-3">
-                          {item.field.params.map((param) => (
-                            <div className="param">
-                              <input
-                                className="m-1"
-                                type="checkbox"
-                                checked={false}
-                                disabled
-                              />
-                              <span className="mr-3">{param.name}</span>
-                            </div>
-                          ))}
+                        <div
+                          className={" rounded box h-100"}
+                          style={{
+                            border: "gray 1px solid",
+                          }}
+                        >
+                          {item.field.params.length !== 0
+                            ? item.field.params.map((param) => (
+                                <div className="param col-md-6">
+                                  <input
+                                    className="m-1  "
+                                    type="checkbox"
+                                    checked={false}
+                                    style={{
+                                      Background: "white",
+                                      Border: "1px solid #ababab70",
+                                      BorderRadius: "5px",
+                                      Padding: "0.5rem",
+                                      marginRight: "5px",
+                                    }}
+                                  />
+                                  <span className="mr-3">
+                                    {param.name || param.describe}
+                                  </span>
+                                </div>
+                              ))
+                            : spaceMaker}
                         </div>
                       </div>
                     </>

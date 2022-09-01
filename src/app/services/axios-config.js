@@ -20,6 +20,7 @@ ApiManager.interceptors.response.use(
     }
     if (response?.status === 401) {
       localStorage.removeItem("user");
+      localStorage.removeItem("country");
       window.location.href = `/login`;
     }
     const message =

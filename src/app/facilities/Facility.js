@@ -170,13 +170,15 @@ function Facility() {
       field.stateName === "populationnumber" ||
       field.stateName === "childrennumber"
     ) {
+      console.log(selectedLevel?.minpop);
       validation.min = +selectedLevel?.minpop;
       validation.max = +selectedLevel?.maxpop;
     }
     let validationErr;
-    if (field.name.includes("hh:mm")) {
+    if (field.name?.includes("hh:mm")) {
       validationErr = timeValidationError(value);
     } else {
+      console.log(validation);
       validationErr = hasValidationError(value, validation);
     }
     const cloneFieldsValue = { ...fieldsValue };
@@ -221,7 +223,12 @@ function Facility() {
       const _value = _fieldsValue["loverlevelfac"].replaceAll(" ", "");
       _fieldsValue["loverlevelfac"] = +_value;
     }
-
+    // for in _fieldsValue
+    for (const key in _fieldsValue) {
+      if (_fieldsValue[key] === "") {
+        delete _fieldsValue[key];
+      }
+    }
     const res = await (id === "new"
       ? FacilitiesService.postFacility(_fieldsValue)
       : FacilitiesService.putFacility(_fieldsValue));
@@ -411,10 +418,9 @@ function Facility() {
                       />
                     )}
                     <br />
-
                     {(field.stateName === "populationnumber" ||
                       field.stateName === "childrennumber") &&
-                      levels[fieldsValue["level"] - 2] && (
+                      selectedLevel && (
                         <p>
                           range: {separator(selectedLevel?.minpop)} -{" "}
                           {separator(selectedLevel?.maxpop)}

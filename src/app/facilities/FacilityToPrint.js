@@ -1,9 +1,10 @@
 import { forwardRef, useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
+import { returnDate } from "../items/ItemToPrint";
 
 const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
@@ -15,7 +16,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
         setData(res.data.related);
         setIsLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("There is a problem loading data");
         setIsLoading(false);
       });
@@ -29,26 +30,39 @@ const FacilityToPrint = forwardRef((props, ref) => {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div ref={ref}>
+        <div ref={ref} className={"mx-5 my-5"} style={{ color: "#000" }}>
           <div className="container">
-            <div className="row">
-              <div className="col-md-6">
-                <h4>{window.location.origin}</h4>
+            <div className=" text-center my-4">
+              <div className="">
+                <h4>Inventory and Gap Analysis System (IGA)</h4>
               </div>
-              <div className="col-md-6">
-                <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
+              <div>
+                <h4>
+                  Country:{" "}
+                  {JSON.parse(localStorage.getItem("country"))?.country}
+                </h4>
               </div>
             </div>
             <h2 className="mb-4">
-              <Trans>Facility information:</Trans>
+              {/* TODO Add facility name here*/}
+              <Trans> {`${data.facility} Facility information:`}</Trans>
             </h2>
+            <p> {returnDate()}</p>
             <div className="wrapper">
               <Row>
-                {data.map((item, index) => (
+                {data.map((item) => (
                   <>
                     <div style={{ width: "50%" }}>
                       <h6>{item.name}</h6>
-                      <div className="box mb-3" style={{ display: "flex" }}>
+                      <div
+                        className="box mb-3"
+                        style={{
+                          border: "gray 1px solid",
+                          padding: "1rem",
+                          "border-radius": "5px",
+                          marginButtom: "5px",
+                        }}
+                      >
                         {item.params.map((param) => (
                           <div className="param">
                             <input
@@ -64,7 +78,9 @@ const FacilityToPrint = forwardRef((props, ref) => {
                               checked={false}
                               disabled
                             />
-                            <span className="mr-3">{param.name}</span>
+                            <span className="mr-3">
+                              {param.name || param.describe}
+                            </span>
                           </div>
                         ))}
                       </div>

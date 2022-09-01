@@ -1,6 +1,5 @@
 import Card from "../../shared/UI/Card";
 import ChartDropDown from "./chart/ChartDropDown";
-import CircularChart from "./chart/CircularChart";
 import React, { useEffect, useState } from "react";
 
 import { getItemsAndTypes } from "../dashboard-api";
@@ -14,7 +13,7 @@ import GaugeChart from "react-gauge-chart";
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
   const [items, setItems] = useState([]);
-  const [chartData, setChartData] = useState({ workings: 0, totalItems: 0 });
+  const [chartData, setChartData] = useState();
 
   // api call to get items and types
   const { sendRequest, status, data, error: err } = useHttp(getItemsAndTypes);
@@ -26,11 +25,7 @@ const ItemsCard = () => {
   // Handling api response
 
   if (status === "pending") {
-    return (
-      <div className={"centered"}>
-        <Spinner />
-      </div>
-    );
+    return <Spinner />;
   }
   // TODO: Remove error message at production
   if (err) {
@@ -59,11 +54,13 @@ const ItemsCard = () => {
     data.map((el, i) => {
       if (i === +classId) {
         el.items.map((el, j) => {
+          console.log(el);
           tmp.push({
             id: j,
             classId: i,
             op: el.item_type,
             working: el.working,
+            notWorking: el.not_working,
             totalItems: el.total_items,
           });
         });
@@ -77,7 +74,11 @@ const ItemsCard = () => {
     const itemId = e.target.value;
     items.map((el) => {
       if (el.id === +itemId) {
-        setChartData({ working: el.working, totalItems: el.totalItems });
+        setChartData({
+          notWorking: el.notWorking,
+          working: el.working.toFixed(2),
+          totalItems: el.totalItems,
+        });
       }
     });
   };
@@ -86,27 +87,34 @@ const ItemsCard = () => {
     <div className={classes.item}>
       <Card>
         <h3>🏢 Items </h3>
-
         <ChartDropDown
           onChange={itemClassChangeHandler}
           options={itemClasses}
         />
-
         <ChartDropDown onChange={itemChangeHandler} options={items} />
         <GaugeChart
           className="pt-3"
           id="gauge-chart6"
           animate={true}
-          nrOfLevels={10}
-          percent={chartData.working || 0}
+          nrOfLevels={15}
+          percent={chartData ? chartData.working : ""}
           needleColor="#345243"
-          colors={[ "#EA4228","#F5CD19", "#5BE12C"]}
+          colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}
           animDelay={100}
         />
-
-        <span>{chartData.totalItems}</span>
-        <p>Items</p>
+        {chartData && (
+          <div>
+            <span>{chartData.totalItems}</span>
+            <p>Items</p>
+            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
+              Working: {chartData.working * 100}%
+            </p>
+            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
+              Not working: {chartData.notWorking}
+            </p>
+          </div>
+        )}
       </Card>
     </div>
   );

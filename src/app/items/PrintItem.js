@@ -45,9 +45,9 @@ const PrintItem = () => {
 
   return (
     <div className="print-page">
-      <Row className="justify-content-center mb-4">
-        <Col md={6} className="justify-content-center">
-          <button className="w-100" onClick={handlePrint}>
+      <Row className="justify-content-center ml-5  mb-4">
+        <Col md={6} className="ml-5 justify-content-center">
+          <button className="ml-5 pl w-50" onClick={handlePrint}>
             {loading ? <Trans>Loading...</Trans> : <Trans>Print</Trans>}
           </button>
         </Col>

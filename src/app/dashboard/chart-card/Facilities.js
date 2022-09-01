@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CircularChart from "./chart/CircularChart";
+
 import ChartDropDown from "./chart/ChartDropDown";
 import classes from "./Facilities.module.css";
 import Card from "../../shared/UI/Card";
@@ -10,7 +10,7 @@ import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
-  const [chartData, setChartData] = useState({ defined: 0, subFacilities: 0 });
+  const [chartData, setChartData] = useState();
 
   const { sendRequest, status, data, error: err } = useHttp(getFacilities);
 
@@ -30,9 +30,6 @@ const Facilities = () => {
   }
 
   if (status === "completed" && facilities.length === 0) {
-    console.log("completed");
-    console.log(data);
-
     let tmp = [];
     data.map((el, i) => {
       tmp.push({ op: el.name, id: i, facility: el });
@@ -42,11 +39,11 @@ const Facilities = () => {
 
   const ddChangeHandler = (e) => {
     e.preventDefault();
-    console.log(facilities);
     facilities.map((el) => {
       if (el.id === +e.target.value) {
+        const definedNum = +el.facility.defined;
         setChartData({
-          defined: el.facility.defined,
+          defined: definedNum.toFixed(2),
           subFacilities: el.facility.sub_fac,
         });
       }
@@ -61,15 +58,19 @@ const Facilities = () => {
         <GaugeChart
           id="gauge-chart6"
           animate={true}
-          nrOfLevels={10}
-          percent={chartData.defined}
+          nrOfLevels={15}
+          percent={chartData ? chartData.defined : ""}
           needleColor="#345243"
           colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}
           animDelay={100}
         />
-        <span>{chartData.subFacilities}</span>
-        <p> Subset Facilities </p>
+        {chartData && (
+          <div>
+            <span>{chartData.subFacilities}</span>
+            <p> Subset Facilities </p>
+          </div>
+        )}
       </Card>
     </div>
   );

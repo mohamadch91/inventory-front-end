@@ -1,8 +1,8 @@
 export const relatedFields = {
   is_suitable: ["is_suitable_reason"],
-  haveimmservice: ["typeimmservice", "numimmperweek"],
-  other_service: ["other_services"],
-  havecovid19service: [
+  haveimmservice: [
+    "typeimmservice",
+    "numimmperweek",
     "coverageX1",
     "coverageX2",
     "coverageX3",
@@ -12,6 +12,7 @@ export const relatedFields = {
     "individualsX3",
     "individualsX4",
   ],
+  other_service: ["other_services"],
 };
 
 export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {

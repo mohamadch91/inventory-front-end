@@ -2,8 +2,6 @@ import LevelsTableRow from "./LevelsTableRow";
 import React from "react";
 
 const LevelsTable = (props) => {
-  console.log("here");
-  console.log(props.data);
   return (
     <div>
       <h4 className="card-title"> 🏢 Facilities</h4>
