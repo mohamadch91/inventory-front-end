@@ -21,9 +21,10 @@ class FacilitiesService {
       params,
     });
   }
-  getFacilityFields() {
+  getFacilityFields(params) {
     return ApiManager.get(API_URL + "facility-field", {
       headers: { Authorization: authHeader() },
+      params,
     });
   }
   postFacility(payload) {

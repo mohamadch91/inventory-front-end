@@ -5,15 +5,19 @@ import Spinner from "../shared/Spinner";
 import { useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
 import EditIcon from "../shared/EditIcon";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ItemService from "../services/item.service";
 import { Trans } from "react-i18next";
 
 function ItemList() {
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const facility = params.get("facility");
+
   const { data: items, isLoading: isItemsDefaultLoading } = useQuery(
-    ["item-default-value"],
+    ["item-default-value", facility],
     async () => {
-      const res = await ItemService.getItems();
+      const res = await ItemService.getItems(undefined, facility);
       return res.data;
     },
     {
@@ -83,7 +87,7 @@ function ItemList() {
                     const itemType = itemClass?.item_type.find(
                       (itemT) => itemT.id === item.item_type
                     );
-                    console.log(itemType)
+                    console.log(itemType);
                     return (
                       <TableRow key={item.id}>
                         <TableCell className="col-sm-2">

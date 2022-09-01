@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Spinner from "../shared/Spinner";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -32,6 +32,9 @@ function Item() {
   const [isFromPQS, setIsFromPQS] = useState(false);
 
   const { id } = useParams();
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const parent = params.get("parent");
 
   const { isLoading: isItemDefaultLoading } = useQuery(
     ["item-default-value", id],
@@ -93,11 +96,17 @@ function Item() {
     isIdle: isItemsFieldsIdle,
     refetch: refetchItemFields,
   } = useQuery(
-    ["item-fields", selectedItemClass?.item_class.id, selectedItemType?.id],
+    [
+      "item-fields",
+      selectedItemClass?.item_class.id,
+      selectedItemType?.id,
+      parent,
+    ],
     async () => {
       const res = await ItemService.getItemFields(
         selectedItemClass.item_class.id,
-        selectedItemType.id
+        selectedItemType.id,
+        parent
       );
       const result = {};
       if (res.data) {

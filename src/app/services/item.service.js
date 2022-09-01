@@ -4,10 +4,13 @@ import authHeader from "./auth-header";
 const API_URL = "http://5.182.47.38:8001/item/";
 
 class ItemService {
-  getItems(id) {
+  getItems(id, facility) {
     const params = {};
     if (id) {
       params.id = id;
+    }
+    if (facility) {
+      params.facility = facility;
     }
     return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
@@ -26,11 +29,14 @@ class ItemService {
       params,
     });
   }
-  getItemFields(class_id, type_id) {
+  getItemFields(class_id, type_id, parent) {
     const params = {
       class_id,
       type_id,
     };
+    if (parent) {
+      params.parent = parent;
+    }
     return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },
       params,

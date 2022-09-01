@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import "../styles/table.scss";
@@ -8,63 +8,24 @@ import SharedTable from "../shared/SharedTable";
 import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
 import MenuIcon from "../shared/MenuIcon";
-import { Link } from "react-router-dom";
+import FacilityIcon from "../shared/FacilityIcon";
+import { Link, useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
 
 function FacilityList() {
-  const [selectedParentId, setSelectedParentId] = useState(null);
-  const [allFacility, setAllFacility] = useState([]);
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const pid = params.get("pid");
 
-  const { isLoading: isFacilityDefaultLoading, refetch: refetchFacilities } =
-    useQuery(
-      ["facility-default-value", selectedParentId],
-      async () => {
-        const res = await FacilitiesService.getFacilities();
-        return res.data;
-      },
-      {
-        enabled: false,
-        onSuccess(data) {
-          setAllFacility(data);
-        },
-      }
-    );
-
-  const { isLoading: isGetSubFacilityLoading, refetch: fetchSubFacilities } =
-    useQuery(
-      ["sub-facilities", selectedParentId],
-      async () => {
-        const res = await FacilitiesService.getSubFacilities(selectedParentId);
-        return res.data;
-      },
-      {
-        refetchOnMount: false,
-        enabled: false,
-        onSuccess(data) {
-          // const _allFacility = [...allFacility];
-          // const parentIndex = _allFacility.findIndex(
-          //   (fac) => fac.id === selectedParentId
-          // );
-          // for (let i = 0; i < data.length; i++) {
-          //   const element = data[i];
-          //   if (!_allFacility.find((fac) => fac.id === element.id)) {
-          //     _allFacility.splice(parentIndex + i + 1, 0, element);
-          //   }
-          // }
-          setAllFacility(data);
-        },
-      }
-    );
-
-  useEffect(() => {
-    refetchFacilities();
-  }, []);
-
-  useEffect(() => {
-    if (selectedParentId) {
-      fetchSubFacilities();
+  const { data: facilities, isLoading: isFacilityDefaultLoading } = useQuery(
+    ["facility-list", pid],
+    async () => {
+      const res = await (pid
+        ? FacilitiesService.getSubFacilities(pid)
+        : FacilitiesService.getFacilities());
+      return res.data;
     }
-  }, [selectedParentId]);
+  );
 
   const convertDate = (date) => {
     if (date) {
@@ -84,6 +45,33 @@ function FacilityList() {
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
+            {pid && (
+              <div className="row mt-3">
+                <div className="col-sm-2 mt-2">
+                  <Trans>Parent facility:</Trans>
+                </div>
+                <div className="col-sm-4 ">
+                  <input
+                    className="w-100"
+                    disabled
+                    defaultValue={facilities[0]?.name}
+                  />
+                </div>
+                <Link
+                  to={{
+                    pathname: "/facilities/list",
+                    search: `${
+                      facilities[0]?.parentid
+                        ? `?pid=${facilities[0]?.parentid}`
+                        : ""
+                    }`,
+                  }}
+                  className="col-sm-2 mt-2"
+                >
+                  up level
+                </Link>
+              </div>
+            )}
             <div className="mt-5 table-container">
               <SharedTable>
                 <TableHead>
@@ -110,11 +98,11 @@ function FacilityList() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {allFacility.map((facility, index) => {
+                  {facilities.map((facility, index) => {
                     return (
                       <TableRow key={index}>
                         <TableCell className="col-sm-2">
-                          {facility.name ?? "-"}
+                          {pid && index > 0 && "-- "} {facility.name ?? "-"}
                         </TableCell>
                         <TableCell className="col-sm-1">
                           {facility.level ?? "-"}
@@ -139,22 +127,48 @@ function FacilityList() {
                               </button>
                             </Tooltip>
                           </Link>
-                          {facility.parentid && (
+                          {((pid && index > 0) || !pid) && (
                             <Tooltip title="Sub facilities">
-                              <button
-                                className="edit-btn"
-                                disabled={
-                                  isGetSubFacilityLoading &&
-                                  facility.parentid === selectedParentId
-                                }
-                                onClick={() =>
-                                  setSelectedParentId(facility.parentid)
-                                }
+                              <Link
+                                to={{
+                                  pathname: "/facilities/list",
+                                  search: `?pid=${facility.id}`,
+                                }}
                               >
                                 <MenuIcon />
-                              </button>
+                              </Link>
                             </Tooltip>
                           )}
+                          <Tooltip title="Add Facility">
+                            <Link
+                              to={{
+                                pathname: "/facilities/info/new",
+                                search: `?pid=${facility.id}`,
+                              }}
+                            >
+                              <FacilityIcon />
+                            </Link>
+                          </Tooltip>
+                          <Tooltip title="Item list">
+                            <Link
+                              to={{
+                                pathname: "/items/list",
+                                search: `?facility=${facility.id}`,
+                              }}
+                            >
+                              <FacilityIcon />
+                            </Link>
+                          </Tooltip>
+                          <Tooltip title="Add item">
+                            <Link
+                              to={{
+                                pathname: "/items/info/new",
+                                search: `?parent=${facility.id}`,
+                              }}
+                            >
+                              <FacilityIcon />
+                            </Link>
+                          </Tooltip>
                         </TableCell>
                       </TableRow>
                     );
