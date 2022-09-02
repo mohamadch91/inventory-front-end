@@ -8,6 +8,8 @@ import ItemService from "../../../services/item.service";
 import Spinner from "../../../shared/Spinner";
 import filterFormReducer from "./FilterFormReducer";
 import toast from "react-hot-toast";
+import classes from "../ItemsQR.module.css";
+import { Trans } from "react-i18next";
 
 const FilterForm = (props) => {
   const [itemTypeOptions, setItemTypeOptions] = useState([]);
@@ -181,13 +183,22 @@ const FilterForm = (props) => {
         />
       </div>
 
-      <div className="col-sm-4 ml-5">
-        <FilterFormYearsInput
-          onFromChange={yearFromChangeHandler}
-          onToChange={yearToChangeHandler}
-        />
+      <div className={`col-sm-4 `}>
+        <div className={classes.inputResponsive}>
+          <FilterFormYearsInput
+            onFromChange={yearFromChangeHandler}
+            onToChange={yearToChangeHandler}
+          />
+        </div>
+
         <hr className="my-1" />
-        <FilterFormTextInput onChange={itemCodeChangeHandler} />
+        <div>
+          <FilterFormTextInput
+            onChange={itemCodeChangeHandler}
+            className={classes.codeInputResponsive}
+          />
+        </div>
+
         <hr className="my-1" />
         <FilterFormCheckbox
           onChange={functionalChangeHandler}
@@ -197,9 +208,9 @@ const FilterForm = (props) => {
         <button
           onClick={submitHandler}
           type="button"
-          className="btn btn-primary btn-fw mt-3 w-75"
+          className={`btn btn-primary btn-fw mt-3  ${classes.buttonResponsive}`}
         >
-          Search QR code
+          <Trans>Search QR code</Trans>
         </button>
       </div>
     </div>

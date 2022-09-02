@@ -1,20 +1,31 @@
 import LevelsTableRow from "./LevelsTableRow";
 import React from "react";
+import { Trans } from "react-i18next";
 
 const LevelsTable = (props) => {
   return (
-    <div>
+    <div className={"px-2 py-5"}>
       <h4 className="card-title"> 🏢 Facilities</h4>
       <p className="card-description"> Facilities owned separated by levels</p>
       <div className="table-responsive">
         <table className="table">
           <thead>
             <tr>
-              <th>Level</th>
-              <th>Level Name</th>
-              <th>Total number of facilities</th>
-              <th>Total number of sub-facilities</th>
-              <th>Number of Defined sub-level facilities</th>
+              <th>
+                <Trans>Level</Trans>
+              </th>
+              <th>
+                <Trans>Level Name</Trans>
+              </th>
+              <th>
+                <Trans>Total number of facilities</Trans>
+              </th>
+              <th>
+                <Trans>Total number of sub-facilities</Trans>
+              </th>
+              <th>
+                <Trans>Number of Defined sub-level facilities</Trans>
+              </th>
             </tr>
           </thead>
           <tbody>

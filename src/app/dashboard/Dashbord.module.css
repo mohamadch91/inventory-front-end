@@ -7,7 +7,26 @@
 
 }
 
+
+
  .warning {
     margin :4rem;
 }
+ .tables{
+    margin :4rem;
+ }
 
+ @media (max-width: 768px) {
+     .charts{
+         flex-direction: column;
+         padding: 2rem;
+     }
+     .warning{
+         margin :0;
+
+     }
+     .tables {
+      margin: 0;
+     }
+
+ }

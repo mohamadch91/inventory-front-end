@@ -7,3 +7,17 @@
     padding: 1rem 3.2rem;
 
 }
+
+@media (max-width: 768px) {
+    .levels {
+        margin: 2rem 0;
+        padding: 0;}
+
+
+
+    .sub-facilities {
+        padding: 0;
+        margin: 0;
+    }
+}
+

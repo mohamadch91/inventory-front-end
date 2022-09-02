@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import AppRoutes from "./AppRoutes";
 import Navbar from "./shared/Navbar";
 import Sidebar from "./shared/Sidebar";
-import SettingsPanel from "./shared/SettingsPanel";
+
 import Footer from "./shared/Footer";
 import { withTranslation } from "react-i18next";
 import { clearMessage } from "./actions/message";
@@ -13,7 +13,7 @@ import eventBus from "./common/EventBus";
 import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
-import Map from './settings/Map'
+import Map from "./settings/Map";
 
 class App extends Component {
   constructor(props) {
@@ -61,15 +61,11 @@ class App extends Component {
 
     let navbarComponent = !this.state.isFullPageLayout ? <Navbar /> : "";
     let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar /> : "";
-    let SettingsPanelComponent = !this.state.isFullPageLayout ? (
-      <SettingsPanel />
-    ) : (
-      ""
-    );
+
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
-        <div className="map " style={{"display":"none"}}>
+        <div className="map " style={{ display: "none" }}>
           <Map
             loca={this.state.mainlocation}
             handleChange={this.handlemapclick}
@@ -82,7 +78,6 @@ class App extends Component {
           <div className="main-panel">
             <div className="content-wrapper">
               <AppRoutes />
-              {SettingsPanelComponent}
             </div>
             {footerComponent}
           </div>

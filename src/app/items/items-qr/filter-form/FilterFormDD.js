@@ -33,7 +33,7 @@ const FilterFormDD = (props) => {
           className="form-select"
           as="select"
         >
-          <option value="-1"> Please select </option>
+          <option value="-1">Please select</option>
           {props.options.map((el) => {
             return (
               <option key={el.id} value={el.id}>

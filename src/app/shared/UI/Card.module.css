@@ -5,3 +5,9 @@
 
     background-color: white;
 }
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem;
+        margin: 1rem;
+    }
+}

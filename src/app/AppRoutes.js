@@ -16,17 +16,7 @@ const LogBookDetailsPage = lazy(() =>
   import("./dashboard/warnings/tables/logbook/LogBookDetailsPage")
 );
 
-const Buttons = lazy(() => import("./basic-ui/Buttons"));
-const Dropdowns = lazy(() => import("./basic-ui/Dropdowns"));
-const Typography = lazy(() => import("./basic-ui/Typography"));
-
-const BasicElements = lazy(() => import("./form-elements/BasicElements"));
-
-const BasicTable = lazy(() => import("./tables/BasicTable"));
-
 const Mdi = lazy(() => import("./icons/Mdi"));
-
-const ChartJs = lazy(() => import("./charts/ChartJs"));
 
 const Error403 = lazy(() => import("./error-pages/Error403"));
 const Error404 = lazy(() => import("./error-pages/Error404"));
@@ -222,22 +212,6 @@ class AppRoutes extends Component {
             path="/dashboard/warnings-info/:wType"
             component={WarningsTablePage}
           />
-
-          <Route path="/basic-ui/buttons" component={Buttons} />
-          <Route path="/basic-ui/dropdowns" component={Dropdowns} />
-          <Route path="/basic-ui/typography" component={Typography} />
-
-          <Route path="/tables/basic-table" component={BasicTable} />
-
-          <Route
-            path="/form-Elements/basic-elements"
-            component={BasicElements}
-          />
-
-          <Route path="/icons/mdi" component={Mdi} />
-
-          <Route path="/charts/chart-js" component={ChartJs} />
-
           <Route path="/" component={Login} />
           <Route path="/user-pages/register-1" component={Register1} />
 

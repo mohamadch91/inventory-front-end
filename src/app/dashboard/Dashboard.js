@@ -19,6 +19,7 @@ const Dashboard = () => {
       <section className={classes.warning}>
         <Warnings />
       </section>
+
       <DashboardTables />
     </main>
   );
