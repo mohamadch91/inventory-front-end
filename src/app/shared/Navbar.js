@@ -3,9 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import i18n from "../../i18n";
-// import { span } from 'react-i18next';
 import eventBus from "../common/EventBus";
-import userService from "../services/user.service";
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -64,11 +62,11 @@ class Navbar extends Component {
           >
             <span className="mdi mdi-menu"></span>
           </button>
-          <div className="test">
+          <div className="search-field d-none d-md-block">
             <img
-              src={require("../../assets/images/home/who-logos.png")}
+              src={require("../../assets/images/home/nav-logo.jpg")}
               alt="profile"
-              className={"w-30"}
+              className={"pl-3"}
               style={{
                 maxWidth: "100%",
                 maxHeight: "100%",
