@@ -64,19 +64,17 @@ class Navbar extends Component {
           >
             <span className="mdi mdi-menu"></span>
           </button>
-          <div className="search-field d-none d-md-block">
-            <form className="d-flex align-items-center h-100" action="#">
-              <div className="input-group">
-                <div className="input-group-prepend bg-transparent">
-                  <i className="input-group-text border-0 mdi mdi-magnify"></i>
-                </div>
-                <input
-                  type="text"
-                  className="form-control bg-transparent border-0"
-                  placeholder="Search products"
-                />
-              </div>
-            </form>
+          <div className="test">
+            <img
+              src={require("../../assets/images/home/who-logos.png")}
+              alt="profile"
+              className={"w-30"}
+              style={{
+                maxWidth: "100%",
+                maxHeight: "100%",
+                objectFit: "contain",
+              }}
+            />
           </div>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile d-none d-xl-flex">
@@ -114,32 +112,7 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item nav-profile d-none d-xl-flex">
-              <Dropdown alignRight>
-                <Dropdown.Toggle className="nav-link count-indicator">
-                  <span>Projects</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-eye-outline mr-2"></i>
-                    <span>View Project</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-pencil-outline mr-2"></i>
-                    <span>Edit Project</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
+
             <li className="nav-item nav-profile nav-language d-none d-lg-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
@@ -198,8 +171,9 @@ class Navbar extends Component {
                       alt=""
                     />
                   </div>
+                  {/**/}
                   <div className="p-2">
-                    <h5 className="dropdown-header text-uppercase pl-2 text-dark">
+                    {/*          <h5 className="dropdown-header text-uppercase pl-2 text-dark">
                       <span>User Options</span>
                     </h5>
                     <Dropdown.Item
@@ -238,7 +212,7 @@ class Navbar extends Component {
                       </span>
                       <i className="mdi mdi-settings"></i>
                     </Dropdown.Item>
-                    <div role="separator" className="dropdown-divider"></div>
+                     <div role="separator" className="dropdown-divider"></div>
                     <h5 className="dropdown-header text-uppercase  pl-2 text-dark mt-2">
                       <span>Actions</span>
                     </h5>
@@ -251,7 +225,8 @@ class Navbar extends Component {
                         <span>Lock Account</span>
                       </span>
                       <i className="mdi mdi-lock ml-1"></i>
-                    </Dropdown.Item>
+                    </Dropdown.Item>*/}
+
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
                       href="/login"
@@ -268,7 +243,8 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item">
+            {/*
+             <li className="nav-item">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-email-outline"></i>
@@ -348,7 +324,8 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item">
+            */}
+            {/*  <li className="nav-item">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-bell-outline"></i>
@@ -424,7 +401,7 @@ class Navbar extends Component {
                   </h6>
                 </Dropdown.Menu>
               </Dropdown>
-            </li>
+            </li>*/}
           </ul>
           <button
             className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
