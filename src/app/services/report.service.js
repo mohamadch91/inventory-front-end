@@ -64,6 +64,12 @@ class ReportService {
       },
     });
   }
+  getPlanningReport(params) {
+    return ApiManager.get(API_URL + "planingreport", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getPlanningCCEGap(params) {
     return ApiManager.get(API_URL + "gapcce", {
       headers: { Authorization: authHeader() },

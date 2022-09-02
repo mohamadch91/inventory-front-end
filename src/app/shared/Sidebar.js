@@ -868,6 +868,20 @@ class Sidebar extends Component {
                             </span>
                           </Link>
                         </li>
+                        <li className="nav-item">
+                          <Link
+                            className={
+                              this.isPathActive("/settings/planning-report")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
+                            to="/settings/planning-report"
+                          >
+                            <span>
+                              <Trans>Planning Report</Trans>
+                            </span>
+                          </Link>
+                        </li>
                       </ul>
                     </Collapse>
                   </li>

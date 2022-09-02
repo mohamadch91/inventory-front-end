@@ -38,23 +38,21 @@ const degrees = [
   { id: "5", name: "Dry store" },
 ];
 
-function PlanningCCEGap() {
+function PlanningReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
 
-  const { data: gapCCEHelper, isLoading: isGapCCEHelperLoading } = useQuery(
-    ["planning-cce-gap-helper"],
-    async () => {
-      const res = await ReportService.getPlanningCCEGap({ help: true });
+  const { data: planningReportHelper, isLoading: planningReportHelperLoading } =
+    useQuery(["planning-report-helper"], async () => {
+      const res = await ReportService.getPlanningReport({ help: true });
       return res.data;
-    }
-  );
+    });
 
   const {
     data: reports,
     isLoading: isReportsLoading,
     refetch: fetchReports,
   } = useQuery(
-    ["gap-cce-report"],
+    ["planning-report"],
     async () => {
       const params = {
         help: false,
@@ -65,7 +63,7 @@ function PlanningCCEGap() {
           params[key] = filter;
         }
       }
-      const res = await ReportService.getPlanningCCEGap(params);
+      const res = await ReportService.getPlanningReport(params);
       return res.data;
     },
     {
@@ -74,14 +72,14 @@ function PlanningCCEGap() {
     }
   );
 
-  if (isGapCCEHelperLoading || isReportsLoading) {
+  if (planningReportHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
 
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Planning CCE Gap</Trans>
+        <Trans>Planning Report</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -154,7 +152,7 @@ function PlanningCCEGap() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {gapCCEHelper?.level.map((lev) => (
+                      {planningReportHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
                         </option>
@@ -182,7 +180,7 @@ function PlanningCCEGap() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {gapCCEHelper?.type.map((ty) => (
+                      {planningReportHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
                         </option>
@@ -212,7 +210,7 @@ function PlanningCCEGap() {
                       <option value="-1" selected disabled>
                         Please select
                       </option>
-                      {gapCCEHelper?.power.map((pow) => (
+                      {planningReportHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
                         </option>
@@ -481,43 +479,22 @@ function PlanningCCEGap() {
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <Trans>Planned</Trans>
-                    </TableCell>
-                    <TableCell>
                       <Trans>Facility Name</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Parent Facility</Trans>
+                      <Trans>PQS/PIS Code</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Level</Trans>
+                      <Trans>PQS/PIS-Type</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Code</Trans>
+                      <Trans>Net vaccine storage capacity (lit.)</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Type</Trans>
+                      <Trans>Freezer Net Capacity (lit.)</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Power source</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Storage condition</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Require Capacity</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Available Capacity (lit.)</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Functional Capacity</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Shortage/exces Capacity</Trans>
-                    </TableCell>
-                    <TableCell>
-                      <Trans>Plan it</Trans>
+                      <Trans>Assign</Trans>
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -525,28 +502,17 @@ function PlanningCCEGap() {
                   {reports?.map((report, index) => {
                     return (
                       <TableRow key={index}>
+                        <TableCell>{report.facility ?? "-"}</TableCell>
+                        <TableCell>{report.code ?? "-"}</TableCell>
+                        <TableCell>{report.type ?? "-"}</TableCell>
+                        <TableCell>{report.vac_cap ?? "-"}</TableCell>
+                        <TableCell>{report.freez_cap ?? "-"}</TableCell>
                         <TableCell>
                           <input
                             type="checkbox"
                             disabled
-                            defaultChecked={report.planned}
+                            defaultChecked={report.assigned}
                           />
-                        </TableCell>
-                        <TableCell>{report.facility ?? "-"}</TableCell>
-                        <TableCell>{report.parent ?? "-"}</TableCell>
-                        <TableCell>{report.level ?? "-"}</TableCell>
-                        <TableCell>{report.code ?? "-"}</TableCell>
-                        <TableCell>{report.type ?? "-"}</TableCell>
-                        <TableCell>{report.power ?? "-"}</TableCell>
-                        <TableCell>{report.condition ?? "-"}</TableCell>
-                        <TableCell>{report.req_capacity ?? "-"}</TableCell>
-                        <TableCell>{report.available ?? "-"}</TableCell>
-                        <TableCell>{report.func_cap ?? "-"}</TableCell>
-                        <TableCell>{report.exces ?? "-"}</TableCell>
-                        <TableCell>
-                          <Link to={`/settings/fac-gap-info/${report.id}`}>
-                            Plan it
-                          </Link>
                         </TableCell>
                       </TableRow>
                     );
@@ -561,4 +527,4 @@ function PlanningCCEGap() {
   );
 }
 
-export default PlanningCCEGap;
+export default PlanningReport;

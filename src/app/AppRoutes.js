@@ -47,6 +47,7 @@ const ParameterDescription = lazy(() =>
 );
 const MangeHelp = lazy(() => import("./settings/ManageHelp"));
 const PlanningCCEGap = lazy(() => import("./settings/PlanningCCEGap"));
+const PlanningReport = lazy(() => import("./settings/PlanningReport"));
 const FacilityGapInformation = lazy(() =>
   import("./settings/FacilityGapInformation")
 );
@@ -149,6 +150,11 @@ class AppRoutes extends Component {
             exact
             path="/settings/planning-cce-gap"
             component={PlanningCCEGap}
+          />
+          <Route
+            exact
+            path="/settings/planning-report"
+            component={PlanningReport}
           />
           <Route
             exact
