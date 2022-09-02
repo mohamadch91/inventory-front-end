@@ -44,8 +44,12 @@ const FacilityToPrint = forwardRef((props, ref) => {
               </div>
             </div>
             <h2 className="mb-4">
-              {/* TODO Add facility name here*/}
-              <Trans> {`${data.facility} Facility information:`}</Trans>
+              <Trans>
+                {" "}
+                {`${
+                  JSON.parse(localStorage.getItem("user"))?.facility_name
+                } Facility information:`}
+              </Trans>
             </h2>
             <p> {returnDate()}</p>
             <div className="wrapper">
