@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import DashboardService from "../../../../services/dashboard.service";
 import { Spinner } from "react-bootstrap";
+import { Trans } from "react-i18next";
 
 const LogBookPage = () => {
   const { data, isLoading } = useQuery(
@@ -23,16 +24,28 @@ const LogBookPage = () => {
     <div className="d-flex mb-3">
       <div className="col-lg-12 stretch-card">
         <div className="card">
-          <div className="card-body">
+          <div className="card-body p-2">
             <h4 className="card-title">Warnings Info</h4>
             <div className="table-responsive">
-              <table className="table table-bordered">
+              <table className="table table-bordered p-2 m-2">
                 <thead>
                   <tr>
-                    <th className={"col-3"}> # </th>
-                    <th className={"col-3"}> Code </th>
-                    <th className={"col-3"}> Maintenance group </th>
-                    <th className={"col-3"}> Details </th>
+                    <th className={"col-3"}>
+                      {" "}
+                      <Trans>#</Trans>{" "}
+                    </th>
+                    <th className={"col-3"}>
+                      {" "}
+                      <Trans>Code</Trans>{" "}
+                    </th>
+                    <th className={"col-3"}>
+                      {" "}
+                      <Trans>Maintenance group</Trans>{" "}
+                    </th>
+                    <th className={"col-3"}>
+                      {" "}
+                      <Trans>Details</Trans>{" "}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,7 +60,7 @@ const LogBookPage = () => {
                             to={`/dashboard/maintenanceLog/${el.id}`}
                             className="btn btn-info btn-fw "
                           >
-                            Click for details️
+                            <Trans>Click for details</Trans>
                           </Link>
                         </td>
                       </tr>

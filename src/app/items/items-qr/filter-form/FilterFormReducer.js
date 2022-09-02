@@ -21,16 +21,5 @@ const filterFormReducer = (state, action) => {
     func: false,
   };
 };
-// const [filterState, dispatchFilterState] = useReducer(filterFormReducer, {
-//     facilityId: null,
-//     itemClassId: null,
-//     itemTypeId: null,
-//     physicalId: null,
-//     workingId: null,
-//     userId: null,
-//     yearFrom: null,
-//     yearTo: null,
-//     functional: false,
-// }, {});
 
 export default filterFormReducer;

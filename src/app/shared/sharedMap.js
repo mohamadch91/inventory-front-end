@@ -129,7 +129,7 @@ const MapWrapper = (props) => {
           center={[x1, x2]}
           zoom={10}
           scrollWheelZoom={true}
-          style={{ width: "100%", height: "450px" }}
+          style={{ width: "100%", height: "450px", zIndex: "1" }}
 
           //   onClick={this.handlemapclick}
         >

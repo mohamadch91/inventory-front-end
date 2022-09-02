@@ -18,7 +18,6 @@ const defaultValues = {
   power: "-1",
   degree: "1",
   option: "1",
-  year_from: "-1",
   year_to: "-1",
   year_from: "-1",
   calculate_for: "-1",
@@ -352,7 +351,7 @@ function GapItemReport() {
                       as="select"
                     >
                       <option value="-1" selected disabled>
-                        Please select
+                        select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
@@ -379,7 +378,7 @@ function GapItemReport() {
                       as="select"
                     >
                       <option value="-1" selected disabled>
-                        Please select
+                        select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
@@ -406,7 +405,7 @@ function GapItemReport() {
                       as="select"
                     >
                       <option value="-1" selected disabled>
-                        Please select
+                        select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { QrReader } from "react-qr-reader";
 import ResultTable from "./ResultTable";
 import adapter from "webrtc-adapter";
+import classes from "../items-qr/ItemsQR.module.css";
 
 const ScanQR = () => {
   const [QRString, setQRString] = useState();
@@ -28,7 +29,7 @@ const ScanQR = () => {
   };
 
   return (
-    <div className={"card px-5 py-5 w-75 m-auto "}>
+    <div className={`card w-75 m-auto ${classes.scanPage}`}>
       <button
         onClick={submitHandler}
         type="button"

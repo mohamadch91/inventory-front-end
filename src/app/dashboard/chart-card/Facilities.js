@@ -8,6 +8,7 @@ import { getFacilities } from "../dashboard-api";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
+import { Trans } from "react-i18next";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState();
@@ -53,7 +54,9 @@ const Facilities = () => {
   return (
     <div className={classes.facilities}>
       <Card>
-        <h3>🏢 Facilities </h3>
+        <h3>
+          🏢 <Trans>Facilities</Trans>{" "}
+        </h3>
         <ChartDropDown onChange={ddChangeHandler} options={facilities} />
         <GaugeChart
           id="gauge-chart6"
@@ -68,7 +71,10 @@ const Facilities = () => {
         {chartData && (
           <div>
             <span>{chartData.subFacilities}</span>
-            <p> Subset Facilities </p>
+            <p>
+              {" "}
+              <Trans>Subset Facilities</Trans>{" "}
+            </p>
           </div>
         )}
       </Card>
