@@ -15,7 +15,7 @@ function MaintenanceServiceGroup() {
   const [selectedItemType, setSelectedItemType] = useState();
   const [selectedGp, setSelectedGp] = useState();
   const [editedFields, setEditedFields] = useState([]);
-  
+
   const { data: itemClassesWithItemTypes, isLoading: isItemClassesLoading } =
     useQuery(
       ["active-item-classes-with-item-type"],
@@ -49,7 +49,6 @@ function MaintenanceServiceGroup() {
         selectedItemType?.id,
         selectedGp?.id
       );
-      console.log(res.data);
       return res.data;
     },
     { enabled: false, cacheTime: 0 }
@@ -62,27 +61,28 @@ function MaintenanceServiceGroup() {
   }, [selectedGp]);
 
   const selectItemClassHandler = (e) => {
-    setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
-    setSelectedItemType(
-      itemClassesWithItemTypes[e.target.value].item_type?.[0]
+    const value = +e.target.value;
+    const item = itemClassesWithItemTypes.find(
+      (item) => item.item_class.id === value
     );
-    setSelectedGp(
-      itemClassesWithItemTypes[e.target.value].item_type?.[0]?.maintancegp?.[0]
-    );
+    setSelectedItemClassAndItemTypes(item);
+    setSelectedItemType(item.item_type?.[0]);
+    setSelectedGp(item.item_type?.[0]?.maintancegp?.[0]);
   };
 
   const selectItemTypeHandler = (e) => {
-    setSelectedItemType(
-      selectedItemClassAndItemTypes.item_type[e.target.value]
+    const value = +e.target.value;
+    const item = selectedItemClassAndItemTypes.item_type.find(
+      (item) => item.id === value
     );
-    setSelectedGp(
-      selectedItemClassAndItemTypes.item_type[e.target.value].maintancegp?.[0]
-    );
+    setSelectedItemType(item);
+    setSelectedGp(item.maintancegp?.[0]);
   };
 
   const selectGpHandler = (e) => {
-    console.log(selectedItemType.maintancegp[e.target.value]);
-    setSelectedGp(selectedItemType.maintancegp[e.target.value]);
+    const value = +e.target.value;
+    const item = selectedItemType.maintancegp.find((item) => item.id === value);
+    setSelectedGp(item);
   };
 
   const onAcceptHandler = async () => {
@@ -94,6 +94,8 @@ function MaintenanceServiceGroup() {
   if (isItemClassesLoading || isMaintenancesLoading) {
     return <Spinner />;
   }
+
+  console.log(selectedItemType);
 
   return (
     <div>
@@ -110,9 +112,13 @@ function MaintenanceServiceGroup() {
                       onChange={selectItemClassHandler}
                       className="form-select"
                       as="select"
+                      value={selectedItemClassAndItemTypes?.item_class.id}
                     >
-                      {itemClassesWithItemTypes.map((itemClass, index) => (
-                        <option value={index}>
+                      {itemClassesWithItemTypes.map((itemClass) => (
+                        <option
+                          key={itemClass.item_class.id}
+                          value={itemClass.item_class.id}
+                        >
                           {itemClass.item_class.title}
                         </option>
                       ))}
@@ -129,10 +135,13 @@ function MaintenanceServiceGroup() {
                       className="form-select"
                       disabled={selectedItemClassAndItemTypes === null}
                       as="select"
+                      value={selectedItemType?.id}
                     >
                       {selectedItemClassAndItemTypes?.item_type.map(
-                        (itemType, index) => (
-                          <option value={index}>{itemType.title}</option>
+                        (itemType) => (
+                          <option key={itemType.id} value={itemType.id}>
+                            {itemType.title}
+                          </option>
                         )
                       )}
                     </Form.Control>
@@ -148,9 +157,10 @@ function MaintenanceServiceGroup() {
                       className="form-select"
                       disabled={selectedItemType === null}
                       as="select"
+                      value={selectedGp?.id}
                     >
-                      {selectedItemType?.maintancegp.map((gp, index) => (
-                        <option value={index} key={gp.id} disabled={!gp.enable}>
+                      {selectedItemType?.maintancegp.map((gp) => (
+                        <option value={gp.id} key={gp.id} disabled={!gp.enable}>
                           {gp.name}
                         </option>
                       ))}
@@ -192,7 +202,6 @@ function MaintenanceServiceGroup() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                   
                     {maintenances?.map((field) => {
                       return (
                         <TableRow

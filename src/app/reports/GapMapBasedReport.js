@@ -17,7 +17,7 @@ const degrees = [
   { id: "2", name: "-20 C" },
   { id: "3", name: "-70 C" },
   { id: "4", name: "+25 C" },
-  { id: "5", name: "Dry" },
+  { id: "5", name: "Dry store" },
 ];
 
 const statuses = [
@@ -29,14 +29,6 @@ const statuses = [
 function GapMapBasedReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
 
-  const { data: gapMapHelper, isLoading: isGapMapHelper } = useQuery(
-    ["gap-map-helper"],
-    async () => {
-      const res = await ReportService.getGapMap({ help: true });
-      return res.data;
-    }
-  );
-
   const {
     data: reports,
     isLoading: isReportsLoading,
@@ -44,9 +36,7 @@ function GapMapBasedReport() {
   } = useQuery(
     ["gap-map-report"],
     async () => {
-      const params = {
-        help: false,
-      };
+      const params = {};
       for (const key in filterValues) {
         const filter = filterValues[key];
         if (filter.length > 0) {
@@ -62,7 +52,7 @@ function GapMapBasedReport() {
     }
   );
 
-  if (isGapMapHelper || isReportsLoading) {
+  if (isReportsLoading) {
     return <Spinner />;
   }
   return (

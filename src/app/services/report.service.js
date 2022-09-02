@@ -64,6 +64,33 @@ class ReportService {
       },
     });
   }
+  getPlanningCCEGap(params) {
+    return ApiManager.get(API_URL + "gapcce", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  getGapCCEPlan(params) {
+    return ApiManager.get(API_URL + "gapccePlan", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  postGapCCEPlan(payload) {
+    return ApiManager.post(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteGapCCEPlan(payload) {
+    return ApiManager.delete(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putGapCCEPlan(payload) {
+    return ApiManager.delete(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new ReportService();

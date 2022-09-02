@@ -46,6 +46,10 @@ const ParameterDescription = lazy(() =>
   import("./settings/ParameterDescription")
 );
 const MangeHelp = lazy(() => import("./settings/ManageHelp"));
+const PlanningCCEGap = lazy(() => import("./settings/PlanningCCEGap"));
+const FacilityGapInformation = lazy(() =>
+  import("./settings/FacilityGapInformation")
+);
 const FieldsOfItemT = lazy(() => import("./settings/FieldsOfItemT"));
 const FacilityFields = lazy(() => import("./settings/FacilityFields"));
 const Manufacturer = lazy(() => import("./settings/Manufacturer"));
@@ -141,6 +145,16 @@ class AppRoutes extends Component {
             component={NewLevelList}
           />
           <Route exact path="/settings/manage-help" component={MangeHelp} />
+          <Route
+            exact
+            path="/settings/planning-cce-gap"
+            component={PlanningCCEGap}
+          />
+          <Route
+            exact
+            path="/settings/fac-gap-info/:id"
+            component={FacilityGapInformation}
+          />
 
           <Route exact path="/settings/mtns_setting" component={MtnsSetting} />
           <Route

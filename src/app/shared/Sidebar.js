@@ -854,6 +854,20 @@ class Sidebar extends Component {
                             </span>
                           </Link>
                         </li>
+                        <li className="nav-item">
+                          <Link
+                            className={
+                              this.isPathActive("/settings/planning-cce-gap")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
+                            to="/settings/planning-cce-gap"
+                          >
+                            <span>
+                              <Trans>Planning CCE Gap</Trans>
+                            </span>
+                          </Link>
+                        </li>
                       </ul>
                     </Collapse>
                   </li>

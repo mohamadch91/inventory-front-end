@@ -29,7 +29,7 @@ const degrees = [
   { id: "2", name: "-20 C" },
   { id: "3", name: "-70 C" },
   { id: "4", name: "+25 C" },
-  { id: "5", name: "Dry" },
+  { id: "5", name: "Dry store" },
   { id: "6", name: "All" },
 ];
 

@@ -1,11 +1,12 @@
 import React from "react";
 import { useQuery } from "react-query";
 import helpService from "../services/help.service";
+import API_URL from "../services/APIURL";
 
 function Help(props) {
   const { selectedLang, selectedPage } = props;
 
-  const { data: helpData, isLoading: isLoading } = useQuery(
+  const { data: helpData } = useQuery(
     ["help", selectedLang, selectedPage],
     async () => {
       const res = await helpService.getHelpContent(selectedLang, selectedPage);
@@ -14,13 +15,19 @@ function Help(props) {
   );
 
   return (
-    <div className="mt-3">
-      <div className="card">
-        <div className="card-body">
-          <div className="row">{helpData?.abr}</div>
-        </div>
+    helpData?.abr && (
+      <div className="row">
+        <a
+          href={API_URL + helpData.abr}
+          download
+          style={{ width: "fit-content" }}
+        >
+          <button className="btn btn-success" type="button">
+            Download Help
+          </button>
+        </a>
       </div>
-    </div>
+    )
   );
 }
 
