@@ -1,5 +1,6 @@
 import React from "react";
 import SubFacilitiesTableRow from "./SubFacilitiesTableRow";
+import { Trans } from "react-i18next";
 
 const SubFacilitiesTable = (props) => {
   const generateRows = () => {
@@ -24,21 +25,35 @@ const SubFacilitiesTable = (props) => {
   };
   return (
     <div className={"py-2 px-2"}>
-      <h4 className="card-title"> Sub Facilities</h4>
-      <p className="card-description">
+      <h4 className="card-title">
         {" "}
-        list of all sub facilities contained in the organizaion{" "}
+        <Trans>Sub Facilities</Trans>
+      </h4>
+      <p className="card-description">
+        <Trans>list of all sub facilities </Trans>
       </p>
       <div className="table-responsive">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th> # </th>
-              <th> Facility Name </th>
-              <th> Level </th>
-              <th> Level name </th>
-              <th> Registered </th>
-              <th> Last Update </th>
+              <th>
+                <Trans>#</Trans>
+              </th>
+              <th>
+                <Trans>Facility Name</Trans>
+              </th>
+              <th>
+                <Trans>Level</Trans>
+              </th>
+              <th>
+                <Trans>Level name</Trans>
+              </th>
+              <th>
+                <Trans>Registered</Trans>
+              </th>
+              <th>
+                <Trans>Last Update</Trans>
+              </th>
             </tr>
           </thead>
 

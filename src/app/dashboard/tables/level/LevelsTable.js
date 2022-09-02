@@ -1,5 +1,6 @@
 import LevelsTableRow from "./LevelsTableRow";
 import React from "react";
+import { Trans } from "react-i18next";
 
 const LevelsTable = (props) => {
   return (
@@ -10,11 +11,21 @@ const LevelsTable = (props) => {
         <table className="table">
           <thead>
             <tr>
-              <th>Level</th>
-              <th>Level Name</th>
-              <th>Total number of facilities</th>
-              <th>Total number of sub-facilities</th>
-              <th>Number of Defined sub-level facilities</th>
+              <th>
+                <Trans>Level</Trans>
+              </th>
+              <th>
+                <Trans>Level Name</Trans>
+              </th>
+              <th>
+                <Trans>Total number of facilities</Trans>
+              </th>
+              <th>
+                <Trans>Total number of sub-facilities</Trans>
+              </th>
+              <th>
+                <Trans>Number of Defined sub-level facilities</Trans>
+              </th>
             </tr>
           </thead>
           <tbody>

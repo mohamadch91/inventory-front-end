@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import ItemService from "../../services/item.service";
 import { Spinner } from "react-bootstrap";
+import { Trans } from "react-i18next";
 
 const ResultTable = (props) => {
   const { data, isLoading: formDataIsLoading } = useQuery(
@@ -26,10 +27,18 @@ const ResultTable = (props) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Item Class</th>
-            <th>Item Type</th>
-            <th>PQS code</th>
-            <th>code</th>
+            <th>
+              <Trans>Item Class</Trans>
+            </th>
+            <th>
+              <Trans>Item Type</Trans>
+            </th>
+            <th>
+              <Trans>PQS code</Trans>
+            </th>
+            <th>
+              <Trans>Code</Trans>
+            </th>
           </tr>
         </thead>
         <tbody>

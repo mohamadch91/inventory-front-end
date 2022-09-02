@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 const LogBookItem = () => {
   return (
@@ -15,7 +16,7 @@ const LogBookItem = () => {
           style={{ fontSize: "16px", textDecorationColor: "#777" }}
           to={"dashboard/maintenanceLog"}
         >
-          Item Maintenance Logbook
+          <Trans>Item Maintenance Logbook</Trans>
         </Link>
       </div>
     </div>

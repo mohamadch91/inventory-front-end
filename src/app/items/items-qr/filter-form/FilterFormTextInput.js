@@ -1,10 +1,14 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import { Trans } from "react-i18next";
 
 const FilterFormTextInput = (props) => {
   return (
     <Form.Group className="ml-2 w-100">
-      <label className="py-2"> Item Code </label>
+      <label className="py-2">
+        {" "}
+        <Trans>Item Code</Trans>{" "}
+      </label>
       <Form.Control
         style={{ width: "50%" }}
         type="text"

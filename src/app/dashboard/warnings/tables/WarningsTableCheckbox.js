@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans } from "react-i18next";
 
 const WarningsTableCheckbox = (props) => {
   return (
@@ -11,7 +12,7 @@ const WarningsTableCheckbox = (props) => {
           value={props.value}
         />
         <i className="input-helper" />
-        {props.label}
+        <Trans>{props.label}</Trans>
       </label>
     </div>
   );

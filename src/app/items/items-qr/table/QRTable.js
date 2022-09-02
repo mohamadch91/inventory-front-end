@@ -28,8 +28,9 @@ const QRTable = React.forwardRef((props, refToPrint) => {
     return (
       <div className="alert alert-danger w-50 text-center m-auto" role="alert">
         <p className="display-4">
-          {" "}
-          Could not find any data with the information provided 😟
+          <Trans>
+            Could not find any data with the information provided 😟
+          </Trans>
         </p>
       </div>
     );
@@ -52,7 +53,9 @@ const QRTable = React.forwardRef((props, refToPrint) => {
     <div ref={refToPrint} className={"mt-5 "} style={{ color: "#000" }}>
       <div className={"text-center"}>
         <div>
-          <h4>Inventory and Gap Analysis System (IGA)</h4>
+          <h4>
+            <Trans>Inventory and Gap Analysis System (IGA)</Trans>
+          </h4>
         </div>
         <div>
           <h4>{JSON.parse(localStorage.getItem("country"))?.country}</h4>
@@ -66,16 +69,24 @@ const QRTable = React.forwardRef((props, refToPrint) => {
               <TableHead>
                 <TableRow>
                   <TableCell className="col-sm-2">
-                    <Trans>Item class</Trans>
+                    <Trans>
+                      <Trans>Item class</Trans>
+                    </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
-                    <Trans>Item category</Trans>
+                    <Trans>
+                      <Trans>Item category</Trans>
+                    </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
-                    <Trans>Model</Trans>
+                    <Trans>
+                      <Trans>Model</Trans>
+                    </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
-                    <Trans>code</Trans>
+                    <Trans>
+                      <Trans>code</Trans>
+                    </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">
                     <Trans>QR Code</Trans>

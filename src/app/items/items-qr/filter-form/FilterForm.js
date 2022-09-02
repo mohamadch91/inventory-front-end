@@ -9,6 +9,7 @@ import Spinner from "../../../shared/Spinner";
 import filterFormReducer from "./FilterFormReducer";
 import toast from "react-hot-toast";
 import classes from "../ItemsQR.module.css";
+import { Trans } from "react-i18next";
 
 const FilterForm = (props) => {
   const [itemTypeOptions, setItemTypeOptions] = useState([]);
@@ -209,7 +210,7 @@ const FilterForm = (props) => {
           type="button"
           className={`btn btn-primary btn-fw mt-3  ${classes.buttonResponsive}`}
         >
-          Search QR code
+          <Trans>Search QR code</Trans>
         </button>
       </div>
     </div>
