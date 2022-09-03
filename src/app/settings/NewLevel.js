@@ -506,7 +506,6 @@ export default function DataTable() {
         toast.error("Levels import failed");
       })
       .finally(() => {
-        setExcel(null);
       });
     console.log(levels);
   };

@@ -2,6 +2,7 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import { ProgressBar } from "react-bootstrap";
 import UserService from "../services/user.service";
+import FacilitiesService from "../services/facilities.service";
 import { DataGrid } from "@mui/x-data-grid";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -136,85 +137,49 @@ const headCells = [
     id: "number",
     numeric: false,
     disablePadding: false,
-    label: "Levels",
+    label: "id",
   },
   {
     id: "name",
     numeric: false,
     disablePadding: true,
-    label: "Name",
+    label: "Facility Name",
   },
   {
-    id: "m25vol",
+    id: "code",
     numeric: false,
     disablePadding: true,
-    label: "+25 C",
+    label: "Facility code",
   },
   {
-    id: "uppervol",
+    id: "parent",
     numeric: false,
     disablePadding: true,
-    label: "+2 - +8 C",
+    label: "Parent Facility",
   },
   {
-    id: "undervol",
+    id: "type",
     numeric: false,
     disablePadding: true,
-    label: "-20 C",
+    label: "Facility Type",
   },
   {
-    id: "m70vol",
+    id: "level",
     numeric: false,
     disablePadding: true,
-    label: "-70 C",
+    label: "Facility Level",
   },
   {
-    id: "dryvol",
+    id: "lname",
     numeric: false,
     disablePadding: true,
-    label: "Dry store",
+    label: "Level Name",
   },
   {
-    id: "m25volnew",
+    id: "pop",
     numeric: false,
     disablePadding: true,
-    label: "+25 C",
-  },
-  {
-    id: "uppervolnew",
-    numeric: false,
-    disablePadding: true,
-    label: "+2 - +8 C",
-  },
-  {
-    id: "undervolnew",
-    numeric: false,
-    disablePadding: true,
-    label: "-20 C",
-  },
-  {
-    id: "m70volnew",
-    numeric: false,
-    disablePadding: true,
-    label: "-70 C",
-  },
-  {
-    id: "dryvolnew",
-    numeric: false,
-    disablePadding: true,
-    label: "Dry store",
-  },
-  {
-    id: "minpop",
-    numeric: false,
-    disablePadding: true,
-    label: "Min pop",
-  },
-  {
-    id: "maxpop",
-    numeric: false,
-    disablePadding: true,
-    label: "Max pop",
+    label: "Population",
   },
 ];
 
@@ -251,7 +216,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Level list
+          Imported Facilities
         </Typography>
       )}
     </Toolbar>
@@ -286,66 +251,7 @@ export default function ImportFacility() {
     return false;
   };
 
-  const handleSave = () => {
-    setEdit(!isEdit);
-    setRows(rows);
-    setDisable(true);
-    if (
-      !isMinpopMaxpopValid(rows[editableRowId - 1].maxpop) ||
-      !isMinpopMaxpopValid(rows[editableRowId - 1].minpop)
-    ) {
-      toast.error("Please fill the fields with right format");
-    } else {
-      UserService.putLevels(rows)
-        .then((response) => {
-          const country = JSON.parse(localStorage.getItem("country"));
-          let row = [];
-          for (let i = 0; i < country.levels; i++) {
-            row.push(
-              createData(
-                response.data[i].id,
-                response.data[i].name,
-                parseInt(response.data[i].maxpop),
-                parseInt(response.data[i].minpop),
-                response.data[i].uppervol,
-                response.data[i].undervol,
-                response.data[i].m25vol,
-                response.data[i].m70vol,
-                response.data[i].dryvol,
-                response.data[i].m25volnew,
-                response.data[i].m70volnew,
-                response.data[i].uppervolnew,
-                response.data[i].undervolnew,
-                response.data[i].dryvolnew,
-                response.data[i].country,
-                response.data[i].parent
-              )
-            );
-          }
-          setRows(row);
-        })
-        .catch((e) => {
-          // console.log(e);
-        });
-      setOpen(true);
-      setEditableRowId(null);
-      setEditFormData({});
-    }
-  };
-  const handleInputChange = (e, index) => {
-    let number = e.target.value;
-    setDisable(false);
-    const flag = number.split(".").length;
-    if (flag > 1) {
-      const num = number.split(".")[0];
-      const floatpoint = number.split(".")[1].slice(0, 2);
-      number = num + "." + floatpoint;
-    }
-    const { name, value } = e.target;
-    const list = [...rows];
-    list[index][name] = number;
-    setRows(list);
-  };
+
 
   // Showing delete confirmation to users
   const handleConfirm = () => {
@@ -403,7 +309,7 @@ export default function ImportFacility() {
   };
 
   const separator = (x) => {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return x?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
   };
 
   const handleChangeDense = (event) => {
@@ -442,7 +348,7 @@ export default function ImportFacility() {
     reader.onload = (evt) => {
       const bstr = evt.target.result;
       const wb = XLSX.read(bstr, { type: "binary" });
-      const wsname = wb.SheetNames[3];
+      const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       console.log(ws);
       const data = XLSX.utils.sheet_to_json(ws);
@@ -453,209 +359,91 @@ export default function ImportFacility() {
   };
   const handleExcel = () => {
     let levels = [];
-    const country = JSON.parse(localStorage.getItem("country"));
-    for (let i = 0; i < country.levels; i++) {
+    for (let i = 0; i < excel.length; i++) {
       let data = excel[i];
+
       let level = {
-        name: data["__EMPTY_2"],
-        id: data["__EMPTY_3"],
-        uppervol: data["2-8°C"] === "" ? 0.0 : data["2-8°C"].toFixed(2),
-        m25vol: data["+25 C"] === "" ? 0.0 : data["+25 C"].toFixed(2),
-        undervol: data["-20°C"] === "" ? 0.0 : data["-20°C"].toFixed(2),
-        dryvol: data["Dry store"] === "" ? 0.0 : data["Dry store"].toFixed(2),
-        m25volnew: data["+25 C"] === "" ? 0.0 : data["+25 C_1"].toFixed(2),
-        uppervolnew: data["2-8°C_1"] === "" ? 0.0 : data["2-8°C_1"].toFixed(2),
-        undervolnew: data["-20°C_1"] === "" ? 0.0 : data["-20°C_1"].toFixed(2),
-        m70volnew: data["-70°C_1"] === "" ? 0.0 : data["-70°C_1"].toFixed(2),
-        dryvolnew:
-          data["Dry store_1"] === "" ? 0.0 : data["Dry store_1"].toFixed(2),
-        m70vol: data["-70°C"] === "" ? 0.0 : data["-70°C"].toFixed(2),
+        id: data.id,
+        code: data.FacilityCode ? data.FacilityCode : null,
+        name: data.facilityName ? data.facilityName : null,
+        parentid: data.parentFac ? data.parentFac : null,
+        level: data.level ? data.level : null,
+        lname: data.levelname ? data.levelname : null,
+        type: data.Facilitytype ? data.Facilitytype : null,
+        pop: data.Population ? data.Population : 0,
       };
       levels.push(level);
     }
-    UserService.putLevels(levels)
+    FacilitiesService.importFacilities(levels)
       .then((response) => {
-        toast.success("Levels imported successfully");
-        let row = [];
-        for (let i = 0; i < country.levels; i++) {
-          row.push(
-            createData(
-              response.data[i].id,
-              response.data[i].name,
-              parseInt(response.data[i].maxpop),
-              parseInt(response.data[i].minpop),
-              response.data[i].uppervol,
-              response.data[i].undervol,
-              response.data[i].m25vol,
-              response.data[i].m70vol,
-              response.data[i].dryvol,
-              response.data[i].m25volnew,
-              response.data[i].m70volnew,
-              response.data[i].uppervolnew,
-              response.data[i].undervolnew,
-              response.data[i].dryvolnew,
-              response.data[i].country,
-              response.data[i].parent
-            )
-          );
-        }
-
-        setRows(row);
+        toast.success("Facility import succesfully");
+       
+        setRows(response.data);
       })
       .catch((err) => {
-        toast.error("Levels import failed");
+        toast.error("Facility import failed");
       })
       .finally(() => {
-        setExcel(null);
       });
     console.log(levels);
   };
-  React.useEffect(() => {
-    // get
-    UserService.getLevels()
-      .then((response) => {
-        const country = JSON.parse(localStorage.getItem("country"));
-        let row = [];
-        for (let i = 0; i < country.levels; i++) {
-          row.push(
-            createData(
-              response.data[i].id,
-              response.data[i].name,
-              parseInt(response.data[i].maxpop),
-              parseInt(response.data[i].minpop),
-              response.data[i].uppervol,
-              response.data[i].undervol,
-              response.data[i].m25vol,
-              response.data[i].m70vol,
-              response.data[i].dryvol,
-              response.data[i].m25volnew,
-              response.data[i].m70volnew,
-              response.data[i].uppervolnew,
-              response.data[i].undervolnew,
-              response.data[i].dryvolnew,
-              response.data[i].country,
-              response.data[i].parent
-            )
-          );
-        }
-
-        setRows(row);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, []);
-
+ 
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title"> Level Configurations </h1>
+        <h1 className="page-title"> Import facility</h1>
       </div>
-      {JSON.parse(localStorage.getItem("country"))?.usingtool && (
-        <Box sx={{ width: "100%" }}>
-          <Paper sx={{ width: "100%", mb: 2 }}>
-            <div>
-              <div className="item-class-page row mr-5 mt-2 mb-3 ml-5">
-                <Typography
-                  sx={{ flex: "1 1 100%" }}
-                  variant="h6"
-                  id="tableTitle"
-                  component="div"
-                  className=" mt-3 item-class-page"
-                >
-                  <Trans>import level</Trans>
-                </Typography>
-                <div className="col-md-12 item-class-page">
-                  <label>
-                    <Trans>upload excel to change levels data</Trans>
-                  </label>
-                  <div className="row d-flex mb-2 ">
-                    <div className="col-md-3">
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={handleImport}
-                      />
-                    </div>
-                    <div className="col-md-3 ml-2 mt-1">
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                          handleExcel();
-                        }}
-                      >
-                        <Trans>Sumbit</Trans>
-                      </Button>
-                    </div>
+      <Box sx={{ width: "100%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <div>
+            <div className="item-class-page row mr-5 mt-2 mb-3 ml-5">
+              <Typography
+                sx={{ flex: "1 1 100%" }}
+                variant="h6"
+                id="tableTitle"
+                component="div"
+                className=" mt-3 item-class-page"
+              >
+                <Trans>Import Facility</Trans>
+              </Typography>
+              <div className="col-md-12 item-class-page">
+                <label>
+                  <Trans>Upload excel to import facility</Trans>
+                </label>
+                <div className="row d-flex mb-2 ">
+                  <div className="col-md-3">
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={handleImport}
+                    />
+                  </div>
+                  <div className="col-md-3 ml-2 mt-1">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        handleExcel();
+                      }}
+                    >
+                      <Trans>Sumbit</Trans>
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
-          </Paper>
-        </Box>
-      )}
+          </div>
+        </Paper>
+      </Box>
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />
           <SharedTable>
             <TableHead>
-              <TableRow>
-                <TableCell colSpan={7.5}></TableCell>
-                <TableCell colSpan={4}>
-                  <Trans>Target Population :</Trans>
-                  <Trans>
-                    {JSON.parse(localStorage.getItem("country"))?.poptarget}
-                  </Trans>
-                </TableCell>
-                <TableCell colSpan={6}></TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell colSpan={4}></TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#82c4ed",
-                    textAlign: "center",
-                    borderLeft: "1px solid black",
-                  }}
-                  colSpan={5}
-                >
-                  <Trans>Current values</Trans> <Trans>(cm3)</Trans>
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#2f7ebf",
-                    textAlign: "center",
-                    borderLeft: "1px solid black",
-                    borderRight: "1px solid black",
-                  }}
-                  colSpan={5}
-                >
-                  <Trans>Planned values</Trans> <Trans>(cm3)</Trans>
-                </TableCell>
-                <TableCell
-                  sx={{
-                    backgroundColor: "#2f7ebf",
-                    textAlign: "center",
-                    borderLeft: "1px solid black",
-                    borderRight: "1px solid black",
-                  }}
-                  colSpan={2}
-                >
-                  <Trans>Population</Trans>
-                </TableCell>
-              </TableRow>
               <TableRow className="item-class-page">
-                <TableCell colSpan={2}></TableCell>
                 {headCells.map((headCell) => (
                   <TableCell
-                    sx={
-                      headCell.id === "m25vol" || headCell.id === "m25volnew"
-                        ? { borderLeft: "1px solid black" }
-                        : headCell.id === "dryvolnew"
-                        ? { borderRight: "1px solid black" }
-                        : ""
-                    }
+                   
                     key={headCell.id}
                   >
                     <Trans>{headCell.label}</Trans>
@@ -666,319 +454,50 @@ export default function ImportFacility() {
             <TableBody className="item-class-page">
               {rows.map((row, i) => (
                 <>
-                  {editableRowId !== row.id ? (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      <TableCell colSpan={2}>
-                        <button
-                          className="edit-btn"
-                          onClick={(event) => handleEdit1(row)}
-                        >
-                          <EditIcon />
-                        </button>
-                      </TableCell>
-                      <TableCell
-                        className="text-center"
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.id}
-                      </TableCell>
-                      <TableCell
-                        scope="row"
-                        className="text-center"
-                        padding="none"
-                      >
-                        {row.name}
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          borderLeft: "1px solid black",
-                          paddongLeft: "2px",
-                        }}
-                        padding="none"
-                        align="center"
-                      >
-                        {row.m25vol}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.uppervol}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.undervol}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.m70vol}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.dryvol}
-                      </TableCell>
-                      <TableCell
-                        sx={{ borderLeft: "1px solid black" }}
-                        padding="none"
-                        align="center"
-                      >
-                        {row.m25volnew}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.uppervolnew}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.undervolnew}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {row.m70volnew}
-                      </TableCell>
-                      <TableCell
-                        padding="none"
-                        sx={{ borderRight: "1px solid black" }}
-                        align="center"
-                      >
-                        {row.dryvolnew}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {separator(row.minpop)}
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        {separator(row.maxpop)}
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                      <TableCell colSpan={2}>
-                        <button className="save-btn" onClick={handleSave}>
-                          <Trans>Save</Trans>
-                        </button>
-                        <button
-                          className="close-btn"
-                          onClick={() => setEditableRowId(null)}
-                        >
-                          <CloseIcon />
-                        </button>
-                      </TableCell>
-                      <TableCell
-                        className="text-center"
-                        scope="row"
-                        padding="none"
-                      >
-                        <input
-                          required
-                          disabled
-                          value={row.id}
-                          name="name"
-                          isValid={levelValidator(rows[i].name)}
-                          type="text"
-                        />
-                      </TableCell>
-                      <TableCell
-                        scope="row"
-                        padding="none"
-                        className="text-center"
-                      >
-                        <input
-                          required
-                          isValid={levelValidator(rows[i].name)}
-                          value={rows[i].name}
-                          name="name"
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          type="text"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell
-                        sx={{ borderLeft: "1px solid black" }}
-                        padding="none"
-                        align="center"
-                      >
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].m25vol)}
-                          isInvalid={!capacityValidator(rows[i].m25vol)}
-                          value={rows[i].m25vol}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="m25vol"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].uppervol)}
-                          value={rows[i].uppervol}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="uppervol"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].undervol)}
-                          value={rows[i].undervol}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="undervol"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].m70vol)}
-                          value={rows[i].m70vol}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="m70vol"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].dryvol)}
-                          value={rows[i].dryvol}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="dryvol"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                      </TableCell>
-                      <TableCell
-                        sx={{ borderLeft: "1px solid black" }}
-                        padding="none"
-                        align="center"
-                      >
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].m25volnew)}
-                          value={rows[i].m25volnew}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="m25volnew"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].uppervolnew)}
-                          value={rows[i].uppervolnew}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="uppervolnew"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].undervolnew)}
-                          value={rows[i].undervolnew}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="undervolnew"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].m70volnew)}
-                          value={rows[i].m70volnew}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="m70volnew"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell
-                        padding="none"
-                        sx={{ borderRight: "1px solid black" }}
-                        align="center"
-                      >
-                        <input
-                          required
-                          isValid={capacityValidator(rows[i].dryvolnew)}
-                          value={rows[i].dryvolnew}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="dryvolnew"
-                          type="number"
-                          placeholder="0"
-                          min="0"
-                        />
-                      </TableCell>
-
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          value={rows[i].minpop}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="minpop"
-                          type="number"
-                          min="0"
-                          max="100000000"
-                          step="1"
-                        />
-                        <span></span>
-                      </TableCell>
-                      <TableCell padding="none" align="center">
-                        <input
-                          required
-                          value={rows[i].maxpop}
-                          onChange={(e) => {
-                            handleInputChange(e, i);
-                          }}
-                          name="maxpop"
-                          type="number"
-                          min="0"
-                          max="100000000"
-                          step="1"
-                        />
-                      </TableCell>
-                    </TableRow>
-                  )}
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                    <TableCell
+                      className="text-center"
+                      scope="row"
+                      padding="none"
+                    >
+                      {row.id}
+                    </TableCell>
+                    <TableCell
+                      scope="row"
+                      className="text-center"
+                      padding="none"
+                    >
+                      {row.name}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        paddongLeft: "2px",
+                      }}
+                      padding="none"
+                      align="center"
+                    >
+                      {row.code}
+                    </TableCell>
+                    <TableCell padding="none" align="center">
+                      {row.parentid}
+                    </TableCell>
+                    <TableCell padding="none" align="center">
+                      {row.type}
+                    </TableCell>
+                    <TableCell padding="none" align="center">
+                      {row.level}
+                    </TableCell>
+                    <TableCell padding="none" align="center">
+                      {row.lname}
+                    </TableCell>
+                    <TableCell
+                      padding="none"
+                      align="center"
+                    >
+                      {separator(row.pop)}
+                    </TableCell>
+             
+                  </TableRow>
                 </>
               ))}
             </TableBody>

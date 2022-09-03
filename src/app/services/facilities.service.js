@@ -38,9 +38,13 @@ class FacilitiesService {
     });
   }
   importFacilities(payload) {
-    return ApiManager.post(API_URL + "import", payload, {
-      headers: { Authorization: authHeader() },
-    });
+    return ApiManager.post(
+      "http://127.0.0.1:8000/facilities/" + "import",
+      payload,
+      {
+        headers: { Authorization: authHeader() },
+      }
+    );
   }
     
 }
