@@ -88,7 +88,7 @@ class AppRoutes extends Component {
   render() {
     return (
       <Suspense fallback={<Spinner />}>
-        <Switch>
+        <Switch >
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />

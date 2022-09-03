@@ -10,12 +10,13 @@ function Help(props) {
     ["help", selectedLang, selectedPage],
     async () => {
       const res = await helpService.getHelpContent(selectedLang, selectedPage);
+      console.log(res);
       return res.data.length > 0 ? res.data[0] : {};
     }
   );
 
   return (
-    helpData?.abr && (
+    helpData?.abr ?(
       <div className="row">
         <a
           href={API_URL + helpData.abr}
@@ -27,7 +28,7 @@ function Help(props) {
           </button>
         </a>
       </div>
-    )
+    ):(<></>)
   );
 }
 

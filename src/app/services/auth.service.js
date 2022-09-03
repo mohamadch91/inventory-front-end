@@ -76,6 +76,7 @@ class AuthService {
    * @function logout
    */
   logout() {
+    console.log("logout");
     localStorage.removeItem("user");
     localStorage.removeItem("country");
   }

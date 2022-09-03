@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
-import EventBus from "../common/EventBus";
+import eventBus from "../common/EventBus";
+
 
 import { connect } from "react-redux";
 import userService from "../services/user.service";
@@ -13,6 +14,7 @@ import {
   isMobile,
 } from "react-device-detect";
 import * as rdd from "react-device-detect";
+import { history } from "../helpers/history";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -933,18 +935,27 @@ class Sidebar extends Component {
           {/* Logout*/}
           <li className="nav-item sidebar-user-actions py-5">
             <div className="sidebar-user-menu">
-              <a
-                href="!#"
+              <Link to="/login">
+                   <a
+                href="/login"
                 onClick={(event) => {
-                  EventBus.dispatch("logout");
+                  eventBus.dispatch("logout");
+                  history.push("/login");
                 }}
                 className="nav-link"
               >
-                <i className="mdi mdi-logout menu-icon"></i>
+                <i
+                  onClick={(event) => {
+                    eventBus.dispatch("logout");
+                  }}
+                  className="mdi mdi-logout menu-icon"
+                ></i>
                 <span className="menu-title">
                   <span>Log Out</span>
                 </span>
               </a>
+              </Link>
+          
             </div>
           </li>
         </ul>

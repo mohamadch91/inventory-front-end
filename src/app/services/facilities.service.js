@@ -37,6 +37,12 @@ class FacilitiesService {
       headers: { Authorization: authHeader() },
     });
   }
+  importFacilities(payload) {
+    return ApiManager.post(API_URL + "import", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+    
 }
 
 export default new FacilitiesService();

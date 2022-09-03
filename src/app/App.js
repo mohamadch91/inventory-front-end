@@ -47,7 +47,6 @@ class App extends Component {
     this.onRouteChanged();
   }
   logOut() {
-    console.log("salam");
 
     this.props.dispatch(logout());
     this.setState({
