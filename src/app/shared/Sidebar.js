@@ -840,6 +840,20 @@ class Sidebar extends Component {
                         <li className="nav-item">
                           <Link
                             className={
+                              this.isPathActive("/settings/import-facility")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
+                            to="/settings/import-facility"
+                          >
+                            <span>
+                              <Trans>Import Facilities with MS Excel</Trans>
+                            </span>
+                          </Link>
+                        </li>
+                        <li className="nav-item">
+                          <Link
+                            className={
                               this.isPathActive("/settings/reports/excel")
                                 ? "nav-link active"
                                 : "nav-link"
@@ -936,26 +950,25 @@ class Sidebar extends Component {
           <li className="nav-item sidebar-user-actions py-5">
             <div className="sidebar-user-menu">
               <Link to="/login">
-                   <a
-                href="/login"
-                onClick={(event) => {
-                  eventBus.dispatch("logout");
-                  history.push("/login");
-                }}
-                className="nav-link"
-              >
-                <i
+                <a
+                  href="/login"
                   onClick={(event) => {
                     eventBus.dispatch("logout");
+                    history.push("/login");
                   }}
-                  className="mdi mdi-logout menu-icon"
-                ></i>
-                <span className="menu-title">
-                  <span>Log Out</span>
-                </span>
-              </a>
+                  className="nav-link"
+                >
+                  <i
+                    onClick={(event) => {
+                      eventBus.dispatch("logout");
+                    }}
+                    className="mdi mdi-logout menu-icon"
+                  ></i>
+                  <span className="menu-title">
+                    <span>Log Out</span>
+                  </span>
+                </a>
               </Link>
-          
             </div>
           </li>
         </ul>

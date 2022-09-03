@@ -262,7 +262,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function DataTable() {
+export default function ImportFacility() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const [rows, setRows] = React.useState([]);

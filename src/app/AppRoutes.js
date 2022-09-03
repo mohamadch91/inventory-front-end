@@ -25,7 +25,6 @@ const Error500 = lazy(() => import("./error-pages/Error500"));
 const Login = lazy(() => import("./user-pages/Login"));
 const Register1 = lazy(() => import("./user-pages/Register"));
 const Country = lazy(() => import("./settings/Country"));
-const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
@@ -83,12 +82,12 @@ const ProfileOfFacility = lazy(() => import("./reports/ProfileOfFacility"));
 const ProfileOfColdChain = lazy(() => import("./reports/ProfileOfColdChain"));
 const GapItemReport = lazy(() => import("./reports/GapItemReport"));
 const GapMapBasedReport = lazy(() => import("./reports/GapMapBasedReport"));
-
+const Facimport= lazy(() => import("./settings/importFacility"));
 class AppRoutes extends Component {
   render() {
     return (
       <Suspense fallback={<Spinner />}>
-        <Switch >
+        <Switch>
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
@@ -97,13 +96,14 @@ class AppRoutes extends Component {
           <Route exact path="/message/list" component={MessageList} />
 
           <Route exact path="/settings/country" component={Country} />
-          <Route exact path="/settings/level" component={Level} />
           <Route exact path="/settings/item-class" component={ItemClass} />
           <Route exact path="/settings/item-type" component={ItemType} />
           <Route exact path="/settings/params" component={Parameters} />
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
           <Route exact path="/settings/pqs3" component={Pqs3} />
+          <Route exact path="/settings/import-facility" component={Facimport} />
+
           <Route
             exact
             path="/settings/reports/excel"
