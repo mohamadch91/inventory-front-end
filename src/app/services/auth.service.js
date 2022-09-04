@@ -10,8 +10,8 @@ import axios from "axios";
  * @constant {string} API_URL Url for login api
  * @constant {string} USER_PROFILE Url for user profile api
  */
-const API_URL = "http://5.182.47.38:8001/auth/login/";
-const USER_PROFILE = "http://5.182.47.38:8001/user-data/";
+const API_URL = "http://127.0.0.1:8000/auth/login/";
+const USER_PROFILE = "http://127.0.0.1:8000/user-data/";
 class AuthService {
   /**
    *
@@ -54,7 +54,7 @@ class AuthService {
             user.username = res.data.User.username;
             user.idnumber = res.data.User.idnumber;
             user.phone = res.data.User.phone;
-            user.facility_name=res.data.facility;
+            user.facility_name = res.data.facility;
             user.facility_admin = res.data.User.facadmin;
             user.facility_id = res.data.User.facilityid;
             user.reportadmin = res.data.User.reportadmin;

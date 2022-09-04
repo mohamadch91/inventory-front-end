@@ -23,11 +23,14 @@ const ItemToPrint = forwardRef((props, ref) => {
   const [FilteredItemTypes, setFilteredItemTypes] = useState([]);
   const [selectedItemClass, setSelectedItemClass] = useState(null);
   const [selectedItemType, setSelectedItemType] = useState(null);
-
+  const [facility, setFacility] = useState(null);
+  const [typename, setTypename] = useState(null);
   function getData(itemClass, itemType) {
     ItemService.getItemFields(itemClass, itemType)
       .then((res) => {
-        setData(res.data);
+              const Data = [{}];
+          setFacility(res.data.facility);  
+        setData(res.data.fields);
         setIsLoading(false);
       })
       .catch(() => {
@@ -94,7 +97,7 @@ const ItemToPrint = forwardRef((props, ref) => {
           <div className="container mb-5">
             <div className="row">
               <h3 className="col-md-2 mb-0 d-flex justify-content-center align-items-center">
-                <Trans>Item class:</Trans>
+                <Trans>Item class</Trans>:
               </h3>
               <select
                 name="itemclass"
@@ -111,12 +114,14 @@ const ItemToPrint = forwardRef((props, ref) => {
                 ))}
               </select>
               <h3 className="col-md-2 mb-0 d-flex justify-content-center align-items-center">
-                <Trans>Item type:</Trans>
+                <Trans>Item type</Trans>:
               </h3>
               <select
                 name="itemtype"
                 className="col-md-3 d-flex justify-content-center"
                 onChange={(e) => {
+                  console.log(e.target.innerText.split("\n"));
+                  setTypename(e.target.innerText.split("\n")[e.target.value]);
                   setSelectedItemType(e.target.value);
                 }}
                 value={selectedItemType}
@@ -163,6 +168,51 @@ const ItemToPrint = forwardRef((props, ref) => {
               <p> {returnDate()}</p>
               <div className="wrapper">
                 <Row className={"row"}>
+                  <div className={"w-50 m-3 col-5 "}>
+                    <h6>Facility name</h6>
+                    <div
+                      className={" rounded box h-75"}
+                      style={{
+                        border: "gray 1px solid",
+                      }}
+                    >
+                      <div className=" col-md-6">{facility?.name}</div>
+                    </div>
+                  </div>
+                  <div className={"w-50 m-3 col-5 "}>
+                    <h6>Facility code</h6>
+                    <div
+                      className={" rounded box h-75"}
+                      style={{
+                        border: "gray 1px solid",
+                      }}
+                    >
+                      <div className=" col-md-6">{facility?.code}</div>
+                    </div>
+                  </div>
+                  <div className={"w-50 m-3 col-5 "}>
+                    <h6>Level</h6>
+                    <div
+                      className={" rounded box h-75"}
+                      style={{
+                        border: "gray 1px solid",
+                      }}
+                    >
+                      <div className=" col-md-6">{facility?.level}</div>
+                    </div>
+                  </div>
+                  <div className={"w-50 m-3 col-5 "}>
+                    <h6>Item Type</h6>
+                    <div
+                      className={" rounded box h-75"}
+                      style={{
+                        border: "gray 1px solid",
+                      }}
+                    >
+                      <div className=" col-md-6">{typename}</div>
+                    </div>
+                  </div>
+
                   {data?.map((item) => (
                     <>
                       <div className={"w-50 m-3 col-5 "}>
@@ -173,6 +223,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                             border: "gray 1px solid",
                           }}
                         >
+                          {item.x}
                           {item.field.params.length !== 0
                             ? item.field.params.map((param) => (
                                 <div className="param col-md-6">

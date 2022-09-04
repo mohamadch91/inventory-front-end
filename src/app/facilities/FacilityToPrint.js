@@ -13,6 +13,17 @@ const FacilityToPrint = forwardRef((props, ref) => {
   function getData() {
     FacilitiesService.getFacilityFields()
       .then((res) => {
+        const data=res.data.related;
+        data.unshift({
+          name: "Facility code",
+          params:[],
+          type: "text",
+        })
+        const levels = res.data.levels;
+        data.unshift({
+          name: "Levels",
+          params:levels,
+        });
         setData(res.data.related);
         setIsLoading(false);
       })

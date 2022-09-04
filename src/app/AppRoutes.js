@@ -232,12 +232,13 @@ class AppRoutes extends Component {
             path="/dashboard/warnings-info/:wType"
             component={WarningsTablePage}
           />
-          <Route path="/" component={Login} />
+
           <Route path="/user-pages/register-1" component={Register1} />
 
           <Route path="/error-pages/error-403" component={Error403} />
           <Route path="/error-pages/error-404" component={Error404} />
           <Route path="/error-pages/error-500" component={Error500} />
+          <Route path="/" component={Login} />
 
           <Redirect to="/" />
         </Switch>

@@ -53,11 +53,11 @@ const Facilities = () => {
 
   return (
     <div className={classes.facilities}>
-      <Card>
+      <Card className="w-50">
         <h3>
           🏢 <Trans>Facilities</Trans>{" "}
         </h3>
-        <ChartDropDown onChange={ddChangeHandler} options={facilities} />
+        <ChartDropDown onChange={ddChangeHandler} options={facilities} text="Select facility"/>
         <GaugeChart
           id="gauge-chart6"
           animate={true}

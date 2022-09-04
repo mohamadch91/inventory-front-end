@@ -14,7 +14,15 @@ export async function getFacilities() {
     const res = await DashboardService.getAllFacilities();
     return res.data;
   } catch (error) {
-    throw new Error("Error fetching data from back-end " + error.message);
+    const { response } = error;
+    if (response?.status === 403) {
+      window.location.href = `/error-pages/error-403`;
+    }
+    if (response?.status === 401) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("country");
+      window.location.href = `/login`;
+    }
   }
 }
 
@@ -24,6 +32,14 @@ export async function getTablesData() {
 
     return res.data;
   } catch (error) {
-    throw new Error("Error fetching data from back-end " + error.message);
+    const { response } = error;
+    if (response?.status === 403) {
+      window.location.href = `/error-pages/error-403`;
+    }
+    if (response?.status === 401) {
+      localStorage.removeItem("user");
+      localStorage.removeItem("country");
+      window.location.href = `/login`;
+    }
   }
 }

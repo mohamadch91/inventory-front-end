@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/facilities/";
+const API_URL = "http://127.0.0.1:8000/facilities/";
 
 class FacilitiesService {
   getFacilities(id) {
@@ -39,14 +39,13 @@ class FacilitiesService {
   }
   importFacilities(payload) {
     return ApiManager.post(
-      "http://127.0.0.1:8000/facilities/" + "import",
+      "http://127.0.0.1:8000facilities/" + "import",
       payload,
       {
         headers: { Authorization: authHeader() },
       }
     );
   }
-    
 }
 
 export default new FacilitiesService();
