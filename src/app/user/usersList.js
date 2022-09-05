@@ -23,6 +23,8 @@ function UsersList() {
     reportadmin: false,
     useradmin: false,
     is_superuser: false,
+    password: "",
+    conf_password: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [facilities, setFacilities] = useState([]);
@@ -144,7 +146,9 @@ function UsersList() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "";
+      if (key !== "idnumber" && key !== "phone" && key !== "position") {
+        return addRowFormData[key] !== "";
+      }
     });
     if (!isValid) {
       toast.error("Please fill all the fields");
@@ -179,7 +183,7 @@ function UsersList() {
       }))(addRowFormData);
       UserListService.addUser(formToPost)
         .then((res) => {
-          toast.success("user added succesfully");
+          toast.success("user added successfully");
           setIsLoading(true);
           getList(selectedFacility);
           setAddRowFormData({
@@ -189,11 +193,14 @@ function UsersList() {
             reportadmin: false,
             useradmin: false,
             is_superuser: false,
+            password: "",
+            conf_password: "",
           });
           setIsAddModalOpen(false);
           setActiveStep(0);
         })
         .catch((err) => {
+          console.log(err);
           toast.error("There is a problem sending data");
           setIsLoading(false);
         });
@@ -671,7 +678,6 @@ function UsersList() {
                       type="number"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.idnumber}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
@@ -683,7 +689,6 @@ function UsersList() {
                       type="text"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.position}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
@@ -695,7 +700,6 @@ function UsersList() {
                       type="tel"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.phone}
-                      required
                     ></input>
                   </div>
                   <div className="row mt-3">
