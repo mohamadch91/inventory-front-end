@@ -27,6 +27,12 @@ class ReportService {
       params,
     });
   }
+  getGapMap(params) {
+    return ApiManager.get(API_URL + "gapmap", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getItemGp(params) {
     return ApiManager.get(API_URL + "item-gp", {
       headers: { Authorization: authHeader() },
@@ -39,8 +45,55 @@ class ReportService {
       params,
     });
   }
+  getGapItem(params) {
+    return ApiManager.get(API_URL + "gapitem", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
   getProfOfFac() {
     return ApiManager.get(API_URL + "facprof", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getColdProf(degree) {
+    return ApiManager.get(API_URL + "coldprof", {
+      headers: { Authorization: authHeader() },
+      params: {
+        degree,
+      },
+    });
+  }
+  getPlanningReport(params) {
+    return ApiManager.get(API_URL + "planingreport", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  getPlanningCCEGap(params) {
+    return ApiManager.get(API_URL + "gapcce", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  getGapCCEPlan(params) {
+    return ApiManager.get(API_URL + "gapccePlan", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  postGapCCEPlan(payload) {
+    return ApiManager.post(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteGapCCEPlan(payload) {
+    return ApiManager.delete(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  putGapCCEPlan(payload) {
+    return ApiManager.delete(API_URL + "gapccePlan", payload, {
       headers: { Authorization: authHeader() },
     });
   }

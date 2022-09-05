@@ -1,19 +1,19 @@
 export const responseMessages = {
   //series 2xx
   200: {
-    fa: "",
+    fa: "Success",
   },
   201: {
-    fa: "منابع با موفقیت ایجاد شد",
+    fa: "Created successfully",
   },
   202: {
-    fa: "درخواست پذیرفته شد",
+    fa: "Request accepted",
   },
   203: {
-    fa: "اطلاعات نامعتبر است ",
+    fa: "Information is not authoritative",
   },
   204: {
-    fa: "محتوایی برای نمایش موجود نیست",
+    fa: "No content",
   },
 
   //series 3xx
@@ -38,21 +38,24 @@ export const responseMessages = {
 
   //series 4xx
   400: {
-    fa: "درخواست اشتباه",
+    fa: "Request is not valid",
   },
   401: {
-    fa: "نیاز به احراز هویت",
+    fa: "Not authorized",
   },
   403: {
-    fa: "عدم دسترسی کاربر",
+    fa: "Cannot access",
   },
   404: {
-    fa: "منبعی یافت نشد",
+    fa: "No valid entry found",
+  },
+  406: {
+    fa: "Imported file is not valid",
   },
 
   //series 5xx
   500: {
-    fa: "خطا از سمت سرور",
+    fa: "Server error",
   },
   501: {
     fa: "خطا از سمت سرور",
@@ -71,6 +74,6 @@ export const responseMessages = {
   },
 
   //default
-  success: { fa: "موفقیت آمیز بود" },
-  failed: { fa: "درخواست ناموفق بود" },
+  success: { fa: "Succesfull" },
+  failed: { fa: "Request failed" },
 };

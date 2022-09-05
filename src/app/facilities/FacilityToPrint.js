@@ -13,6 +13,17 @@ const FacilityToPrint = forwardRef((props, ref) => {
   function getData() {
     FacilitiesService.getFacilityFields()
       .then((res) => {
+        const data=res.data.related;
+        data.unshift({
+          name: "Facility code",
+          params:[],
+          type: "text",
+        })
+        const levels = res.data.levels;
+        data.unshift({
+          name: "Levels",
+          params:levels,
+        });
         setData(res.data.related);
         setIsLoading(false);
       })
@@ -44,8 +55,12 @@ const FacilityToPrint = forwardRef((props, ref) => {
               </div>
             </div>
             <h2 className="mb-4">
-              {/* TODO Add facility name here*/}
-              <Trans> {`${data.facility} Facility information:`}</Trans>
+              <Trans>
+                {" "}
+                {`${
+                  JSON.parse(localStorage.getItem("user"))?.facility_name
+                } Facility information:`}
+              </Trans>
             </h2>
             <p> {returnDate()}</p>
             <div className="wrapper">

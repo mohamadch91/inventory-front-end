@@ -9,7 +9,6 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Level from "./Level";
 import { alpha } from "@mui/material/styles";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
@@ -507,7 +506,6 @@ export default function DataTable() {
         toast.error("Levels import failed");
       })
       .finally(() => {
-        setExcel(null);
       });
     console.log(levels);
   };

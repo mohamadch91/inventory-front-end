@@ -1,5 +1,6 @@
 import React from "react";
 import WarningsTableCheckbox from "./WarningsTableCheckbox";
+import { Trans } from "react-i18next";
 
 const WarningsTable = (props) => {
   const { data, setState, state } = props;
@@ -23,12 +24,29 @@ const WarningsTable = (props) => {
             <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th> # </th>
-                  <th> Item Type </th>
-                  <th> Code </th>
-                  <th> Deadline </th>
-                  <th> Service interval </th>
-                  <th> Done </th>
+                  <th>
+                    <Trans>#</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Item Type</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Code</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Deadline</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Service interval</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Done</Trans>{" "}
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -56,7 +74,7 @@ const WarningsTable = (props) => {
               className=" mt-3 btn btn-primary btn-fw"
               onClick={props.onSubmit}
             >
-              Mark as done
+              <Trans>Mark as done</Trans>
             </button>
           </div>
         </div>

@@ -434,7 +434,7 @@ export class Country extends Component {
                           <Trans>
                             {" "}
                             logo <br /> jpg, jpeg, png <br />
-                            aspect ratio 1:1
+                            aspect ratio 16:4
                           </Trans>
                         </label>
                         <div className="col-sm-9 mt-3">
@@ -610,10 +610,10 @@ export class Country extends Component {
                             as="select"
                           >
                             <option value="General population">
-                             General population
+                              General population
                             </option>
                             <option value="Under-1 Population">
-                          Under-1 Population
+                              Under-1 Population
                             </option>
                           </Form.Control>
                         </div>
@@ -644,12 +644,11 @@ export class Country extends Component {
                               value={true}
                               key="Estimate required capacity (in MS Excel)"
                             >
-                              
-                                Estimate required capacity (in MS Excel)
+                              Estimate required capacity (in MS Excel)
                             </option>
 
                             <option value={false}>
-                            Enter required capacity manually
+                              Enter required capacity manually
                             </option>
                           </Form.Control>
                         </div>

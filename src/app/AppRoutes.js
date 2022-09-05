@@ -16,17 +16,7 @@ const LogBookDetailsPage = lazy(() =>
   import("./dashboard/warnings/tables/logbook/LogBookDetailsPage")
 );
 
-const Buttons = lazy(() => import("./basic-ui/Buttons"));
-const Dropdowns = lazy(() => import("./basic-ui/Dropdowns"));
-const Typography = lazy(() => import("./basic-ui/Typography"));
-
-const BasicElements = lazy(() => import("./form-elements/BasicElements"));
-
-const BasicTable = lazy(() => import("./tables/BasicTable"));
-
 const Mdi = lazy(() => import("./icons/Mdi"));
-
-const ChartJs = lazy(() => import("./charts/ChartJs"));
 
 const Error403 = lazy(() => import("./error-pages/Error403"));
 const Error404 = lazy(() => import("./error-pages/Error404"));
@@ -35,7 +25,6 @@ const Error500 = lazy(() => import("./error-pages/Error500"));
 const Login = lazy(() => import("./user-pages/Login"));
 const Register1 = lazy(() => import("./user-pages/Register"));
 const Country = lazy(() => import("./settings/Country"));
-const Level = lazy(() => import("./settings/Level"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
 const ItemType = lazy(() => import("./settings/ItemType"));
@@ -46,6 +35,11 @@ const ParameterDescription = lazy(() =>
   import("./settings/ParameterDescription")
 );
 const MangeHelp = lazy(() => import("./settings/ManageHelp"));
+const PlanningCCEGap = lazy(() => import("./settings/PlanningCCEGap"));
+const PlanningReport = lazy(() => import("./settings/PlanningReport"));
+const FacilityGapInformation = lazy(() =>
+  import("./settings/FacilityGapInformation")
+);
 const FieldsOfItemT = lazy(() => import("./settings/FieldsOfItemT"));
 const FacilityFields = lazy(() => import("./settings/FacilityFields"));
 const Manufacturer = lazy(() => import("./settings/Manufacturer"));
@@ -85,7 +79,10 @@ const FacilityMapBasedReport = lazy(() =>
 const ItemGroupReport = lazy(() => import("./reports/ItemGroupReport"));
 const ItemFacilityReport = lazy(() => import("./reports/ItemFacilityReport"));
 const ProfileOfFacility = lazy(() => import("./reports/ProfileOfFacility"));
-
+const ProfileOfColdChain = lazy(() => import("./reports/ProfileOfColdChain"));
+const GapItemReport = lazy(() => import("./reports/GapItemReport"));
+const GapMapBasedReport = lazy(() => import("./reports/GapMapBasedReport"));
+const Facimport= lazy(() => import("./settings/importFacility"));
 class AppRoutes extends Component {
   render() {
     return (
@@ -99,13 +96,14 @@ class AppRoutes extends Component {
           <Route exact path="/message/list" component={MessageList} />
 
           <Route exact path="/settings/country" component={Country} />
-          <Route exact path="/settings/level" component={Level} />
           <Route exact path="/settings/item-class" component={ItemClass} />
           <Route exact path="/settings/item-type" component={ItemType} />
           <Route exact path="/settings/params" component={Parameters} />
           <Route exact path="/settings/manufacturer" component={Manufacturer} />
           <Route exact path="/settings/pqs4" component={Pqs4} />
           <Route exact path="/settings/pqs3" component={Pqs3} />
+          <Route exact path="/settings/import-facility" component={Facimport} />
+
           <Route
             exact
             path="/settings/reports/excel"
@@ -138,6 +136,21 @@ class AppRoutes extends Component {
             component={NewLevelList}
           />
           <Route exact path="/settings/manage-help" component={MangeHelp} />
+          <Route
+            exact
+            path="/settings/planning-cce-gap"
+            component={PlanningCCEGap}
+          />
+          <Route
+            exact
+            path="/settings/planning-report"
+            component={PlanningReport}
+          />
+          <Route
+            exact
+            path="/settings/fac-gap-info/:id"
+            component={FacilityGapInformation}
+          />
 
           <Route exact path="/settings/mtns_setting" component={MtnsSetting} />
           <Route
@@ -190,7 +203,18 @@ class AppRoutes extends Component {
             path="/reports/item-fac"
             component={ItemFacilityReport}
           />
+          <Route
+            exact
+            path="/reports/gap-map-based"
+            component={GapMapBasedReport}
+          />
           <Route exact path="/reports/fac-prof" component={ProfileOfFacility} />
+          <Route exact path="/reports/gap-item" component={GapItemReport} />
+          <Route
+            exact
+            path="/reports/prof-cold-chain"
+            component={ProfileOfColdChain}
+          />
 
           <Route exact path="/dashboard" component={Dashboard} />
           <Route
@@ -209,27 +233,12 @@ class AppRoutes extends Component {
             component={WarningsTablePage}
           />
 
-          <Route path="/basic-ui/buttons" component={Buttons} />
-          <Route path="/basic-ui/dropdowns" component={Dropdowns} />
-          <Route path="/basic-ui/typography" component={Typography} />
-
-          <Route path="/tables/basic-table" component={BasicTable} />
-
-          <Route
-            path="/form-Elements/basic-elements"
-            component={BasicElements}
-          />
-
-          <Route path="/icons/mdi" component={Mdi} />
-
-          <Route path="/charts/chart-js" component={ChartJs} />
-
-          <Route path="/" component={Login} />
           <Route path="/user-pages/register-1" component={Register1} />
 
           <Route path="/error-pages/error-403" component={Error403} />
           <Route path="/error-pages/error-404" component={Error404} />
           <Route path="/error-pages/error-500" component={Error500} />
+          <Route path="/" component={Login} />
 
           <Redirect to="/" />
         </Switch>

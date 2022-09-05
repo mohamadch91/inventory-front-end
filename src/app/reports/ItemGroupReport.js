@@ -23,8 +23,8 @@ const defaultValues = {
   item_power: "-1",
   manufacturer: "-1",
   pqs: "",
-  year_from: "",
-  year_to: "",
+  year_from: "-1",
+  year_to: "-1",
   capacity_from: "",
   capacity_to: "",
 };

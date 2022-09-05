@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter basename="">
+      <BrowserRouter>
         <Suspense fallback={<div>Loading...</div>}>
           <App />
         </Suspense>

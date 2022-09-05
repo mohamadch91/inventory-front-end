@@ -152,7 +152,7 @@ function FieldsFacility() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      <Trans>Save</Trans>
+                      <Trans>Save all</Trans>
                     </button>
                   </Box>
                 </div>

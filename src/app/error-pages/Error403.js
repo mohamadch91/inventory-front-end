@@ -15,7 +15,10 @@ export class Error403 extends Component {
                 <div className="col-lg-6 error-page-divider text-lg-left pl-lg-4">
                   <h2>SORRY!</h2>
                   <h3 className="font-weight-light">
-                    You don't have permissions to access this page!
+                    You can't add or delete Facilities!
+                  </h3>
+                  <h3 className="font-weight-light">
+                    Please change values and try again!
                   </h3>
                 </div>
               </div>

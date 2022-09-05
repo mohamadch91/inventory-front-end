@@ -9,6 +9,7 @@ import classes from "./ItemCard.module.css";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
+import { Trans } from "react-i18next";
 
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
@@ -86,12 +87,19 @@ const ItemsCard = () => {
   return (
     <div className={classes.item}>
       <Card>
-        <h3>🏢 Items </h3>
+        <h3>
+          🏢 <Trans>Items</Trans>{" "}
+        </h3>
         <ChartDropDown
           onChange={itemClassChangeHandler}
           options={itemClasses}
+          text="Select item Class"
         />
-        <ChartDropDown onChange={itemChangeHandler} options={items} />
+        <ChartDropDown
+          onChange={itemChangeHandler}
+          options={items}
+          text="Select item Type"
+        />
         <GaugeChart
           className="pt-3"
           id="gauge-chart6"
@@ -106,12 +114,14 @@ const ItemsCard = () => {
         {chartData && (
           <div>
             <span>{chartData.totalItems}</span>
-            <p>Items</p>
-            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
-              Working: {chartData.working * 100}%
+            <p>
+              <Trans>Items</Trans>
             </p>
             <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
-              Not working: {chartData.notWorking}
+              <Trans>Working</Trans>: {chartData.working * 100}%
+            </p>
+            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
+              <Trans>Not working</Trans>: {chartData.notWorking}
             </p>
           </div>
         )}

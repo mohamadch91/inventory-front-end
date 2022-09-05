@@ -1,5 +1,5 @@
 export const separator = (x) => {
-  if (!x) {
+  if (x === undefined || x === null) {
     return;
   }
   x = parseInt(x);

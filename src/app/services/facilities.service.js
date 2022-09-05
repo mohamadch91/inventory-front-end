@@ -21,9 +21,10 @@ class FacilitiesService {
       params,
     });
   }
-  getFacilityFields() {
+  getFacilityFields(params) {
     return ApiManager.get(API_URL + "facility-field", {
       headers: { Authorization: authHeader() },
+      params,
     });
   }
   postFacility(payload) {
@@ -35,6 +36,15 @@ class FacilitiesService {
     return ApiManager.put(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
+  }
+  importFacilities(payload) {
+    return ApiManager.post(
+      "http://5.182.47.38:8001facilities/" + "import",
+      payload,
+      {
+        headers: { Authorization: authHeader() },
+      }
+    );
   }
 }
 

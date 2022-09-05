@@ -144,7 +144,7 @@ function FieldsOfItemT() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Fields of</Trans> <Trans>"item category"</Trans>
+        <Trans>Fields of</Trans> <Trans>"Item category"</Trans>
       </h3>
       {isItemClassesLoading ? (
         <Spinner />
@@ -246,7 +246,7 @@ function FieldsOfItemT() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      <Trans>Save</Trans>
+                      <Trans>Save all</Trans>
                     </button>
                   </Box>
                 </div>

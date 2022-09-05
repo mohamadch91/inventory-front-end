@@ -4,7 +4,7 @@ const ChartDropDown = (props) => {
   return (
     <div className={classes.drop}>
       <select onChange={props.onChange}>
-        <option value="">Select Item Class</option>
+        <option value="">{props.text}</option>
 
         {props.options.map((el, i) => (
           <option key={i} value={el.id}>

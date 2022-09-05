@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 
 import dashboardService from "../../services/dashboard.service";
 import LogBookItem from "./tables/logbook/LogBookItem";
+import { Trans } from "react-i18next";
 
 const warningsData = [
   {
@@ -46,10 +47,13 @@ const Warnings = () => {
 
   return (
     <div className={`card-body recent-activity ${classes.warnings}`}>
-      <h4 className="card-title"> Warnings</h4>
+      <h4 className="card-title">
+        {" "}
+        <Trans>Warnings</Trans>
+      </h4>
 
       <p className="card-description">
-        Warnings that need to be taken cared of
+        <Trans>Warnings that need to be taken cared of</Trans>
       </p>
 
       {data && (

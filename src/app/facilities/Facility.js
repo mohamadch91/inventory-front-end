@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "react-query";
 import FacilitiesService from "../services/facilities.service";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Spinner from "../shared/Spinner";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -33,6 +33,9 @@ function Facility() {
   const [levels, setLevels] = useState([]);
 
   const { id } = useParams();
+  const history = useHistory();
+  const params = new URLSearchParams(history.location.search);
+  const pid = params.get("pid");
 
   const { isLoading: isFacilityDefaultLoading } = useQuery(
     ["facility-default-value", id],
@@ -64,7 +67,11 @@ function Facility() {
   const { data: facilityFields, isLoading: isFacilitiesFields } = useQuery(
     ["facility-fields"],
     async () => {
-      const res = await FacilitiesService.getFacilityFields();
+      const params = {};
+      if (pid) {
+        params["parent"] = pid;
+      }
+      const res = await FacilitiesService.getFacilityFields(params);
       const result = {};
       if (res.data) {
         for (const field of res.data.related) {

@@ -2,49 +2,37 @@ import { Form } from "react-bootstrap";
 import HelpService from "../services/help.service";
 import { useQuery } from "react-query";
 import Spinner from "../shared/Spinner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { languages, pages } from "../constants/help";
+import API_URL from "../services/APIURL";
 
 function MangeHelp() {
   const [selectedLang, setSelectedLang] = useState(languages[0]);
   const [selectedPage, setSelectedPage] = useState(pages[0]);
-  const [helpContent, setHelpContent] = useState("");
+  const [helpFile, setHelpFile] = useState(null);
 
   const {
     data: helpData,
     isLoading: isLoading,
     refetch: refetchHelp,
-  } = useQuery(
-    ["help", selectedLang, selectedPage],
-    async () => {
-      const res = await HelpService.getHelpContent(selectedLang, selectedPage);
-      return res.data.length > 0 ? res.data[0] : {};
-    },
-    {
-      enabled: false,
-      onSuccess(data) {
-        setHelpContent(data.abr);
-      },
-    }
-  );
-
-  useEffect(() => {
-    refetchHelp();
-  }, []);
+  } = useQuery(["help", selectedLang, selectedPage], async () => {
+    const res = await HelpService.getHelpContent(selectedLang, selectedPage);
+    return res.data.length > 0 ? res.data[0] : {};
+  });
 
   const onSaveHandler = async (e) => {
     e.preventDefault();
-    const payload = {
-      lang: selectedLang,
-      page: selectedPage,
-      abr: helpContent,
-    };
+    const formData = new FormData();
+    formData.append("lang", selectedLang);
+    formData.append("page", selectedPage);
+    formData.append("abr", helpFile);
     if (helpData.id) {
-      payload.id = helpData.id;
+      formData.append("id", helpData.id);
     }
     const res = await (helpData.id
-      ? HelpService.putHelpContent(payload)
-      : HelpService.postHelpContent(payload));
+      ? HelpService.putHelpContent(formData)
+      : HelpService.postHelpContent(formData));
+    refetchHelp();
   };
 
   return (
@@ -108,11 +96,13 @@ function MangeHelp() {
             <div className="card-body pb-3">
               <form onSubmit={onSaveHandler}>
                 <div className="row">
-                  <textarea
-                    placeholder="help content..."
-                    value={helpContent}
-                    rows={10}
-                    onChange={(e) => setHelpContent(e.target.value)}
+                  <input
+                    type="file"
+                    onChange={(e) => {
+                      e.persist();
+                      const value = e.target.files[0];
+                      setHelpFile(value);
+                    }}
                   />
                 </div>
                 <div className="row">
@@ -123,6 +113,20 @@ function MangeHelp() {
                   >
                     Save
                   </button>
+                  {helpData?.abr && (
+                    <a
+                      href={API_URL + helpData.abr}
+                      download
+                      style={{ width: "fit-content" }}
+                    >
+                      <button
+                        className="btn btn-success mt-3 ml-2"
+                        type="button"
+                      >
+                        Download Help
+                      </button>
+                    </a>
+                  )}
                 </div>
               </form>
             </div>

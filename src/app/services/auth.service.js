@@ -54,6 +54,7 @@ class AuthService {
             user.username = res.data.User.username;
             user.idnumber = res.data.User.idnumber;
             user.phone = res.data.User.phone;
+            user.facility_name = res.data.facility;
             user.facility_admin = res.data.User.facadmin;
             user.facility_id = res.data.User.facilityid;
             user.reportadmin = res.data.User.reportadmin;
@@ -75,6 +76,7 @@ class AuthService {
    * @function logout
    */
   logout() {
+    console.log("logout");
     localStorage.removeItem("user");
     localStorage.removeItem("country");
   }

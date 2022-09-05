@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import DashboardService from "../../../../services/dashboard.service";
 import { Spinner } from "react-bootstrap";
+import { Trans } from "react-i18next";
 
 const LogBookDetailsPage = () => {
   const param = useParams();
@@ -32,21 +33,47 @@ const LogBookDetailsPage = () => {
         <div className="card">
           <div className="card-body">
             <h4 className="card-title">
-              Details of <i>{`${detailsData.type}`}</i> maintenance performed by{" "}
-              {`${detailsData.gp}`}: #{`${detailsData.code}`}
+              <Trans>
+                Details of <i>{`${detailsData.type}`}</i> maintenance performed
+                by {`${detailsData.gp}`}: #{`${detailsData.code}`}
+              </Trans>
             </h4>
             <div className="table-responsive">
               <table className="table table-bordered">
                 <thead>
                   <tr>
-                    <th> # </th>
-                    <th> Name </th>
-                    <th> Code </th>
-                    <th> interval </th>
-                    <th> interval in location </th>
-                    <th> Deadline </th>
-                    <th> Deadline in location </th>
-                    <th> Status </th>
+                    <th>
+                      {" "}
+                      <Trans>#</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>Name</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>Code</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>interval</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>interval in location</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>Deadline</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans> Deadline in location</Trans>{" "}
+                    </th>
+                    <th>
+                      {" "}
+                      <Trans>Status</Trans>{" "}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
