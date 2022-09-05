@@ -7,8 +7,8 @@ import { languages, pages } from "../constants/help";
 import API_URL from "../services/APIURL";
 
 function MangeHelp() {
-  const [selectedLang, setSelectedLang] = useState(languages[0]);
-  const [selectedPage, setSelectedPage] = useState(pages[0]);
+  const [selectedLang, setSelectedLang] = useState("en");
+  const [selectedPage, setSelectedPage] = useState("dashboard");
   const [helpFile, setHelpFile] = useState(null);
 
   const {
@@ -50,15 +50,15 @@ function MangeHelp() {
                     <label className="col-sm-12">Language</label>
                     <div className="col-sm-12">
                       <Form.Control
-                        onChange={(e) =>
-                          setSelectedLang(languages[e.target.value])
-                        }
+                        onChange={(e) => setSelectedLang(e.target.value)}
                         className="form-select"
                         as="select"
-                        value={languages.indexOf(selectedLang)}
+                        value={selectedLang}
                       >
-                        {languages.map((lang, index) => (
-                          <option value={index}>{lang}</option>
+                        {Object.keys(languages).map((lang) => (
+                          <option value={lang} id={lang}>
+                            {languages[lang]}
+                          </option>
                         ))}
                       </Form.Control>
                     </div>
@@ -69,13 +69,15 @@ function MangeHelp() {
                     <label className="col-sm-12">Page</label>
                     <div className="col-sm-12">
                       <Form.Control
-                        onChange={(e) => setSelectedPage(pages[e.target.value])}
+                        onChange={(e) => setSelectedPage(e.target.value)}
                         className="form-select"
                         as="select"
-                        value={pages.indexOf(selectedPage)}
+                        value={selectedPage}
                       >
-                        {pages.map((page, index) => (
-                          <option value={index}>{page}</option>
+                        {Object.keys(pages).map((page) => (
+                          <option key={page} value={page}>
+                            {pages[page]}
+                          </option>
                         ))}
                       </Form.Control>
                     </div>

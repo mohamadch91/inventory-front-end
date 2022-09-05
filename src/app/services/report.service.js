@@ -88,12 +88,13 @@ class ReportService {
     });
   }
   deleteGapCCEPlan(payload) {
-    return ApiManager.delete(API_URL + "gapccePlan", payload, {
+    return ApiManager.delete(API_URL + "gapccePlan", {
       headers: { Authorization: authHeader() },
+      data: payload,
     });
   }
   putGapCCEPlan(payload) {
-    return ApiManager.delete(API_URL + "gapccePlan", payload, {
+    return ApiManager.put(API_URL + "gapccePlan", payload, {
       headers: { Authorization: authHeader() },
     });
   }

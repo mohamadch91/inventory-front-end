@@ -49,9 +49,11 @@ function Item() {
       return { ...res.data[1], ...defaultData };
     },
     {
-      refetchOnMount: true,
       onSuccess(data) {
-        setFieldValue(data);
+        setFieldValue((preValues) => ({
+          ...data,
+          ...preValues,
+        }));
       },
     }
   );
@@ -322,7 +324,7 @@ function Item() {
                       (i) =>
                         i?.item_class.id === selectedItemClass?.item_class.id
                     )}
-                    disabled={activeStep !== 0}
+                    disabled={activeStep !== 0 || id !== "new"}
                   >
                     {itemClassesAndTypes.map((itemClass, index) => (
                       <option value={index}>
@@ -355,7 +357,7 @@ function Item() {
                     value={selectedItemClass?.item_type.findIndex(
                       (i) => i?.id === selectedItemType?.id
                     )}
-                    disabled={activeStep !== 0}
+                    disabled={activeStep !== 0 || id !== "new"}
                   >
                     {selectedItemClass?.item_type.map((itemType, index) => (
                       <option value={index}>{itemType.title}</option>

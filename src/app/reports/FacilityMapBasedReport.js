@@ -17,6 +17,8 @@ const defaultValues = {
 function FacilityMapBasedReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
 
+  const country = JSON.parse(localStorage.getItem("country")) || {};
+
   const { data: facMapHelper, isLoading: isFacMapHelperLoading } = useQuery(
     ["fac-map-based-helper"],
     async () => {
@@ -204,6 +206,10 @@ function FacilityMapBasedReport() {
         </div>
       </div>
       <div className="p-3">
+        <h4>
+          <Trans>Report Number: Facility Map-Based ({country?.country})</Trans>
+        </h4>
+        <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
         <SharedMap locations={reports} />
       </div>
     </div>

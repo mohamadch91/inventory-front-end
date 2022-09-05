@@ -17,6 +17,12 @@ class ItemService {
       params,
     });
   }
+  deleteItem(id) {
+    return ApiManager.delete(API_URL, {
+      headers: { Authorization: authHeader() },
+      data: { id },
+    });
+  }
   getItemClassesAndTypes() {
     return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },

@@ -25,6 +25,8 @@ const defaultValues = {
 function FacilitySegmentationReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
 
+  const country = JSON.parse(localStorage.getItem("country")) || {};
+
   const { data: facSegHelper, isLoading: isFacSegHelperLoading } = useQuery(
     ["fac-seg-helper"],
     async () => {
@@ -332,8 +334,11 @@ function FacilitySegmentationReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Reports</Trans>
+              <Trans>
+                Report Number: Facility Segmentation ({country?.country})
+              </Trans>
             </h4>
+            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>

@@ -157,6 +157,7 @@ const ReportTable = (props) => {
 };
 
 function ProfileOfFacility() {
+  const country = JSON.parse(localStorage.getItem("country")) || {};
   const { data: reports, isLoading: isReportsLoading } = useQuery(
     ["profile-of-facility-reports"],
     async () => {
@@ -171,9 +172,10 @@ function ProfileOfFacility() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">
-        <Trans>Profile of facility</Trans>
-      </h3>
+      <h4>
+        <Trans>Report Number: Profile of facility ({country?.country})</Trans>
+      </h4>
+      <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
       {reports &&
         Object.keys(reports).map((key) => {
           const title =

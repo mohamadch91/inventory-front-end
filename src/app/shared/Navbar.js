@@ -4,6 +4,7 @@ import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import i18n from "../../i18n";
 import eventBus from "../common/EventBus";
+import Help from "../components/Help";
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -75,6 +76,9 @@ class Navbar extends Component {
             />
           </div>
           <ul className="navbar-nav navbar-nav-right">
+            <li className="nav-item nav-profile  d-xl-flex">
+              <Help />
+            </li>
             <li className="nav-item nav-profile d-none d-xl-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">

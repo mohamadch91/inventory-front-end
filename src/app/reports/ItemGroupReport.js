@@ -70,6 +70,8 @@ function ItemGroupReport() {
     return <Spinner />;
   }
 
+  const country = JSON.parse(localStorage.getItem("country")) || {};
+
   return (
     <div>
       <h3 className="page-title mb-3">
@@ -573,8 +575,11 @@ function ItemGroupReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Reports</Trans>
+              <Trans>
+                Report Number: Item Grouped Report ({country?.country})
+              </Trans>
             </h4>
+            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>

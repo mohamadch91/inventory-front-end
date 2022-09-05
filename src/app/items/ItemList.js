@@ -1,20 +1,31 @@
 import React from "react";
-import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from "@mui/material";
 import "../styles/table.scss";
 import Spinner from "../shared/Spinner";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
 import EditIcon from "../shared/EditIcon";
 import { Link, useHistory } from "react-router-dom";
 import ItemService from "../services/item.service";
 import { Trans } from "react-i18next";
+import TrashIcon from "../shared/TrashIcon";
 
 function ItemList() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const facility = params.get("facility");
 
-  const { data: items, isLoading: isItemsDefaultLoading } = useQuery(
+  const {
+    data: items,
+    isLoading: isItemsDefaultLoading,
+    refetch: refetchItems,
+  } = useQuery(
     ["item-default-value", facility],
     async () => {
       const res = await ItemService.getItems(undefined, facility);
@@ -36,6 +47,16 @@ function ItemList() {
         refetchOnMount: true,
       }
     );
+
+  const { isLoading: isDeleteLoading, mutateAsync: deleteItem } = useMutation({
+    mutationFn: async (id) => {
+      const res = await ItemService.deleteItem(id);
+      return res;
+    },
+    onSuccess() {
+      refetchItems();
+    },
+  });
 
   const convertDate = (date) => {
     console.log(date);
@@ -113,6 +134,15 @@ function ItemList() {
                               <EditIcon />
                             </div>
                           </Link>
+                          <Tooltip title="Delete facility">
+                            <button
+                              className="edit-btn"
+                              disabled={isDeleteLoading}
+                              onClick={() => deleteItem(facility.id)}
+                            >
+                              <TrashIcon />
+                            </button>
+                          </Tooltip>
                         </TableCell>
                       </TableRow>
                     );

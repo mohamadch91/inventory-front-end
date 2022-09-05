@@ -61,11 +61,11 @@ const tableData = [
   },
   {
     headTitle: "General",
-    valueKey: "children",
+    valueKey: "general",
   },
   {
-    headTitle: "General",
-    valueKey: "general",
+    headTitle: "Under_1",
+    valueKey: "children",
   },
 ];
 
@@ -91,6 +91,8 @@ const tableDegreeData = [
 function GapItemReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
   const [selectedDegree, setSelectedDegree] = useState("1");
+
+  const country = JSON.parse(localStorage.getItem("country")) || {};
 
   const { data: gapItemHelper, isLoading: isGapItemHelperLoading } = useQuery(
     ["gap-item-helper"],
@@ -354,7 +356,9 @@ function GapItemReport() {
                         select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {
-                        const year = new Date().getUTCFullYear() - i;
+                        const year =
+                          (filterValues.year_to ||
+                            new Date().getUTCFullYear()) - i;
                         return (
                           <option key={year} value={year}>
                             {year}
@@ -380,7 +384,10 @@ function GapItemReport() {
                       <option value="-1" selected disabled>
                         select
                       </option>
-                      {Array.from({ length: 30 }).map((_, i) => {
+                      {Array.from({
+                        length:
+                          new Date().getUTCFullYear() - filterValues.year_from,
+                      }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
                           <option key={year} value={year}>
@@ -444,8 +451,9 @@ function GapItemReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Reports</Trans>
+              <Trans>Report Number: Gap Item Report ({country?.country})</Trans>
             </h4>
+            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container ">
               <SharedTable>
                 <TableHead>
@@ -458,12 +466,21 @@ function GapItemReport() {
                     </TableCell>
                     {selectedDegree === "6" ? (
                       Array.from({ length: 5 }).map((_, i) => (
-                        <TableCell key={i} align="center" colSpan={4}>
+                        <TableCell
+                          key={i}
+                          align="center"
+                          colSpan={4}
+                          style={{ textAlign: "center" }}
+                        >
                           {degrees[i].name}
                         </TableCell>
                       ))
                     ) : (
-                      <TableCell align="center" colSpan={4}>
+                      <TableCell
+                        align="center"
+                        colSpan={4}
+                        style={{ textAlign: "center" }}
+                      >
                         {degrees[+selectedDegree - 1].name}
                       </TableCell>
                     )}

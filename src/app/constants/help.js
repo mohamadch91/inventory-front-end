@@ -1,9 +1,19 @@
-export const languages = ["arabic", "english", "persian", "french", "russian"];
+export const languages = {
+  en: "English",
+  fr: "Français",
+  ar: "العربية",
+  fa: "فارسی",
+  es: "Español",
+  ru: "Русский",
+};
 
-export const pages = [
-  "admin",
-  "index",
-  "Facility_info",
-  "Facility_type",
-  "admin_guide",
-];
+export const pages = {
+  dashboard: "Dashboard",
+  facilities: "Facilities",
+  hr: "Human Resources",
+  user: "User",
+  message: "Message",
+  reports: "Reports",
+  settings: "Settings",
+  "about-iga": "About-IGA",
+};

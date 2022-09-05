@@ -110,6 +110,8 @@ function ItemFacilityReport() {
   const [filterValues, setFilterValues] = useState(defaultValues);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const country = JSON.parse(localStorage.getItem("country")) || {};
+
   const { data: itemFacHelper, isLoading: isItemFacHelperLoading } = useQuery(
     ["item-fac-helper"],
     async () => {
@@ -499,8 +501,11 @@ function ItemFacilityReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Reports</Trans>
+              <Trans>
+                Report Number: Item Report By Facility ({country?.country})
+              </Trans>
             </h4>
+            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container ">
               <SharedTable stickyHeader>
                 <TableHead>

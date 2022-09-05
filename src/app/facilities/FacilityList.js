@@ -3,11 +3,14 @@ import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import "../styles/table.scss";
 import Spinner from "../shared/Spinner";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
 import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
 import MenuIcon from "../shared/MenuIcon";
+import AddItemIcon from "../shared/AddItemIcon";
+import TrashIcon from "../shared/TrashIcon";
+import AddFacilityIcon from "../shared/AddFacilityIcon";
 import FacilityIcon from "../shared/FacilityIcon";
 import { Link, useHistory } from "react-router-dom";
 import { Trans } from "react-i18next";
@@ -17,15 +20,27 @@ function FacilityList() {
   const params = new URLSearchParams(history.location.search);
   const pid = params.get("pid");
 
-  const { data: facilities, isLoading: isFacilityDefaultLoading } = useQuery(
-    ["facility-list", pid],
-    async () => {
-      const res = await (pid
-        ? FacilitiesService.getSubFacilities(pid)
-        : FacilitiesService.getFacilities());
-      return res.data;
-    }
-  );
+  const {
+    data: facilities,
+    isLoading: isFacilityDefaultLoading,
+    refetch: refetchFacilities,
+  } = useQuery(["facility-list", pid], async () => {
+    const res = await (pid
+      ? FacilitiesService.getSubFacilities(pid)
+      : FacilitiesService.getFacilities());
+    return res.data;
+  });
+
+  const { isLoading: isDeleteLoading, mutateAsync: deleteFacility } =
+    useMutation({
+      mutationFn: async (id) => {
+        const res = await FacilitiesService.deleteFacility(id);
+        return res;
+      },
+      onSuccess() {
+        refetchFacilities();
+      },
+    });
 
   const convertDate = (date) => {
     if (date) {
@@ -135,7 +150,7 @@ function FacilityList() {
                                   search: `?pid=${facility.id}`,
                                 }}
                               >
-                                <MenuIcon />
+                                <FacilityIcon />
                               </Link>
                             </Tooltip>
                           )}
@@ -146,7 +161,7 @@ function FacilityList() {
                                 search: `?pid=${facility.id}`,
                               }}
                             >
-                              <FacilityIcon />
+                              <AddFacilityIcon />
                             </Link>
                           </Tooltip>
                           <Tooltip title="Item list">
@@ -156,7 +171,7 @@ function FacilityList() {
                                 search: `?facility=${facility.id}`,
                               }}
                             >
-                              <FacilityIcon />
+                              <MenuIcon />
                             </Link>
                           </Tooltip>
                           <Tooltip title="Add item">
@@ -166,8 +181,17 @@ function FacilityList() {
                                 search: `?parent=${facility.id}`,
                               }}
                             >
-                              <FacilityIcon />
+                              <AddItemIcon />
                             </Link>
+                          </Tooltip>
+                          <Tooltip title="Delete facility">
+                            <button
+                              className="edit-btn"
+                              disabled={isDeleteLoading}
+                              onClick={() => deleteFacility(facility.id)}
+                            >
+                              <TrashIcon />
+                            </button>
                           </Tooltip>
                         </TableCell>
                       </TableRow>

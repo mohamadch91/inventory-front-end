@@ -21,6 +21,12 @@ class FacilitiesService {
       params,
     });
   }
+  deleteFacility(id) {
+    return ApiManager.delete(API_URL, {
+      headers: { Authorization: authHeader() },
+      data: { id },
+    });
+  }
   getFacilityFields(params) {
     return ApiManager.get(API_URL + "facility-field", {
       headers: { Authorization: authHeader() },
