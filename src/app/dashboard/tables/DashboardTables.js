@@ -15,7 +15,11 @@ const DashboardTables = () => {
     sendRequest();
   }, []);
   if (status === "pending") {
-    return <Spinner />;
+    return (
+      <div className={"spinner-wrapper"} style={{ position: "relative" }}>
+        <div className={"donut"} />
+      </div>
+    );
   }
   console.log("error object", err);
   // TODO: Remove error message at production
