@@ -26,7 +26,7 @@ function Help() {
         download
         style={{ width: "fit-content" }}
       >
-        <button className="btn btn-success" type="button">
+        <button className="btn btn-primary" type="button">
           Download Help
         </button>
       </a>

@@ -11,7 +11,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
   const [isLoading, setIsLoading] = useState(true);
 
   function getData() {
-    FacilitiesService.getFacilityFields()
+    FacilitiesService.getFacilityFields1()
       .then((res) => {
         const data=res.data.related;
         data.unshift({
@@ -19,7 +19,14 @@ const FacilityToPrint = forwardRef((props, ref) => {
           params:[],
           type: "text",
         })
-        const levels = res.data.levels;
+        let levels = res.data.levels;
+        // change levels name to id
+        levels = levels.map((level) => {
+          return {
+            id: level.id,
+            name: level.id+" - "+ level.name,
+          };
+        });
         data.unshift({
           name: "Levels",
           params:levels,

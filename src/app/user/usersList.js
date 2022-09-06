@@ -22,7 +22,7 @@ function UsersList() {
     itemadmin: false,
     reportadmin: false,
     useradmin: false,
-    is_superuser: false,
+    is_active: false,
     password: "",
     conf_password: "",
   });
@@ -101,7 +101,7 @@ function UsersList() {
       let formToPut = (({
         pk,
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -115,7 +115,7 @@ function UsersList() {
         pk,
 
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -154,9 +154,10 @@ function UsersList() {
       toast.error("Please fill all the fields");
     } else {
       setIsLoading(true);
+      const owner=JSON.parse(localStorage.getItem("user")).username
       let formToPost = (({
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -169,7 +170,7 @@ function UsersList() {
         name,
       }) => ({
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -180,7 +181,10 @@ function UsersList() {
         reportadmin,
         useradmin,
         name,
+        
       }))(addRowFormData);
+      console.log(formToPost);
+      formToPost.owner=owner
       UserListService.addUser(formToPost)
         .then((res) => {
           toast.success("user added successfully");
@@ -192,7 +196,7 @@ function UsersList() {
             itemadmin: false,
             reportadmin: false,
             useradmin: false,
-            is_superuser: false,
+            is_active: true,
             password: "",
             conf_password: "",
           });
@@ -261,7 +265,10 @@ function UsersList() {
                       <Trans>Username</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Facility Name</Trans>
+                      <Trans>Facility</Trans> <Trans>Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Owner</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Manage Facilities</Trans>
@@ -276,7 +283,7 @@ function UsersList() {
                       <Trans>Manage Users</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Super User</Trans>
+                      <Trans>Active</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Position</Trans>
@@ -297,6 +304,7 @@ function UsersList() {
                           <TableCell>
                             {findFacilityById(item.facilityid)?.name}
                           </TableCell>
+                          <TableCell>{item?.owner}</TableCell>
                           <TableCell>
                             <input
                               type="checkbox"
@@ -328,7 +336,7 @@ function UsersList() {
                           <TableCell>
                             <input
                               type="checkbox"
-                              checked={item.is_superuser}
+                              checked={item.is_active}
                               disabled
                             ></input>
                           </TableCell>
@@ -359,7 +367,7 @@ function UsersList() {
               {activeStep === 0 ? (
                 <>
                   <h3 className="mb-3 text-center">
-                    <Trans>Edit user</Trans>
+                    <Trans>Edit</Trans> <Trans>user</Trans>
                   </h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -449,8 +457,6 @@ function UsersList() {
                       type="number"
                       onChange={handleChangeEdit}
                       value={editFormData?.idnumber}
-                      required
-                      disabled
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
@@ -460,7 +466,6 @@ function UsersList() {
                       type="text"
                       onChange={handleChangeEdit}
                       value={editFormData?.position}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
@@ -470,22 +475,21 @@ function UsersList() {
                       type="tel"
                       onChange={handleChangeEdit}
                       value={editFormData?.phone}
-                      required
                     ></input>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Super user</label>
+                      <label className="m-0 mr-2">Active</label>
                       <input
-                        name="is_superuser"
+                        name="is_active"
                         type="checkbox"
                         onChange={() =>
                           setEditFormData({
                             ...editFormData,
-                            is_superuser: !editFormData.is_superuser,
+                            is_active: !editFormData.is_active,
                           })
                         }
-                        checked={editFormData?.is_superuser}
+                        checked={editFormData?.is_active}
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
@@ -705,18 +709,18 @@ function UsersList() {
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
                       <label className="m-0 mr-2">
-                        <Trans>Super user</Trans>
+                        <Trans>Active</Trans>
                       </label>
                       <input
-                        name="is_superuser"
+                        name="is_active"
                         type="checkbox"
                         onChange={() =>
                           setAddRowFormData({
                             ...addRowFormData,
-                            is_superuser: !addRowFormData.is_superuser,
+                            is_active: !addRowFormData.is_active,
                           })
                         }
-                        checked={addRowFormData?.is_superuser}
+                        checked={addRowFormData?.is_active}
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
@@ -794,7 +798,7 @@ function UsersList() {
                   >
                     <Trans>Back</Trans>
                   </button>
-                  <button className="save-btn w-100" type="submit">
+                  <button className="save-btn w-100 mb-3" type="submit">
                     <Trans>Save</Trans>
                   </button>
                 </>

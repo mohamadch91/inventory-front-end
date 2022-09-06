@@ -24,12 +24,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://5.182.47.38:8001${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `http://5.182.47.38:8001${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
@@ -74,45 +74,12 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
+            Inventory AND GAP ANALYSIS(
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.0
           </div>
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile  d-xl-flex">
               <Help />
-            </li>
-            <li className="nav-item nav-profile d-none d-xl-flex">
-              <Dropdown alignRight>
-                <Dropdown.Toggle className="nav-link count-indicator">
-                  <span>Reports</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-pdf mr-2"></i>
-                    <span>PDF</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-excel mr-2"></i>
-                    <span>Excel</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-word mr-2"></i>
-                    <span>doc</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
             </li>
 
             <li className="nav-item nav-profile nav-language d-none d-lg-flex">

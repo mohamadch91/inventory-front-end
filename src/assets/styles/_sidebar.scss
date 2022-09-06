@@ -16,7 +16,7 @@
     width: 258px;
     position: fixed;
     overflow-y: scroll;
-    top: 0;
+    top: 64px;
     bottom: 0;
   transition: width $action-transition-duration
       $action-transition-timing-function,

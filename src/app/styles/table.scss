@@ -1,4 +1,6 @@
 .table-container {
+  height: 400px;
+  overflow: auto;
   td,
   th {
     text-align: left;
@@ -7,6 +9,7 @@
     background: rgb(40, 136, 254);
     color: white;
   }
+  
   tr:nth-child(even) {
     background: #ffffff;
   }

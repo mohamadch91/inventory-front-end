@@ -42,7 +42,7 @@ const ScanQR = () => {
         <QrReader
           className={"w-75 m-auto "}
           onResult={scanHandler}
-          scanDelay={3000}
+          scanDelay={100}
         />
       )}
       {QRString && !cameraAvailable && (
