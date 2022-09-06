@@ -23,7 +23,7 @@ function Help() {
     <div className="row">
       <a
         href={API_URL + helpData.abr}
-        download
+        target="_blank"
         style={{ width: "fit-content" }}
       >
         <button className="btn btn-primary" type="button">
