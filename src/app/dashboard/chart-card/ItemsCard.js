@@ -7,7 +7,6 @@ import useHttp from "../../shared/custom-hooks/use-http";
 
 import classes from "./ItemCard.module.css";
 import toast from "react-hot-toast";
-import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
 import { Trans } from "react-i18next";
 
@@ -26,7 +25,11 @@ const ItemsCard = () => {
   // Handling api response
 
   if (status === "pending") {
-    return <Spinner />;
+    return (
+      <div className={"spinner-wrapper"} style={{ position: "relative" }}>
+        <div className={"donut"} />
+      </div>
+    );
   }
   // TODO: Remove error message at production
   if (err) {

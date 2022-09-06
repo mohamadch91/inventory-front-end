@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import ItemService from "../../services/item.service";
 import { Spinner } from "react-bootstrap";
 import { Trans } from "react-i18next";
+import EmptyDataBaseMessage from "../../shared/UI/EmptyDataBaseMessage";
 
 const ResultTable = (props) => {
   const { data, isLoading: formDataIsLoading } = useQuery(
@@ -18,6 +19,13 @@ const ResultTable = (props) => {
 
   if (formDataIsLoading) {
     return <Spinner />;
+  }
+  if (!formDataIsLoading && data.length === 0) {
+    return (
+      <EmptyDataBaseMessage
+        message={"No data was found with the desired QR code"}
+      />
+    );
   }
   console.log("data is");
   console.log(data);

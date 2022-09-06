@@ -1,12 +1,12 @@
 import React from "react";
+import { Trans } from "react-i18next";
 
 const EmptyDataBaseMessage = (props) => {
   return (
-    <div
-      className={"m-auto w-50 text-center p-5 text-black rounded"}
-      style={{ backgroundColor: "rgba(255,57,57,0.61)" }}
-    >
-      <h2>We've been looking everywhere, nothing was found ... 😟 </h2>
+    <div className="alert alert-danger w-50 text-center m-auto" role="alert">
+      <p className="display-4">
+        <Trans>We've been looking everywhere, nothing was found ... 😟</Trans>
+      </p>
       {props.message && <p>{props.message}</p>}
     </div>
   );

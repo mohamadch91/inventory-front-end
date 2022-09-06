@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import ItemService from "../../../services/item.service";
 import Spinner from "../../../shared/Spinner";
 import QRTableRow from "./QRTableRow";
+import EmptyDataBaseMessage from "../../../shared/UI/EmptyDataBaseMessage";
 
 const QRTable = React.forwardRef((props, refToPrint) => {
   const { data, isLoading } = useQuery(
@@ -26,13 +27,9 @@ const QRTable = React.forwardRef((props, refToPrint) => {
   }
   if (data.length === 0) {
     return (
-      <div className="alert alert-danger w-50 text-center m-auto" role="alert">
-        <p className="display-4">
-          <Trans>
-            Could not find any data with the information provided 😟
-          </Trans>
-        </p>
-      </div>
+      <EmptyDataBaseMessage
+        message={"Could not find any data with the information provided "}
+      />
     );
   }
 

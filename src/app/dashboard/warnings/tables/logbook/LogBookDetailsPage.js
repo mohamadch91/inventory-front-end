@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import DashboardService from "../../../../services/dashboard.service";
 import { Spinner } from "react-bootstrap";
 import { Trans } from "react-i18next";
+import EmptyDataBaseMessage from "../../../../shared/UI/EmptyDataBaseMessage";
 
 const LogBookDetailsPage = () => {
   const param = useParams();
@@ -21,12 +22,15 @@ const LogBookDetailsPage = () => {
   );
 
   if (isLoading) {
+    console.log(isLoading);
     return <Spinner />;
+  }
+  if (!isLoading && detailsData.length === 0) {
+    return <EmptyDataBaseMessage />;
   }
 
   const data = detailsData.maintanances;
 
-  console.log(data);
   return (
     <div className="d-flex mb-3">
       <div className="col-lg-12 stretch-card">

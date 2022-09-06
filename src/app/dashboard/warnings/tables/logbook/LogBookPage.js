@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import DashboardService from "../../../../services/dashboard.service";
-import { Spinner } from "react-bootstrap";
 import { Trans } from "react-i18next";
+import EmptyDataBaseMessage from "../../../../shared/UI/EmptyDataBaseMessage";
 
 const LogBookPage = () => {
   const { data, isLoading } = useQuery(
-    [],
+    ["logbook-data"],
     async () => {
       const res = await DashboardService.getMaintenanceLog();
       return res.data;
@@ -18,8 +18,13 @@ const LogBookPage = () => {
   );
 
   if (isLoading) {
-    return <Spinner />;
+    return <div> Loading ... </div>;
   }
+
+  if (!isLoading && data.length === 0) {
+    return <EmptyDataBaseMessage />;
+  }
+
   return (
     <div className="d-flex mb-3">
       <div className="col-lg-12 stretch-card">
@@ -39,12 +44,10 @@ const LogBookPage = () => {
                       <Trans>Code</Trans>{" "}
                     </th>
                     <th className={"col-3"}>
-                      {" "}
                       <Trans>Maintenance group</Trans>{" "}
                     </th>
                     <th className={"col-3"}>
-                      {" "}
-                      <Trans>Details</Trans>{" "}
+                      <Trans>Details</Trans>
                     </th>
                   </tr>
                 </thead>

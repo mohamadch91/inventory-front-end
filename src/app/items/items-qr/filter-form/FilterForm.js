@@ -10,6 +10,7 @@ import filterFormReducer from "./FilterFormReducer";
 import toast from "react-hot-toast";
 import classes from "../ItemsQR.module.css";
 import { Trans } from "react-i18next";
+import EmptyDataBaseMessage from "../../../shared/UI/EmptyDataBaseMessage";
 
 const FilterForm = (props) => {
   const [itemTypeOptions, setItemTypeOptions] = useState([]);
@@ -28,8 +29,15 @@ const FilterForm = (props) => {
     }
   );
 
-  if (formDataIsLoading || data.length === 0) {
+  if (formDataIsLoading) {
     return <Spinner />;
+  }
+  if (!formDataIsLoading && data.length === 0) {
+    return (
+      <EmptyDataBaseMessage
+        message={"Data base responded with empty facilities information"}
+      />
+    );
   }
 
   // ------------ feeding data to app
