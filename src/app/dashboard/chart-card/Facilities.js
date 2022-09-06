@@ -3,34 +3,43 @@ import React, { useEffect, useState } from "react";
 import ChartDropDown from "./chart/ChartDropDown";
 import classes from "./Facilities.module.css";
 import Card from "../../shared/UI/Card";
-import useHttp from "../../shared/custom-hooks/use-http";
-import { getFacilities } from "../dashboard-api";
 import toast from "react-hot-toast";
 import Spinner from "../../shared/Spinner";
 import GaugeChart from "react-gauge-chart";
 import { Trans } from "react-i18next";
+import DashboardService from "../../services/dashboard.service";
+import { useQuery } from "react-query";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState();
 
-  const { sendRequest, status, data, error: err } = useHttp(getFacilities);
+  // const { sendRequest, status, data, error: err } = useHttp(getFacilities);
 
-  useEffect(() => {
-    sendRequest();
-  }, []);
+  // useEffect(() => {
+  //   sendRequest();
+  // }, []);
+
+  const { data, isLoading, isFetched } = useQuery(
+    ["warnings"],
+    async () => {
+      const res = await DashboardService.getAllFacilities();
+      return res.data;
+    },
+    {
+      refetchOnMount: true,
+    }
+  );
 
   // Handling api response
-  if (status === "pending") {
-    return <Spinner />;
+  if (!isFetched) {
+    return (
+      <div style={{ width: "100%" }}>
+        <Spinner />;
+      </div>
+    );
   }
 
-  // TODO: Remove error message at production
-  if (err) {
-    toast.error("There was a problem loading data");
-    return <p>{err}</p>;
-  }
-
-  if (status === "completed" && facilities.length === 0) {
+  if (!isLoading && facilities.length === 0) {
     let tmp = [];
     data.map((el, i) => {
       tmp.push({ op: el.name, id: i, facility: el });
@@ -57,7 +66,11 @@ const Facilities = () => {
         <h3>
           🏢 <Trans>Facilities</Trans>{" "}
         </h3>
-        <ChartDropDown onChange={ddChangeHandler} options={facilities} text="Select facility"/>
+        <ChartDropDown
+          onChange={ddChangeHandler}
+          options={facilities}
+          text="Select facility"
+        />
         <GaugeChart
           id="gauge-chart6"
           animate={true}
