@@ -105,7 +105,7 @@ const ItemsCard = () => {
           id="gauge-chart6"
           animate={true}
           nrOfLevels={15}
-          percent={chartData ? chartData.working : ""}
+          percent={chartData ? chartData.working : 0}
           needleColor="#345243"
           colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}

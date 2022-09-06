@@ -13,14 +13,8 @@ const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState();
 
-  // const { sendRequest, status, data, error: err } = useHttp(getFacilities);
-
-  // useEffect(() => {
-  //   sendRequest();
-  // }, []);
-
   const { data, isLoading, isFetched } = useQuery(
-    ["warnings"],
+    ["charts-facilities"],
     async () => {
       const res = await DashboardService.getAllFacilities();
       return res.data;
@@ -30,11 +24,10 @@ const Facilities = () => {
     }
   );
 
-  // Handling api response
   if (!isFetched) {
     return (
-      <div style={{ width: "100%" }}>
-        <Spinner />;
+      <div className={"spinner-wrapper"} style={{ position: "relative" }}>
+        <div className={"donut"} />
       </div>
     );
   }
@@ -75,7 +68,7 @@ const Facilities = () => {
           id="gauge-chart6"
           animate={true}
           nrOfLevels={15}
-          percent={chartData ? chartData.defined : ""}
+          percent={chartData ? chartData.defined : 0}
           needleColor="#345243"
           colors={["#EA4228", "#F5CD19", "#5BE12C"]}
           textColor={"#000000"}

@@ -42,13 +42,16 @@ const Warnings = () => {
   );
 
   if (warningData || data.length === 0) {
-    return null;
+    return (
+      <div className={"spinner-wrapper"} style={{ position: "relative" }}>
+        <div className={"donut"} />
+      </div>
+    );
   }
 
   return (
     <div className={`card-body recent-activity ${classes.warnings}`}>
       <h4 className="card-title">
-        {" "}
         <Trans>Warnings</Trans>
       </h4>
 
