@@ -18,6 +18,9 @@ ApiManager.interceptors.response.use(
     if (response?.status === 403) {
       window.location.href = `/error-pages/error-403`;
     }
+      if (response?.status === 409) {
+        window.location.href = `/error-pages/error-409`;
+      }
     if (response?.status === 401) {
       localStorage.removeItem("user");
       localStorage.removeItem("country");

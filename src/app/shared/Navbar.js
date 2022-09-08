@@ -24,12 +24,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://5.182.47.38:8001${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `http://5.182.47.38:8001${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
@@ -74,7 +74,7 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
-            Inventory AND GAP ANALYSIS(
+            Inventory and Gap Analysis (
             {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.0
           </div>
           <ul className="navbar-nav navbar-nav-right">
@@ -140,61 +140,10 @@ class Navbar extends Component {
                       alt=""
                     />
                   </div>
-                  {/**/}
                   <div className="p-2">
-                    {/*          <h5 className="dropdown-header text-uppercase pl-2 text-dark">
+                    <h5 className="dropdown-header text-uppercase pl-2 text-dark">
                       <span>User Options</span>
                     </h5>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
-                    >
-                      <span>
-                        <span>Inbox</span>
-                      </span>
-                      <span className="p-0">
-                        <span className="badge badge-primary">3</span>
-                        <i className="mdi mdi-email-open-outline ml-1"></i>
-                      </span>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
-                    >
-                      <span>
-                        <span>Profile</span>
-                      </span>
-                      <span className="p-0">
-                        <span className="badge badge-success">1</span>
-                        <i className="mdi mdi-account-outline ml-1"></i>
-                      </span>
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
-                    >
-                      <span>
-                        <span>Settings</span>
-                      </span>
-                      <i className="mdi mdi-settings"></i>
-                    </Dropdown.Item>
-                     <div role="separator" className="dropdown-divider"></div>
-                    <h5 className="dropdown-header text-uppercase  pl-2 text-dark mt-2">
-                      <span>Actions</span>
-                    </h5>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
-                    >
-                      <span>
-                        <span>Lock Account</span>
-                      </span>
-                      <i className="mdi mdi-lock ml-1"></i>
-                    </Dropdown.Item>*/}
 
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
@@ -212,8 +161,8 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            {/*
-             <li className="nav-item">
+
+            <li className="nav-item">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-email-outline"></i>
@@ -228,73 +177,19 @@ class Navbar extends Component {
                     className="dropdown-item preview-item"
                     onClick={(evt) => evt.preventDefault()}
                   >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face4.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Mark send you a message</span>
+                        <Link to="/message/list">
+                          <span>See all message</span>
+                        </Link>
                       </h6>
-                      <p className="text-gray mb-0">
-                        1 <span>Minutes ago</span>
-                      </p>
                     </div>
                   </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face2.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Cregh send you a message</span>
-                      </h6>
-                      <p className="text-gray mb-0">
-                        15 <span>Minutes ago</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face3.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Profile picture updated</span>
-                      </h6>
-                      <p className="text-gray mb-0">
-                        18 <span>Minutes ago</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer">
-                    4<span> new messages</span>
-                  </h6>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            */}
-            {/*  <li className="nav-item">
+
+            <li className="nav-item">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-bell-outline"></i>
@@ -316,61 +211,15 @@ class Navbar extends Component {
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Event today</span>
+                        <Link to="/dashboard/maintenanceLog">
+                          <span>See all Maintenance</span>
+                        </Link>
                       </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        {" "}
-                        <span>
-                          Just a reminder that you have an event today
-                        </span>{" "}
-                      </p>
                     </div>
                   </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <div className="preview-icon bg-warning">
-                        <i className="mdi mdi-settings"></i>
-                      </div>
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Settings</span>
-                      </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        <span>Update dashboard</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <div className="preview-icon bg-info">
-                        <i className="mdi mdi-link-variant"></i>
-                      </div>
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Launch Admin</span>
-                      </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        <span>New admin wow!</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer">
-                    <span>See all notifications</span>
-                  </h6>
                 </Dropdown.Menu>
               </Dropdown>
-            </li>*/}
+            </li>
           </ul>
           <button
             className="navbar-toggler navbar-toggler-right d-lg-none align-self-center"

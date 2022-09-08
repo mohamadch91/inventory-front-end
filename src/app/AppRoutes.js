@@ -19,6 +19,8 @@ const LogBookDetailsPage = lazy(() =>
 const Mdi = lazy(() => import("./icons/Mdi"));
 
 const Error403 = lazy(() => import("./error-pages/Error403"));
+const Error409 = lazy(() => import("./error-pages/Error409"));
+
 const Error404 = lazy(() => import("./error-pages/Error404"));
 const Error500 = lazy(() => import("./error-pages/Error500"));
 
@@ -236,6 +238,8 @@ class AppRoutes extends Component {
           <Route path="/user-pages/register-1" component={Register1} />
 
           <Route path="/error-pages/error-403" component={Error403} />
+          <Route path="/error-pages/error-409" component={Error409} />
+
           <Route path="/error-pages/error-404" component={Error404} />
           <Route path="/error-pages/error-500" component={Error500} />
           <Route path="/" component={Login} />

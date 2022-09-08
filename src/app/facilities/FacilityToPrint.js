@@ -69,7 +69,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
                 } Facility information:`}
               </Trans>
             </h2>
-            <p> {returnDate()}</p>
+            <p>Date: -----------</p>
             <div className="wrapper">
               <Row>
                 {data.map((item) => (

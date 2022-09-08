@@ -10,14 +10,16 @@ export class Error403 extends Component {
             <div className="col-lg-8 mx-auto text-white">
               <div className="row align-items-center d-flex flex-row">
                 {/* 
+                  Maximum sub facilityies has been reached!!!!!
                   
-                  2-you cant't delete a facility which has sub facilities and items!!!!!!!!! 
+                  2-
 
                */}
                 <div className="col-lg-6 error-page-divider text-lg-left pl-lg-4">
                   <h2>SORRY!</h2>
                   <h3 className="font-weight-light">
-                    Maximum sub facilityies has been reached!!!!!
+                    you cant't delete a facility which has sub facilities and
+                    items!!!!!!!!!
                   </h3>
                   <h3 className="font-weight-light">
                     Please change values and try again!

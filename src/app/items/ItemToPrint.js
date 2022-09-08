@@ -165,7 +165,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                   } Item information:`}
                 </Trans>
               </h2>
-              <p> {returnDate()}</p>
+              <p> Date: --------</p>
               <div className="wrapper">
                 <Row className={"row"}>
                   <div className={"w-50 m-3 col-5 "}>

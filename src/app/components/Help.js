@@ -26,8 +26,8 @@ function Help() {
         target="_blank"
         style={{ width: "fit-content" }}
       >
-        <button className="btn btn-primary" type="button">
-          Download Help
+        <button className="btn btn-success text-dark" type="button">
+          Help
         </button>
       </a>
     </div>

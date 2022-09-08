@@ -74,12 +74,17 @@ class App extends Component {
         {navbarComponent}
         <div className="container-fluid page-body-wrapper">
           {sidebarComponent}
-          <div className="main-panel">
-            <div className="content-wrapper">
-              <AppRoutes />
+          {((this.props.location.pathname !== "/") &&
+          (this.props.location.pathname !== "/login")) ? (
+            <div className="main-panel">
+              <div className="content-wrapper">
+                <AppRoutes />
+              </div>
+              {footerComponent}
             </div>
-            {footerComponent}
-          </div>
+          ) : (
+            <AppRoutes />
+          )}
         </div>
       </div>
     );
