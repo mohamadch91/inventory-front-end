@@ -14,66 +14,83 @@ const table1Data = [
   {
     headTitle: "Level",
     valueKey: "id",
+    func: (val) => val,
   },
   {
     headTitle: "Level name",
     valueKey: "name",
+    func: (val) => val,
   },
   {
     headTitle: "General population",
     valueKey: "general",
+    func: (val) => separator(val),
   },
   {
-    headTitle: "Number of under-one children served by this facility",
+    headTitle: "Number of under-one children",
     valueKey: "under1",
+    func: (val) => separator(val),
   },
   {
     headTitle: "Cold RoomA",
     valueKey: "cold_a",
+    func: (val) => val,
   },
   {
     headTitle: "Freezer Room",
     valueKey: "fr",
+    func: (val) => val,
   },
   {
     headTitle: "Refrigerator",
     valueKey: "refrig",
+    func: (val) => val,
   },
   {
     headTitle: "Freezer",
     valueKey: "freezer",
+    func: (val) => val,
   },
   {
     headTitle: "Cold Box",
     valueKey: "cb",
+    func: (val) => val,
   },
   {
     headTitle: "Vaccine Carrier",
     valueKey: "vc",
+    func: (val) => val,
   },
   {
     headTitle: "Cold RoomA",
     valueKey: "nw_cold_a",
+    func: (val) => val,
   },
   {
     headTitle: "Freezer Room",
     valueKey: "nw_fr",
+    func: (val) => val,
   },
   {
     headTitle: "Refrigerator",
     valueKey: "nw_refrig",
+    func: (val) => val,
   },
   {
     headTitle: "Freezer",
     valueKey: "nw_freezer",
+    func: (val) => val,
   },
+
   {
     headTitle: "Cold Box",
     valueKey: "nw_cb",
+    func: (val) => val,
   },
   {
     headTitle: "Vaccine Carrier",
     valueKey: "nw_vc",
+    func: (val) => val,
   },
 ];
 
@@ -94,10 +111,10 @@ const table2Data = [
     headTitle: "General population",
     valueKey: "general",
     func: (val) => separator(val),
-    size: "fit",
+    size: "large",
   },
   {
-    headTitle: "Number of under-one children served by this facility",
+    headTitle: "Number of under-one children ",
     valueKey: "under1",
     func: (val) => separator(val),
     size: "large",
@@ -106,7 +123,7 @@ const table2Data = [
     headTitle: "Require capacity per target population (cm3)",
     valueKey: "req",
     func: (val) => (+val).toFixed(2),
-    size: "large",
+    size: "fit",
   },
   {
     headTitle: "Available capacity per target population (cm3)",
@@ -118,26 +135,26 @@ const table2Data = [
     headTitle:
       "The difference between available capacity and require capacity per target population (cm3)",
     valueKey: "diff",
-    func: (val) => (+val).toFixed(2),
+    func: (val) => (val).toFixed(2),
     size: "large",
   },
   {
     headTitle: "Require capacity",
     valueKey: "require_capacity",
-    func: (val) => (+separator(val)).toFixed(2),
+    func: (val) => val.toFixed(2),
     size: "fit",
   },
   {
     headTitle: "Available capacity (lit.)",
     valueKey: "available_capacity",
-    func: (val) => (+separator(val)).toFixed(2),
+    func: (val) => val.toFixed(2),
     size: "fit",
   },
   {
     headTitle:
       "The difference between current available capacity and require capacity (lit.)",
     valueKey: "diff_capacity",
-    func: (val) => (+separator(val)).toFixed(2),
+    func: (val) => val.toFixed(2),
     size: "large",
   },
 ];
@@ -196,7 +213,7 @@ function ProfileOfColdChain() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" colSpan={4}></TableCell>
+                    <TableCell align="center" colSpan={6}></TableCell>
                     <TableCell align="center" colSpan={6}>
                       Exist Items
                     </TableCell>
@@ -208,7 +225,7 @@ function ProfileOfColdChain() {
                     {table1Data.map((cell, i) => (
                       <TableCell
                         key={cell.headTitle}
-                        style={{ minWidth: i === 3 ? "230px" : "" }}
+                        style={{ minWidth: (i === 3 || i===2) ? "230px" : "" }}
                       >
                         <Trans>{cell.headTitle}</Trans>
                       </TableCell>
@@ -221,7 +238,7 @@ function ProfileOfColdChain() {
                       <TableRow key={index}>
                         {table1Data.map((data) => (
                           <TableCell key={data.valueKey}>
-                            {report[data.valueKey] ?? "-"}
+                            {data.func(report[data.valueKey]) ?? "-"}
                           </TableCell>
                         ))}
                       </TableRow>

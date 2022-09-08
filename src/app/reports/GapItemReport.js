@@ -9,7 +9,7 @@ import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
 import API_URL from "../services/APIURL";
-
+import { separator } from "../helpers/separator";
 const defaultValues = {
   name: "",
   code: "",
@@ -42,30 +42,44 @@ const tableData = [
   {
     headTitle: "Parent",
     valueKey: "parent",
+      func: (val) => val,
+
   },
   {
     headTitle: "Name",
     valueKey: "name",
+      func: (val) => val,
+
   },
   {
     headTitle: "Level",
     valueKey: "level",
+      func: (val) => val,
+
   },
   {
     headTitle: "Code",
     valueKey: "code",
+      func: (val) => val,
+
   },
   {
     headTitle: "Type",
     valueKey: "type",
+      func: (val) => val,
+
   },
   {
     headTitle: "General",
     valueKey: "general",
+    func: (val) => separator(val),
+
   },
   {
     headTitle: "Under_1",
     valueKey: "children",
+    func: (val) => separator(val),
+
   },
 ];
 
@@ -73,18 +87,22 @@ const tableDegreeData = [
   {
     headTitle: "Required Capacity(lit)",
     valueKey: "req",
+    func: (val) => parseFloat(val).toFixed(2),
   },
   {
     headTitle: "All Total Available (lit)",
     valueKey: "tcapacity",
+    func: (val) => parseFloat(val).toFixed(2),
   },
   {
     headTitle: "Functioning Total Available (lit)",
     valueKey: "fcapacity",
+    func: (val) => parseFloat(val).toFixed(2),
   },
   {
     headTitle: "Excess/ Shortage (lit)",
     valueKey: "excees",
+    func: (val) => parseFloat(val).toFixed(2),
   },
 ];
 
@@ -510,7 +528,7 @@ function GapItemReport() {
                       <TableRow key={index}>
                         {tableData.map((data) => (
                           <TableCell key={data.valueKey}>
-                            {report[data.valueKey] ?? "-"}
+                            {data.func(report[data.valueKey]) ?? "-"}
                           </TableCell>
                         ))}
                         {Array.from({
@@ -529,7 +547,7 @@ function GapItemReport() {
                                       : "unset",
                                 }}
                               >
-                                {report[`${td.valueKey}${i + 1}`]}
+                                {td.func(`${td.valueKey}${i + 1}`) ?? "-"}
                               </TableCell>
                             ))}
                           </Fragment>

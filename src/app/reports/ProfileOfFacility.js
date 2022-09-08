@@ -6,112 +6,149 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
-
+import { separator } from "../helpers/separator";
 const allTableData = {
   by_type: [
     {
       headTitle: "Level",
       valueKey: "level",
+      func: (val) => val,
     },
     {
       headTitle: "Level Name",
       valueKey: "name",
+      func: (val) => val,
     },
     {
       headTitle: "Facility type",
       valueKey: "type",
+      func: (val) => val,
     },
     {
       headTitle: "Total number of facilities",
       valueKey: "count",
+    func: (val) => separator(val),
+
     },
   ],
+  func: (val) => val,
+
   by_owner: [
     {
       headTitle: "Level",
       valueKey: "level",
+      func: (val) => val,
     },
     {
       headTitle: "Level Name",
       valueKey: "name",
+      func: (val) => val,
     },
     {
       headTitle: "Ownership",
       valueKey: "owner",
+      func: (val) => val,
     },
     {
       headTitle: "Total number of facilities",
       valueKey: "count",
+    func: (val) => separator(val),
+
     },
   ],
   by_power: [
     {
       headTitle: "Level",
       valueKey: "level",
+      func: (val) => val,
     },
     {
       headTitle: "Level Name",
       valueKey: "name",
+      func: (val) => val,
     },
     {
       headTitle: "Power source",
       valueKey: "power",
+      func: (val) => val,
     },
     {
       headTitle: "Total number of facilities",
       valueKey: "count",
+    func: (val) => separator(val),
+
     },
   ],
   general: [
     {
       headTitle: "Level",
       valueKey: "level",
+      func: (val) => val,
     },
     {
       headTitle: "Level Name",
       valueKey: "name",
+      func: (val) => val,
     },
     {
       headTitle: "Total",
       valueKey: "total",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Average population",
       valueKey: "avg",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Minimum population",
       valueKey: "min",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Maximum population",
       valueKey: "max",
+    func: (val) => separator(val),
+
     },
   ],
   under_1: [
     {
       headTitle: "Level",
       valueKey: "level",
+      func: (val) => val,
     },
     {
       headTitle: "Level Name",
       valueKey: "name",
+      func: (val) => val,
     },
     {
       headTitle: "Total",
       valueKey: "total",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Average population",
       valueKey: "avg",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Minimum population",
       valueKey: "min",
+    func: (val) => separator(val),
+
     },
     {
       headTitle: "Maximum population",
       valueKey: "max",
+    func: (val) => separator(val),
+
     },
   ],
 };
@@ -141,7 +178,7 @@ const ReportTable = (props) => {
                     <TableRow key={index}>
                       {tableData.map((data) => (
                         <TableCell key={data.valueKey}>
-                          {report[data.valueKey] ?? "-"}
+                          {data.func(report[data.valueKey]) ?? "-"}
                         </TableCell>
                       ))}
                     </TableRow>
