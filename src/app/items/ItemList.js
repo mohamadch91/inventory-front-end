@@ -134,7 +134,7 @@ function ItemList() {
                               <EditIcon />
                             </div>
                           </Link>
-                          <Tooltip title="Delete facility">
+                          <Tooltip title="Delete item">
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}

@@ -144,7 +144,42 @@ function ItemFacilityReport() {
       enabled: false,
     }
   );
+    const printFilterValues = () => {
+    let filterString = "";
+    for (const key in filterValues) {
+      const filter = filterValues[key];
+      if (filter.length > 0 && filter !== "-1") {
+        if(key==='item_class'){
+          const item_class=selectedItem.item_class_name;
+          filterString += `${key}: ${item_class}, `;
+        }
+        else if(key==='item_type'){
+          console.log(selectedItem.item_type);
+          const item_type=selectedItem.item_type.filter((item)=>item.id===parseInt(filter));
+          console.log(item_type);
+          filterString += `${key}: ${item_type[0]?.name}, `;
+        }
+          else if(key==='level'){
+          filterString += `${key}: ${itemFacHelper.level[filter]}, `;
+        }else if(key==='type'){
+          filterString += `${key}: ${itemFacHelper.type[filter]}, `;
+        }else if(key==='power'){
+          filterString += `${key}: ${itemFacHelper.power[filter]}, `;
+        }else if(key==='physical'){
+          filterString += `${key}: ${itemFacHelper.physical[filter]}, `;
+        }else if(key==='financial'){
+          filterString += `${key}: ${itemFacHelper.financial[filter]}, `;
+        }else if(key==='working'){
+          filterString += `${key}: ${itemFacHelper.working[filter]}, `;
+        }else if(key==='item_power'){
+          filterString += `${key}: ${itemFacHelper.item_power[filter]}, `;
+        }else{
 
+        filterString += `${key}: ${filter}, `;}
+      }
+    }
+    return filterString;
+  };
   if (isItemFacHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
@@ -505,6 +540,10 @@ function ItemFacilityReport() {
                 Report Number: Item Report By Facility ({country?.country})
               </Trans>
             </h4>
+            <h6>
+              Filters : {""} {printFilterValues()}
+            </h6>
+
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container ">
               <SharedTable stickyHeader>

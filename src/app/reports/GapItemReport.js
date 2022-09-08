@@ -87,7 +87,9 @@ const tableDegreeData = [
   {
     headTitle: "Required Capacity(lit)",
     valueKey: "req",
-    func: (val) => parseFloat(val).toFixed(2),
+    func: (val) => {
+      console.log(val)
+      parseFloat(val).toFixed(2)},
   },
   {
     headTitle: "All Total Available (lit)",
@@ -147,7 +149,22 @@ function GapItemReport() {
       },
     }
   );
+    const printFilterValues = () => {
+        let filter = "";
+        for (const key in filterValues) {
+            const filterValue = filterValues[key];
+            if (filterValue.length > 0 && filterValue !== "-1") {
+              if(key==='degree'){
+                filter += `${key}=${degrees.find((d) => d.id === filterValue).name},`;
+              }else if(key==='option'){
+                filter += `${key}=${options.find((d) => d.id === filterValue).name},`;
+              }else{
+                filter += `${key}=${filterValue}&`;
+            }}
+        }
+        return filter;
 
+    }
   if (isGapItemHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
@@ -469,8 +486,10 @@ function GapItemReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Report Number: Gap Item Report ({country?.country})</Trans>
+              <Trans>Report : Gap Item Report ({country?.country})</Trans>
             </h4>
+            <h6>Filters : {""} {printFilterValues()}</h6>
+
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container ">
               <SharedTable>
@@ -547,7 +566,8 @@ function GapItemReport() {
                                       : "unset",
                                 }}
                               >
-                                {td.func(`${td.valueKey}${i + 1}`) ?? "-"}
+                                {td.func(report[`${td.valueKey}${i + 1}`]) ??
+                                  "-"}
                               </TableCell>
                             ))}
                           </Fragment>

@@ -69,7 +69,21 @@ function ItemGroupReport() {
   if (isItemGpHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
-
+  const printFilterValues = () => {
+    let filter = "";
+    for (const key in filterValues) {
+      const value = filterValues[key];
+      if (value.length > 0 && value !== "-1") {
+        if (key === "power") {
+          // filter += `${key}=${facSegHelper.power[value].name}&`;
+        } else {
+          filter += `${key}=${value}&`;
+        }
+      }
+    }
+    return filter;
+    return filter;
+  }
   const country = JSON.parse(localStorage.getItem("country")) || {};
 
   return (
@@ -509,6 +523,7 @@ function ItemGroupReport() {
                         );
                       })}
                     </Form.Control>
+                    Year to can not be lower than from
                   </Form.Group>
                 </div>
                 <div className="col-sm-6">
@@ -579,6 +594,10 @@ function ItemGroupReport() {
                 Report Number: Item Grouped Report ({country?.country})
               </Trans>
             </h4>
+            <h6>
+              Filters : {""} {printFilterValues()}
+            </h6>
+
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
               <SharedTable>

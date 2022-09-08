@@ -235,7 +235,7 @@ function HRList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
+                    <TableCell>Id</TableCell>
                     <TableCell>
                       <Trans>Full Name</Trans>
                     </TableCell>

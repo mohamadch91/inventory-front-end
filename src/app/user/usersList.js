@@ -257,7 +257,7 @@ function UsersList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
+                    <TableCell>Id</TableCell>
                     <TableCell>
                       <Trans>Name</Trans>
                     </TableCell>

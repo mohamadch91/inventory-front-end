@@ -59,7 +59,20 @@ function FacilitySegmentationReport() {
       enabled: false,
     }
   );
-
+    const printFilterValues = () => {
+    let filter = "";
+    for (const key in filterValues) {
+      const value = filterValues[key];
+      if (value.length > 0) {
+        if(key=== 'power'){
+          filter += `${key}=${facSegHelper.power[value].name}&`;
+        }else{
+          filter += `${key}=${value}&`;
+        }
+      }
+    }
+    return filter;
+  };
   if (isFacSegHelperLoading || isReportsLoading) {
     return <Spinner />;
   }
@@ -338,6 +351,10 @@ function FacilitySegmentationReport() {
                 Report Number: Facility Segmentation ({country?.country})
               </Trans>
             </h4>
+            <h6>
+              Filters : {""} {printFilterValues()}
+            </h6>
+
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
               <SharedTable>
