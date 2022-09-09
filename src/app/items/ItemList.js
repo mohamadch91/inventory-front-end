@@ -15,12 +15,18 @@ import { Link, useHistory } from "react-router-dom";
 import ItemService from "../services/item.service";
 import { Trans } from "react-i18next";
 import TrashIcon from "../shared/TrashIcon";
+import Modal from "react-bootstrap/Modal";
 
 function ItemList() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const facility = params.get("facility");
-
+const [openModal, setOpenModal] = React.useState(false);
+const [itemId, setItemId] = React.useState(null);
+const [resons, setResons] = React.useState([]);
+const [reasonsLoding, setReasonsLoding] = React.useState(false);
+const [reason, setReason] = React.useState("");
+const [is_deleted, setIsDeleted] = React.useState(false);
   const {
     data: items,
     isLoading: isItemsDefaultLoading,
@@ -28,7 +34,7 @@ function ItemList() {
   } = useQuery(
     ["item-default-value", facility],
     async () => {
-      const res = await ItemService.getItems(undefined, facility);
+      const res = await ItemService.getItems(undefined, facility,is_deleted);
       return res.data;
     },
     {
@@ -59,20 +65,61 @@ function ItemList() {
   });
 
   const convertDate = (date) => {
-    console.log(date);
     return new Date(date).toISOString().split("T")[0];
   };
 
   if (isItemsDefaultLoading || isItemClassesAndTypesLoading) {
     return <Spinner />;
   }
+ const openDeleteModal = (id) => {
+   setReasonsLoding(true);
+   ItemService.deleteitemparam(id).then((res) => {
+     setResons(res.data);
+     setReasonsLoding(false);
+   });
 
+   setItemId(id);
+   setOpenModal(true);
+   setReasonsLoding(false);
+ };
+ const handledeletChange =()=>{
+    setIsDeleted(!is_deleted)
+ }
+ const deletefac = () => {
+   const data = {
+     id: itemId,
+     delete_reason: reason,
+     isDel: true,
+   };
+   const res = ItemService.deleteitem(data);
+   setOpenModal(false);
+   refetchItems();
+ };
+ if (reasonsLoding) {
+   return <Spinner />;
+ }
   return (
     <div>
       <h3 className="page-title mb-3">
         <Trans>Item list</Trans>
       </h3>
       <div className="mt-3">
+        <label className="mr-2 mb-1"> Deleted </label>
+        <input
+          type="checkbox"
+          checked={is_deleted}
+          onChange={handledeletChange}
+          className="mt-1"
+        />
+
+        <button
+          className="btn btn-success text-dark w-25  mb-2   "
+          onClick={()=>refetchItems()}
+          style={{ marginLeft: "5%" }}
+          type="submit"
+        >
+          <Trans>filter</Trans>
+        </button>
         <div className="card">
           <div className="card-body">
             <div className="mt-5 table-container">
@@ -104,11 +151,9 @@ function ItemList() {
                     const itemClass = itemClassesAndTypes?.find(
                       (itemC) => itemC.item_class.id === item.item_class
                     );
-                    console.log(itemClass, "itemClass");
                     const itemType = itemClass?.item_type.find(
                       (itemT) => itemT.id === item.item_type
                     );
-                    console.log(itemType);
                     return (
                       <TableRow key={item.id}>
                         <TableCell className="col-sm-2">
@@ -138,7 +183,7 @@ function ItemList() {
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}
-                              onClick={() => deleteItem(facility.id)}
+                              onClick={() => openDeleteModal(item.id)}
                             >
                               <TrashIcon />
                             </button>
@@ -149,6 +194,50 @@ function ItemList() {
                   })}
                 </TableBody>
               </SharedTable>
+              <Modal show={openModal} onHide={() => setOpenModal(false)}>
+                <form onSubmit={deletefac}>
+                  <h1
+                    className="mb-1 mr-3  mt-5 mb-5 text-black"
+                    style={{ marginLeft: "33%" }}
+                  >
+                    <Trans>Delete Item</Trans>
+                  </h1>
+                  <div className="d-flex flex-column align-items-center"></div>
+                  <div className="d-flex flex-column align-items-center"></div>
+                  <div className="d-flex flex-column align-items-center"></div>
+                  <div className="d-flex flex-column align-items-center"></div>
+
+                  <div className="d-flex flex-column align-items-center w-100">
+                    <label>
+                      <Trans>Delete reasons</Trans>
+                    </label>
+                    <select
+                      name="Delete reasons"
+                      onChange={(event) => {
+                        setReason(event.target.value);
+                      }}
+                      // value={editFormData?.facility}
+                    >
+                      <option value="-1" selected disabled>
+                        Please select
+                      </option>
+                      {resons?.map((item, index) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <button
+                    className="btn btn-success text-dark w-50 mt-4 mb-2   "
+                    style={{ marginLeft: "24%" }}
+                    type="submit"
+                  >
+                    <Trans>Delete</Trans>
+                  </button>
+                </form>
+              </Modal>
             </div>
           </div>
         </div>

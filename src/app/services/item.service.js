@@ -4,13 +4,16 @@ import authHeader from "./auth-header";
 const API_URL = "http://127.0.0.1:8000/item/";
 
 class ItemService {
-  getItems(id, facility) {
+  getItems(id, facility,deleted) {
     const params = {};
     if (id) {
       params.id = id;
     }
     if (facility) {
       params.facility = facility;
+    }
+    if (deleted) {
+      params.deleted = deleted;
     }
     return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },

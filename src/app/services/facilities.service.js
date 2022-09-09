@@ -5,11 +5,14 @@ import axios from "axios";
 const API_URL = "http://127.0.0.1:8000/facilities/";
 
 class FacilitiesService {
-  getFacilities(id) {
+  getFacilities(id, deleted) {
     const params = {};
     if (id) {
       params.id = id;
     }
+     if (deleted) {
+       params.deleted = deleted;
+     }
     return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,
@@ -59,17 +62,16 @@ class FacilitiesService {
       }
     );
   }
-  deletefacilityparam(){
+  deletefacilityparam() {
     return ApiManager.get(API_URL + "delete", {
       headers: { Authorization: authHeader() },
     });
   }
   deleteFacility(payload) {
-    return ApiManager.post(API_URL+"delete", payload,{
-      headers: { Authorization: authHeader() }
+    return ApiManager.post(API_URL + "delete", payload, {
+      headers: { Authorization: authHeader() },
     });
   }
-
 }
 
 export default new FacilitiesService();

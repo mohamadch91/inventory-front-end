@@ -26,6 +26,8 @@ function FacilityList() {
   const [resons, setResons] = React.useState([]);
   const [reasonsLoding, setReasonsLoding] = React.useState(false);
   const [reason, setReason] = React.useState("");
+const [is_deleted, setIsDeleted] = React.useState(false);
+
   const {
     data: facilities,
     isLoading: isFacilityDefaultLoading,
@@ -33,7 +35,7 @@ function FacilityList() {
   } = useQuery(["facility-list", pid], async () => {
     const res = await (pid
       ? FacilitiesService.getSubFacilities(pid)
-      : FacilitiesService.getFacilities());
+      : FacilitiesService.getFacilities(undefined,is_deleted));
     return res.data;
   });
 
@@ -72,13 +74,16 @@ function FacilityList() {
   const deletefac = () => {
     const data={
       "id":facilityId,
-      "reason":reason,
+      "delete_reason":reason,
       "is_deleted":true
     }
     const res = FacilitiesService.deleteFacility(data);
     setOpenModal(false);
     refetchFacilities();
   }
+   const handledeletChange = () => {
+     setIsDeleted(!is_deleted);
+   };
   if(reasonsLoding){
     return <Spinner />;
   }
@@ -88,6 +93,22 @@ function FacilityList() {
         <Trans>Facility list</Trans>
       </h3>
       <div className="mt-3">
+        <label className="mr-2 mb-1"> Deleted </label>
+        <input
+          type="checkbox"
+          checked={is_deleted}
+          onChange={handledeletChange}
+          className="mt-1"
+        />
+
+        <button
+          className="btn btn-success text-dark w-25  mb-2   "
+          onClick={() => refetchFacilities()}
+          style={{ marginLeft: "5%" }}
+          type="submit"
+        >
+          <Trans>filter</Trans>
+        </button>
         <div className="card">
           <div className="card-body">
             {pid && (
@@ -231,7 +252,10 @@ function FacilityList() {
               </SharedTable>
               <Modal show={openModal} onHide={() => setOpenModal(false)}>
                 <form onSubmit={deletefac}>
-                  <h1 className="mb-1 mr-3  mt-5 mb-5 text-black" style={{ marginLeft: "33%" }}>
+                  <h1
+                    className="mb-1 mr-3  mt-5 mb-5 text-black"
+                    style={{ marginLeft: "33%" }}
+                  >
                     <Trans>Delete facility</Trans>
                   </h1>
                   <div className="d-flex flex-column align-items-center"></div>
