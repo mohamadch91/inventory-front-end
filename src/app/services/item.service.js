@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/item/";
+const API_URL = "http://127.0.0.1:8000/item/";
 
 class ItemService {
   getItems(id, facility) {
@@ -17,12 +17,12 @@ class ItemService {
       params,
     });
   }
-  deleteItem(id) {
-    return ApiManager.delete(API_URL, {
-      headers: { Authorization: authHeader() },
-      data: { id },
-    });
-  }
+  // deleteItem(id) {
+  //   return ApiManager.delete(API_URL, {
+  //     headers: { Authorization: authHeader() },
+  //     data: { id },
+  //   });
+  // }
   getItemClassesAndTypes() {
     return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },
@@ -74,6 +74,16 @@ class ItemService {
   getQrData(payload) {
     console.log("now requesting to ", API_URL + "qr/getqr?" + payload);
     return ApiManager.get(API_URL + "qr/list?" + payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteitemparam() {
+    return ApiManager.get(API_URL + "delete", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteitem(payload) {
+    return ApiManager.post(API_URL + "delete", payload, {
       headers: { Authorization: authHeader() },
     });
   }

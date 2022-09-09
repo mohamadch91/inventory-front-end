@@ -2,7 +2,7 @@ import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 import axios from "axios";
 
-const API_URL = "http://5.182.47.38:8001/facilities/";
+const API_URL = "http://127.0.0.1:8000/facilities/";
 
 class FacilitiesService {
   getFacilities(id) {
@@ -22,12 +22,12 @@ class FacilitiesService {
       params,
     });
   }
-  deleteFacility(id) {
-    return ApiManager.delete(API_URL, {
-      headers: { Authorization: authHeader() },
-      data: { id },
-    });
-  }
+  // deleteFacility(id) {
+  //   return ApiManager.delete(API_URL, {
+  //     headers: { Authorization: authHeader() },
+  //     data: { id },
+  //   });
+  // }
   getFacilityFields(params) {
     return ApiManager.get(API_URL + "facility-field", {
       headers: { Authorization: authHeader() },
@@ -52,13 +52,24 @@ class FacilitiesService {
   }
   importFacilities(payload) {
     return ApiManager.post(
-      "http://5.182.47.38:8001facilities/" + "import",
+      "http://127.0.0.1:8000/facilities/" + "import",
       payload,
       {
         headers: { Authorization: authHeader() },
       }
     );
   }
+  deletefacilityparam(){
+    return ApiManager.get(API_URL + "delete", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteFacility(payload) {
+    return ApiManager.post(API_URL+"delete", payload,{
+      headers: { Authorization: authHeader() }
+    });
+  }
+
 }
 
 export default new FacilitiesService();
