@@ -686,14 +686,14 @@ export class Country extends Component {
                   {this.state.country !== [] &&
                   this.state.country !== undefined &&
                   this.state.user?.admin ? (
-                    <button type="submit" className="btn btn-primary mr-2">
+                    <button type="submit" className="btn w-25 btn-primary mr-2">
                       <Trans>Save</Trans>
                     </button>
                   ) : (
                     <button
                       type="submit"
                       disabled
-                      className="btn btn-primary mr-2"
+                      className="btn w-25 btn-primary mr-2"
                     >
                       <Trans>Save</Trans>
                     </button>
