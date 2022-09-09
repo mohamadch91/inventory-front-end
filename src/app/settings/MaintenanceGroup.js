@@ -82,12 +82,22 @@ function MaintenanceGroupComponent() {
       item_type: selectedItemType?.id,
       item_class: selectedItemClassAndItemTypes?.item_class.id,
     };
-    const res = (await payload.id)
-      ? MaintenanceService.putMaintenanceGp(payload)
-      : MaintenanceService.postMaintenanceGp(payload);
-    fetchMaintenance();
-    setSelectedToEdit(defaultValues);
-    setIsEditMode(false);
+    if(await payload.id){
+      MaintenanceService.putMaintenanceGp(payload).then((res) => {
+        fetchMaintenance();
+        setSelectedToEdit(defaultValues);
+        setIsEditMode(false);
+      }
+      );
+    }
+    else{
+      MaintenanceService.postMaintenanceGp(payload).then((res) => {
+        fetchMaintenance();
+        setSelectedToEdit(defaultValues);
+        setIsEditMode(false);
+      }
+      );
+    }
   };
 
   if (isItemClassesLoading || isMaintenancesLoading) {

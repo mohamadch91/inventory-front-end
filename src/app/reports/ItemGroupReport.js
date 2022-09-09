@@ -73,15 +73,52 @@ function ItemGroupReport() {
     let filter = "";
     for (const key in filterValues) {
       const value = filterValues[key];
+      console.log(itemGpHelper);
       if (value.length > 0 && value !== "-1") {
-        if (key === "power") {
-          // filter += `${key}=${facSegHelper.power[value].name}&`;
-        } else {
+        if (key === "level"){
+          filter += `Level = ${value}- ${itemGpHelper.level.find((level) => level.id === parseInt(value)).name} `;
+        }
+        else if (key === "type"){
+          filter += `${key}= ${itemGpHelper.type.find((type) => type.id === parseInt(value)).name} `;
+        }
+        else if (key === "power"){
+          filter += `Power source = ${itemGpHelper.power.find((power) => power.id === parseInt(value)).name} `;
+        }
+        else if (key === "item_class"){
+           const item_class = selectedItem.item_class_name;
+           filter += `${key}: ${item_class}, `;
+        }
+        else if (key === "item_type"){
+          const item_type = selectedItem.item_type.filter(
+            (item) => item.id === parseInt(value)
+          );
+           console.log(item_type);
+          filter += `${key}: ${item_type[0]?.name}, `;
+        }
+        else if (key === "physical"){
+          filter += `${key}= ${itemGpHelper.physical.find((physical) => physical.id === parseInt(value)).name} `;
+        }
+        else if (key === "financial"){
+
+          filter += `${key}= ${itemGpHelper.financial.find((financial) => financial.id === parseInt(value)).name} `;
+        }
+        else if (key === "working"){
+          filter += `${key}= ${itemGpHelper.working.find((working) => working.id === parseInt(value)).name} `;
+        }
+        else if (key === "item_power"){
+          filter += `Item Power source = ${itemGpHelper.item_power.find((item_power) => item_power.id === parseInt(value)).name} `;
+        }
+        else if (key === "manufacturer"){
+         const item_type = selectedItem.manufacturer.filter(
+           (item) => item.id === parseInt(value)
+         );
+         filter += `${key}: ${item_type[0]?.name}, `;
+        }
+        else {
           filter += `${key}=${value}&`;
         }
       }
     }
-    return filter;
     return filter;
   }
   const country = JSON.parse(localStorage.getItem("country")) || {};

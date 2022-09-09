@@ -86,11 +86,22 @@ function MaintenanceServiceComponent() {
       item_type: selectedItemType?.id,
       item_class: selectedItemClassAndItemTypes?.item_class.id,
     };
-    const res = (await payload.id)
-      ? MaintenanceService.putMaintenance(payload)
-      : MaintenanceService.postMaintenance(payload);
-    fetchMaintenance();
+    if(await payload.id){
+      MaintenanceService.putMaintenance(payload).then((res) => {
+        fetchMaintenance();
+      }
+      );
+    }
+    else{
+      MaintenanceService.postMaintenance(payload).then((res) => {
+        fetchMaintenance();
+      }
+      );
+
+    }
+    
     setSelectedToEdit(defaultValues);
+
     setIsEditMode(false);
   };
 

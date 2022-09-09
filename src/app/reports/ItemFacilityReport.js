@@ -154,9 +154,7 @@ function ItemFacilityReport() {
           filterString += `${key}: ${item_class}, `;
         }
         else if(key==='item_type'){
-          console.log(selectedItem.item_type);
           const item_type=selectedItem.item_type.filter((item)=>item.id===parseInt(filter));
-          console.log(item_type);
           filterString += `${key}: ${item_type[0]?.name}, `;
         }
           else if(key==='level'){
