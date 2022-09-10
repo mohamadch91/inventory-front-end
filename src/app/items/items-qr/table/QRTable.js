@@ -14,7 +14,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
     ["filter", props.queryString],
     async () => {
       const res = await ItemService.getQrTableData(props.queryString);
-      console.log(res.data);
+
       return res?.data;
     },
     {

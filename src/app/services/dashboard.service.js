@@ -44,7 +44,6 @@ class DashboardService {
     });
   }
   getLogDetails(payload) {
-    console.log(API_URL + "/maintenancelog" + payload);
     return ApiManager.get(API_URL + "/maintenancelog" + payload, {
       headers: { Authorization: authHeader() },
     });

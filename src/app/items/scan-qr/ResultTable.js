@@ -27,8 +27,6 @@ const ResultTable = (props) => {
       />
     );
   }
-  console.log("data is");
-  console.log(data);
 
   return (
     <div className="table-responsive mt-3">

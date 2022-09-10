@@ -19,7 +19,6 @@ const ItemsCard = () => {
   const { sendRequest, status, data, error: err } = useHttp(getItemsAndTypes);
 
   useEffect(() => {
-    console.log("salam");
     sendRequest();
   }, []);
 
@@ -59,7 +58,6 @@ const ItemsCard = () => {
     data?.map((el, i) => {
       if (i === +classId) {
         el.items.map((el, j) => {
-          console.log(el);
           tmp.push({
             id: j,
             classId: i,

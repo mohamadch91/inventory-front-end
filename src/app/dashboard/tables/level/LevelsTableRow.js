@@ -1,7 +1,6 @@
 import React from "react";
 
 const LevelsTableRow = (props) => {
-  console.log(props._key);
   return (
     <tr>
       <td key={"A"}>

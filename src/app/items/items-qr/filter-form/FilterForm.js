@@ -148,7 +148,6 @@ const FilterForm = (props) => {
     props.onSubmit(filterState);
   };
 
-  console.log(filterState);
   return (
     <div className="row">
       <div className="col-sm-7">

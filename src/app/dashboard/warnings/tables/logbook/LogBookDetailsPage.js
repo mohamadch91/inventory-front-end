@@ -22,7 +22,6 @@ const LogBookDetailsPage = () => {
   );
 
   if (isLoading) {
-    console.log(isLoading);
     return <Spinner />;
   }
   if (!isLoading && detailsData.length === 0) {

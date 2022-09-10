@@ -42,7 +42,6 @@ class AuthService {
             headers: { Authorization: "Bearer " + user.access },
           })
           .then((res) => {
-            console.log(res.data.Country);
             let country = res.data.Country[0];
 
             if (country === undefined) {

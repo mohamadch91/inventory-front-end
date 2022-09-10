@@ -47,7 +47,6 @@ class App extends Component {
     this.onRouteChanged();
   }
   logOut() {
-
     this.props.dispatch(logout());
     this.setState({
       showModeratorBoard: false,
@@ -56,8 +55,6 @@ class App extends Component {
     });
   }
   render() {
-    // console.log(this.state.currentUser);
-
     let navbarComponent = !this.state.isFullPageLayout ? <Navbar /> : "";
     let sidebarComponent = !this.state.isFullPageLayout ? <Sidebar /> : "";
 
@@ -74,8 +71,8 @@ class App extends Component {
         {navbarComponent}
         <div className="container-fluid page-body-wrapper">
           {sidebarComponent}
-          {((this.props.location.pathname !== "/") &&
-          (this.props.location.pathname !== "/login")) ? (
+          {this.props.location.pathname !== "/" &&
+          this.props.location.pathname !== "/login" ? (
             <div className="main-panel">
               <div className="content-wrapper">
                 <AppRoutes />

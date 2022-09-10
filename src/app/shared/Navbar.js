@@ -94,8 +94,9 @@ class Navbar extends Component {
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
-                  {Object.keys(this.languages).map((key) => (
+                  {Object.keys(this.languages).map((key, i) => (
                     <Dropdown.Item
+                      key={i + key}
                       className="dropdown-item d-flex align-items-center"
                       href="!#"
                       onClick={(e) => {

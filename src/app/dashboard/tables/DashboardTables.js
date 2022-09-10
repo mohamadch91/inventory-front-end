@@ -20,8 +20,6 @@ const DashboardTables = () => {
       </div>
     );
   }
-  console.log("error object", err);
-  // TODO: Remove error message at production
   if (err) {
     toast.error("There was a problem loading data");
     return <p>{err}</p>;
