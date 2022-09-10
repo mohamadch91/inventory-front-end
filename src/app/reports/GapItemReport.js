@@ -18,8 +18,8 @@ const defaultValues = {
   power: "-1",
   degree: "1",
   option: "1",
-  year_to: "-1",
   year_from: "-1",
+  year_to: "-1",
   calculate_for: "-1",
 };
 
@@ -158,7 +158,7 @@ function GapItemReport() {
               }else if(key==='option'){
                 filter += `${key} = ${options.find((d) => d.id === filterValue).name} , `;
               }else{
-                filter += `${key} = ${filterValue} & `;
+                filter += `${key} = ${filterValue} , `;
             }}
         }
         return filter;
@@ -421,7 +421,7 @@ function GapItemReport() {
                       </option>
                       {Array.from({
                         length:
-                          new Date().getUTCFullYear() - filterValues.year_from,
+                          new Date().getUTCFullYear() - filterValues.year_from+1,
                       }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (

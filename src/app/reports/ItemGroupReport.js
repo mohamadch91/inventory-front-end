@@ -425,7 +425,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Energy source for Cold chain:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"

@@ -156,7 +156,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <Trans>Type</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Last Changes On</Trans>
+                      <Trans>Last Changed on</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Tool box</Trans>

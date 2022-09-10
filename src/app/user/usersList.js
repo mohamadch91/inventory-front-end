@@ -206,9 +206,13 @@ function UsersList() {
           setActiveStep(0);
         })
         .catch((err) => {
-          console.log(err);
+          if(err.response.data.username){
+            toast.error(err.response.data.username[0]);
+          }
+          else{
           toast.error("There is a problem sending data");
           setIsLoading(false);
+          }
         });
     }
   }
