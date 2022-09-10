@@ -19,7 +19,7 @@ const ItemsCard = () => {
   const { sendRequest, status, data, error: err } = useHttp(getItemsAndTypes);
 
   useEffect(() => {
-    console.log("salam")
+    console.log("salam");
     sendRequest();
   }, []);
 
@@ -40,7 +40,7 @@ const ItemsCard = () => {
 
   // ----------- Feeding to app
   // creating first dropdown available options
-  if (status === "completed" && itemClasses.length === 0) {
+  if (status === "completed" && itemClasses.length !== 0) {
     // Setting item classes
     let tmp = [];
     data?.map((el, i) => {

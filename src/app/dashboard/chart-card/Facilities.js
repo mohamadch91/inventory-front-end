@@ -32,7 +32,7 @@ const Facilities = () => {
     );
   }
 
-  if (!isLoading && facilities.length === 0) {
+  if (!isLoading && facilities.length !== 0) {
     let tmp = [];
     data.map((el, i) => {
       tmp.push({ op: el.name, id: i, facility: el });
@@ -48,7 +48,7 @@ const Facilities = () => {
         setChartData({
           defined: definedNum.toFixed(2),
           subFacilities: el.facility.sub_fac,
-          lower:el.facility.lower,
+          lower: el.facility.lower,
         });
       }
     });

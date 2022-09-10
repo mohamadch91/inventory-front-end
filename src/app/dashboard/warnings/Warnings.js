@@ -30,7 +30,7 @@ const warningsData = [
 ];
 
 const Warnings = () => {
-  const { data, isLoading: warningData } = useQuery(
+  const { data, isLoading } = useQuery(
     ["warnings"],
     async () => {
       const res = await dashboardService.getAllWarningsData();
@@ -41,7 +41,7 @@ const Warnings = () => {
     }
   );
 
-  if (warningData || data.length === 0) {
+  if (isLoading || data.length === 0) {
     return (
       <div className={"spinner-wrapper"} style={{ position: "relative" }}>
         <div className={"donut"} />

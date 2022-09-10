@@ -5,7 +5,6 @@ import useHttp from "../../shared/custom-hooks/use-http";
 import { getTablesData } from "../dashboard-api";
 import LevelsTable from "./level/LevelsTable";
 import toast from "react-hot-toast";
-import Spinner from "../../shared/Spinner";
 
 const DashboardTables = () => {
   const { sendRequest, status, data, error: err } = useHttp(getTablesData);
