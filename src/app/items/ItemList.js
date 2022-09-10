@@ -114,7 +114,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
 
         <button
           className="btn btn-success text-dark w-25  mb-2   "
-          onClick={()=>refetchItems()}
+          onClick={() => refetchItems()}
           style={{ marginLeft: "5%" }}
           type="submit"
         >
@@ -235,6 +235,17 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     type="submit"
                   >
                     <Trans>Delete</Trans>
+                  </button>
+                  <button
+                    className="btn btn-danger text-dark w-50 mt-4 mb-2   "
+                    style={{ marginLeft: "24%" }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpenModal(false);
+                    }}
+                  >
+                    <Trans>Cancel</Trans>
                   </button>
                 </form>
               </Modal>
