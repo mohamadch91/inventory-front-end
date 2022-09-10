@@ -146,7 +146,9 @@ function UsersList() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      if (key !== "idnumber" && key !== "phone" && key !== "position") {
+      console.log(key);
+      if (key !== "idnumber" || key !== "phone" || key !== "position") {
+        console.log(addRowFormData[key]);
         return addRowFormData[key] !== "";
       }
     });

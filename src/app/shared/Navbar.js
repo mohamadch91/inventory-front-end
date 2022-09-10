@@ -75,8 +75,12 @@ class Navbar extends Component {
               }}
             />
             Inventory and Gap Analysis (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.0
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.0 
+            
+            (You
+            are in {this.state.user?.facility_name})
           </div>
+
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile  d-xl-flex">
               <Help />
