@@ -19,6 +19,7 @@ const ItemsCard = () => {
   const { sendRequest, status, data, error: err } = useHttp(getItemsAndTypes);
 
   useEffect(() => {
+    console.log("salam")
     sendRequest();
   }, []);
 
@@ -42,7 +43,7 @@ const ItemsCard = () => {
   if (status === "completed" && itemClasses.length === 0) {
     // Setting item classes
     let tmp = [];
-    data.map((el, i) => {
+    data?.map((el, i) => {
       tmp.push({ op: el.item_class, id: i });
     });
     setItemClasses(tmp);
@@ -55,7 +56,7 @@ const ItemsCard = () => {
     let tmp = [];
     const classId = e.target.value;
 
-    data.map((el, i) => {
+    data?.map((el, i) => {
       if (i === +classId) {
         el.items.map((el, j) => {
           console.log(el);
@@ -76,7 +77,7 @@ const ItemsCard = () => {
   // like before, find desired result based on ID found in onChange event.
   const itemChangeHandler = (e) => {
     const itemId = e.target.value;
-    items.map((el) => {
+    items?.map((el) => {
       if (el.id === +itemId) {
         setChartData({
           notWorking: el.notWorking,
@@ -88,7 +89,7 @@ const ItemsCard = () => {
   };
 
   return (
-    <div className={classes.item}>
+    <div className={classes?.item}>
       <Card>
         <h3>
           🏢 <Trans>Items</Trans>{" "}
@@ -116,15 +117,15 @@ const ItemsCard = () => {
         />
         {chartData && (
           <div>
-            <span>{chartData.totalItems}</span>
+            <span>{chartData?.totalItems}</span>
             <p>
               <Trans>Items</Trans>
             </p>
             <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
-              <Trans>Working</Trans>: {chartData.working * 100}%
+              <Trans>Working</Trans>: {chartData?.working * 100}%
             </p>
             <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
-              <Trans>Not working</Trans>: {chartData.notWorking}
+              <Trans>Not working</Trans>: {chartData?.notWorking}
             </p>
           </div>
         )}

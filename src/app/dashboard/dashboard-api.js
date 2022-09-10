@@ -3,7 +3,7 @@ import DashboardService from "../services/dashboard.service";
 export async function getItemsAndTypes() {
   try {
     const res = await DashboardService.getAllDashboardItems();
-    return res.data;
+    return res?.data;
   } catch (error) {
     throw new Error("Error fetching data from back-end " + error.message);
   }
@@ -12,7 +12,7 @@ export async function getItemsAndTypes() {
 export async function getFacilities() {
   try {
     const res = await DashboardService.getAllFacilities();
-    return res.data;
+    return res?.data;
   } catch (error) {
     const { response } = error;
     if (response?.status === 403) {
