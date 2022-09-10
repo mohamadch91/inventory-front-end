@@ -8,7 +8,7 @@
         a = i(74569),
         c = i.n(a),
         t = i(54318),
-        r = "http://127.0.0.1:8000/hr/",
+        r = "http://5.182.47.38:8000/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -117,7 +117,7 @@
         v = i(43144),
         p = i(39877),
         g = i(54318),
-        Z = "http://127.0.0.1:8000/auth/",
+        Z = "http://5.182.47.38:8000/auth/",
         b = new ((function () {
           function e() {
             (0, f.Z)(this, e);

@@ -149,7 +149,7 @@
         r = n(74569),
         i = n.n(r),
         u = n(54318),
-        c = "http://127.0.0.1:8000/hr/",
+        c = "http://5.182.47.38:8000/hr/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -208,7 +208,7 @@
         r = n(74569),
         i = n.n(r),
         u = n(54318),
-        c = "http://127.0.0.1:8000/message/",
+        c = "http://5.182.47.38:8000/message/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);

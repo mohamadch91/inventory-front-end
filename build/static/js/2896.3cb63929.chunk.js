@@ -853,7 +853,7 @@
         s = n(43144),
         r = n(39877),
         i = n(54318),
-        l = "http://127.0.0.1:8000/dashboard",
+        l = "http://5.182.47.38:8000/dashboard",
         c = (function () {
           function e() {
             (0, a.Z)(this, e);

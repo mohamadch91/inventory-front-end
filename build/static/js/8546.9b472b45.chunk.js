@@ -766,7 +766,7 @@
         c = i(74569),
         a = i.n(c),
         t = i(54318),
-        r = "http://127.0.0.1:8000/hr/",
+        r = "http://5.182.47.38:8000/hr/",
         d = (function () {
           function e() {
             (0, l.Z)(this, e);

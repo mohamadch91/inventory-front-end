@@ -7,7 +7,7 @@
         i = a(43144),
         r = a(39877),
         o = a(54318),
-        l = (a(74569), "http://127.0.0.1:8000/facilities/"),
+        l = (a(74569), "http://5.182.47.38:8000/facilities/"),
         s = (function () {
           function e() {
             (0, n.Z)(this, e);
@@ -76,7 +76,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return r.Z.post(
-                    "http://127.0.0.1:8000/facilities/import",
+                    "http://5.182.47.38:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, o.Z)() } }
                   );

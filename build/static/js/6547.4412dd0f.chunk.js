@@ -315,7 +315,7 @@
         i = t(74569),
         c = t.n(i),
         a = t(54318),
-        l = "http://127.0.0.1:8000/hr/",
+        l = "http://5.182.47.38:8000/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -374,7 +374,7 @@
         i = t(74569),
         c = t.n(i),
         a = t(54318),
-        l = "http://127.0.0.1:8000/message/",
+        l = "http://5.182.47.38:8000/message/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);

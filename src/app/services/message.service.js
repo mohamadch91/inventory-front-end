@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8000/message/";
+const API_URL = "http://5.182.47.38:8000/message/";
 
 class MessageService {
   getReceivedMessages() {

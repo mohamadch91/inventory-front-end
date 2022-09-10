@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (t, e) {
                     return s()
-                      .post("http://127.0.0.1:8000/auth/login/", {
+                      .post("http://5.182.47.38:8000/auth/login/", {
                         username: t,
                         password: e,
                       })
@@ -37,7 +37,7 @@
                             access: t.data.access,
                           };
                           return s()
-                            .get("http://127.0.0.1:8000/user-data/", {
+                            .get("http://5.182.47.38:8000/user-data/", {
                               headers: { Authorization: "Bearer " + e.access },
                             })
                             .then(function (t) {
@@ -606,7 +606,7 @@
       },
       80794: function (t, e) {
         "use strict";
-        e.Z = "http://127.0.0.1:8000";
+        e.Z = "http://5.182.47.38:8000";
       },
       54318: function (t, e, n) {
         "use strict";
@@ -716,7 +716,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://127.0.0.1:8000/help/",
+          s = "http://5.182.47.38:8000/help/",
           u = (function () {
             function t() {
               (0, r.Z)(this, t);
@@ -761,7 +761,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://127.0.0.1:8000/item/",
+          s = "http://5.182.47.38:8000/item/",
           u = (function () {
             function t() {
               (0, r.Z)(this, t);
@@ -888,7 +888,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://127.0.0.1:8000/items/",
+          s = "http://5.182.47.38:8000/items/",
           u = (function () {
             function t() {
               (0, r.Z)(this, t);
@@ -1021,8 +1021,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://127.0.0.1:8000/settings/",
-          u = "http://127.0.0.1:8000",
+          s = "http://5.182.47.38:8000/settings/",
+          u = "http://5.182.47.38:8000",
           l = (function () {
             function t() {
               (0, r.Z)(this, t);
@@ -5696,7 +5696,7 @@
             defaultNS: "translation",
             supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
             backend: {
-              loadPath: "http://127.0.0.1:8000/media/{{lng}}/{{ns}}.json",
+              loadPath: "http://5.182.47.38:8000/media/{{lng}}/{{ns}}.json",
               addPath: null,
               crossDomain: !0,
               requestOptions: { cache: "no-store" },
@@ -29789,15 +29789,13 @@
                   (this.mutateOptions = e),
                   this.currentMutation &&
                     this.currentMutation.removeObserver(this),
-                  (this.currentMutation = this.client
-                    .getMutationCache()
-                    .build(
-                      this.client,
-                      (0, h.Z)({}, this.options, {
-                        variables:
-                          "undefined" !== typeof t ? t : this.options.variables,
-                      })
-                    )),
+                  (this.currentMutation = this.client.getMutationCache().build(
+                    this.client,
+                    (0, h.Z)({}, this.options, {
+                      variables:
+                        "undefined" !== typeof t ? t : this.options.variables,
+                    })
+                  )),
                   this.currentMutation.addObserver(this),
                   this.currentMutation.execute()
                 );
@@ -30307,12 +30305,10 @@
                         t(e.currentResult);
                       }),
                     t.cache &&
-                      e.client
-                        .getQueryCache()
-                        .notify({
-                          query: e.currentQuery,
-                          type: "observerResultsUpdated",
-                        });
+                      e.client.getQueryCache().notify({
+                        query: e.currentQuery,
+                        type: "observerResultsUpdated",
+                      });
                 });
               }),
               e
@@ -38948,11 +38944,15 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "http://127.0.0.1:8000".concat(this.state.logo1),
+                        logo1: "http://5.182.47.38:8000".concat(
+                          this.state.logo1
+                        ),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "http://127.0.0.1:8000".concat(this.state.logo2),
+                        logo2: "http://5.182.47.38:8000".concat(
+                          this.state.logo2
+                        ),
                       });
                 },
               },
