@@ -44,3 +44,36 @@
   .new_row{
     flex-wrap: nowrap!important;
   }
+  @media screen and (max-width: 768px) {
+    .mobile{
+          display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.mobile-padding{
+      padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+    .who {
+    height: 40%;
+    width: 40%;
+    }
+    .zero_margin{
+      margin: 0!important;
+      font-size: 20px!important;
+
+    }
+    .new-margin{
+      margin-top: 0.5rem!important;
+      margin-bottom: 0.5rem!important;
+      margin-left: 0!important;
+      font-size: 20px!important;
+    }
+    .sign{
+      font-size: 15px!important;
+    }
+    }
+    
+  

@@ -158,19 +158,32 @@ function ItemFacilityReport() {
           filterString += `${key}: ${item_type[0]?.name}, `;
         }
           else if(key==='level'){
-          filterString += `${key}: ${itemFacHelper.level[filter]}, `;
+          const level=itemFacHelper.level.filter((item)=>item.id===parseInt(filter));
+          filterString += `Level : ${level[0]?.name}, `;
         }else if(key==='type'){
-          filterString += `${key}: ${itemFacHelper.type[filter]}, `;
+          // find the type name by id
+          const type=itemFacHelper.type.filter((item)=>item.id===parseInt(filter));
+          filterString += `Type : ${type[0]?.name}, `;
         }else if(key==='power'){
-          filterString += `${key}: ${itemFacHelper.power[filter]}, `;
+          // find the power name by id
+          const power=itemFacHelper.power.filter((item)=>item.id===parseInt(filter));
+          filterString += `Power source: ${power[0]?.name}, `;
         }else if(key==='physical'){
-          filterString += `${key}: ${itemFacHelper.physical[filter]}, `;
+          // find the physical name by id
+          const physical=itemFacHelper.physical.filter((item)=>item.id===parseInt(filter));
+          filterString += `Physical condition : ${physical[0]?.name}, `;
         }else if(key==='financial'){
-          filterString += `${key}: ${itemFacHelper.financial[filter]}, `;
+          // find the financial name by id
+          const financial=itemFacHelper.financial.filter((item)=>item.id===parseInt(filter));
+          filterString += `Financial : ${financial[0]?.name}, `;
         }else if(key==='working'){
-          filterString += `${key}: ${itemFacHelper.working[filter]}, `;
+          // find the working name by id
+          const working=itemFacHelper.working.filter((item)=>item.id===parseInt(filter));
+          filterString += `Working condition : ${working[0]?.name}, `;
         }else if(key==='item_power'){
-          filterString += `${key}: ${itemFacHelper.item_power[filter]}, `;
+          // find the item_power name by id
+          const item_power=itemFacHelper.item_power.filter((item)=>item.id===parseInt(filter));
+          filterString += `Item power : ${item_power[0]?.name}, `;
         }else{
 
         filterString += `${key}: ${filter}, `;}

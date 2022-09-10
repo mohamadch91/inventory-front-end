@@ -65,8 +65,45 @@ function FacilitySegmentationReport() {
       const value = filterValues[key];
       if (value.length > 0) {
         if(key=== 'power'){
-          filter += `${key}=${facSegHelper.power[value].name}&`;
-        }else{
+          // find power whith value=id
+          const power = facSegHelper.power.find((p) => p.id === parseInt(value));
+          filter += `Power source: ${power.name}, `;
+        
+        }
+        else if(key=== 'func'){
+          // find func whith value=id
+          console.log(value)
+          if(value === 'true'){
+            filter += `Function: Working, `;
+          }
+          else{
+            filter += `Function: Not working, `;
+          }
+        }
+        else if(key=== 'type'){
+          // find type whith value=id
+          const type = facSegHelper.type.find((t) => t.id === parseInt(value));
+          filter += `Type: ${type.name}, `;
+        }
+        else if(key=== 'level'){
+          // find level whith value=id
+          const level = facSegHelper.level.find((l) => l.id === parseInt(value));
+          filter += `Level: ${level.name}, `;
+        }
+        else if(key=== 'gfrom'){
+          filter += `General population from: ${value}, `;
+        }
+        else if(key=== 'gto'){
+          filter += `General population to: ${value}, `;
+        }
+        else if(key=== 'underfrom'){
+          filter += `Under 1 population from: ${value}, `;
+        }
+        else if(key=== 'underto'){
+          filter += `Under 1 population to: ${value}, `;
+        }
+
+        else{
           filter += `${key}=${value}&`;
         }
       }

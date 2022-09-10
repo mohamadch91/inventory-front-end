@@ -91,12 +91,11 @@ class Login extends Component {
         .then((res) => {
           toast.success("Login Successfull");
           // this.alerthandle("Login Successful","success");
-          this.sleep(500000)
           
           history.push("/dashboard");
           window.location.reload();
         })
-        .catch((error) => {
+        .catch((err) => {
           toast.error("Login Failed");
           // this.alerthandle("Login failed ","alert")
           this.setState({
@@ -138,14 +137,14 @@ class Login extends Component {
 
     return (
       <section className="background-radial-gradient overflow-hidden w-100">
-        <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-          <div className="row gx-lg-5 align-items-center mb-5 new_row ">
+        <div className="container mobile-padding px-4 py-5 px-md-5 text-center text-lg-start my-5">
+          <div className="row mobile gx-lg-5 align-items-center mb-5 new_row ">
             <div
-              className="col-lg-6 mb-5 mb-lg-0"
+              className="col-lg-6 mb-5 zero_margin mb-lg-0"
               style={{ Zindex: "10", marginRight: "10%" }}
             >
               <h1
-                className="my-5  display-5 fw-bold "
+                className="my-5 new-margin  display-5 fw-bold "
                 style={{ color: "hsl(218, 81%, 95%)", fontSize: "30px" }}
               >
                 Inventory and Gap analyses system <br />
@@ -154,7 +153,7 @@ class Login extends Component {
               <img className="who" src="./who-emblem.png" />
             </div>
 
-            <div className="offset-1 col-lg-4 mb-5 mb-lg-0 position-relative mt-5">
+            <div className="offset-1 offset-sm-0 col-lg-4 zero_margin mb-5 mb-lg-0 position-relative mt-5">
               <div
                 id="radius-shape-1"
                 className="position-absolute rounded-circle shadow-5-strong"
@@ -164,7 +163,7 @@ class Login extends Component {
                 className="position-absolute shadow-5-strong"
               ></div>
 
-              <div className="card bg-glass  mb-5 mt-5">
+              <div className="card bg-glass new-margin  mb-5 mt-5">
                 <div className="card-body px-5 py-5 px-md-5 col-md-12">
                   <Form
                     onSubmit={this.handleLogin}
@@ -209,7 +208,7 @@ class Login extends Component {
 
                     <button
                       type="submit"
-                      className="btn btn-primary btn-block mb-4"
+                      className="btn sign btn-primary btn-block mb-4"
                     >
                       sign in
                       {this.state.loading && (
