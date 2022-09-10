@@ -8,7 +8,7 @@ const LevelsTable = (props) => {
       <h4 className="card-title"> 🏢 Facilities</h4>
       <p className="card-description"> Facilities owned separated by levels</p>
       <div className="table-responsive">
-        <table className="table">
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>

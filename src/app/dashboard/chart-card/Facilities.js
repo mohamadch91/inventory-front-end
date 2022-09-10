@@ -48,6 +48,7 @@ const Facilities = () => {
         setChartData({
           defined: definedNum.toFixed(2),
           subFacilities: el.facility.sub_fac,
+          lower:el.facility.lower,
         });
       }
     });
@@ -75,13 +76,22 @@ const Facilities = () => {
           animDelay={100}
         />
         {chartData && (
-          <div>
-            <span>{chartData.subFacilities}</span>
-            <p>
-              {" "}
-              <Trans>Subset Facilities</Trans>{" "}
-            </p>
-          </div>
+          <>
+            <div>
+              <span>{chartData.subFacilities}</span>
+              <p>
+                {" "}
+                <Trans>Subset Facilities defined</Trans>{" "}
+              </p>
+            </div>
+            <div>
+              <span>{chartData.lower}</span>
+              <p>
+                {" "}
+                <Trans>Can be defined</Trans>{" "}
+              </p>
+            </div>
+          </>
         )}
       </Card>
     </div>
