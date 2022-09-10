@@ -221,13 +221,13 @@ export class Country extends Component {
   };
   isCountryCodeValid = () => {
     var hasNumber = /\d/;
-    if (this.state.CountryCode.length === 0) {
+    if (this.state.CountryCode?.length === 0) {
       return true;
     }
-    if (this.state.CountryCode.length > 3) {
+    if (this.state.CountryCode?.length > 3) {
       return false;
     }
-    if (this.state.CountryCode.length < 3) {
+    if (this.state.CountryCode?.length < 3) {
       return false;
     }
     if (hasNumber.test(this.state.CountryCode)) {
@@ -237,7 +237,7 @@ export class Country extends Component {
   };
   isCountryValid = () => {
     if (
-      this.state.CountryName.length > 1 &&
+      this.state.CountryName?.length > 1 &&
       !/\d/.test(this.state.CountryName)
     ) {
       return true;
@@ -246,8 +246,8 @@ export class Country extends Component {
   };
   isCurrencyValid = () => {
     if (
-      this.state.Currency.length > 0 &&
-      this.state.Currency.length < 4 &&
+      this.state.Currency?.length > 0 &&
+      this.state.Currency?.length < 4 &&
       !/\d/.test(this.state.Currency)
     ) {
       return true;
