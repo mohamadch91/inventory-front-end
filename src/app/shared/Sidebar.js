@@ -3,7 +3,6 @@ import { Link, withRouter } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 import eventBus from "../common/EventBus";
 
-
 import { connect } from "react-redux";
 import userService from "../services/user.service";
 import { Trans, withTranslation } from "react-i18next";
@@ -949,25 +948,23 @@ class Sidebar extends Component {
           {/* Logout*/}
           <li className="nav-item sidebar-user-actions py-5">
             <div className="sidebar-user-menu">
-              <Link to="/login">
-                <a
-                  href="/login"
+              <Link
+                to="/login"
+                onClick={(event) => {
+                  eventBus.dispatch("logout");
+                  history.push("/login");
+                }}
+                className="nav-link"
+              >
+                <i
                   onClick={(event) => {
                     eventBus.dispatch("logout");
-                    history.push("/login");
                   }}
-                  className="nav-link"
-                >
-                  <i
-                    onClick={(event) => {
-                      eventBus.dispatch("logout");
-                    }}
-                    className="mdi mdi-logout menu-icon"
-                  ></i>
-                  <span className="menu-title">
-                    <span>Log Out</span>
-                  </span>
-                </a>
+                  className="mdi mdi-logout menu-icon"
+                />
+                <span className="menu-title">
+                  <span>Log Out</span>
+                </span>
               </Link>
             </div>
           </li>
