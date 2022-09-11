@@ -367,9 +367,7 @@ export default function ImportFacility() {
         code: data.FacilityCode ? data.FacilityCode : null,
         name: data.facilityName ? data.facilityName : null,
         parentid: data.parentFac ? data.parentFac : null,
-        level: data.level ? data.level : null,
-        lname: data.levelname ? data.levelname : null,
-        type: data.Facilitytype ? data.Facilitytype : null,
+        level: data.Level ? data.Level : null,
         pop: data.Population ? data.Population : 0,
       };
       levels.push(level);
