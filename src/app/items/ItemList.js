@@ -104,22 +104,24 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         <Trans>Item list</Trans>
       </h3>
       <div className="mt-3">
-        <label className="mr-2 mb-1"> Deleted </label>
-        <input
-          type="checkbox"
-          checked={is_deleted}
-          onChange={handledeletChange}
-          className="mt-1"
-        />
+        <div>
+          <label className="mr-2 mb-1"> Deleted </label>
+          <input
+            type="checkbox"
+            checked={is_deleted}
+            onChange={handledeletChange}
+            className="mt-1 "
+          />
 
-        <button
-          className="btn btn-success text-dark w-25  mb-2   "
-          onClick={() => refetchItems()}
-          style={{ marginLeft: "5%" }}
-          type="submit"
-        >
-          <Trans>filter</Trans>
-        </button>
+          <button
+            className="btn btn-success text-dark w-25  mb-2   "
+            onClick={() => refetchItems()}
+            style={{ marginLeft: "5%" }}
+            type="submit"
+          >
+            <Trans>filter</Trans>
+          </button>
+        </div>
         <div className="card">
           <div className="card-body">
             <div className="mt-5 table-container">

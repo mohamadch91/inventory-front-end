@@ -93,22 +93,24 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         <Trans>Facility list</Trans>
       </h3>
       <div className="mt-3">
-        <label className="mr-2 mb-1"> Deleted </label>
-        <input
-          type="checkbox"
-          checked={is_deleted}
-          onChange={handledeletChange}
-          className="mt-1"
-        />
+        <div className="">
+          <label className="mr-2  "> Deleted </label>
+          <input
+            type="checkbox"
+            checked={is_deleted}
+            onChange={handledeletChange}
+            className="mt-1"
+          />
+          <button
+            className="btn btn-success text-dark w-25  mb-2   "
+            onClick={() => refetchFacilities()}
+            style={{ marginLeft: "5%" }}
+            type="submit"
+          >
+            <Trans>filter</Trans>
+          </button>
+        </div>
 
-        <button
-          className="btn btn-success text-dark w-25  mb-2   "
-          onClick={() => refetchFacilities()}
-          style={{ marginLeft: "5%" }}
-          type="submit"
-        >
-          <Trans>filter</Trans>
-        </button>
         <div className="card">
           <div className="card-body">
             {pid && (
@@ -296,12 +298,12 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                   <button
                     className="btn btn-danger text-dark w-50 mt-4 mb-2   "
                     style={{ marginLeft: "24%" }}
-                        onClick={(e) =>{
-                        e.preventDefault()
-                        e.stopPropagation()
-                        setOpenModal(false)
-                        }}
->
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setOpenModal(false);
+                    }}
+                  >
                     <Trans>Cancel</Trans>
                   </button>
                 </form>

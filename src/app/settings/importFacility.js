@@ -381,7 +381,8 @@ export default function ImportFacility() {
         setRows(response.data);
       })
       .catch((err) => {
-        toast.error("Facility import failed");
+        console.log(err)
+        toast.error(err.response.data);
       })
       .finally(() => {
       });
