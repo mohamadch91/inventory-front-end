@@ -20,7 +20,7 @@ i18n
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
     backend: {
-      loadPath: "http://5.182.47.38:8001/media/{{lng}}/{{ns}}.json",
+      loadPath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
       addPath: null,
       crossDomain: true,
       requestOptions: {

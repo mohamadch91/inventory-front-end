@@ -1,8 +1,8 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "http://5.182.47.38:8001/settings/";
-const URL = "http://5.182.47.38:8001";
+const API_URL = "https://inventory.runflare.run/settings/";
+const URL = "https://inventory.runflare.run";
 class UserService {
   getPublicContent() {
     return ApiManager.get(API_URL + "all");

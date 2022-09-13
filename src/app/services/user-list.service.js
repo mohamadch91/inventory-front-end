@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/auth/";
+const API_URL = "https://inventory.runflare.run/auth/";
 
 class UserListService {
   getUsersByFacilityId(id) {

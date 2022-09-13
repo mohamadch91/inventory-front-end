@@ -10,8 +10,8 @@ import axios from "axios";
  * @constant {string} API_URL Url for login api
  * @constant {string} USER_PROFILE Url for user profile api
  */
-const API_URL = "http://5.182.47.38:8001/auth/login/";
-const USER_PROFILE = "http://5.182.47.38:8001/user-data/";
+const API_URL = "https://inventory.runflare.run/auth/login/";
+const USER_PROFILE = "https://inventory.runflare.run/user-data/";
 class AuthService {
   /**
    *

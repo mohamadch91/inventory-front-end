@@ -154,7 +154,15 @@ function Facility() {
     }
     currentStepFields.forEach((field) => {
       if (field.required && !fieldsValue[field.stateName]) {
+        if(field.type==="bool"){
+          console.log(fieldsValue[field.stateName]);
+          onChangeHandler(false,field)
+          console.log(fieldsValue[field.stateName]);
+
+        }
+        else{
         _fieldErrors[field.stateName] = "this field is required!";
+        }
       }
     });
     setFieldErrors(_fieldErrors);
@@ -177,7 +185,6 @@ function Facility() {
       field.stateName === "populationnumber" ||
       field.stateName === "childrennumber"
     ) {
-      console.log(selectedLevel?.minpop);
       validation.min = +selectedLevel?.minpop;
       validation.max = +selectedLevel?.maxpop;
     }
@@ -185,7 +192,6 @@ function Facility() {
     if (field.name?.includes("hh:mm")) {
       validationErr = timeValidationError(value);
     } else {
-      console.log(validation);
       validationErr = hasValidationError(value, validation);
     }
     const cloneFieldsValue = { ...fieldsValue };
@@ -380,6 +386,7 @@ function Facility() {
               if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
                 return null;
               }
+            
               const hasRequiredError = !!fieldErrors[field.stateName];
               return (
                 <Form.Group className="row mb-0" key={field.name}>

@@ -142,7 +142,7 @@ const headCells = [
   {
     id: "name",
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: "Facility Name",
   },
   {
@@ -152,17 +152,18 @@ const headCells = [
     label: "Facility code",
   },
   {
+    id: "other",
+    numeric: false,
+    disablePadding: true,
+    label: "Other code",
+  },
+  {
     id: "parent",
     numeric: false,
     disablePadding: true,
     label: "Parent Facility",
   },
-  {
-    id: "type",
-    numeric: false,
-    disablePadding: true,
-    label: "Facility Type",
-  },
+
   {
     id: "level",
     numeric: false,
@@ -361,9 +362,8 @@ export default function ImportFacility() {
     let levels = [];
     for (let i = 0; i < excel.length; i++) {
       let data = excel[i];
-
+      if(data.FacilityCode && data.facilityName && data.Level){
       let level = {
-        id: data.id,
         code: data.FacilityCode ? data.FacilityCode : null,
         name: data.facilityName ? data.facilityName : null,
         parentid: data.parentFac ? data.parentFac : null,
@@ -372,6 +372,7 @@ export default function ImportFacility() {
       };
       levels.push(level);
     }
+  }
     FacilitiesService.importFacilities(levels)
       .then((response) => {
         toast.success("Facility import succesfully");
@@ -380,7 +381,7 @@ export default function ImportFacility() {
       })
       .catch((err) => {
         console.log(err)
-        toast.error(err.response.data);
+        toast.error(JSON.stringify(err.response.data));
       })
       .finally(() => {
       });
@@ -441,10 +442,7 @@ export default function ImportFacility() {
             <TableHead>
               <TableRow className="item-class-page">
                 {headCells.map((headCell) => (
-                  <TableCell
-                   
-                    key={headCell.id}
-                  >
+                  <TableCell key={headCell.id}>
                     <Trans>{headCell.label}</Trans>
                   </TableCell>
                 ))}
@@ -477,25 +475,28 @@ export default function ImportFacility() {
                     >
                       {row.code}
                     </TableCell>
+                    <TableCell
+                      sx={{
+                        paddongLeft: "2px",
+                      }}
+                      padding="none"
+                      align="center"
+                    >
+                      {row.other_code}
+                    </TableCell>
                     <TableCell padding="none" align="center">
                       {row.parentid}
                     </TableCell>
-                    <TableCell padding="none" align="center">
-                      {row.type}
-                    </TableCell>
+                   
                     <TableCell padding="none" align="center">
                       {row.level}
                     </TableCell>
                     <TableCell padding="none" align="center">
                       {row.lname}
                     </TableCell>
-                    <TableCell
-                      padding="none"
-                      align="center"
-                    >
+                    <TableCell padding="none" align="center">
                       {separator(row.pop)}
                     </TableCell>
-             
                   </TableRow>
                 </>
               ))}

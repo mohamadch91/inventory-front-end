@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/help/";
+const API_URL = "https://inventory.runflare.run/help/";
 
 class HelpService {
   getHelpContent(lang, page) {

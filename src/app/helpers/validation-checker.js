@@ -1,7 +1,6 @@
 import { separator } from "../helpers/separator";
 
 export const hasValidationError = (value, validation) => {
-  console.log(typeof value);
   if (typeof value !== "string" && typeof value !== "number") return false;
 
   const _value = value.replaceAll(" ", "");

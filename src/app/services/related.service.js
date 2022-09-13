@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/related/";
+const API_URL = "https://inventory.runflare.run/related/";
 
 class RelatedService {
   getParameters() {

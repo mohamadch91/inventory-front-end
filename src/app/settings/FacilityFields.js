@@ -191,6 +191,7 @@ function FieldsFacility() {
                               relatedFacility?.find(
                                 (rItem) => field.id === rItem.id
                               );
+                              console.log(fieldValue)
                             return (
                               <TableRow key={field.id}>
                                 <TableCell className="col-sm-4">

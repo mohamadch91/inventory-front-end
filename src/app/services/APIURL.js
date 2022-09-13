@@ -1,2 +1,2 @@
-const API_URL = "http://5.182.47.38:8001";
+const API_URL = "https://inventory.runflare.run";
 export default API_URL;

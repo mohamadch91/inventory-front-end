@@ -13,6 +13,8 @@ import { hasValidationError } from "../helpers/validation-checker";
 import { Trans } from "react-i18next";
 import Select from "react-select";
 import StepOperations from "../components/StepOperations";
+import { isRelatedFieldOk, relatedFields } from "../helpers/related-tem";
+
 
 const facilityField = {
   id: "facility",
@@ -150,8 +152,14 @@ function Item() {
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
       if (field.required && !fieldsValue[field.state]) {
+          if (field.type === "bool") {
+            console.log(fieldsValue[field.stateName]);
+            onChangeHandler(false, field);
+            console.log(fieldsValue[field.stateName]);
+          }
+         else{ 
         _fieldErrors[field.state] = "this field is required!";
-      }
+      }}
     });
     setFieldErrors(_fieldErrors);
     return Object.keys(_fieldErrors).length > 0;
@@ -188,6 +196,14 @@ function Item() {
       return;
     }
     const _fieldsValue = { ...fieldsValue };
+     for (const key in relatedFields) {
+       const fields = relatedFields[key];
+       if (fieldsValue[key] === false) {
+         fields.forEach((field) => {
+           delete _fieldsValue[field];
+         });
+       }
+     }
     if (!isFromPQS) {
       for (const key in fieldsValue) {
         if (fromPQSFields.find((pqsField) => pqsField.state === key)) {
@@ -487,6 +503,9 @@ function Item() {
               </>
             )}
             {Object.values(itemFields)[activeStep]?.map((field) => {
+               if (!isRelatedFieldOk(field.state, fieldsValue)) {
+                 return null;
+               }
               const hasRequiredError = !!fieldErrors[field.state];
               return (
                 <div className="row" key={field.name}>

@@ -11,6 +11,7 @@ const DynamicInput = (props) => {
         onChange={(e) => onChangeHandler(e.target.value, field)}
         defaultValue={defaultValue}
         className="form-control"
+        multiple={field.stateName === "other_services" ? true : false}
         as="select"
         disabled={field.active ? !field.active : field.disabled}
         id={`field-${field.id}`}
@@ -37,9 +38,11 @@ const DynamicInput = (props) => {
   }
 
   if (field.type === "bool") {
+   
     return (
       <>
         <input
+          
           type="checkbox"
           defaultChecked={defaultValue}
           onChange={(e) => onChangeHandler(e.target.checked, field)}
