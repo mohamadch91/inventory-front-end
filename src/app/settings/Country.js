@@ -81,6 +81,8 @@ export class Country extends Component {
  * @param {event} event 
  * @returns null
  * when clickng on the save country called
+ * check if country exist edit else submit countery
+ * also after submiting get country and change localstorage datas
  */
   handleSubmit = (event) => {
     event.preventDefault();
