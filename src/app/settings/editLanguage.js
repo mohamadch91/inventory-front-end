@@ -20,7 +20,15 @@ import "./itemType.scss";
 import "./editLang.scss";
 import { useTranslation } from "react-i18next";
 import { Trans } from "react-i18next";
+/**
+ * edit language pages
+ * 
+ * @returns DOMELEMNT
+ */
 function EditLanguage() {
+  /**
+   * define languagess we supported
+   */
   const languages = [
     { label: "English", value: "en" },
     { label: "Français", value: "fr" },
