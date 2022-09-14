@@ -17,7 +17,19 @@ import Map from "../settings/Map";
 import { Trans } from "react-i18next";
 import { separator } from "../helpers/separator";
 import StepOperations from "../components/StepOperations";
-
+import { useEffect } from "react";
+import {
+  MapContainer,
+  useMap,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
+import L from "leaflet";
+// import tileLayer from '../util/tileLayer';
+// import "leaflet/dist/leaflet.css";
+import "leaflet/dist/leaflet.css";
 const parentFacilityField = {
   id: "parent-facility",
   type: "text",
@@ -25,7 +37,64 @@ const parentFacilityField = {
   disabled: true,
   stateName: "parentName",
 };
+const center = [52.22977, 21.01178];
+delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
+function LocationMarker() {
+  const [position, setPosition] = useState(null);
+  const map = useMapEvents({
+    click() {
+      map.locate();
+      map.invalidateSize();
+    },
+    locationfound(e) {
+      setPosition(e.latlng);
+      map.flyTo(e.latlng, map.getZoom());
+    },
+  });
+
+  return position === null ? null : <></>;
+}
+const GetCoordinates = (props) => {
+  const map = useMap();
+  const handleClick = (e) => {
+           window.handleMapClick(e);
+
+  };
+
+  useEffect(() => {
+    if (!map) return;
+    const info = L.DomUtil.create("div", "legend");
+
+    const positon = L.Control.extend({
+      options: {
+        position: "bottomleft",
+      },
+
+      onAdd: function () {
+        info.textContent = "Click on map too add location";
+        return info;
+      },
+    });
+    map.on("load", (e) => {
+      console.log("salam");
+    });
+    map.on("click", (e) => {
+      window.navigator.geolocation.getCurrentPosition(console.log, console.log);
+        info.textContent = e.latlng;
+      handleClick(e);
+    });
+
+    map.addControl(new positon());
+  }, [map]);
+
+  return null;
+};
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
@@ -36,6 +105,27 @@ function Facility() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const pid = params.get("pid");
+const [map, setMap] = useState(null);
+const [Current, sercurrent] = useState([]);
+const [x1, setx1] = useState(
+  JSON.parse(localStorage.getItem("country")) === null
+    ? 35
+    : JSON.parse(localStorage.getItem("country"))["mainlocation"] === undefined
+    ? 35
+    : JSON.parse(localStorage.getItem("country"))
+        ["mainlocation"]?.split("(")[1]
+        ?.split(",")[0]
+);
+const [x2, setx2] = useState(
+  JSON.parse(localStorage.getItem("country")) === null
+    ? 51
+    : JSON.parse(localStorage.getItem("country"))["mainlocation"] === undefined
+    ? 51
+    : JSON.parse(localStorage.getItem("country"))
+        ["mainlocation"]?.split(",")[1]
+        ?.split(")")[0]
+);
+
 
   const { isLoading: isFacilityDefaultLoading } = useQuery(
     ["facility-default-value", id],
@@ -216,6 +306,7 @@ function Facility() {
       return;
     }
     const _fieldsValue = { ...fieldsValue };
+    console.log(_fieldsValue)
     for (const key in relatedFields) {
       const fields = relatedFields[key];
       if (fieldsValue[key] === false) {
@@ -247,11 +338,13 @@ function Facility() {
       : FacilitiesService.putFacility(_fieldsValue));
   };
 
-  const handleMapClick = (e) => {
+  const handleMapClick = async (e) => {
+    setMap(e.latlng);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue["gpsCordinate"] = e.latlng;
     setFieldValue(cloneFieldsValue);
   };
+window.handleMapClick = handleMapClick;
 
   const selectedLevel = levels[fieldsValue["level"] - 2];
   return (
@@ -414,10 +507,48 @@ function Facility() {
                             value={fieldsValue[field.stateName]}
                           />
                         </div>
-                        <Map
-                          loca={fieldsValue[field.stateName]}
-                          handleChange={handleMapClick}
-                        />
+                        <div className="map">
+                          {Current !== null && x1 && x2 && (
+                            <MapContainer
+                              center={[x1, x2]}
+                              zoom={10}
+                              scrollWheelZoom={true}
+                              style={{
+                                width: "100%",
+                                height: "450px",
+                                zIndex: "1",
+                              }}
+
+                              //   onClick={this.handlemapclick}
+                            >
+                              <TileLayer
+                                {...{
+                                  url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                  width: 500,
+                                }}
+                              />
+
+                              <GetCoordinates
+                                change={handleMapClick}
+                                fields={fieldsValue}
+                                setFields={setFieldValue}
+                                map={map}
+                                setMap={setMap}
+                              />
+                              <>
+                                {map && (
+                                  <Marker position={map} draggable={true}>
+                                    <Popup position={map}>
+                                      Current location:{" "}
+                                      <pre>{JSON.stringify(map, null, 2)}</pre>
+                                    </Popup>
+                                  </Marker>
+                                )}
+                              </>
+                              <LocationMarker />
+                            </MapContainer>
+                          )}
+                        </div>
                       </div>
                     ) : (
                       <DynamicInput

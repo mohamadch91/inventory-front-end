@@ -1,5 +1,6 @@
 {
   "name": "inventory",
+  "homepage": "https://invgap.org",
   "version": "1.1.0",
   "private": true,
   "dependencies": {

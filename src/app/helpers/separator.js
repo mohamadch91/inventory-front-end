@@ -1,5 +1,5 @@
 export const separator = (x) => {
-  if (x === undefined || x === null) {
+  if (x === undefined || x === null || x==="") {
     return;
   }
   x = parseInt(x);
@@ -8,6 +8,7 @@ export const separator = (x) => {
 
 function thousandSeparator(n, sep) {
   function reverse(text) {
+
     return text.split("").reverse().join("");
   }
 

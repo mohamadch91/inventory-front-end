@@ -61,12 +61,7 @@ class App extends Component {
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
-        <div className="map " style={{ display: "none" }}>
-          <Map
-            loca={this.state.mainlocation}
-            handleChange={this.handlemapclick}
-          />
-        </div>
+        
         <Toaster />
         {navbarComponent}
         <div className="container-fluid page-body-wrapper">

@@ -41,14 +41,25 @@ const DynamicInput = (props) => {
    
     return (
       <>
-        <input
-          
-          type="checkbox"
-          defaultChecked={defaultValue}
-          onChange={(e) => onChangeHandler(e.target.checked, field)}
+        <Form.Control
+          onChange={(e) => onChangeHandler(e.target.value, field)}
+          defaultValue={defaultValue}
+          className="form-control"
+          multiple={field.stateName === "other_services" ? true : false}
+          as="select"
           disabled={field.active ? !field.active : field.disabled}
-        />
-        <i style={{ marginLeft: "5px" }}> checked: yes </i>
+          id={`field-${field.id}`}
+        >
+          <option value="" selected disabled>
+            Please select
+          </option>
+          <option value="true"  >
+            Yes
+          </option>
+          <option value="false"  >
+            No
+          </option>
+        </Form.Control>
       </>
     );
   }
