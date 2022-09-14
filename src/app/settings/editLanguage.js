@@ -54,7 +54,11 @@ function EditLanguage() {
   const [page, setPage] = useState(1);
   const [searchParam, setSearchParam] = useState("");
   const { t } = useTranslation();
-
+  /**
+   * 
+   * @param {*} query query fo rget all data from serve
+   * ge language words and translations 
+   */
   function getData(query) {
     LanguageService.getTranslations()
       .then((res) => {
