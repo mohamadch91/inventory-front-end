@@ -13,6 +13,8 @@ import {
   timeValidationError,
 } from "../helpers/validation-checker";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
+import { isRelatedFieldOkReq } from "../helpers/related-field-req";
+
 import Map from "../settings/Map";
 import { Trans } from "react-i18next";
 import { separator } from "../helpers/separator";
@@ -158,6 +160,7 @@ const [x2, setx2] = useState(
     ["facility-fields"],
     async () => {
       const params = {};
+      params["id"] = id;
       if (pid) {
         params["parent"] = pid;
       }
@@ -243,16 +246,12 @@ const [x2, setx2] = useState(
       currentStepFields.push(facilityNameField);
     }
     currentStepFields.forEach((field) => {
-      if (field.required && !fieldsValue[field.stateName]) {
-        if(field.type==="bool"){
-          console.log(fieldsValue[field.stateName]);
-          onChangeHandler(false,field)
-          console.log(fieldsValue[field.stateName]);
-
-        }
-        else{
+      if (
+        field.required &&
+        !fieldsValue[field.stateName] &&
+        !isRelatedFieldOkReq(field.stateName, fieldsValue)
+      ) {
         _fieldErrors[field.stateName] = "this field is required!";
-        }
       }
     });
     setFieldErrors(_fieldErrors);
@@ -272,12 +271,22 @@ const [x2, setx2] = useState(
   const onChangeHandler = (value, field) => {
     const validation = field.validation?.[0];
     if (
-      field.stateName === "populationnumber" ||
+      (JSON.parse(localStorage.getItem("country"))["poptarget"] ===
+        "General population" &&
+        field.stateName === "populationnumber") 
+    ) {
+      validation.min = +selectedLevel?.minpop;
+      validation.max = +selectedLevel?.maxpop;
+    }
+    if (
+      JSON.parse(localStorage.getItem("country"))["poptarget"] ===
+        "Under-1 Population" &&
       field.stateName === "childrennumber"
     ) {
       validation.min = +selectedLevel?.minpop;
       validation.max = +selectedLevel?.maxpop;
     }
+    
     let validationErr;
     if (field.name?.includes("hh:mm")) {
       validationErr = timeValidationError(value);
@@ -297,6 +306,14 @@ const [x2, setx2] = useState(
     } else {
       delete _fieldErrors[field.stateName];
     }
+    for (const key in relatedFields) {
+      const fields = relatedFields[key];
+      if (fieldsValue[key] === true) {
+        fields.forEach((field) => {
+          delete _fieldErrors[field];
+        });
+      }
+    }
     setFieldErrors(_fieldErrors);
   };
 
@@ -306,7 +323,6 @@ const [x2, setx2] = useState(
       return;
     }
     const _fieldsValue = { ...fieldsValue };
-    console.log(_fieldsValue)
     for (const key in relatedFields) {
       const fields = relatedFields[key];
       if (fieldsValue[key] === false) {
@@ -563,8 +579,21 @@ window.handleMapClick = handleMapClick;
                       />
                     )}
                     <br />
-                    {(field.stateName === "populationnumber" ||
-                      field.stateName === "childrennumber") &&
+                    {JSON.parse(localStorage.getItem("country"))[
+                      "poptarget"
+                    ] === "General population" &&
+                      field.stateName === "populationnumber" &&
+                      selectedLevel && (
+                        <p>
+                          range: {separator(selectedLevel?.minpop)} -{" "}
+                          {separator(selectedLevel?.maxpop)}
+                        </p>
+                      )}
+                    {JSON.parse(
+                      localStorage.getItem("country"))["poptarget"] ===
+                        "Under-1 Population"
+                     &&
+                      field.stateName === "childrennumber" &&
                       selectedLevel && (
                         <p>
                           range: {separator(selectedLevel?.minpop)} -{" "}

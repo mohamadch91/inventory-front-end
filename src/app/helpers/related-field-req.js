@@ -15,15 +15,15 @@ export const relatedFields = {
   other_service: ["other_services"],
 };
 
-export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {
+export const isRelatedFieldOkReq = (currentFieldStateName, fieldsValue) => {
   for (const key in relatedFields) {
     const fields = relatedFields[key];
 
     if (fields.indexOf(currentFieldStateName) >= 0) {
-      if(key==="is_suitable"){
-        return !fieldsValue[key]
+      if (key === "is_suitable") {
+        return fieldsValue[key];
       }
-      return fieldsValue[key];
+      return !fieldsValue[key];
     }
   }
   return true;

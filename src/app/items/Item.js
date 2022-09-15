@@ -14,6 +14,7 @@ import { Trans } from "react-i18next";
 import Select from "react-select";
 import StepOperations from "../components/StepOperations";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-tem";
+import { isRelatedFieldOkReq } from "../helpers/related-tem-req";
 
 
 const facilityField = {
@@ -151,15 +152,15 @@ function Item() {
     const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
-      if (field.required && !fieldsValue[field.state]) {
-          if (field.type === "bool") {
-            console.log(fieldsValue[field.stateName]);
-            onChangeHandler(false, field);
-            console.log(fieldsValue[field.stateName]);
-          }
-         else{ 
-        _fieldErrors[field.state] = "this field is required!";
-      }}
+      if (
+        field.required &&
+        !fieldsValue[field.state] &&
+        !isRelatedFieldOkReq(field.stateName, fieldsValue)
+      ) {
+       
+          _fieldErrors[field.state] = "this field is required!";
+        
+      }
     });
     setFieldErrors(_fieldErrors);
     return Object.keys(_fieldErrors).length > 0;
@@ -187,6 +188,14 @@ function Item() {
     } else {
       delete _fieldErrors[field.state];
     }
+     for (const key in relatedFields) {
+       const fields = relatedFields[key];
+       if (fieldsValue[key] === true) {
+         fields.forEach((field) => {
+           delete _fieldErrors[field];
+         });
+       }
+     }
     setFieldErrors(_fieldErrors);
   };
 
@@ -242,12 +251,45 @@ function Item() {
       //TODO: show a correct massage to user
       return;
     }
+
     const cloneFieldsValue = { ...fieldsValue };
-    const selectedPqs = pqsData.find((pqs) => pqs.id === value);
-    cloneFieldsValue["PQSPISType"] = selectedPqs?.model;
-    cloneFieldsValue["PQSPISManufacturer"] =
-      selectedPqs?.manufacturer ?? selectedPqs?.make;
-    cloneFieldsValue["PQSPISRefrigerantGas"] = selectedPqs?.refrigerant;
+    console.log(pqsData);
+
+    const selectedPqs = pqsData.find((pqs) => pqs?.value?.id === value?.id).value;
+    console.log(selectedPqs);
+    if(selectedPqs.ptype==3){
+      cloneFieldsValue["PQSPISManufacturer"] = selectedPqs.make;
+      cloneFieldsValue["PQSPISRefrigerantGas"] = selectedPqs.refrigerant;
+      cloneFieldsValue["PQSPISType"] = selectedPqs.model;
+      cloneFieldsValue["PQSPISTemperatureWorkingZone"] =
+        selectedPqs.refrigerant;
+      cloneFieldsValue["NetVaccineStorageCapacity"] =
+        selectedPqs.refrigeratorcapacity;
+      cloneFieldsValue["FreezerNetCapacity"] = selectedPqs.freezercapacity;
+      cloneFieldsValue["Height"] = selectedPqs.h;
+      cloneFieldsValue["Width"] = selectedPqs.w;
+      cloneFieldsValue["Length"] = selectedPqs.l;
+
+
+      
+
+    }
+    else{
+      cloneFieldsValue["PQSPISType"] = selectedPqs.type;
+      cloneFieldsValue["PQSPISManufacturer"] = selectedPqs.manufacturer;
+      cloneFieldsValue["PQSPISRefrigerantGas"] ="--";
+      cloneFieldsValue["PQSPISTemperatureWorkingZone"] = "--"
+      cloneFieldsValue["NetVaccineStorageCapacity"] =
+        selectedPqs.vaccinenetstoragecapacity;
+      cloneFieldsValue["CoolantPackNominalCapacity"] =
+        selectedPqs.coolantpacknominalcapacity;
+      cloneFieldsValue["NumberOfCoolantPacksRequired"] =
+        selectedPqs.numbercoolantpacks;
+      cloneFieldsValue["ExternalSize"] = selectedPqs.externalvolume;
+
+
+    }
+
     setFieldValue(cloneFieldsValue);
   };
 

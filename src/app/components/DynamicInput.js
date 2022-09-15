@@ -42,10 +42,9 @@ const DynamicInput = (props) => {
     return (
       <>
         <Form.Control
-          onChange={(e) => onChangeHandler(e.target.value, field)}
+          onChange={(e) => onChangeHandler(e.target.value==='true', field)}
           defaultValue={defaultValue}
           className="form-control"
-          multiple={field.stateName === "other_services" ? true : false}
           as="select"
           disabled={field.active ? !field.active : field.disabled}
           id={`field-${field.id}`}
@@ -53,10 +52,10 @@ const DynamicInput = (props) => {
           <option value="" selected disabled>
             Please select
           </option>
-          <option value="true"  >
+          <option value={true}  >
             Yes
           </option>
-          <option value="false"  >
+          <option value={false}  >
             No
           </option>
         </Form.Control>
