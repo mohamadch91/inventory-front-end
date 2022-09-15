@@ -26,5 +26,5 @@ export const isRelatedFieldOkReq = (currentFieldStateName, fieldsValue) => {
       return !fieldsValue[key];
     }
   }
-  return true;
+  return false;
 };

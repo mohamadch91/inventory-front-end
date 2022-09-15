@@ -204,7 +204,7 @@ const [x2, setx2] = useState(
         setFieldValue((perFieldsValue) => ({
           ...perFieldsValue,
           completerstaffname:
-            perFieldsValue?.completerstaffname ?? res.data.user.username,
+            perFieldsValue?.completerstaffname ?? res.data.user.id,
           parentName: res.data.facility.name,
         }));
       }
@@ -251,9 +251,35 @@ const [x2, setx2] = useState(
         !fieldsValue[field.stateName] &&
         !isRelatedFieldOkReq(field.stateName, fieldsValue)
       ) {
+        if(field.type==="bool"){
+          if(fieldsValue[field.stateName]===undefined){
+          _fieldErrors[field.stateName] = "this field is required!";
+          }
+        }
+        else{
         _fieldErrors[field.stateName] = "this field is required!";
-      }
+      }}
     });
+    for (const key in relatedFields) {
+      const fields = relatedFields[key];
+      console.log(typeof fieldsValue[key]);
+      if (key === "is_suitable"){
+      
+        if(fieldsValue[key]===true){
+         fields.forEach((field) => {
+             console.log(field);
+           delete _fieldErrors[field];
+         });
+        }
+      }
+      else{
+        if (fieldsValue[key] === false) {
+          fields.forEach((field) => {
+            console.log(field)
+            delete _fieldErrors[field];
+          });
+        }
+    }}
     setFieldErrors(_fieldErrors);
     return Object.keys(_fieldErrors).length > 0;
   };
@@ -357,7 +383,8 @@ const [x2, setx2] = useState(
   const handleMapClick = async (e) => {
     setMap(e.latlng);
     const cloneFieldsValue = { ...fieldsValue };
-    cloneFieldsValue["gpsCordinate"] = e.latlng;
+    let str="LatLng("+e.latlng.lat+","+e.latlng.lng+")";
+    cloneFieldsValue["gpsCordinate"] = str;
     setFieldValue(cloneFieldsValue);
   };
 window.handleMapClick = handleMapClick;

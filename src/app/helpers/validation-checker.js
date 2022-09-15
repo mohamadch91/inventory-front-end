@@ -11,25 +11,26 @@ export const hasValidationError = (value, validation) => {
   if (validation.max !== -1 && validation.max < _value) {
     return `value must less than ${separator(validation.max)}`;
   }
-
+ console.log(_value.split("."));
   if (
     validation.float &&
     _value.includes(".") &&
-    (+_value).toFixed(validation.floating) > _value
+    (_value).split(".")[1].length > validation.floating
   ) {
+   
     return `value must has ${validation.floating} decimals`;
   }
-  if (
-    validation.digits !== -1 &&
-    _value
-      .toString()
-      .replaceAll(",", "")
-      .replaceAll(".", "")
-      .replaceAll(":", "").length >
-      validation.digits + (validation.floating > 0 ? validation.floating : 0)
-  ) {
-    return `value must be ${validation.digits} digits`;
-  }
+  // if (
+  //   validation.digits !== -1 &&
+  //   _value
+  //     .toString()
+  //     .replaceAll(",", "")
+  //     .replaceAll(".", "")
+  //     .replaceAll(":", "").length >
+  //     validation.digits + (validation.floating > 0 ? validation.floating : 0)
+  // ) {
+  //   return `value must be ${validation.digits} digits`;
+  // }
   return false;
 };
 

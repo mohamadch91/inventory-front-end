@@ -7,7 +7,10 @@ export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {
     const fields = relatedFields[key];
     if (fields.indexOf(currentFieldStateName) >= 0) {
       console.log(fieldsValue[key]);
-      return !fieldsValue[key];
+      if (fieldsValue[key]!==undefined) {return !fieldsValue[key];}
+      else{
+        return false;
+      }
     }
   }
   return true;

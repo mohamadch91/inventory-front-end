@@ -207,7 +207,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               </Link>
                             </Tooltip>
                           )}
-                          <Tooltip title="Add Facility">
+                          <Tooltip title="Add Sub Facility">
                             <Link
                               to={{
                                 pathname: "/facilities/info/new",

@@ -33,6 +33,7 @@ const ScanQR = () => {
       <button
         onClick={submitHandler}
         type="button"
+        constraints={{ facingMode: "environment" }}
         className="btn btn-primary btn-fw mt-3 w-75 m-auto"
       >
         Search QR code

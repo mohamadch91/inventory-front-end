@@ -108,6 +108,7 @@ function Item() {
       parent,
     ],
     async () => {
+      console.log(selectedItemType);
       const res = await ItemService.getItemFields(
         selectedItemClass.item_class.id,
         selectedItemType.id,
@@ -152,16 +153,34 @@ function Item() {
     const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
+      console.log(field)
       if (
         field.required &&
         !fieldsValue[field.state] &&
-        !isRelatedFieldOkReq(field.stateName, fieldsValue)
+        !isRelatedFieldOkReq(field.state, fieldsValue)
       ) {
-       
+        if (field.type === "bool") {
+          if ( fieldsValue[field.state] === undefined) {
+            _fieldErrors[field.state] = "this field is required!";
+          }
+        } else {
+          console.log("salaaam");
           _fieldErrors[field.state] = "this field is required!";
-        
+        }
       }
     });
+     for (const key in relatedFields) {
+       const fields = relatedFields[key];
+       console.log(typeof fieldsValue[key]);
+      
+         if (fieldsValue[key] === true) {
+           fields.forEach((field) => {
+             delete _fieldErrors[field];
+           });
+         }
+       
+     }
+     console.log(_fieldErrors);
     setFieldErrors(_fieldErrors);
     return Object.keys(_fieldErrors).length > 0;
   };
@@ -223,6 +242,12 @@ function Item() {
     _fieldsValue["item_class"] = selectedItemClass.item_class.id;
     _fieldsValue["item_type"] = selectedItemType.id;
     _fieldsValue["facility"] = _fieldsValue["facility"].id;
+    // remove empty items
+    for (const key in _fieldsValue) {
+      if (_fieldsValue[key] === "") {
+        delete _fieldsValue[key];
+      }
+    }
     const res = await (id === "new"
       ? ItemService.postItem(_fieldsValue)
       : ItemService.putItem(_fieldsValue));
@@ -230,9 +255,12 @@ function Item() {
     setFieldValue(_fieldsValue);
   };
 
-  const selectItemClassHandler = (e) => {
+  const selectItemClassHandler = async (e) => {
+    console.log(e.target.value)
+    console.log(itemClassesAndTypes);
     setSelectedItemClass(itemClassesAndTypes[e.target.value]);
-    setSelectedItemType(selectedItemClass.item_type[0]);
+    setSelectedItemType(itemClassesAndTypes[e.target.value].item_type[0]);
+    
   };
 
   const selectItemTypeHandler = (e) => {

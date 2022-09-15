@@ -49,7 +49,7 @@ const DynamicInput = (props) => {
           disabled={field.active ? !field.active : field.disabled}
           id={`field-${field.id}`}
         >
-          <option value="" selected disabled>
+          <option  selected disabled>
             Please select
           </option>
           <option value={true}  >

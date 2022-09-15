@@ -449,8 +449,8 @@ function GapItemReport() {
                       <option value="-1" selected disabled>
                         select
                       </option>
-                      {Array.from({ length: 30 }).map((_, i) => {
-                        const year = new Date().getUTCFullYear() - i;
+                      {Array.from({ length: 10 }).map((_, i) => {
+                        const year = new Date().getUTCFullYear() + i;
                         return (
                           <option key={year} value={year}>
                             {year}
