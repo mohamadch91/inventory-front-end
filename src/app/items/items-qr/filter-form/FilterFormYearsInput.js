@@ -23,6 +23,7 @@ const FilterFormYearsInput = (props) => {
         className="form-control mt-2 col-sm-3 ml-3"
         placeholder="to"
         aria-label="from-year"
+        min={props.from}
         onChange={props.onToChange}
       />
     </Form.Group>

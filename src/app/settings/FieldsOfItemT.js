@@ -79,6 +79,7 @@ function FieldsOfItemT() {
 
   const selectItemClassHandler = (e) => {
     setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
+    setSelectedItemType(itemClassesWithItemTypes[e.target.value].item_type[0]);
   };
 
   const selectItemTypeHandler = (e) => {

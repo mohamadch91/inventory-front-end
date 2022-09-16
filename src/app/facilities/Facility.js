@@ -110,22 +110,10 @@ function Facility() {
 const [map, setMap] = useState(null);
 const [Current, sercurrent] = useState([]);
 const [x1, setx1] = useState(
-  JSON.parse(localStorage.getItem("country")) === null
-    ? 35
-    : JSON.parse(localStorage.getItem("country"))["mainlocation"] === undefined
-    ? 35
-    : JSON.parse(localStorage.getItem("country"))
-        ["mainlocation"]?.split("(")[1]
-        ?.split(",")[0]
+  null
 );
 const [x2, setx2] = useState(
-  JSON.parse(localStorage.getItem("country")) === null
-    ? 51
-    : JSON.parse(localStorage.getItem("country"))["mainlocation"] === undefined
-    ? 51
-    : JSON.parse(localStorage.getItem("country"))
-        ["mainlocation"]?.split(",")[1]
-        ?.split(")")[0]
+  null
 );
 
 
@@ -138,19 +126,74 @@ const [x2, setx2] = useState(
       };
 
       if (id === "new") {
+            setx1(
+              JSON.parse(localStorage.getItem("country")) === null
+                ? 35
+                : JSON.parse(localStorage.getItem("country"))[
+                    "mainlocation"
+                  ] === undefined
+                ? 35
+                : JSON.parse(localStorage.getItem("country"))
+                    ["mainlocation"]?.split("(")[1]
+                    ?.split(",")[0]
+            );
+            setx2(
+              JSON.parse(localStorage.getItem("country")) === null
+                ? 51
+                : JSON.parse(localStorage.getItem("country"))[
+                    "mainlocation"
+                  ] === undefined
+                ? 51
+                : JSON.parse(localStorage.getItem("country"))
+                    ["mainlocation"]?.split(",")[1]
+                    ?.split(")")[0]
+            );
         return defaultData;
       }
-
-      const res = await FacilitiesService.getFacilities(id);
+      const params={
+        id:id
+      }
+      const res = await FacilitiesService.getFacilities(params);
       const result = { ...res.data, defaultData };
       result["populationnumber"] = separator(result["populationnumber"]);
       result["loverlevelfac"] = separator(result["loverlevelfac"]);
       result["childrennumber"] = separator(result["childrennumber"]);
+      const gps = result["gpsCordinate"];
+      if (gps) {
+        let x11=gps.split("(")[1]?.split(",")[0];
+        let x22=gps.split(",")[1]?.split(")")[0];
+        setx1(x11);
+        setx2(x22);
+
+      }
+      else{
+        setx1(
+          JSON.parse(localStorage.getItem("country")) === null
+            ? 35
+            : JSON.parse(localStorage.getItem("country"))["mainlocation"] ===
+              undefined
+            ? 35
+            : JSON.parse(localStorage.getItem("country"))
+                ["mainlocation"]?.split("(")[1]
+                ?.split(",")[0]
+        );
+        setx2(
+          JSON.parse(localStorage.getItem("country")) === null
+            ? 51
+            : JSON.parse(localStorage.getItem("country"))["mainlocation"] ===
+              undefined
+            ? 51
+            : JSON.parse(localStorage.getItem("country"))
+                ["mainlocation"]?.split(",")[1]
+                ?.split(")")[0]
+        );
+      }
       return result;
     },
     {
       refetchOnMount: true,
       onSuccess(data) {
+        console.log(data)
         setFieldValue(data);
       },
     }
@@ -231,9 +274,9 @@ const [x2, setx2] = useState(
   const levelField = {
     id: "level",
     type: "select",
-    active: activeStep === 0,
+    active: activeStep === 0 && id === "new",
     required: true,
-    disabled: activeStep !== 0,
+    disabled: activeStep !== 0 || id != "new",
     stateName: "level",
     params: levels,
   };
@@ -351,11 +394,19 @@ const [x2, setx2] = useState(
     const _fieldsValue = { ...fieldsValue };
     for (const key in relatedFields) {
       const fields = relatedFields[key];
-      if (fieldsValue[key] === false) {
+      if( key === "is_suitable"){
+        if (fieldsValue[key] === true) {
         fields.forEach((field) => {
           delete _fieldsValue[field];
         });
       }
+    }
+    else{
+      if (fieldsValue[key] === false) {
+        fields.forEach((field) => {
+          delete _fieldsValue[field];
+        });
+      }}
     }
     if (_fieldsValue["childrennumber"]) {
       const _value = _fieldsValue["childrennumber"].replaceAll(" ", "");
@@ -378,6 +429,7 @@ const [x2, setx2] = useState(
     const res = await (id === "new"
       ? FacilitiesService.postFacility(_fieldsValue)
       : FacilitiesService.putFacility(_fieldsValue));
+    history.push(`/facilities/list`);
   };
 
   const handleMapClick = async (e) => {
@@ -424,8 +476,30 @@ window.handleMapClick = handleMapClick;
       <div className="mt-3">
         <div className="card">
           <div className="card-body pb-3">
-            <div className="row">
+            <div className="row ">
               <Form.Group className="row mb-0">
+                <label
+                  className={`col-sm-4 text-right`}
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    lineHeight: "1.4",
+                    textAlign: "right",
+                  }}
+                >
+                  Parent facility:
+                </label>
+                <div className={"col-sm-8"}>
+                  <DynamicInput
+                    field={parentFacilityField}
+                    defaultValue={fieldsValue["parentName"]}
+                  />
+                </div>
+              </Form.Group>
+            </div>
+            <div className="row">
+              <Form.Group className="row mb-0 mt-3">
                 <label
                   className={`col-sm-4 text-right control-label`}
                   style={{
@@ -457,28 +531,7 @@ window.handleMapClick = handleMapClick;
                 )}
               </Form.Group>
             </div>
-            <div className="row mt-3">
-              <Form.Group className="row mb-0">
-                <label
-                  className={`col-sm-4 text-right`}
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                    lineHeight: "1.4",
-                    textAlign: "right",
-                  }}
-                >
-                  Parent facility:
-                </label>
-                <div className={"col-sm-8"}>
-                  <DynamicInput
-                    field={parentFacilityField}
-                    defaultValue={fieldsValue["parentName"]}
-                  />
-                </div>
-              </Form.Group>
-            </div>
+
             <div className="row mt-3">
               <Form.Group className="row mb-0">
                 <label
@@ -522,7 +575,7 @@ window.handleMapClick = handleMapClick;
               if (!isRelatedFieldOk(field.stateName, fieldsValue)) {
                 return null;
               }
-            
+
               const hasRequiredError = !!fieldErrors[field.stateName];
               return (
                 <Form.Group className="row mb-0" key={field.name}>
@@ -551,6 +604,7 @@ window.handleMapClick = handleMapClick;
                           />
                         </div>
                         <div className="map">
+                          {console.log(x1,x2)}
                           {Current !== null && x1 && x2 && (
                             <MapContainer
                               center={[x1, x2]}
@@ -616,10 +670,9 @@ window.handleMapClick = handleMapClick;
                           {separator(selectedLevel?.maxpop)}
                         </p>
                       )}
-                    {JSON.parse(
-                      localStorage.getItem("country"))["poptarget"] ===
-                        "Under-1 Population"
-                     &&
+                    {JSON.parse(localStorage.getItem("country"))[
+                      "poptarget"
+                    ] === "Under-1 Population" &&
                       field.stateName === "childrennumber" &&
                       selectedLevel && (
                         <p>

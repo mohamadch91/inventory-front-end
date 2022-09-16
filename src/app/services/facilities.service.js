@@ -5,14 +5,7 @@ import axios from "axios";
 const API_URL = "https://inventory.runflare.run/facilities/";
 
 class FacilitiesService {
-  getFacilities(id, deleted) {
-    const params = {};
-    if (id) {
-      params.id = id;
-    }
-    if (deleted) {
-      params.deleted = deleted;
-    }
+  getFacilities(params) {
     return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,

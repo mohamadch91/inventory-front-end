@@ -8,10 +8,10 @@ import Spinner from "../shared/Spinner";
 import SharedMap from "../shared/sharedMap";
 
 const defaultValues = {
-  level: "",
-  type: "",
-  power: "",
-  func: "",
+  level: "-1",
+  type: "-1",
+  power: "-1",
+  func: "-1",
 };
 
 function FacilityMapBasedReport() {
@@ -39,7 +39,7 @@ function FacilityMapBasedReport() {
       };
       for (const key in filterValues) {
         const filter = filterValues[key];
-        if (filter.length > 0) {
+        if (filter.length > 0 && filter !== "-1") {
           params[key] = filter;
         }
       }

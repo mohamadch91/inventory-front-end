@@ -128,7 +128,7 @@ function MaintenanceServiceGroup() {
               </div>
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12">item type</label>
+                  <label className="col-sm-12">item Category</label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemTypeHandler}

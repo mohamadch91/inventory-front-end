@@ -180,6 +180,7 @@ class Sidebar extends Component {
                         </span>
                       </Link>
                     </li>
+                 
                   </ul>
                 </Collapse>
               </li>
@@ -762,21 +763,24 @@ class Sidebar extends Component {
                             </span>
                           </Link>
                         </li>
-                        <li className="nav-item">
-                          {" "}
-                          <Link
-                            className={
-                              this.isPathActive("/settings/mtns_setting")
-                                ? "nav-link active"
-                                : "nav-link"
-                            }
-                            to="/settings/mtns_setting"
-                          >
-                            <span>
-                              <Trans>Maintenance settings</Trans>
-                            </span>
-                          </Link>
-                        </li>
+                        {this.country?.usingmaintenance && (
+                          <li className="nav-item">
+                            {" "}
+                            <Link
+                              className={
+                                this.isPathActive("/settings/mtns_setting")
+                                  ? "nav-link active"
+                                  : "nav-link"
+                              }
+                              to="/settings/mtns_setting"
+                            >
+                              <span>
+                                <Trans>Maintenance settings</Trans>
+                              </span>
+                            </Link>
+                          </li>
+                        )}
+
                         <li className="nav-item">
                           {" "}
                           <Link

@@ -241,7 +241,7 @@ function GapItemReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         Please select
                       </option>
                       {gapItemHelper?.level.map((lev) => (
@@ -269,7 +269,7 @@ function GapItemReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         Please select
                       </option>
                       {gapItemHelper?.type.map((ty) => (
@@ -299,7 +299,7 @@ function GapItemReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         Please select
                       </option>
                       {gapItemHelper?.power.map((pow) => (
@@ -386,7 +386,7 @@ function GapItemReport() {
                       value={filterValues.year_from}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         select
                       </option>
                       {console.log(new Date().getUTCFullYear())}
@@ -416,7 +416,7 @@ function GapItemReport() {
                       value={filterValues.year_to}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         select
                       </option>
                       {Array.from({
@@ -446,7 +446,7 @@ function GapItemReport() {
                       value={filterValues.calculate_for}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected  >
                         select
                       </option>
                       {Array.from({ length: 10 }).map((_, i) => {

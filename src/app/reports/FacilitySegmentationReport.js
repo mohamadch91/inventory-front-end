@@ -12,10 +12,10 @@ import "../styles/table.scss";
 const defaultValues = {
   name: "",
   code: "",
-  level: "",
-  type: "",
-  power: "",
-  func: "",
+  level: "-1",
+  type: "-1",
+  power: "-1",
+  func: "-1",
   gfrom: "",
   gto: "",
   underfrom: "",
@@ -63,48 +63,41 @@ function FacilitySegmentationReport() {
     let filter = "";
     for (const key in filterValues) {
       const value = filterValues[key];
-      if (value.length > 0) {
-        if(key=== 'power'){
+      if (value.length > 0 && value !== "-1") {
+        if (key === "power") {
           // find power whith value=id
-          const power = facSegHelper.power.find((p) => p.id === parseInt(value));
+          const power = facSegHelper.power.find(
+            (p) => p.id === parseInt(value)
+          );
           filter += `Power source: ${power.name}, `;
-        
-        }
-        else if(key=== 'func'){
+        } else if (key === "func") {
           // find func whith value=id
-          console.log(value)
-          if(value === 'true'){
+          console.log(value);
+          if (value === "true") {
             filter += `Function: Working, `;
-          }
-          else{
+          } else {
             filter += `Function: Not working, `;
           }
-        }
-        else if(key=== 'type'){
+        } else if (key === "type") {
           // find type whith value=id
           const type = facSegHelper.type.find((t) => t.id === parseInt(value));
           filter += `Type: ${type.name}, `;
-        }
-        else if(key=== 'level'){
+        } else if (key === "level") {
           // find level whith value=id
-          const level = facSegHelper.level.find((l) => l.id === parseInt(value));
-          filter += `Level: ${level.name}, `;
-        }
-        else if(key=== 'gfrom'){
+          const level = facSegHelper.level.find(
+            (l) => l.id === parseInt(value)
+          );
+          filter += `Level: ${level.id} - ${level.name} , `;
+        } else if (key === "gfrom") {
           filter += `General population from: ${value}, `;
-        }
-        else if(key=== 'gto'){
+        } else if (key === "gto") {
           filter += `General population to: ${value}, `;
-        }
-        else if(key=== 'underfrom'){
+        } else if (key === "underfrom") {
           filter += `Under 1 population from: ${value}, `;
-        }
-        else if(key=== 'underto'){
+        } else if (key === "underto") {
           filter += `Under 1 population to: ${value}, `;
-        }
-
-        else{
-          filter += `${key}=${value}&`;
+        } else {
+          filter += `${key}=${value} , `;
         }
       }
     }
@@ -187,7 +180,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected   >
                         Please select
                       </option>
                       {facSegHelper?.level.map((lev) => (
@@ -215,7 +208,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1"   >
                         Please select
                       </option>
                       {facSegHelper?.type.map((ty) => (
@@ -245,7 +238,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1"   >
                         Please select
                       </option>
                       {facSegHelper?.power.map((pow) => (
@@ -273,7 +266,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.func}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1"   >
                         Please select
                       </option>
                       <option value={true}>Working</option>

@@ -166,7 +166,7 @@ const FilterForm = (props) => {
         />
         <FilterFormDD
           key={"C"}
-          label={"Item type"}
+          label={"Item Category"}
           options={itemTypeOptions}
           onChange={itemTypeDDHandler}
         />
@@ -194,6 +194,7 @@ const FilterForm = (props) => {
         <div className={classes.inputResponsive}>
           <FilterFormYearsInput
             onFromChange={yearFromChangeHandler}
+            from={filterState.year_from}
             onToChange={yearToChangeHandler}
           />
         </div>

@@ -196,7 +196,7 @@ function ItemGroupReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.level.map((lev) => (
@@ -224,7 +224,7 @@ function ItemGroupReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.type.map((ty) => (
@@ -254,7 +254,7 @@ function ItemGroupReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.power.map((pow) => (
@@ -294,7 +294,7 @@ function ItemGroupReport() {
                       value={filterValues.item_class}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.item?.map((i) => (
@@ -308,7 +308,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Item type:</Trans>
+                      <Trans>Item Category:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -323,7 +323,7 @@ function ItemGroupReport() {
                       value={filterValues.item_type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {selectedItem?.item_type.map((i) => (
@@ -353,7 +353,7 @@ function ItemGroupReport() {
                       value={filterValues.physical}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.physical?.map((i) => (
@@ -381,7 +381,7 @@ function ItemGroupReport() {
                       value={filterValues.working}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.working?.map((i) => (
@@ -411,7 +411,7 @@ function ItemGroupReport() {
                       value={filterValues.financial}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.financial?.map((i) => (
@@ -439,7 +439,7 @@ function ItemGroupReport() {
                       value={filterValues.item_power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemGpHelper?.item_power?.map((i) => (
@@ -488,7 +488,7 @@ function ItemGroupReport() {
                       value={filterValues.manufacturer}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {selectedItem?.manufacturer?.map((i) => (
@@ -521,7 +521,7 @@ function ItemGroupReport() {
                       value={filterValues.year_from}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {
@@ -548,7 +548,7 @@ function ItemGroupReport() {
                       value={filterValues.year_to}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {Array.from({ length: 30 }).map((_, i) => {

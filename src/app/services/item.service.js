@@ -15,6 +15,7 @@ class ItemService {
     if (deleted) {
       params.deleted = deleted;
     }
+
     return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,
@@ -26,9 +27,14 @@ class ItemService {
   //     data: { id },
   //   });
   // }
-  getItemClassesAndTypes() {
+  getItemClassesAndTypes(parent) {
+    const params = {};
+    if (parent) {
+      params.parent = parent;
+    }
     return ApiManager.get(API_URL + "item-field", {
       headers: { Authorization: authHeader() },
+      params,
     });
   }
   getPQS(id) {

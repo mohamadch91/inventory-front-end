@@ -47,7 +47,9 @@ const ItemToPrint = forwardRef((props, ref) => {
           (item) => item.itemclass === itemClassId
         );
         setFilteredItemTypes(filteredItemTypes);
+
         getData(itemClassId, filteredItemTypes[0].id);
+        setTypename(filteredItemTypes[0].title);
       })
       .catch(() => {
         toast.error("There is a problem loading data");
@@ -114,14 +116,16 @@ const ItemToPrint = forwardRef((props, ref) => {
                 ))}
               </select>
               <h3 className="col-md-2 mb-0 d-flex justify-content-center align-items-center">
-                <Trans>Item type</Trans>:
+                <Trans>Item Category</Trans>:
               </h3>
               <select
                 name="itemtype"
                 className="col-md-3 d-flex justify-content-center"
                 onChange={(e) => {
                   console.log(e.target.innerText.split("\n"));
-                  setTypename(e.target.innerText.split("\n")[e.target.value]);
+                  setTypename(
+                    e.target.innerText.split("\n")[e.target.value - 1]
+                  );
                   setSelectedItemType(e.target.value);
                 }}
                 value={selectedItemType}
@@ -202,7 +206,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                     </div>
                   </div>
                   <div className={"w-50 m-3 col-5 "}>
-                    <h6>Item Type</h6>
+                    <h6>Item Category</h6>
                     <div
                       className={" rounded box h-75"}
                       style={{

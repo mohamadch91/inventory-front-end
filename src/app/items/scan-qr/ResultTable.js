@@ -37,7 +37,7 @@ const ResultTable = (props) => {
               <Trans>Item Class</Trans>
             </th>
             <th>
-              <Trans>Item Type</Trans>
+              <Trans>Item Category</Trans>
             </th>
             <th>
               <Trans>PQS code</Trans>

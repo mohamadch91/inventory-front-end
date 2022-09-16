@@ -50,7 +50,7 @@ const tableData = [
     valueKey: "item_class",
   },
   {
-    headTitle: "Item type",
+    headTitle: "Item Category",
     group: "item",
     valueKey: "item_type",
   },
@@ -268,7 +268,7 @@ function ItemFacilityReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.level.map((lev) => (
@@ -296,7 +296,7 @@ function ItemFacilityReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.type.map((ty) => (
@@ -326,7 +326,7 @@ function ItemFacilityReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.power.map((pow) => (
@@ -365,7 +365,7 @@ function ItemFacilityReport() {
                       value={filterValues.item_class}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.item?.map((i) => (
@@ -379,7 +379,7 @@ function ItemFacilityReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Item type:</Trans>
+                      <Trans>Item Category:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -394,7 +394,7 @@ function ItemFacilityReport() {
                       value={filterValues.item_type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {selectedItem?.item_type.map((i) => (
@@ -424,7 +424,7 @@ function ItemFacilityReport() {
                       value={filterValues.physical}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.physical?.map((i) => (
@@ -452,7 +452,7 @@ function ItemFacilityReport() {
                       value={filterValues.working}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.working?.map((i) => (
@@ -482,7 +482,7 @@ function ItemFacilityReport() {
                       value={filterValues.financial}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.financial?.map((i) => (
@@ -510,7 +510,7 @@ function ItemFacilityReport() {
                       value={filterValues.item_power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
+                      <option value="-1" selected>
                         Please select
                       </option>
                       {itemFacHelper?.item_power?.map((i) => (

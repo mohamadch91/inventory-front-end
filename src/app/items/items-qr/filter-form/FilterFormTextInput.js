@@ -12,8 +12,7 @@ const FilterFormTextInput = (props) => {
       <Form.Control
         style={{ width: "50%" }}
         type="text"
-        className="form-control mt-2 "
-        placeholder="ABC05"
+        className=" mt-2 "
         aria-label="from-year"
         onChange={props.onChange}
       />

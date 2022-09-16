@@ -24,7 +24,7 @@ export class SubFacilityReportChart extends Component {
       labels: [],
       datasets: [
         {
-          label: "# of Votes",
+          label: "Population",
           data: [],
           backgroundColor: [],
           borderColor: [],
@@ -47,10 +47,16 @@ export class SubFacilityReportChart extends Component {
 
   options = {
     scales: {
-      yAxes: [
+      xAxes: [
         {
           ticks: {
             beginAtZero: true,
+            userCallback: function (label, index, labels) {
+              // when the floored value is the same as the value we have a whole number
+              if (Math.floor(label) === label) {
+                return label;
+              }
+            },
           },
         },
       ],

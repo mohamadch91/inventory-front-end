@@ -75,7 +75,7 @@ class Navbar extends Component {
               }}
             />
             Inventory and Gap Analysis (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.10
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.20
             (You are in {this.state.user?.facility_name})
           </div>
 
@@ -147,7 +147,14 @@ class Navbar extends Component {
                     <h5 className="dropdown-header text-uppercase pl-2 text-dark">
                       <span>User Options</span>
                     </h5>
-
+                    <h5 className="dropdown-header text-uppercase pl-2 text-dark">
+                      <span>
+                        {" "}
+                        {this.state.user == null
+                          ? ""
+                          : this.state.user.username}
+                      </span>
+                    </h5>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
                       href="/login"

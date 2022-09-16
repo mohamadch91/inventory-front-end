@@ -433,7 +433,7 @@ function HRList() {
                 <select
                   name="facility"
                   onChange={handleChangeAdd}
-                  value={addRowFormData?.facility}
+                  value={selectedFacility}
                 >
                   {facilities.map((item, index) => (
                     <option

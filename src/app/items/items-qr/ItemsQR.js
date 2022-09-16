@@ -11,7 +11,7 @@ const ItemsQR = () => {
   const filterSubmitHandler = (filterStateData) => {
     let s = "";
     for (let key in filterStateData) {
-      if (filterStateData[key] !== "-1") {
+      if (filterStateData[key] !== "-1" && filterStateData[key] !="") {
         s += key + "=" + filterStateData[key] + "&";
       }
     }

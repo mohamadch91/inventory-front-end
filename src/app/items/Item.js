@@ -49,7 +49,7 @@ function Item() {
       if (id === "new") return defaultData;
 
       const res = await ItemService.getItems(id);
-      return { ...res.data[1], ...defaultData };
+      return { ...res.data[0]};
     },
     {
       onSuccess(data) {
@@ -65,7 +65,7 @@ function Item() {
     useQuery(
       ["item-classes-and-types"],
       async () => {
-        const res = await ItemService.getItemClassesAndTypes();
+        const res = await ItemService.getItemClassesAndTypes(parent);
         setFieldValue((preValues) => ({
           ...preValues,
           facility: res.data.facility,
@@ -171,8 +171,7 @@ function Item() {
     });
      for (const key in relatedFields) {
        const fields = relatedFields[key];
-       console.log(typeof fieldsValue[key]);
-      
+        console.log(fieldsValue[key]);
          if (fieldsValue[key] === true) {
            fields.forEach((field) => {
              delete _fieldErrors[field];
@@ -195,7 +194,7 @@ function Item() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const onChangeHandler = (value, field) => {
+  const onChangeHandler = async (value, field) => {
     const validationErr = hasValidationError(value, field.validation?.[0]);
     const cloneFieldsValue = { ...fieldsValue };
     cloneFieldsValue[field.state] = value;
@@ -209,12 +208,12 @@ function Item() {
     }
      for (const key in relatedFields) {
        const fields = relatedFields[key];
-       if (fieldsValue[key] === true) {
+       console.log(fieldsValue[key]);
          fields.forEach((field) => {
            delete _fieldErrors[field];
          });
-       }
      }
+     console.log(_fieldErrors);
     setFieldErrors(_fieldErrors);
   };
 
@@ -242,6 +241,7 @@ function Item() {
     _fieldsValue["item_class"] = selectedItemClass.item_class.id;
     _fieldsValue["item_type"] = selectedItemType.id;
     _fieldsValue["facility"] = _fieldsValue["facility"].id;
+    console.log(_fieldsValue["facility"].id);
     // remove empty items
     for (const key in _fieldsValue) {
       if (_fieldsValue[key] === "") {
@@ -251,7 +251,7 @@ function Item() {
     const res = await (id === "new"
       ? ItemService.postItem(_fieldsValue)
       : ItemService.putItem(_fieldsValue));
-
+    history.push(`/items/list`);
     setFieldValue(_fieldsValue);
   };
 

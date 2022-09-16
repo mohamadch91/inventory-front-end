@@ -100,7 +100,7 @@ const ItemsCard = () => {
         <ChartDropDown
           onChange={itemChangeHandler}
           options={items}
-          text="Select item Type"
+          text="Select item Category"
         />
         <GaugeChart
           className="pt-3"

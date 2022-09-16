@@ -599,7 +599,7 @@ function UsersList() {
                     <select
                       name="facilityid"
                       onChange={handleChangeAdd}
-                      value={addRowFormData?.facilityid}
+                      value={selectedFacility}
                     >
                       {facilities.map((item, index) => (
                         <option

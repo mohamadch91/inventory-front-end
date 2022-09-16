@@ -29,7 +29,7 @@ const WarningsTable = (props) => {
                   </th>
                   <th>
                     {" "}
-                    <Trans>Item Type</Trans>{" "}
+                    <Trans>Item Category</Trans>{" "}
                   </th>
                   <th>
                     {" "}

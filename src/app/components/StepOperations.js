@@ -23,7 +23,7 @@ function StepOperations(props) {
         </Button>
         <Box sx={{ flex: "1 1 auto" }} />
         {activeStep === stepsLength ? (
-          <button className="btn btn-primary ">Save</button>
+          <button className="btn btn-primary w-25 ">Save all</button>
         ) : (
           <Button
             disabled={isNextDisabled}
