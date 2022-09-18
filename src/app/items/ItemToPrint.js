@@ -81,6 +81,7 @@ const ItemToPrint = forwardRef((props, ref) => {
         return item.itemclass === parseInt(selectedItemClass);
       });
       setSelectedItemType(filteredItemTypes[0]?.id);
+      setTypename(filteredItemTypes[0]?.title);
       setFilteredItemTypes(filteredItemTypes);
     }
   }, [selectedItemClass]);
@@ -123,9 +124,15 @@ const ItemToPrint = forwardRef((props, ref) => {
                 className="col-md-3 d-flex justify-content-center"
                 onChange={(e) => {
                   console.log(e.target.innerText.split("\n"));
-                  setTypename(
-                    e.target.innerText.split("\n")[e.target.value - 1]
-                  );
+                  console.log(e.target.value);
+                  FilteredItemTypes.find((item) => {
+                    if (item.id === parseInt(e.target.value)) {
+                      setTypename(item.title);
+                    }
+                  });
+                  // setTypename(
+                  //   e.target.innerText.split("\n")[e.target.value - 1]
+                  // );
                   setSelectedItemType(e.target.value);
                 }}
                 value={selectedItemType}

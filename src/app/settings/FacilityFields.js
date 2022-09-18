@@ -152,7 +152,7 @@ function FieldsFacility() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      <Trans>Save all</Trans>
+                      <Trans>SAVE ALL</Trans>
                     </button>
                   </Box>
                 </div>
@@ -176,9 +176,12 @@ function FieldsFacility() {
                             <Trans>Enable</Trans>
                           </TableCell>
                           <TableCell className="col-sm-4">
-                            <Trans>Is this required field for</Trans> <Trans> facility?</Trans>
+                            <Trans>Is this required field for</Trans>{" "}
+                            <Trans> facility?</Trans>
                           </TableCell>
-                          <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Edit</Trans>
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -191,7 +194,7 @@ function FieldsFacility() {
                               relatedFacility?.find(
                                 (rItem) => field.id === rItem.id
                               );
-                              console.log(fieldValue)
+                            console.log(fieldValue);
                             return (
                               <TableRow key={field.id}>
                                 <TableCell className="col-sm-4">

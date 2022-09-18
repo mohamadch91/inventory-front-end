@@ -247,7 +247,7 @@ function FieldsOfItemT() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      <Trans>Save all</Trans>
+                      <Trans>SAVE ALL</Trans>
                     </button>
                   </Box>
                 </div>
@@ -271,11 +271,12 @@ function FieldsOfItemT() {
                             <Trans>Enable</Trans>
                           </TableCell>
                           <TableCell className="col-sm-4">
-                            <Trans>
-                              Is this required field for</Trans> <Trans>item category</Trans>
-                            ?
+                            <Trans>Is this required field for</Trans>{" "}
+                            <Trans>item category</Trans>?
                           </TableCell>
-                          <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Edit</Trans>
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -358,7 +359,7 @@ function FieldsOfItemT() {
                                         setNewFieldName(field.name);
                                       }}
                                     >
-                                      <EditIcon  sx={{"marginLeft":"0"}}/>
+                                      <EditIcon sx={{ marginLeft: "0" }} />
                                     </button>
                                   </TableCell>
                                 )}

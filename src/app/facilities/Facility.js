@@ -87,8 +87,17 @@ const GetCoordinates = (props) => {
       console.log("salam");
     });
     map.on("click", (e) => {
-      window.navigator.geolocation.getCurrentPosition(console.log, console.log);
-        info.textContent = e.latlng;
+      window.navigator.geolocation.getCurrentPosition((pos)=> {
+        const { latitude, longitude } = pos.coords;
+        const data={
+          latlang:{
+          lat:latitude,
+          lng:longitude
+        }}
+        handleClick(data)
+      }, console.log);
+      info.textContent = e.latlng;
+      console.log(e)
       handleClick(e);
     });
 
@@ -164,6 +173,7 @@ const [x2, setx2] = useState(
         let x22=gps.split(",")[1]?.split(")")[0];
         setx1(x11);
         setx2(x22);
+        setMap([x11, x22]);
 
       }
       else{
@@ -247,7 +257,7 @@ const [x2, setx2] = useState(
         setFieldValue((perFieldsValue) => ({
           ...perFieldsValue,
           completerstaffname:
-            perFieldsValue?.completerstaffname ?? res.data.user.id,
+            perFieldsValue?.completerstaffname ?? res.data.user.username,
           parentName: res.data.facility.name,
         }));
       }
@@ -295,7 +305,7 @@ const [x2, setx2] = useState(
         !isRelatedFieldOkReq(field.stateName, fieldsValue)
       ) {
         if(field.type==="bool"){
-          if(fieldsValue[field.stateName]===undefined){
+          if(fieldsValue[field.stateName]===undefined || fieldsValue[field.stateName]===null){
           _fieldErrors[field.stateName] = "this field is required!";
           }
         }
@@ -467,6 +477,7 @@ window.handleMapClick = handleMapClick;
               handleBack={handleBack}
               handleNext={handleNext}
               activeStep={activeStep}
+              id={id}
               stepsLength={Object.keys(facilityFields).length - 1}
               isNextDisabled={Object.keys(fieldErrors).length > 0}
             />
@@ -604,7 +615,6 @@ window.handleMapClick = handleMapClick;
                           />
                         </div>
                         <div className="map">
-                          {console.log(x1,x2)}
                           {Current !== null && x1 && x2 && (
                             <MapContainer
                               center={[x1, x2]}
@@ -705,6 +715,7 @@ window.handleMapClick = handleMapClick;
               handleBack={handleBack}
               handleNext={handleNext}
               activeStep={activeStep}
+              id={id}
               stepsLength={Object.keys(facilityFields).length - 1}
               isNextDisabled={Object.keys(fieldErrors).length > 0}
             />

@@ -448,7 +448,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     Filter
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-1 mt-1">
                   <button
                     type="button"
                     className="btn btn-secondary"

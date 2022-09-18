@@ -1,6 +1,7 @@
 import classes from "./ChartDropDown.module.css";
 
 const ChartDropDown = (props) => {
+  console.log(props)
   return (
     <div className={classes.drop}>
       <select onChange={props.onChange}>

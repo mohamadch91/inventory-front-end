@@ -17,6 +17,7 @@ const Facilities = () => {
     ["charts-facilities"],
     async () => {
       const res = await DashboardService.getAllFacilities();
+      
       return res.data;
     },
     {
@@ -32,12 +33,13 @@ const Facilities = () => {
     );
   }
 
-  if (!isLoading && facilities.length !== 0) {
+  if (!isLoading && facilities.length === 0) {
     let tmp = [];
     data.map((el, i) => {
       tmp.push({ op: el.name, id: i, facility: el });
     });
     setFacilities(tmp);
+    console.log(facilities);
   }
 
   const ddChangeHandler = (e) => {
@@ -90,6 +92,7 @@ const Facilities = () => {
                 {" "}
                 <Trans>Can be defined</Trans>{" "}
               </p>
+              <br></br>
             </div>
           </>
         )}

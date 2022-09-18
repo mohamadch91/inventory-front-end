@@ -208,9 +208,9 @@ class Login extends Component {
 
                     <button
                       type="submit"
-                      className="btn sign btn-primary btn-block mb-4"
+                      className="btn sign btn-primary btn-block mb-2"
                     >
-                      sign in
+                      <h3 className='m-auto'>SIGN IN </h3>
                       {this.state.loading && (
                         <span className="mr-2 pr-1 pl-2 spinner-border spinner-border-sm"></span>
                       )}

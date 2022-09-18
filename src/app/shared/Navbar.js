@@ -75,7 +75,7 @@ class Navbar extends Component {
               }}
             />
             Inventory and Gap Analysis (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.20
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.25
             (You are in {this.state.user?.facility_name})
           </div>
 

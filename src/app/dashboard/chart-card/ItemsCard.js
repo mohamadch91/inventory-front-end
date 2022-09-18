@@ -39,7 +39,7 @@ const ItemsCard = () => {
 
   // ----------- Feeding to app
   // creating first dropdown available options
-  if (status === "completed" && itemClasses.length !== 0) {
+  if (status === "completed" && itemClasses.length === 0) {
     // Setting item classes
     let tmp = [];
     data?.map((el, i) => {
@@ -119,10 +119,10 @@ const ItemsCard = () => {
             <p>
               <Trans>Items</Trans>
             </p>
-            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
+            <p >
               <Trans>Working</Trans>: {chartData?.working * 100}%
             </p>
-            <p className={"text-secondary mb-1"} style={{ fontSize: "13px" }}>
+            <p  >
               <Trans>Not working</Trans>: {chartData?.notWorking}
             </p>
           </div>

@@ -20,14 +20,13 @@ export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {
     const fields = relatedFields[key];
 
     if (fields.indexOf(currentFieldStateName) >= 0) {
-      if (fieldsValue[key] !== undefined){
+      console.log(fieldsValue[key]);
+      if (fieldsValue[key] !== undefined && fieldsValue[key] !== null) {
         if (key === "is_suitable") {
           return !fieldsValue[key];
         }
-      return fieldsValue[key];
-
-      }
-      else{
+        return fieldsValue[key];
+      } else {
         return false;
       }
     }

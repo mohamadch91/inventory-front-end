@@ -65,6 +65,7 @@ const DynamicInput = (props) => {
           : !field.params[i].enable;
         let selecteds =
           defaultValue !== undefined &&
+          defaultValue !== null &&
           defaultValue.includes(field.params[i].id)
             ? true
             : false;

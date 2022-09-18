@@ -107,8 +107,7 @@ class Sidebar extends Component {
             </Link>
           </li>
 
-          {isBrowser && (
-            <BrowserView>
+          
               {" "}
               <li
                 className={
@@ -184,8 +183,8 @@ class Sidebar extends Component {
                   </ul>
                 </Collapse>
               </li>
-            </BrowserView>
-          )}
+          
+          
 
           <li
             className={

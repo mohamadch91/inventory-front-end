@@ -20,13 +20,14 @@ i18n
     ns: ["translation"],
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
-    localePath: "/app/static/locales",
+    localePath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
     backend: {
       loadPath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
       addPath: null,
       request: async (options, url, payload, callback) => {
         try {
           const translation = await axios.get(url);
+          console.log(translation);
           callback({
             status: 200,
             data: JSON.stringify(translation.data),
@@ -36,7 +37,7 @@ i18n
         }
       },
       crossDomain: true,
-      withCredentials : true,
+      withCredentials: true,
       requestOptions: {
         cache: "no-store",
       },

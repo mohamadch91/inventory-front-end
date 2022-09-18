@@ -160,7 +160,10 @@ function Item() {
         !isRelatedFieldOkReq(field.state, fieldsValue)
       ) {
         if (field.type === "bool") {
-          if ( fieldsValue[field.state] === undefined) {
+          if (
+            fieldsValue[field.state] === undefined ||
+            fieldsValue[field.state] === null
+          ) {
             _fieldErrors[field.state] = "this field is required!";
           }
         } else {
@@ -356,6 +359,7 @@ function Item() {
               handleBack={handleBack}
               handleNext={handleNext}
               activeStep={activeStep}
+              id={id}
               stepsLength={Object.keys(itemFields).length - 1}
               isNextDisabled={Object.keys(fieldErrors).length > 0}
             />
@@ -625,6 +629,7 @@ function Item() {
             <StepOperations
               handleBack={handleBack}
               handleNext={handleNext}
+              id={id}
               activeStep={activeStep}
               stepsLength={Object.keys(itemFields).length - 1}
               isNextDisabled={Object.keys(fieldErrors).length > 0}
