@@ -43,10 +43,10 @@ const SubFacilitiesTable = (props) => {
                 <Trans>Facility Name</Trans>
               </th>
               <th>
-                <Trans>Level</Trans>
+                <Trans>Levels</Trans>
               </th>
               <th>
-                <Trans>Level name</Trans>
+                <Trans>Level Name</Trans>
               </th>
               <th>
                 <Trans>Registered</Trans>

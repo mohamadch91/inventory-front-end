@@ -86,10 +86,10 @@ class Navbar extends Component {
               <Help />
             </li>
 
-            <li className="nav-item nav-profile nav-language d-none d-lg-flex">
+            <li className="nav-item nav-profile nav-language  d-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
-                  <div className="nav-language-text">
+                  <div className="">
                     <p className="mb-1 text-black">
                       <span>{this.languages[i18n.language]}</span>
                     </p>
@@ -178,7 +178,7 @@ class Navbar extends Component {
               </Dropdown>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item d-none">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-email-outline"></i>
