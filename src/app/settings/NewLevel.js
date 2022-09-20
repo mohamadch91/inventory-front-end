@@ -208,13 +208,13 @@ const headCells = [
     id: "minpop",
     numeric: false,
     disablePadding: true,
-    label: "Min pop",
+    label: "Minimum",
   },
   {
     id: "maxpop",
     numeric: false,
     disablePadding: true,
-    label: "Max pop",
+    label: "Maximum",
   },
 ];
 
@@ -251,7 +251,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Level list
+          <Trans>Level list</Trans>
         </Typography>
       )}
     </Toolbar>
@@ -548,7 +548,9 @@ export default function DataTable() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title"> Level Configurations </h1>
+        <h1 className="page-title">
+          <Trans>Level settings</Trans>{" "}
+        </h1>
       </div>
       {JSON.parse(localStorage.getItem("country"))?.usingtool && (
         <Box sx={{ width: "100%" }}>
@@ -562,11 +564,11 @@ export default function DataTable() {
                   component="div"
                   className=" mt-3 item-class-page"
                 >
-                  <Trans>import level</Trans>
+                  <Trans>Import levels capacity data</Trans>
                 </Typography>
                 <div className="col-md-12 item-class-page">
                   <label>
-                    <Trans>upload excel to change levels data</Trans>
+                    <Trans>Import from assistance tool</Trans>
                   </label>
                   <div className="row d-flex mb-2 ">
                     <div className="col-md-3">
@@ -584,7 +586,7 @@ export default function DataTable() {
                           handleExcel();
                         }}
                       >
-                        <Trans>Sumbit</Trans>
+                        <Trans>Submit</Trans>
                       </Button>
                     </div>
                   </div>
@@ -602,7 +604,7 @@ export default function DataTable() {
               <TableRow>
                 <TableCell colSpan={7.5}></TableCell>
                 <TableCell colSpan={4}>
-                  <Trans>Target Population :</Trans>
+                  <Trans>Target populations:</Trans>
                   <Trans>
                     {JSON.parse(localStorage.getItem("country"))?.poptarget}
                   </Trans>
@@ -619,7 +621,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  <Trans>Current values</Trans> <Trans>(cm3)</Trans>
+                  <Trans>Scenario 1 (in cubic centimetres)</Trans>
                 </TableCell>
                 <TableCell
                   sx={{
@@ -630,7 +632,7 @@ export default function DataTable() {
                   }}
                   colSpan={5}
                 >
-                  <Trans>Planned values</Trans> <Trans>(cm3)</Trans>
+                  <Trans>Scenario 2 (planned) (in cubic centimetres)</Trans>
                 </TableCell>
                 <TableCell
                   sx={{
@@ -641,7 +643,7 @@ export default function DataTable() {
                   }}
                   colSpan={2}
                 >
-                  <Trans>Population</Trans>
+                  <Trans>Populations</Trans>
                 </TableCell>
               </TableRow>
               <TableRow className="item-class-page">

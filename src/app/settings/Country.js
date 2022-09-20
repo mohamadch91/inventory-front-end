@@ -7,7 +7,7 @@ import "./country.css";
 import * as XLSX from "xlsx";
 import { toast } from "react-hot-toast";
 import Map from "./Map";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 
 import "./country.scss";
 delete L.Icon.Default.prototype._getIconUrl;
@@ -315,7 +315,7 @@ export class Country extends Component {
             <div className="card">
               <div className="card-body">
                 <h4 className="card-title">
-                  <Trans>Add Country</Trans>
+                  <Trans>Add country</Trans>
                 </h4>
                 <Form
                   noValidate
@@ -325,7 +325,7 @@ export class Country extends Component {
                 >
                   <h3 className=" card-description text-bold">
                     {" "}
-                    <Trans>Country info</Trans>
+                    <Trans>Country</Trans> <Trans>info</Trans>
                   </h3>
                   <div className="row">
                     <div className="col-md-6">
@@ -351,7 +351,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans>Country code</Trans>
+                          <Trans>Country</Trans> <Trans>code</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -401,7 +401,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans>Allow levels</Trans>
+                          <Trans>Allowed levels</Trans>
                         </label>
                         <div
                           style={{ marginTop: "2.5%" }}
@@ -421,7 +421,7 @@ export class Country extends Component {
                           />
 
                           <label className="col-sm-3 col-form-label  ">
-                            <Trans>value :</Trans> {this.state.levels}{" "}
+                            <Trans>Value:</Trans> {this.state.levels}{" "}
                           </label>
                         </div>
                       </Form.Group>
@@ -432,9 +432,7 @@ export class Country extends Component {
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">
                           <Trans>
-                            {" "}
-                            logo <br /> jpg, jpeg, png <br />
-                            aspect ratio 16:4
+                            Logo 1: jpg.jpeg.png, aspect ration 16:4
                           </Trans>
                         </label>
                         <div className="col-sm-9 mt-3">
@@ -469,11 +467,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">
-                          <Trans>
-                            {" "}
-                            second logo <br /> jpg, jpeg, png
-                            <br /> aspect ratio 1:1
-                          </Trans>
+                          <Trans>Logo 2: jpg.jpeg.png, aspect ration 1:1</Trans>
                         </label>
                         <div className="col-sm-9 mt-3">
                           <div className="custom-file ">
@@ -509,7 +503,7 @@ export class Country extends Component {
                     <div className="col-md-6 ">
                       <Form.Group className=" row  ">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans>Annual Population Growth Rate</Trans>
+                          <Trans>Annual population growth rate (%)</Trans>
                         </label>
                         <div className="col-sm-9">
                           <div className="input-group ">
@@ -549,7 +543,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          <Trans>Enable HR</Trans>
+                          <Trans>Enable HR data</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
@@ -570,7 +564,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          <Trans>Enable Maintenance</Trans>
+                          <Trans>Enable maintenance functions</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
@@ -594,7 +588,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans> Target Population</Trans>
+                          <Trans>Target populations:</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -609,12 +603,20 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option value="General population">
-                              General population
-                            </option>
-                            <option value="Under-1 Population">
-                              Under-1 Population
-                            </option>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value="General population">
+                                  {t("General populations")}
+                                </option>
+                              )}
+                            </Translation>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value="Under-1 Population">
+                                  {t("Under-1 populations")}
+                                </option>
+                              )}
+                            </Translation>
                           </Form.Control>
                         </div>
                       </Form.Group>
@@ -622,7 +624,7 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          <Trans>Require Capacity</Trans>
+                          <Trans>Required capacity</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
@@ -639,17 +641,26 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option
-                              data-i18n="[html]content.body"
-                              value={true}
-                              key="Estimate required capacity (in MS Excel)"
-                            >
-                              Estimate required capacity (in MS Excel)
-                            </option>
-
-                            <option value={false}>
-                              Enter required capacity manually
-                            </option>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option
+                                  value={true}
+                                  key="Estimate required capacity (in MS Excel)"
+                                >
+                                  {t(
+                                    "Import from Assistant Tool (in MS Excel)"
+                                  )}
+                                </option>
+                              )}
+                            </Translation>
+                            
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value={false}>
+                                  {t("Enter manually")}
+                                </option>
+                              )}
+                            </Translation>
                           </Form.Control>
                         </div>
                       </Form.Group>
@@ -658,7 +669,7 @@ export class Country extends Component {
                   <Form.Group className="row">
                     <div className="col-md-6">
                       <label className="col-sm-3 col-form-label ">
-                        <Trans>Main Location</Trans>
+                        <Trans>Main location</Trans>
                       </label>
                       <div className="map">
                         <Map

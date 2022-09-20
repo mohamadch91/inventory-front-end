@@ -202,7 +202,7 @@ function HRList() {
   return (
     <div className="item-class-page hr-page">
       <h3 className="page-title mb-3">
-        <Trans>HR Information by Facility</Trans>
+        <Trans>Human resources information by facility</Trans>
       </h3>
       {isLoading ? (
         <Spinner />
@@ -210,7 +210,9 @@ function HRList() {
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4 className="page-title">Main Facility</h4>
+              <h4 className="page-title">
+                <Trans>Main facility</Trans>
+              </h4>
             </div>
             <div className="col-md-10 d-flex">
               <select
@@ -416,7 +418,7 @@ function HRList() {
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            <Trans>Human Resource add</Trans>
+            <Trans>Add human resource</Trans>
           </button>
           <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
             <form onSubmit={handleSubmitNew}>

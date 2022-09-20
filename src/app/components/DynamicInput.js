@@ -2,6 +2,8 @@ import { Form } from "react-bootstrap";
 import { separator as thousandSeparator } from "../helpers/separator";
 import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
+import { Translation, Trans } from "react-i18next";
+
 import { useState } from "react";
 const numericKeys = "0123456789.:";
 const num1 = "0123456789";
@@ -14,7 +16,9 @@ const Option = (props) => {
           checked={props.isSelected}
           onChange={() => null}
         />{" "}
-        <label>{props.label}</label>
+        <label>
+          <Trans>{props.label}</Trans>
+        </label>
       </components.Option>
     </div>
   );
@@ -35,7 +39,13 @@ const DynamicInput = (props) => {
           disabled={field.active ? !field.active : field.disabled}
           id={`field-${field.id}`}
         >
-          <option value="">Please select</option>
+          <Translation>
+            {(t, { i18n }) => (
+              <option i18n value="" selected>
+                {t("Please select")}
+              </option>
+            )}
+          </Translation>
           {field.params.map((param) => (
             <option
               disabled={
@@ -135,15 +145,26 @@ const DynamicInput = (props) => {
           disabled={field.active ? !field.active : field.disabled}
           id={`field-${field.id}`}
         >
-          <option
-            selected={(defaultValue === null || defaultValue === undefined) ?true : false}
-            disabled
-          >
-            Please select
-          </option>
+          <Translation>
+            {(t, { i18n }) => (
+              <option
+                i18n
+                value=""
+                selected={
+                  defaultValue === null || defaultValue === undefined
+                    ? true
+                    : false
+                }
+                disabled
+              >
+                {t("Please select")}
+              </option>
+            )}
+          </Translation>
+         
           <option
             selected={
-              (defaultValue !== null && defaultValue !== undefined)
+              defaultValue !== null && defaultValue !== undefined
                 ? defaultValue
                 : false
             }
@@ -153,7 +174,7 @@ const DynamicInput = (props) => {
           </option>
           <option
             selected={
-              (defaultValue !== null && defaultValue !== undefined)
+              defaultValue !== null && defaultValue !== undefined
                 ? !defaultValue
                 : false
             }

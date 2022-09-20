@@ -5,6 +5,7 @@ import Spinner from "../shared/Spinner";
 import { useState } from "react";
 import { languages, pages } from "../constants/help";
 import API_URL from "../services/APIURL";
+import { Translation,Trans } from "react-i18next";
 
 function MangeHelp() {
   const [selectedLang, setSelectedLang] = useState("en");
@@ -37,7 +38,9 @@ function MangeHelp() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Manage help</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Manage HELP</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -47,7 +50,9 @@ function MangeHelp() {
               <div className="row">
                 <div className="col-sm-12 col-lg-5">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Language</label>
+                    <label className="col-sm-12">
+                      <Trans>Language</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={(e) => setSelectedLang(e.target.value)}
@@ -66,7 +71,9 @@ function MangeHelp() {
                 </div>
                 <div className="col-sm-12 col-lg-5">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Page</label>
+                    <label className="col-sm-12">
+                      <Trans>Page</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={(e) => setSelectedPage(e.target.value)}
@@ -75,9 +82,14 @@ function MangeHelp() {
                         value={selectedPage}
                       >
                         {Object.keys(pages).map((page) => (
+                          <Translation>
+                        {(t, { i18n }) => (
                           <option key={page} value={page}>
-                            {pages[page]}
+                            {t( `${pages[page]}`)}
                           </option>
+                        )}
+                      </Translation>
+                          
                         ))}
                       </Form.Control>
                     </div>
@@ -88,7 +100,7 @@ function MangeHelp() {
                     className="btn btn-primary w-100 mt-4"
                     onClick={refetchHelp}
                   >
-                    Filter
+                    <Trans>Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -113,7 +125,7 @@ function MangeHelp() {
                     style={{ marginLeft: "auto", width: "72px" }}
                     type="submit"
                   >
-                    Save
+                    <Trans>Save</Trans>
                   </button>
                   {helpData?.abr && (
                     <a
@@ -125,7 +137,7 @@ function MangeHelp() {
                         className="btn btn-success mt-3 ml-2"
                         type="button"
                       >
-                        Download Help
+                        <Trans>Download Help</Trans>
                       </button>
                     </a>
                   )}

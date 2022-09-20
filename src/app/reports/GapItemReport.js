@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation,Trans} from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -52,7 +52,7 @@ const tableData = [
 
   },
   {
-    headTitle: "Level",
+    headTitle: "Levels",
     valueKey: "level",
       func: (val) => val,
 
@@ -85,13 +85,14 @@ const tableData = [
 
 const tableDegreeData = [
   {
-    headTitle: "Required Capacity(lit)",
+    headTitle: "Required capacity (lit.)",
     valueKey: "req",
     func: (val) => {
-      parseFloat(val).toFixed(2)},
+      parseFloat(val).toFixed(2);
+    },
   },
   {
-    headTitle: "All Total Available (lit)",
+    headTitle: "All total available (lit.)",
     valueKey: "tcapacity",
     func: (val) => parseFloat(val).toFixed(2),
   },
@@ -101,13 +102,13 @@ const tableDegreeData = [
     func: (val) => parseFloat(val).toFixed(2),
   },
   {
-    headTitle: "Excess/ Shortage (lit)",
+    headTitle: "Excess/ Shortage (lit.)",
     valueKey: "excees",
     func: (val) => parseFloat(val).toFixed(2),
   },
 ];
 
-function GapItemReport() {
+function GapItemReport({i18n}) {
   const [filterValues, setFilterValues] = useState(defaultValues);
   const [selectedDegree, setSelectedDegree] = useState("1");
 
@@ -171,7 +172,7 @@ function GapItemReport() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Gap Item Report</Trans>
+        <Trans>Item gap report</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -227,7 +228,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                      <Trans>Levels</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -241,9 +242,16 @@ function GapItemReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected  >
-                        Please select
-                      </option>
+                      {/* <Trans id="ui.select" render={<option value="">hi</option>}>Select something</Trans> */}
+
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+
                       {gapItemHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -255,7 +263,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -269,9 +277,13 @@ function GapItemReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected  >
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {gapItemHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -285,7 +297,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -299,9 +311,13 @@ function GapItemReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected  >
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {gapItemHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -315,7 +331,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Storage condition:</Trans>
+                      <Trans>Storage conditions</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -347,7 +363,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Options:</Trans>
+                      <Trans>Options</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -372,7 +388,7 @@ function GapItemReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-2">
-                      <Trans>from:</Trans>
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-2"
@@ -386,14 +402,12 @@ function GapItemReport() {
                       value={filterValues.year_from}
                       as="select"
                     >
-                      <option value="-1" selected  >
+                      <option value="-1" selected>
                         select
                       </option>
                       {console.log(new Date().getUTCFullYear())}
                       {Array.from({ length: 30 }).map((_, i) => {
-                        const year =
-                          (
-                            new Date().getUTCFullYear()) - i;
+                        const year = new Date().getUTCFullYear() - i;
                         return (
                           <option key={year} value={year}>
                             {year}
@@ -402,7 +416,7 @@ function GapItemReport() {
                       })}
                     </Form.Control>
                     <label className="label col-sm-1">
-                      <Trans>to:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-2"
@@ -416,12 +430,14 @@ function GapItemReport() {
                       value={filterValues.year_to}
                       as="select"
                     >
-                      <option value="-1" selected  >
+                      <option value="-1" selected>
                         select
                       </option>
                       {Array.from({
                         length:
-                          new Date().getUTCFullYear() - filterValues.year_from+1,
+                          new Date().getUTCFullYear() -
+                          filterValues.year_from +
+                          1,
                       }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
@@ -432,7 +448,7 @@ function GapItemReport() {
                       })}
                     </Form.Control>
                     <label className="label col-sm-3">
-                      <Trans>Calculate for year:</Trans>
+                      <Trans>Calculate for Year:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-2"
@@ -446,7 +462,7 @@ function GapItemReport() {
                       value={filterValues.calculate_for}
                       as="select"
                     >
-                      <option value="-1" selected  >
+                      <option value="-1" selected>
                         select
                       </option>
                       {Array.from({ length: 10 }).map((_, i) => {
@@ -465,7 +481,7 @@ function GapItemReport() {
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Report</Trans>
                   </button>
                 </div>
                 <div className="col-sm-1">
@@ -474,7 +490,7 @@ function GapItemReport() {
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear</Trans>
                   </button>
                 </div>
               </div>
@@ -486,10 +502,11 @@ function GapItemReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>Report : Gap Item Report ({country?.country})</Trans>
+              <Trans>Report</Trans> : <Trans>Item gap report</Trans>
+              <Trans> ({country?.country})</Trans>
             </h4>
             <h6>
-              Filters : {""} {printFilterValues()}
+              <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
@@ -498,10 +515,10 @@ function GapItemReport() {
                 <TableHead>
                   <TableRow>
                     <TableCell align="center" colSpan={5}>
-                      Facility information
+                      <Trans>Facility information</Trans>
                     </TableCell>
                     <TableCell align="center" colSpan={2}>
-                      Populations
+                      <Trans>Populations</Trans>
                     </TableCell>
                     {selectedDegree === "6" ? (
                       Array.from({ length: 5 }).map((_, i) => (

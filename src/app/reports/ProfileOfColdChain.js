@@ -120,39 +120,39 @@ const table2Data = [
     size: "large",
   },
   {
-    headTitle: "Require capacity per target population (cm3)",
+    headTitle: "Required capacity per target population",
     valueKey: "req",
     func: (val) => (+val).toFixed(2),
     size: "fit",
   },
   {
-    headTitle: "Available capacity per target population (cm3)",
+    headTitle: "Available capacity per target population",
     valueKey: "available",
     func: (val) => (+val).toFixed(2),
     size: "large",
   },
   {
     headTitle:
-      "The difference between available capacity and require capacity per target population (cm3)",
+      "The difference between available capacity and required capacity per target population",
     valueKey: "diff",
-    func: (val) => (val).toFixed(2),
+    func: (val) => val.toFixed(2),
     size: "large",
   },
   {
-    headTitle: "Require capacity",
+    headTitle: "Required capacity per target population",
     valueKey: "require_capacity",
     func: (val) => val.toFixed(2),
     size: "fit",
   },
   {
-    headTitle: "Available capacity (lit.)",
+    headTitle: "Available capacity per target population",
     valueKey: "available_capacity",
     func: (val) => val.toFixed(2),
     size: "fit",
   },
   {
     headTitle:
-      "The difference between current available capacity and require capacity (lit.)",
+      "The difference between current available capacity and required capacity per target population",
     valueKey: "diff_capacity",
     func: (val) => val.toFixed(2),
     size: "large",
@@ -198,15 +198,15 @@ function ProfileOfColdChain() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Profile of Cold Chain</Trans>
+        <Trans>Profile of cold chain equipment</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>
-                Report Number: Profile of Cold Chain ({country?.country})
-              </Trans>
+              <Trans>Report</Trans> :{" "}
+              <Trans>Profile of cold chain equipment</Trans> ({country?.country}
+              )
             </h4>
             <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
@@ -215,17 +215,17 @@ function ProfileOfColdChain() {
                   <TableRow>
                     <TableCell align="center" colSpan={6}></TableCell>
                     <TableCell align="center" colSpan={6}>
-                      Exist Items
+                      <Trans>Existing items</Trans>
                     </TableCell>
                     <TableCell align="center" colSpan={6}>
-                      Not Work Items
+                      <Trans>Not work items</Trans>
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     {table1Data.map((cell, i) => (
                       <TableCell
                         key={cell.headTitle}
-                        style={{ minWidth: (i === 3 || i===2) ? "230px" : "" }}
+                        style={{ minWidth: i === 3 || i === 2 ? "230px" : "" }}
                       >
                         <Trans>{cell.headTitle}</Trans>
                       </TableCell>
@@ -257,7 +257,7 @@ function ProfileOfColdChain() {
               <div className="col-sm-12 col-lg-6">
                 <Form.Group className="row">
                   <label className="col-sm-4 mt-3">
-                    <Trans>Please select ...</Trans>
+                    <Trans>Please select</Trans> ...
                   </label>
                   <Form.Control
                     className="form-select col-sm-3"

@@ -48,9 +48,14 @@ function EditLanguage() {
   function getData(query) {
     LanguageService.getTranslations()
       .then((res) => {
-        let sum = res.data.reduce((acc, curr) => {
-          return acc + curr.words;
-        }, 0);
+        let sum = 0
+        let data = res.data
+        for (let i = 0; i < data.length; i++) {
+          if(data[i].language === selectedLanguage){
+          sum += data[i].words
+          }
+        }
+        console.log(sum)
         setPageNum(Math.ceil(sum / 20));
         setIsLoading(false);
       })
@@ -163,7 +168,7 @@ function EditLanguage() {
   return (
     <div className="item-class-page">
       <h3 className="page-title mb-3">
-        <Trans>Language setting</Trans>
+        <Trans>Language settings</Trans>
       </h3>
       {isLoading ? (
         <Spinner />
@@ -216,7 +221,7 @@ function EditLanguage() {
                   );
                 }}
               >
-                Filter
+                <Trans>Filter</Trans>
               </button>
             </div>
           </div>
@@ -225,7 +230,7 @@ function EditLanguage() {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <Trans>Cluase</Trans>
+                    <Trans>Clause</Trans>
                   </TableCell>
                   <TableCell>
                     <Trans>Value</Trans>
@@ -303,7 +308,7 @@ function EditLanguage() {
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
               <h3 className="mb-3 mt-3">
-                <Trans>Insert translation</Trans>
+                <Trans>Inset translation</Trans>
               </h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">
@@ -350,7 +355,7 @@ function EditLanguage() {
                     ))}
                   </select>
                 </div>
-                <div className="col-md-3 d-flex justify-content-center align-items-center">
+                <div className="col-md-3 mt-4 d-flex justify-content-center align-items-center">
                   <button className="save-btn" type="submit">
                     <Trans>Save</Trans>
                   </button>

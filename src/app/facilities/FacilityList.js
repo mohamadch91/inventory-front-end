@@ -13,7 +13,7 @@ import TrashIcon from "../shared/TrashIcon";
 import AddFacilityIcon from "../shared/AddFacilityIcon";
 import FacilityIcon from "../shared/FacilityIcon";
 import { Link, useHistory } from "react-router-dom";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
 
@@ -195,11 +195,11 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-5">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Facility name</Trans>:
                     </label>
                     <Form.Control
-                      className="form-control col-sm-8"
+                      className="form-control  col-sm-8"
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
@@ -213,8 +213,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Code:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -233,8 +233,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Levels</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -248,9 +248,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -261,8 +265,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -276,7 +280,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -289,8 +299,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-1">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -304,7 +314,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -315,8 +331,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
-                      <Trans>Functioning Status:</Trans>
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Functioning Status</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -330,7 +346,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.func}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       <option value={true}>Working</option>
                       <option value={false}>Not working</option>
                     </Form.Control>
@@ -341,10 +363,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 <div className="col-sm-12">
                   <Form.Group className="row">
                     <label className="label col-sm-2">
-                      <Trans>General population:</Trans>
+                      <Trans>General populations</Trans>:
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From:</Trans>
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -359,7 +381,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.gfrom}
                     />
                     <label className="label col-sm-1">
-                      <Trans>To:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -380,10 +402,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 <div className="col-sm-12">
                   <Form.Group className="row">
                     <label className="label col-sm-2">
-                      <Trans>Under-1 Population:</Trans>
+                      <Trans>Under-1 Populations</Trans>:
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From:</Trans>
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -398,7 +420,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.underfrom}
                     />
                     <label className="label col-sm-1">
-                      <Trans>To:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -418,7 +440,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-1">
                 <div className="col-sm-6">
                   <Form.Group className="row">
-                    <label className="label col-sm-4">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
                       <Trans>Deleted</Trans>
                     </label>
                     <Form.Control
@@ -433,7 +455,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       value={filterValues.is_deleted}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       <option value={true}>Yes</option>
                       <option value={false} selected>
                         No
@@ -445,7 +473,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Filter
+                    <Trans>Filter</Trans>
                   </button>
                 </div>
                 <div className="col-sm-1 mt-1">
@@ -454,7 +482,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear</Trans>
                   </button>
                 </div>
               </div>
@@ -466,7 +494,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         <div className="card">
           <div className="card-body">
             <h6>
-              Filters : {""} {printFilterValues()}
+              <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
             {pid && (
               <div className="row mt-3">

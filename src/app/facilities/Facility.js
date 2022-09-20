@@ -696,7 +696,7 @@ window.handleMapClick = handleMapClick;
                       <div className="col-sm-4"></div>
                       <div className="col-sm-8">
                         <p className="my-1 ml-2 text-danger">
-                          {fieldErrors[field.stateName]}
+                          <Trans>{fieldErrors[field.stateName]}</Trans>
                         </p>
                       </div>
                     </div>

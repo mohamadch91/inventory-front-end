@@ -8,6 +8,7 @@ import "../styles/table.scss";
 import "../styles/inputs.scss";
 import { useEffect } from "react";
 import MaintenanceService from "../services/maintenance.service";
+import { Trans } from "react-i18next";
 
 function MaintenanceServiceGroup() {
   const [selectedItemClassAndItemTypes, setSelectedItemClassAndItemTypes] =
@@ -99,14 +100,14 @@ function MaintenanceServiceGroup() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Maintenance Service Group Assignment</h3>
+      <h3 className="page-title mb-3"><Trans>Maintenance Service Group Assignment</Trans></h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
             <div className="row">
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12">Item class</label>
+                  <label className="col-sm-12"><Trans>Item class</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemClassHandler}
@@ -128,7 +129,7 @@ function MaintenanceServiceGroup() {
               </div>
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12">item Category</label>
+                  <label className="col-sm-12"><Trans>item Category</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemTypeHandler}
@@ -150,7 +151,7 @@ function MaintenanceServiceGroup() {
               </div>
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12">Maintenance Group</label>
+                  <label className="col-sm-12"><Trans>Maintenance Group</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectGpHandler}
@@ -186,7 +187,7 @@ function MaintenanceServiceGroup() {
                   className="btn btn-primary"
                   onClick={onAcceptHandler}
                 >
-                  Save changes
+                  <Trans>Save changes</Trans>
                 </button>
               </div>
             </div>
@@ -196,9 +197,9 @@ function MaintenanceServiceGroup() {
                   <TableHead>
                     <TableRow>
                       <TableCell className="col-sm-10">
-                        Service/ Maintenance items
+                        <Trans>Service/ Maintenance items</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">Enable</TableCell>
+                      <TableCell className="col-sm-2"><Trans>Enable</Trans></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

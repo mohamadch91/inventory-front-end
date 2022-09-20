@@ -37,7 +37,7 @@ function Parameters() {
       ) : (
         <>
           <h2 className="page-title mb-3">
-            <Trans>Facility:</Trans>
+            <Trans>Parameters related to facilities</Trans>
           </h2>
           <div>
             <SharedTable>
@@ -64,7 +64,7 @@ function Parameters() {
             </SharedTable>
           </div>
           <h2 className="page-title text-left mb-3 mt-5">
-            <Trans>Item</Trans>:
+            <Trans>Parameters related to item categories</Trans>
           </h2>
           <div>
             <SharedTable>

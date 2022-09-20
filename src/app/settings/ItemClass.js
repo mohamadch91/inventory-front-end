@@ -142,7 +142,7 @@ function ItemClass() {
                         </TableCell>
                         <TableCell>
                           <button className="save-btn" onClick={handleSubmit}>
-                          <Trans>  Save</Trans>
+                          <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"

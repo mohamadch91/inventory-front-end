@@ -107,8 +107,7 @@ function ItemTypeLevel() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>"Item category"</Trans>
-        <Trans>In different levels</Trans>
+        <Trans>Item categories in different levels</Trans>
       </h3>
       {isItemClassesLoading ? (
         <Spinner />
@@ -140,7 +139,7 @@ function ItemTypeLevel() {
                 <div className="col-sm-12 col-lg-5">
                   <Form.Group className="row">
                     <label className="col-sm-12">
-                      <Trans>Level</Trans>
+                      <Trans>Levels</Trans>
                     </label>
                     <div className="col-sm-12">
                       <Form.Control
@@ -173,7 +172,7 @@ function ItemTypeLevel() {
                 <TableHead>
                   <TableRow>
                     <TableCell className="col-sm-10">
-                      <Trans>Item category</Trans>
+                      <Trans>Items category</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Enable</Trans>

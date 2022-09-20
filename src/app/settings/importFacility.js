@@ -161,7 +161,7 @@ const headCells = [
     id: "parent",
     numeric: false,
     disablePadding: true,
-    label: "Parent Facility",
+    label: "Parent facility",
   },
 
   {
@@ -426,7 +426,7 @@ export default function ImportFacility() {
                         handleExcel();
                       }}
                     >
-                      <Trans>Sumbit</Trans>
+                      <Trans>Submit</Trans>
                     </Button>
                   </div>
                 </div>

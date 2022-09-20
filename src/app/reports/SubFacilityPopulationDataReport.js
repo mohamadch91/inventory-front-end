@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -52,7 +52,7 @@ function SubFacilityPopulationDataReport() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Sub Facility population data</Trans>
+        <Trans>Sub-facility populations data</Trans>
       </h3>
       <SubFacilityReportChart
         isGeneral={country?.poptarget === "General population"}
@@ -63,7 +63,7 @@ function SubFacilityPopulationDataReport() {
           <div className="card-body py-3">
             <Form.Group className="row">
               <label className="col-sm-4">
-                <Trans>Level:</Trans>
+                <Trans>Levels</Trans>:
               </label>
               <Form.Control
                 className="form-select col-sm-4"
@@ -73,9 +73,13 @@ function SubFacilityPopulationDataReport() {
                 }}
                 as="select"
               >
-                <option value={-1} selected>
-                  Please select
-                </option>
+                <Translation>
+                  {(t, { i18n }) => (
+                    <option i18n value="-1" selected>
+                      {t("Please select")}
+                    </option>
+                  )}
+                </Translation>
                 {subFacHelper?.map((lev) => (
                   <option key={lev.id} value={lev.id}>
                     {`${lev.id} - ${lev.name}`}

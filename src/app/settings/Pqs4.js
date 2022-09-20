@@ -189,7 +189,7 @@ TablePaginationActions.propTypes = {
       return (
         <div className="item-class-page">
           <h3 className="page-title mb-3">
-            <Trans>Import PQS4/PIS and view</Trans>
+            <Trans>Import PQS/PIS 004 and view</Trans>
           </h3>
           {isLoading ? (
             <Spinner />
@@ -202,7 +202,7 @@ TablePaginationActions.propTypes = {
                 <div className="row">
                   <div className="col-md-4 flex-column d-flex">
                     <label className="mb-3">
-                      <Trans>Excel file</Trans>
+                      <Trans>From Excel file</Trans>
                     </label>
                     <input
                       name="describe"
@@ -213,10 +213,12 @@ TablePaginationActions.propTypes = {
                   </div>
                   <div className="col-md-4 flex-column d-flex mt-2">
                     <label className="mb-3">
-                      <Trans>If you sumbit all old datas erased</Trans>
+                      <Trans>
+                        If you click on submit, all old data will be erased!
+                      </Trans>
                     </label>
                     <button onClick={handleExcel} className="save-btn">
-                      <Trans>Sumbit</Trans>
+                      <Trans>Submit</Trans>
                     </button>
                   </div>
                 </div>
@@ -233,10 +235,10 @@ TablePaginationActions.propTypes = {
                   <TableHead>
                     <TableRow>
                       <TableCell>
-                        <Trans>PQS code</Trans>
+                        <Trans>PQS/PIS Code</Trans>
                       </TableCell>
                       <TableCell>
-                        <Trans>Type</Trans>
+                        <Trans>PQS/PIS type</Trans>
                       </TableCell>
                       <TableCell>
                         <Trans>Manufacturer</Trans>
@@ -245,13 +247,13 @@ TablePaginationActions.propTypes = {
                         <Trans>Model</Trans>
                       </TableCell>
                       <TableCell>
-                        <Trans>VaccineNetStorageCapacity</Trans>
+                        <Trans>Net vaccine storage capacity (lit.)</Trans>
                       </TableCell>
                       <TableCell>
-                        <Trans>CoolantPack Nominal Capacity (lit.)</Trans>
+                        <Trans>Coolant pack nominal capacity (lit.)</Trans>
                       </TableCell>
                       <TableCell>
-                        <Trans>Number of CoolantPacks</Trans>
+                        <Trans>Number of coolant pack</Trans>
                       </TableCell>
                       <TableCell>
                         <Trans>Gross volume (lit.)</Trans>:
@@ -305,7 +307,7 @@ TablePaginationActions.propTypes = {
                   page={page}
                   SelectProps={{
                     inputProps: {
-                      "aria-label": "rows per page",
+                      "aria-label": (<Trans>rows per page</Trans>),
                     },
                     native: true,
                   }}

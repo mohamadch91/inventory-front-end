@@ -9,6 +9,7 @@ import "../styles/table.scss";
 import "../styles/inputs.scss";
 import { useEffect } from "react";
 import MaintenanceService from "../services/maintenance.service";
+import { Trans } from "react-i18next";
 
 const defaultValues = {
   name: "",
@@ -106,14 +107,14 @@ function MaintenanceGroupComponent() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Maintenance Group</h3>
+      <h3 className="page-title mb-3"><Trans>Maintenance group</Trans></h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
             <div className="row">
               <div className="col-sm-12 col-lg-6">
                 <Form.Group className="row">
-                  <label className="col-sm-12">Item class</label>
+                  <label className="col-sm-12"><Trans>Item class</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemClassHandler}
@@ -131,7 +132,7 @@ function MaintenanceGroupComponent() {
               </div>
               <div className="col-sm-12 col-lg-6">
                 <Form.Group className="row">
-                  <label className="col-sm-12">item Category</label>
+                  <label className="col-sm-12"><Trans>Items category</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemTypeHandler}
@@ -167,7 +168,7 @@ function MaintenanceGroupComponent() {
                   alignItems: "center",
                 }}
               >
-                Service/ Maintenance Name
+                <Trans>Service/ Maintenance Name</Trans>
               </label>
               <div className="col-sm-8">
                 <Form.Control
@@ -193,7 +194,7 @@ function MaintenanceGroupComponent() {
                   alignItems: "center",
                 }}
               >
-                Enable
+                <Trans>Enable</Trans>
               </label>
               <div className="col-sm-8">
                 <input
@@ -216,7 +217,7 @@ function MaintenanceGroupComponent() {
                   className="btn btn-primary"
                   onClick={onAcceptHandler}
                 >
-                  Accept
+                  <Trans>Accept</Trans>
                 </button>
               </div>
               <div className="col-sm-1">
@@ -227,7 +228,7 @@ function MaintenanceGroupComponent() {
                     setIsEditMode(false);
                   }}
                 >
-                  Return
+                  <Trans>Return</Trans>
                 </button>
               </div>
             </div>
@@ -243,10 +244,10 @@ function MaintenanceGroupComponent() {
                   <TableHead>
                     <TableRow>
                       <TableCell className="col-sm-9">
-                        Service/ Maintenance items
+                        <Trans>Service/ Maintenance items</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-1">Enable</TableCell>
-                      <TableCell className="col-sm-2">Edit</TableCell>
+                      <TableCell className="col-sm-1"><Trans>Enable</Trans></TableCell>
+                      <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

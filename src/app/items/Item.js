@@ -610,7 +610,7 @@ function Item() {
                         <div className="col-sm-4"></div>
                         <div className="col-sm-8">
                           <p className="my-1 ml-2 text-danger">
-                            {fieldErrors[field.state]}
+                            <Trans>{fieldErrors[field.state]}</Trans>
                           </p>
                         </div>
                       </div>

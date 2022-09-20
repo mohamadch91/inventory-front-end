@@ -103,7 +103,7 @@ function FieldsFacility() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Fields related to</Trans> <Trans>facilities</Trans>
+        <Trans>Fields related to facilities</Trans>
       </h3>
       {isRelatedFacilityLoading ? (
         <Spinner />
@@ -121,7 +121,7 @@ function FieldsFacility() {
                             color="inherit"
                             style={{ width: "max-content" }}
                           >
-                            {topic}
+                            <Trans>{topic}</Trans>
                           </StepButton>
                         </Step>
                       );
@@ -164,7 +164,10 @@ function FieldsFacility() {
             <div className="card">
               <div className="card-body p-3">
                 <div className="row">
-                  <h4> {Object.keys(fieldsCategories)[activeStep]}</h4>
+                  <h4>
+                    {" "}
+                    <Trans>{Object.keys(fieldsCategories)[activeStep]}</Trans>
+                  </h4>
                   <div className="mt-5 table-container">
                     <SharedTable>
                       <TableHead>
@@ -176,8 +179,7 @@ function FieldsFacility() {
                             <Trans>Enable</Trans>
                           </TableCell>
                           <TableCell className="col-sm-4">
-                            <Trans>Is this required field for</Trans>{" "}
-                            <Trans> facility?</Trans>
+                            <Trans>Is this required for facility?</Trans>
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <Trans>Edit</Trans>

@@ -22,20 +22,20 @@ i18n
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
     localePath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
     backend: {
-      loadPath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
+      loadPath: "https://inventory.runflare.run/languages/{{ns}}?name={{lng}}",
       addPath: null,
-      request: async (options, url, payload, callback) => {
-        try {
-          const translation = await axios.get(url);
-          console.log(translation);
-          callback({
-            status: 200,
-            data: JSON.stringify(translation.data),
-          });
-        } catch (e) {
-          callback(e);
-        }
-      },
+      // request: async (options, url, payload, callback) => {
+      //   try {
+      //     const translation = await axios.get(url);
+      //     console.log(translation);
+      //     callback({
+      //       status: 200,
+      //       data: JSON.stringify(translation.data),
+      //     });
+      //   } catch (e) {
+      //     callback(e);
+      //   }
+      // },
       crossDomain: true,
       withCredentials: true,
       requestOptions: {

@@ -97,19 +97,19 @@ const allTableData = {
 
     },
     {
-      headTitle: "Average population",
+      headTitle: "Average populations",
       valueKey: "avg",
     func: (val) => separator(val),
 
     },
     {
-      headTitle: "Minimum population",
+      headTitle: "Minimum populations",
       valueKey: "min",
     func: (val) => separator(val),
 
     },
     {
-      headTitle: "Maximum population",
+      headTitle: "Maximum populations",
       valueKey: "max",
     func: (val) => separator(val),
 
@@ -133,19 +133,19 @@ const allTableData = {
 
     },
     {
-      headTitle: "Average population",
+      headTitle: "Average populations",
       valueKey: "avg",
     func: (val) => separator(val),
 
     },
     {
-      headTitle: "Minimum population",
+      headTitle: "Minimum populations",
       valueKey: "min",
     func: (val) => separator(val),
 
     },
     {
-      headTitle: "Maximum population",
+      headTitle: "Maximum populations",
       valueKey: "max",
     func: (val) => separator(val),
 
@@ -209,10 +209,13 @@ function ProfileOfFacility() {
 
   return (
     <div>
-      <h4>
-        <Trans>Report Number: Profile of facility ({country?.country})</Trans>
-      </h4>
-      <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+      <h3 className="text-black">
+        <Trans>Report</Trans>:<Trans>Profile of facilities</Trans> (
+        {country?.country})
+      </h3>
+      <h5 className="text-black">
+        <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+      </h5>
       {reports &&
         Object.keys(reports).map((key) => {
           const title =

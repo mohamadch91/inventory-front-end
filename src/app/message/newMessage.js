@@ -68,7 +68,7 @@ function NewMessage() {
         <div className="container">
           <form onSubmit={handleSubmit}>
             <h3 className="mb-1 page-title">
-              <Trans>Send Message</Trans>
+              <Trans>Send message</Trans>
             </h3>
             <div className="d-flex flex-column">
               <label>
@@ -97,7 +97,7 @@ function NewMessage() {
             </div>
             <div className="d-flex flex-column">
               <label>
-                <Trans>Message Body</Trans>
+                <Trans>Message body</Trans>
               </label>
               <textarea onChange={handleChange} name="body" required />
             </div>

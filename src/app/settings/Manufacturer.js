@@ -147,7 +147,7 @@ function Manufacturer() {
   return (
     <div className="item-class-page">
       <h3 className="page-title mb-3">
-        <Trans>Manufacturers by Item class</Trans>
+        <Trans>Manufacturers by item class</Trans>
       </h3>
       {isLoading ? (
         <Spinner />
@@ -155,7 +155,9 @@ function Manufacturer() {
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4>Item class</h4>
+              <h4>
+                <Trans>Item class</Trans>
+              </h4>
             </div>
             <div className="col-md-10 d-flex">
               <select
@@ -299,7 +301,7 @@ function Manufacturer() {
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
               <h3 className="mb-3 mt-3">
-                <Trans>Insert</Trans> <Trans>Manufacturer</Trans>
+                <Trans>Insert manufacturer</Trans>
               </h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">

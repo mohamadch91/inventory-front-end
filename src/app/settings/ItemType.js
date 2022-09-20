@@ -191,7 +191,7 @@ function ItemType() {
           <div className="add-row mt-4 mb-2">
             <h3>
               {" "}
-              <Trans>Insert new Item category</Trans>
+              <Trans>Enter new item category</Trans>
             </h3>
 
             <div className="row">
@@ -244,7 +244,7 @@ function ItemType() {
                   checked={addRowFormData?.active}
                 ></input>
                 <label>
-                  <Trans>Have PQS?</Trans>
+                  <Trans>Is it from PQS/PIS list?</Trans>
                 </label>
                 <input
                   name="havePQS"
@@ -285,7 +285,7 @@ function ItemType() {
                     <Trans>Active</Trans>
                   </TableCell>
                   <TableCell>
-                    <Trans>Have PQS?</Trans>
+                    <Trans>Is it from PQS/PIS list?</Trans>
                   </TableCell>
                   <TableCell>
                     <Trans>Edit</Trans>

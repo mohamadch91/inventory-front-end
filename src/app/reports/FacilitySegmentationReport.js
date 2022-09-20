@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation, Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -180,9 +180,13 @@ function FacilitySegmentationReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected   >
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -208,9 +212,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1"   >
-                        Please select
-                      </option>
+                      <option value="-1">Please select</option>
                       {facSegHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -238,9 +240,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1"   >
-                        Please select
-                      </option>
+                      <option value="-1">Please select</option>
                       {facSegHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -252,7 +252,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Functioning Status:</Trans>
+                      <Trans>Functioning status</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -266,9 +266,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.func}
                       as="select"
                     >
-                      <option value="-1"   >
-                        Please select
-                      </option>
+                      <option value="-1">Please select</option>
                       <option value={true}>Working</option>
                       <option value={false}>Not working</option>
                     </Form.Control>
@@ -279,10 +277,10 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12">
                   <Form.Group className="row">
                     <label className="label col-sm-2">
-                      <Trans>General population:</Trans>
+                      <Trans>General population</Trans>:
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From:</Trans>
+                      <Trans>From</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -297,7 +295,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.gfrom}
                     />
                     <label className="label col-sm-1">
-                      <Trans>To:</Trans>
+                      <Trans>To</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -321,7 +319,7 @@ function FacilitySegmentationReport() {
                       <Trans>Under-1 Population:</Trans>
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From:</Trans>
+                      <Trans>From</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -356,7 +354,7 @@ function FacilitySegmentationReport() {
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Reports</Trans>
                   </button>
                 </div>
                 <div className="col-sm-1">

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { HorizontalBar } from "react-chartjs-2";
+import { Trans } from "react-i18next";
 
 const backgroundColors = [
   "rgba(255, 99, 132, 0.2)",
@@ -78,11 +79,13 @@ export class SubFacilityReportChart extends Component {
           <div className="col-md-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Sub Facility population data</h4>
+                <h4 className="card-title">
+                  <Trans>Sub-facility populations data</Trans>
+                </h4>
                 <h6 className="mt-1">
                   {this.props.isGeneral
-                    ? "General Population"
-                    : "Under 1 Population"}
+                    ? (<Trans>General Population</Trans>)
+                    : (<Trans>Under 1 Population</Trans>)}
                 </h6>
                 {this.props.rows && (
                   <HorizontalBar

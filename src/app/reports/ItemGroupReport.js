@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation, Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -126,7 +126,7 @@ function ItemGroupReport() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Item Grouped Report</Trans>
+        <Trans>Item grouped report</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -144,7 +144,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                      <Trans>Facility name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -162,7 +162,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Code:</Trans>
+                      <Trans>Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -182,7 +182,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                      <Trans>Levels</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -196,9 +196,13 @@ function ItemGroupReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -210,7 +214,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -224,9 +228,13 @@ function ItemGroupReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -240,7 +248,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -254,9 +262,13 @@ function ItemGroupReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -273,7 +285,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Item class:</Trans>
+                      <Trans>Item class</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -294,9 +306,13 @@ function ItemGroupReport() {
                       value={filterValues.item_class}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.item?.map((i) => (
                         <option key={i.item_class_id} value={i.item_class_id}>
                           {i.item_class_name}
@@ -308,7 +324,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Item Category:</Trans>
+                      <Trans>Items category</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -323,9 +339,13 @@ function ItemGroupReport() {
                       value={filterValues.item_type}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {selectedItem?.item_type.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -353,9 +373,13 @@ function ItemGroupReport() {
                       value={filterValues.physical}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.physical?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -367,7 +391,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Working condition:</Trans>
+                      <Trans>Working condition</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -381,9 +405,13 @@ function ItemGroupReport() {
                       value={filterValues.working}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.working?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -397,7 +425,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Financial source:</Trans>
+                      <Trans>Financial source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -411,9 +439,13 @@ function ItemGroupReport() {
                       value={filterValues.financial}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.financial?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -425,7 +457,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Energy source for Cold chain:</Trans>
+                      <Trans>Energy source for Cold chain</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -439,9 +471,13 @@ function ItemGroupReport() {
                       value={filterValues.item_power}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {itemGpHelper?.item_power?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -455,7 +491,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>PQS/PIS Code:</Trans>
+                      <Trans>PQS/PIS Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -473,7 +509,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Manufacturer:</Trans>
+                      <Trans>Manufacturer</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -488,9 +524,13 @@ function ItemGroupReport() {
                       value={filterValues.manufacturer}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {selectedItem?.manufacturer?.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -504,10 +544,10 @@ function ItemGroupReport() {
                 <div className="col-sm-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Year installed:</Trans>
+                      <Trans>Year installed</Trans>:
                     </label>
                     <label className="label col-sm-2">
-                      <Trans>from:</Trans>
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-2"
@@ -521,9 +561,13 @@ function ItemGroupReport() {
                       value={filterValues.year_from}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {Array.from({ length: 30 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
@@ -534,7 +578,7 @@ function ItemGroupReport() {
                       })}
                     </Form.Control>
                     <label className="label col-sm-2">
-                      <Trans>to:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-2"
@@ -548,9 +592,13 @@ function ItemGroupReport() {
                       value={filterValues.year_to}
                       as="select"
                     >
-                      <option value="-1" selected>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {Array.from({ length: 30 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
@@ -566,10 +614,10 @@ function ItemGroupReport() {
                 <div className="col-sm-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Capacity:</Trans>
+                      <Trans>capacity</Trans>:
                     </label>
                     <label className="label col-sm-2">
-                      <Trans>from:</Trans>
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-2"
@@ -585,7 +633,7 @@ function ItemGroupReport() {
                     />
 
                     <label className="label col-sm-2">
-                      <Trans>to:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-2"
@@ -606,7 +654,7 @@ function ItemGroupReport() {
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Reports</Trans>
                   </button>
                 </div>
                 <div className="col-sm-1">
@@ -615,7 +663,7 @@ function ItemGroupReport() {
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear</Trans>
                   </button>
                 </div>
               </div>
@@ -628,8 +676,7 @@ function ItemGroupReport() {
           <div className="card-body py-3">
             <h4>
               <Trans>
-                Report Number: Item Grouped Report ({country?.country})
-              </Trans>
+                Report</Trans> : <Trans>Item grouped report</Trans> ({country?.country})
             </h4>
             <h6>
               Filters : {""} {printFilterValues()}

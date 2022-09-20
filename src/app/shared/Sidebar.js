@@ -5,7 +5,7 @@ import eventBus from "../common/EventBus";
 
 import { connect } from "react-redux";
 import userService from "../services/user.service";
-import { Trans, withTranslation } from "react-i18next";
+import { Trans} from "react-i18next";
 import {
   BrowserView,
   MobileView,
@@ -105,87 +105,78 @@ class Sidebar extends Component {
                 </span>
               </span>
             </Link>
-          </li>
-
-          
-              {" "}
-              <li
-                className={
-                  this.isPathActive("/facilities")
-                    ? "nav-item active"
-                    : "nav-item"
-                }
-              >
-                <div
-                  className={
-                    this.state.facilitiesOpen
-                      ? "nav-link menu-expanded"
-                      : "nav-link"
-                  }
-                  onClick={() => this.toggleMenuState("facilitiesOpen")}
-                  data-toggle="collapse"
-                >
-                  <span className="icon-bg">
-                    <i className="mdi mdi-table-large menu-icon"></i>
-                  </span>
-                  <span className="menu-title">
+          </li>{" "}
+          <li
+            className={
+              this.isPathActive("/facilities") ? "nav-item active" : "nav-item"
+            }
+          >
+            <div
+              className={
+                this.state.facilitiesOpen
+                  ? "nav-link menu-expanded"
+                  : "nav-link"
+              }
+              onClick={() => this.toggleMenuState("facilitiesOpen")}
+              data-toggle="collapse"
+            >
+              <span className="icon-bg">
+                <i className="mdi mdi-table-large menu-icon"></i>
+              </span>
+              <span className="menu-title">
+                <span>
+                  <Trans>Facilities</Trans>
+                </span>
+              </span>
+              <i className="menu-arrow"></i>
+            </div>
+            <Collapse in={this.state.facilitiesOpen}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/facilities/info")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/facilities/info/new"
+                  >
                     <span>
-                      <Trans>Facilities</Trans>
+                      <Trans>New facility</Trans>
                     </span>
-                  </span>
-                  <i className="menu-arrow"></i>
-                </div>
-                <Collapse in={this.state.facilitiesOpen}>
-                  <ul className="nav flex-column sub-menu">
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/facilities/info")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/facilities/info/new"
-                      >
-                        <span>
-                          <Trans>New Facility</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/facilities/list")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/facilities/list"
-                      >
-                        <span>
-                          <Trans>Facility list</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/facilities/print")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/facilities/print"
-                      >
-                        <span>
-                          <Trans>Print Facility Form</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                 
-                  </ul>
-                </Collapse>
-              </li>
-          
-          
-
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/facilities/list")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/facilities/list"
+                  >
+                    <span>
+                      <Trans>Facility list</Trans>
+                    </span>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className={
+                      this.isPathActive("/facilities/print")
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    to="/facilities/print"
+                  >
+                    <span>
+                      <Trans>Print new facility form</Trans>
+                    </span>
+                  </Link>
+                </li>
+              </ul>
+            </Collapse>
+          </li>
           <li
             className={
               this.isPathActive("/items") ? "nav-item active" : "nav-item"
@@ -220,7 +211,7 @@ class Sidebar extends Component {
                     to="/items/info/new"
                   >
                     <span>
-                      <Trans>New Item</Trans>
+                      <Trans>New item</Trans>
                     </span>
                   </Link>
                 </li>
@@ -248,7 +239,7 @@ class Sidebar extends Component {
                     to="/items/print"
                   >
                     <span>
-                      <Trans>Print Item Form</Trans>
+                      <Trans>Print new item form</Trans>
                     </span>
                   </Link>
                 </li>
@@ -262,7 +253,7 @@ class Sidebar extends Component {
                     to="/items/qr"
                   >
                     <span>
-                      <Trans> Items QR </Trans>
+                      <Trans>Item QRs</Trans>
                     </span>
                   </Link>
                 </li>
@@ -276,7 +267,7 @@ class Sidebar extends Component {
                     to="/items/scan-qr"
                   >
                     <span>
-                      <Trans> Scan QR </Trans>
+                      <Trans>Scan QRs</Trans>
                     </span>
                   </Link>
                 </li>
@@ -305,7 +296,7 @@ class Sidebar extends Component {
                     </span>
                     <span className="menu-title">
                       <span>
-                        <Trans>Human Resource</Trans>
+                        <Trans>Human resources</Trans>
                       </span>
                     </span>
                     <i className="menu-arrow"></i>
@@ -323,7 +314,7 @@ class Sidebar extends Component {
                           to="/hr/list"
                         >
                           <span>
-                            <Trans>HR View</Trans>
+                            <Trans>Human resources list</Trans>
                           </span>
                         </Link>
                       </li>
@@ -352,7 +343,7 @@ class Sidebar extends Component {
                     </span>
                     <span className="menu-title">
                       <span>
-                        <Trans>User</Trans>
+                        <Trans>Users</Trans>
                       </span>
                     </span>
                     <i className="menu-arrow"></i>
@@ -370,7 +361,7 @@ class Sidebar extends Component {
                           to="/user/list"
                         >
                           <span>
-                            <Trans>Users View</Trans>
+                            <Trans>Users list</Trans>
                           </span>
                         </Link>
                       </li>
@@ -398,7 +389,7 @@ class Sidebar extends Component {
                   </span>
                   <span className="menu-title">
                     <span>
-                      <Trans>Message</Trans>
+                      <Trans>Messages</Trans>
                     </span>
                   </span>
                   <i className="menu-arrow"></i>
@@ -431,7 +422,7 @@ class Sidebar extends Component {
                         to="/message/list"
                       >
                         <span>
-                          <Trans>Message List</Trans>
+                          <Trans>Message list</Trans>
                         </span>
                       </Link>
                     </li>
@@ -475,7 +466,7 @@ class Sidebar extends Component {
                         to="/reports/gap-item"
                       >
                         <span>
-                          <Trans>Gap Item Report</Trans>
+                          <Trans>Item gap report</Trans>
                         </span>
                       </Link>
                     </li>
@@ -489,7 +480,7 @@ class Sidebar extends Component {
                         to="/reports/item-fac"
                       >
                         <span>
-                          <Trans>Item Report By Facility</Trans>
+                          <Trans>Item report by facility</Trans>
                         </span>
                       </Link>
                     </li>
@@ -503,7 +494,7 @@ class Sidebar extends Component {
                         to="/reports/fac-seg"
                       >
                         <span>
-                          <Trans>Facility Segmentation</Trans>
+                          <Trans>Facility segmentation</Trans>
                         </span>
                       </Link>
                     </li>
@@ -517,7 +508,7 @@ class Sidebar extends Component {
                         to="/reports/item-gp"
                       >
                         <span>
-                          <Trans>Item Grouped Report</Trans>
+                          <Trans>Item grouped report</Trans>
                         </span>
                       </Link>
                     </li>
@@ -531,7 +522,7 @@ class Sidebar extends Component {
                         to="/reports/subfac-pop-data"
                       >
                         <span>
-                          <Trans>Sub Facility population data</Trans>
+                          <Trans>Sub-facility populations report</Trans>
                         </span>
                       </Link>
                     </li>
@@ -545,7 +536,7 @@ class Sidebar extends Component {
                         to="/reports/fac-prof"
                       >
                         <span>
-                          <Trans>Profile of Facilities</Trans>
+                          <Trans>Profile of facilities</Trans>
                         </span>
                       </Link>
                     </li>
@@ -559,7 +550,7 @@ class Sidebar extends Component {
                         to="/reports/prof-cold-chain"
                       >
                         <span>
-                          <Trans>Profile of Cold Chain</Trans>
+                          <Trans>Profile of cold chain equipment</Trans>
                         </span>
                       </Link>
                     </li>
@@ -573,7 +564,7 @@ class Sidebar extends Component {
                         to="/reports/fac-map-based"
                       >
                         <span>
-                          <Trans>Facility Map-Based Report</Trans>
+                          <Trans>Facility map-based report</Trans>
                         </span>
                       </Link>
                     </li>
@@ -587,7 +578,7 @@ class Sidebar extends Component {
                         to="/reports/gap-map-based"
                       >
                         <span>
-                          <Trans>Gap Map-Based Report</Trans>
+                          <Trans>Gap map report</Trans>
                         </span>
                       </Link>
                     </li>
@@ -599,7 +590,7 @@ class Sidebar extends Component {
                 <>
                   <li className="nav-item nav-category">
                     <span>
-                      <Trans>Admin setting</Trans>
+                      <Trans>ADMIN Setting</Trans>
                     </span>
                   </li>
 
@@ -642,7 +633,7 @@ class Sidebar extends Component {
                             to="/settings/country"
                           >
                             <span>
-                              <Trans>Country setting</Trans>
+                              <Trans>Country</Trans> <Trans>settings</Trans>
                             </span>
                           </Link>
                         </li>
@@ -657,7 +648,7 @@ class Sidebar extends Component {
                             to="/settings/new-level-list"
                           >
                             <span>
-                              <Trans>Level setting</Trans>
+                              <Trans>Level settings</Trans>
                             </span>
                           </Link>
                         </li>
@@ -687,7 +678,7 @@ class Sidebar extends Component {
                             to="/settings/item-type"
                           >
                             <span>
-                              <Trans>Item category</Trans>
+                              <Trans>Items category</Trans>
                             </span>
                           </Link>
                         </li>
@@ -701,7 +692,7 @@ class Sidebar extends Component {
                             to="/settings/item-t-level"
                           >
                             <span>
-                              <Trans>"Item category" In different levels</Trans>
+                              <Trans>Item categories in different levels</Trans>
                             </span>
                           </Link>
                         </li>
@@ -715,7 +706,7 @@ class Sidebar extends Component {
                             to="/settings/item-fields"
                           >
                             <span>
-                              <Trans>Fields of "Item category"</Trans>
+                              <Trans>Fields of Items categories</Trans>
                             </span>
                           </Link>
                         </li>
@@ -758,7 +749,7 @@ class Sidebar extends Component {
                             to="/settings/manufacturer"
                           >
                             <span>
-                              <Trans>Manufacturer by Item class</Trans>
+                              <Trans>Manufacturers by item class</Trans>
                             </span>
                           </Link>
                         </li>
@@ -791,7 +782,7 @@ class Sidebar extends Component {
                             to="/settings/pqs4"
                           >
                             <span>
-                              <Trans>Import PQS4/PIS</Trans>
+                              <Trans>Import PQS/PIS 004</Trans>
                             </span>
                           </Link>
                         </li>
@@ -806,7 +797,7 @@ class Sidebar extends Component {
                             to="/settings/pqs3"
                           >
                             <span>
-                              <Trans>Import PQS3/PIS</Trans>
+                              <Trans>Import PQS/PIS 003</Trans>
                             </span>
                           </Link>
                         </li>
@@ -821,7 +812,7 @@ class Sidebar extends Component {
                             to="/settings/language/edit"
                           >
                             <span>
-                              <Trans>Edit Language</Trans>
+                              <Trans>Edit language</Trans>
                             </span>
                           </Link>
                         </li>
@@ -835,7 +826,7 @@ class Sidebar extends Component {
                             to="/settings/manage-help"
                           >
                             <span>
-                              <Trans>Manage Help</Trans>
+                              <Trans>Manage HELP</Trans>
                             </span>
                           </Link>
                         </li>
@@ -947,7 +938,6 @@ class Sidebar extends Component {
               )}
             </>
           )}
-
           {/* Logout*/}
           <li className="nav-item sidebar-user-actions py-5">
             <div className="sidebar-user-menu">
@@ -966,7 +956,9 @@ class Sidebar extends Component {
                   className="mdi mdi-logout menu-icon"
                 />
                 <span className="menu-title">
-                  <span>Log Out</span>
+                  <span>
+                    <Trans>Logout</Trans>
+                  </span>
                 </span>
               </Link>
             </div>

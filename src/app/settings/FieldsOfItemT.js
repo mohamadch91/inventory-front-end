@@ -145,7 +145,7 @@ function FieldsOfItemT() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Fields of</Trans> <Trans>"Item category"</Trans>
+        <Trans>Fields of Items categories</Trans>
       </h3>
       {isItemClassesLoading ? (
         <Spinner />
@@ -216,7 +216,7 @@ function FieldsOfItemT() {
                             color="inherit"
                             style={{ width: "max-content" }}
                           >
-                            {topic}
+                            <Trans>{topic}</Trans>
                           </StepButton>
                         </Step>
                       );
@@ -241,7 +241,7 @@ function FieldsOfItemT() {
                       onClick={handleNext}
                       sx={{ mr: 1 }}
                     >
-                      Next
+                      <Trans>Next</Trans>
                     </Button>
                     <button
                       className="btn btn-primary "
@@ -259,7 +259,10 @@ function FieldsOfItemT() {
             <div className="card">
               <div className="card-body p-3">
                 <div className="row">
-                  <h4> {Object.keys(fieldsCategories)[activeStep]}</h4>
+                  <h4>
+                    {" "}
+                    <Trans>{Object.keys(fieldsCategories)[activeStep]}</Trans>
+                  </h4>
                   <div className="mt-5 table-container">
                     <SharedTable>
                       <TableHead>
@@ -271,8 +274,10 @@ function FieldsOfItemT() {
                             <Trans>Enable</Trans>
                           </TableCell>
                           <TableCell className="col-sm-4">
-                            <Trans>Is this required field for</Trans>{" "}
-                            <Trans>item category</Trans>?
+                            <Trans>
+                              Is this field required for this item category?
+                            </Trans>
+                            
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <Trans>Edit</Trans>

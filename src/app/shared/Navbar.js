@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import i18n from "../../i18n";
 import eventBus from "../common/EventBus";
 import Help from "../components/Help";
+import { Trans } from "react-i18next";
+
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -74,9 +76,9 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
-            Inventory and Gap Analysis (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.25
-            (You are in {this.state.user?.facility_name})
+            <Trans>Inventory and Gap Analysis</Trans> (
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.35 (
+            <Trans>You are in</Trans> {this.state.user?.facility_name})
           </div>
 
           <ul className="navbar-nav navbar-nav-right">
@@ -145,7 +147,9 @@ class Navbar extends Component {
                   </div>
                   <div className="p-2">
                     <h5 className="dropdown-header text-uppercase pl-2 text-dark">
-                      <span>User Options</span>
+                      <span>
+                        <Trans>User Options</Trans>
+                      </span>
                     </h5>
                     <h5 className="dropdown-header text-uppercase pl-2 text-dark">
                       <span>
@@ -163,7 +167,9 @@ class Navbar extends Component {
                       }}
                     >
                       <span>
-                        <span>Log Out</span>
+                        <span>
+                          <Trans>Logout</Trans>
+                        </span>
                       </span>
                       <i className="mdi mdi-logout ml-1"></i>
                     </Dropdown.Item>
@@ -180,7 +186,7 @@ class Navbar extends Component {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
                   <h6 className="p-3 bg-primary text-white py-4 mb-0">
-                    Messages
+                    <Trans>Messages</Trans>
                   </h6>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item
@@ -190,7 +196,10 @@ class Navbar extends Component {
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
                         <Link to="/message/list">
-                          <span>See all message</span>
+                          <span>
+                            <Trans>See</Trans> <Trans>all</Trans>{" "}
+                            <Trans>message</Trans>
+                          </span>
                         </Link>
                       </h6>
                     </div>
@@ -207,7 +216,9 @@ class Navbar extends Component {
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
                   <h6 className="p-3 mb-0 bg-primary text-white py-4">
-                    <span>Notifications</span>
+                    <span>
+                      <Trans>Notifications</Trans>
+                    </span>
                   </h6>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item
@@ -222,7 +233,10 @@ class Navbar extends Component {
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject font-weight-normal mb-1">
                         <Link to="/dashboard/maintenanceLog">
-                          <span>See all Maintenance</span>
+                          <span>
+                            <Trans>See</Trans> <Trans>all</Trans>{" "}
+                            <Trans>Maintenance</Trans>
+                          </span>
                         </Link>
                       </h6>
                     </div>

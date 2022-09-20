@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -60,7 +60,7 @@ function GapMapBasedReport() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Gap Map-Based Report</Trans>
+        <Trans>Gap map report</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -78,7 +78,7 @@ function GapMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Storage condition:</Trans>
+                      <Trans>Storage conditions:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -103,7 +103,7 @@ function GapMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Gap Status:</Trans>
+                      <Trans>Gap Status</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -129,7 +129,7 @@ function GapMapBasedReport() {
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Reports</Trans>
                   </button>
                 </div>
                 <div className="col-sm-1">
@@ -138,7 +138,7 @@ function GapMapBasedReport() {
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear</Trans>
                   </button>
                 </div>
               </div>
@@ -147,10 +147,10 @@ function GapMapBasedReport() {
         </div>
       </div>
       <div className="p-3">
-        <h4>
-          <Trans>Report Number: Gap Map-Based ({country?.country})</Trans>
-        </h4>
-        <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+        <h3 className="text-black">
+          <Trans>Report</Trans>: <Trans>Gap map report</Trans> ({country?.country})
+        </h3>
+        <h5 className="text-black"><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h5>
         <SharedMap locations={reports} />
       </div>
     </div>
