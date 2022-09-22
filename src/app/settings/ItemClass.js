@@ -9,7 +9,11 @@ import Spinner from "../shared/Spinner";
 import "./itemClassLang.scss";
 import "../styles/inputs.scss";
 import { Trans } from "react-i18next";
-
+/**
+ * 
+ * @returns DOM elemnt 
+ * get all item classes from server and just can edit
+ */
 function ItemClass() {
   const [itemClasses, setItemClasses] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
