@@ -89,7 +89,9 @@ function EditLanguage() {
         setIsLoading(false);
       });
   }
-
+/**
+ * useeffect for gat data with paginations
+ */
   useEffect(() => {
     getData("?pnum=1&name=" + selectedLanguage);
   }, []);
