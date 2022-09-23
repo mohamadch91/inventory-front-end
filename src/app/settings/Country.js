@@ -106,6 +106,10 @@ export class Country extends Component {
     } else {
       this.setState({ validated: true });
       let formData = new FormData();
+      /**
+       * create new formdata from states
+       * form data becouse images
+       */
       formData.append("country", this.state.CountryName);
       formData.append("codecountry", this.state.CountryCode);
       formData.append("currency", this.state.Currency);
