@@ -76,7 +76,12 @@ export class Country extends Component {
     let str = "LatLng(" + e.latlng.lat + "," + e.latlng.lng + ")";
     this.setState({ mainlocation: str});
   }
-
+/**
+ * 
+ * @param {event} event 
+ * @returns null
+ * when clickng on the save country called
+ */
   handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
