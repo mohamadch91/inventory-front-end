@@ -86,6 +86,7 @@ export class Country extends Component {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget;
+    // check for validations
     if (
       !this.isCountryCodeValid() ||
       !this.isCurrencyValid() ||
