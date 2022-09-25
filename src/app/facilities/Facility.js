@@ -432,9 +432,22 @@ const [x2, setx2] = useState(
     }
     // for in _fieldsValue
     for (const key in _fieldsValue) {
+      const field = Object.values(facilityFields)
+        .flat()
+        .find((field) => field.stateName === key);
+      if (field === undefined) {
+        continue;
+      }
       if (_fieldsValue[key] === "") {
         delete _fieldsValue[key];
       }
+     if (typeof _fieldsValue[key] === "string") {
+       // find this field
+       
+       if (field.type === "number") {
+         _fieldsValue[key] = parseFloat(_fieldsValue[key].replace(",", "."));
+       }
+     }
     }
     const res = await (id === "new"
       ? FacilitiesService.postFacility(_fieldsValue)

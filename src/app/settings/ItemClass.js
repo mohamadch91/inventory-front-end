@@ -73,7 +73,7 @@ function ItemClass() {
   }
 
   return (
-    <div className="item-class-page">
+    <div className="item-class-page mb-5">
       {isLoading ? (
         <Spinner />
       ) : (

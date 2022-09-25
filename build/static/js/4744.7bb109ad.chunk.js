@@ -7,7 +7,7 @@
         r = a(43144),
         c = a(54318),
         s = a(39877),
-        o = "https://inventory.runflare.run/reports/",
+        o = "http://127.0.0.1:8000/reports/",
         t = (function () {
           function e() {
             (0, n.Z)(this, e);

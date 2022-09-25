@@ -3,9 +3,10 @@ import { separator as thousandSeparator } from "../helpers/separator";
 import { components } from "react-select";
 import { default as ReactSelect } from "react-select";
 import { Translation, Trans } from "react-i18next";
+import i18n from "../../i18n";
 
 import { useState } from "react";
-const numericKeys = "0123456789.:";
+let numericKeys = "0123456789.:";
 const num1 = "0123456789";
 const Option = (props) => {
   return (
@@ -186,7 +187,9 @@ const DynamicInput = (props) => {
       </>
     );
   }
-
+  if(i18n.language!="en"){
+    numericKeys = "0123456789,:";
+  }
   const validation = field.validation?.[0];
   return (
     <Form.Control
@@ -207,6 +210,7 @@ const DynamicInput = (props) => {
         }
         onChangeHandler(e.target.value, field);
       }}
+      lang="en-US"
       onChange={(e) => onChangeHandler(e.target.value, field)}
       value={defaultValue}
       className="form-control"

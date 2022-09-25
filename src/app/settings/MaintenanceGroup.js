@@ -107,14 +107,18 @@ function MaintenanceGroupComponent() {
 
   return (
     <div>
-      <h3 className="page-title mb-3"><Trans>Maintenance group</Trans></h3>
+      <h3 className="page-title mb-3">
+        <Trans>Maintenance group</Trans>
+      </h3>
       <div className="mt-3">
         <div className="card">
           <div className="card-body">
             <div className="row">
               <div className="col-sm-12 col-lg-6">
                 <Form.Group className="row">
-                  <label className="col-sm-12"><Trans>Item class</Trans></label>
+                  <label className="col-sm-12">
+                    <Trans>Item class</Trans>
+                  </label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemClassHandler}
@@ -122,7 +126,13 @@ function MaintenanceGroupComponent() {
                       as="select"
                     >
                       {itemClassesWithItemTypes.map((itemClass, index) => (
-                        <option value={index}>
+                        <option
+                          value={index}
+                          selected={
+                            itemClass?.item_class.id ===
+                            selectedItemClassAndItemTypes?.item_class.id
+                          }
+                        >
                           {itemClass.item_class.title}
                         </option>
                       ))}
@@ -132,7 +142,9 @@ function MaintenanceGroupComponent() {
               </div>
               <div className="col-sm-12 col-lg-6">
                 <Form.Group className="row">
-                  <label className="col-sm-12"><Trans>Items category</Trans></label>
+                  <label className="col-sm-12">
+                    <Trans>Items category</Trans>
+                  </label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemTypeHandler}
@@ -142,7 +154,12 @@ function MaintenanceGroupComponent() {
                     >
                       {selectedItemClassAndItemTypes?.item_type.map(
                         (itemType, index) => (
-                          <option value={index}>{itemType.title}</option>
+                          <option
+                            selected={itemType.id === selectedItemType.id}
+                            value={index}
+                          >
+                            {itemType.title}
+                          </option>
                         )
                       )}
                     </Form.Control>
@@ -246,8 +263,12 @@ function MaintenanceGroupComponent() {
                       <TableCell className="col-sm-9">
                         <Trans>Service/ Maintenance items</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-1"><Trans>Enable</Trans></TableCell>
-                      <TableCell className="col-sm-2"><Trans>Edit</Trans></TableCell>
+                      <TableCell className="col-sm-1">
+                        <Trans>Enable</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Edit</Trans>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

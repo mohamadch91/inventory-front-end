@@ -221,6 +221,10 @@ function HRList() {
                   setSelectedFacility(e.target.value);
                   setIsLoading(true);
                   getList(e.target.value);
+                  setAddRowFormData({
+                    ...addRowFormData,
+                    facility: e.target.value,
+                  });
                 }}
                 value={selectedFacility}
               >
@@ -435,13 +439,14 @@ function HRList() {
                 <select
                   name="facility"
                   onChange={handleChangeAdd}
-                  value={selectedFacility}
+                  value={addRowFormData?.facility}
                 >
                   {facilities.map((item, index) => (
+                    
                     <option
                       key={item.id}
                       value={item.id}
-                      selected={item.facility === item.id}
+                      selected={selectedFacility === item.id}
                     >
                       {item.name}
                     </option>

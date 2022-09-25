@@ -153,7 +153,6 @@ function Item() {
     const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
-      console.log(field)
       if (
         field.required &&
         !fieldsValue[field.state] &&
@@ -167,7 +166,6 @@ function Item() {
             _fieldErrors[field.state] = "this field is required!";
           }
         } else {
-          console.log("salaaam");
           _fieldErrors[field.state] = "this field is required!";
         }
       }
@@ -244,11 +242,29 @@ function Item() {
     _fieldsValue["item_class"] = selectedItemClass.item_class.id;
     _fieldsValue["item_type"] = selectedItemType.id;
     _fieldsValue["facility"] = _fieldsValue["facility"].id;
-    console.log(_fieldsValue["facility"].id);
     // remove empty items
     for (const key in _fieldsValue) {
-      if (_fieldsValue[key] === "") {
+      const field = Object.values(itemFields)
+        .flat()
+        .find((field) => field.state === key);
+      if(field === undefined) {
+        continue;
+      }
+      if (_fieldsValue[key] === "" || _fieldsValue[key] === null) {
         delete _fieldsValue[key];
+        continue;
+      }
+
+      if (typeof _fieldsValue[key] ==='string' ){
+        // find this field 
+        console.log(Object.values(itemFields).flat());
+        console.log(key);
+        // const field = Object.values(itemFields).flat().find((field) => field.state === key);
+        
+        if (field.type === 'number'){
+          _fieldsValue[key] = parseFloat(_fieldsValue[key].replace(",", "."));
+
+        }
       }
     }
     const res = await (id === "new"

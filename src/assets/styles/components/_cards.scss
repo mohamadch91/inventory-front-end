@@ -3,6 +3,8 @@
 .card {
   border: 0;
   border-radius: 0;
+    margin-bottom: 30px;
+
   .card-body {
     padding: $card-padding-y $card-padding-x;
     @media(max-width: 767px) {

@@ -14,7 +14,7 @@
   @media (min-width: 992px) {
     .navbar {
       .navbar-brand-wrapper {
-        width: $sidebar-width-mini;
+        width: $sidebar-width-mini -10px;
       }
       .navbar-menu-wrapper {
         width: calc(100% - #{$sidebar-width-mini});
@@ -122,7 +122,7 @@
   @media (min-width: 992px) {
     .navbar {
       .navbar-brand-wrapper {
-        width: $sidebar-width-icon;
+        width: 55px;
         .brand-logo {
           display: none;
         }

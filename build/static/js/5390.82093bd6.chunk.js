@@ -204,7 +204,7 @@
         i = n(43144),
         a = n(39877),
         s = n(54318),
-        c = (n(74569), "https://inventory.runflare.run/facilities/"),
+        c = (n(74569), "http://127.0.0.1:8000/facilities/"),
         u = (function () {
           function e() {
             (0, r.Z)(this, e);
@@ -268,7 +268,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return a.Z.post(
-                    "https://inventory.runflare.run/facilities/import",
+                    "http://127.0.0.1:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, s.Z)() } }
                   );

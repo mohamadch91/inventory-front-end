@@ -250,7 +250,7 @@
         a = t(43144),
         s = t(39877),
         i = t(54318),
-        c = "https://inventory.runflare.run/dashboard",
+        c = "http://127.0.0.1:8000/dashboard",
         l = (function () {
           function e() {
             (0, r.Z)(this, e);

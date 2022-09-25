@@ -29,7 +29,11 @@ const WarningsTable = (props) => {
                   </th>
                   <th>
                     {" "}
-                    <Trans>Item Category</Trans>{" "}
+                    <Trans>Maintenance</Trans>{" "}
+                  </th>
+                  <th>
+                    {" "}
+                    <Trans>Items category</Trans>{" "}
                   </th>
                   <th>
                     {" "}
@@ -55,6 +59,8 @@ const WarningsTable = (props) => {
                     <tr key={el.id} className="table-danger">
                       <td key={el.id + i}> {i + 1} </td>
                       <td key={i + el.name}> {el.name} </td>
+                      <td key={i + el.item_type}> {el.item_type} </td>
+
                       <td key={i + el.code}> {el.code} </td>
                       <td key={i + el.deadline}> {el.deadline} </td>
                       <td key={i + el.interval}> {el.interval} </td>

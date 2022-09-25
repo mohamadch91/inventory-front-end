@@ -120,20 +120,20 @@ const table2Data = [
     size: "large",
   },
   {
-    headTitle: "Required capacity per target population",
+    headTitle: "Required capacity",
     valueKey: "req",
     func: (val) => (+val).toFixed(2),
     size: "fit",
   },
   {
-    headTitle: "Available capacity per target population",
+    headTitle: "Available capacity ",
     valueKey: "available",
     func: (val) => (+val).toFixed(2),
     size: "large",
   },
   {
     headTitle:
-      "The difference between available capacity and required capacity per target population",
+      "The difference between available capacity and required capacity ",
     valueKey: "diff",
     func: (val) => val.toFixed(2),
     size: "large",
@@ -213,10 +213,24 @@ function ProfileOfColdChain() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" colSpan={6}></TableCell>
-                    <TableCell align="center" colSpan={6}>
+                    <TableCell
+                      align="center"
+                      colSpan={4}
+                      sx={{
+                        borderRight: "1px solid black",
+                      }}
+                    ></TableCell>
+                    <TableCell colspan={2}></TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        borderRight: "1px solid black",
+                      }}
+                      colSpan={4}
+                    >
                       <Trans>Existing items</Trans>
                     </TableCell>
+                    <TableCell colspan={2}></TableCell>
                     <TableCell align="center" colSpan={6}>
                       <Trans>Not work items</Trans>
                     </TableCell>

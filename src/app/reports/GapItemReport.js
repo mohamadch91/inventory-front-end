@@ -87,9 +87,9 @@ const tableDegreeData = [
   {
     headTitle: "Required capacity (lit.)",
     valueKey: "req",
-    func: (val) => {
-      parseFloat(val).toFixed(2);
-    },
+    func: (val) => 
+      parseFloat(val).toFixed(2)
+    ,
   },
   {
     headTitle: "All total available (lit.)",
@@ -157,10 +157,44 @@ function GapItemReport({i18n}) {
               if(key==='degree'){
                 filter += `Storage condition=${degrees.find((d) => d.id === filterValue).name} , `;
               }else if(key==='option'){
-                filter += `${key} = ${options.find((d) => d.id === filterValue).name} , `;
-              }else{
+                filter += `Option = ${options.find((d) => d.id === filterValue).name} , `;
+              }
+              else if(key==='type'){
+                filter += `Type = ${
+                  gapItemHelper?.type.find((d) => d.id === parseInt(filterValue)).name
+                } , `;
+              }else if(key==='level'){
+                filter += `Level =   ${
+                  gapItemHelper?.level.find(
+                    (d) => d.id === parseInt(filterValue)
+                  ).id
+                }  - ${
+                  gapItemHelper?.level.find(
+                    (d) => d.id === parseInt(filterValue)
+                  ).name
+                } , `;
+              }
+              else if(key==='power'){
+                filter += `Power source = ${
+                  gapItemHelper?.power.find(
+                    (d) => d.id === parseInt(filterValue)
+                  ).name
+                } , `;
+              }
+              else if (key === "code") {
+                                filter += `Code = ${filterValue} , `;
+
+              } else if (key === "name") {
+                filter += `Facility name = ${filterValue} , `;
+              } else if (key === "year_from") {
+                filter += `Year from = ${filterValue} , `;
+              } else if (key === "year_to") {
+                filter += `Year to = ${filterValue} , `;
+              } else if (key === "calculate_for") {
+                filter += `Calculate for = ${filterValue} , `;
+              } else {
                 filter += `${key} = ${filterValue} , `;
-            }}
+              }}
         }
         return filter;
 
@@ -585,6 +619,7 @@ function GapItemReport({i18n}) {
                                       : "unset",
                                 }}
                               >
+                                {console.log(report[`${td.valueKey}${i + 1}`])}
                                 {td.func(report[`${td.valueKey}${i + 1}`]) ??
                                   "-"}
                               </TableCell>

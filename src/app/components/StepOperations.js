@@ -29,7 +29,7 @@ function StepOperations(props) {
         </Button>
         <Box sx={{ flex: "1 1 auto" }} />
         <>
-          {id !== "new" && (
+          {id !== "new" && activeStep !== stepsLength && (
             <>
               <button className="btn btn-primary w-25 ">SAVE ALL</button>
               <Button
@@ -41,6 +41,12 @@ function StepOperations(props) {
                 <Trans>Next</Trans>
                 <RightArrowIcon />
               </Button>
+            </>
+          )}
+          {id !== "new" && activeStep === stepsLength && (
+            <>
+              <button className="btn btn-primary w-25 ">SAVE ALL</button>
+            
             </>
           )}
           {id === "new" && activeStep !== stepsLength && (

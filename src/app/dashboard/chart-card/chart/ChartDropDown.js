@@ -6,7 +6,6 @@ const ChartDropDown = (props) => {
   return (
     <div className={classes.drop}>
       <select onChange={props.onChange}>
-        <option value="">{props.text}</option>
         <Translation>
           {(t, { i18n }) => (
             <option i18n value="" selected>

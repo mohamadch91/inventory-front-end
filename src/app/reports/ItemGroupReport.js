@@ -73,7 +73,6 @@ function ItemGroupReport() {
     let filter = "";
     for (const key in filterValues) {
       const value = filterValues[key];
-      console.log(itemGpHelper);
       if (value.length > 0 && value !== "-1") {
         if (key === "level"){
           filter += `Level = ${value}- ${itemGpHelper.level.find((level) => level.id === parseInt(value)).name} `;
@@ -86,14 +85,13 @@ function ItemGroupReport() {
         }
         else if (key === "item_class"){
            const item_class = selectedItem.item_class_name;
-           filter += `${key}: ${item_class}, `;
+           filter += `Item class: ${item_class}, `;
         }
         else if (key === "item_type"){
           const item_type = selectedItem.item_type.filter(
             (item) => item.id === parseInt(value)
           );
-           console.log(item_type);
-          filter += `${key}: ${item_type[0]?.name}, `;
+          filter += `Items category: ${item_type[0]?.name}, `;
         }
         else if (key === "physical"){
           filter += `${key}= ${itemGpHelper.physical.find((physical) => physical.id === parseInt(value)).name} `;

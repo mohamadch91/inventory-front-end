@@ -68,7 +68,8 @@ function MaintenanceServiceComponent() {
   }, [selectedItemType]);
 
   const selectItemClassHandler = (e) => {
-    console.log();
+    console.log(e.target.value);
+    console.log(itemClassesWithItemTypes);
     setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
     setSelectedItemType(
       itemClassesWithItemTypes[e.target.value].item_type?.[0]
@@ -76,6 +77,8 @@ function MaintenanceServiceComponent() {
   };
 
   const selectItemTypeHandler = (e) => {
+    console.log(e.target.value);
+    console.log(selectedItemClassAndItemTypes);
     setSelectedItemType(
       selectedItemClassAndItemTypes.item_type[e.target.value]
     );
@@ -131,7 +134,13 @@ function MaintenanceServiceComponent() {
                       as="select"
                     >
                       {itemClassesWithItemTypes.map((itemClass, index) => (
-                        <option value={index}>
+                        <option
+                          selected={
+                            itemClass?.item_class.id ===
+                            selectedItemClassAndItemTypes?.item_class.id
+                          }
+                          value={index}
+                        >
                           {itemClass.item_class.title}
                         </option>
                       ))}
@@ -153,7 +162,7 @@ function MaintenanceServiceComponent() {
                     >
                       {selectedItemClassAndItemTypes?.item_type.map(
                         (itemType, index) => (
-                          <option value={index}>{itemType.title}</option>
+                          <option selected={itemType.id ===selectedItemType.id} value={index}>{itemType.title}</option>
                         )
                       )}
                     </Form.Control>

@@ -7,7 +7,7 @@
         i = r(43144),
         l = r(39877),
         a = r(54318),
-        s = "https://inventory.runflare.run/related/",
+        s = "http://127.0.0.1:8000/related/",
         c = (function () {
           function e() {
             (0, t.Z)(this, e);

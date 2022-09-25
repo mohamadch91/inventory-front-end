@@ -72,7 +72,7 @@ class App extends Component {
               <div className="content-wrapper">
                 <AppRoutes />
               </div>
-              {footerComponent}
+              {/* {footerComponent} */}
             </div>
           ) : (
             <AppRoutes />

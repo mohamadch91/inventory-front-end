@@ -127,7 +127,7 @@ const MapWrapper = (props) => {
       {Current !== null && x1 && x2 && (
         <MapContainer
           center={[x1, x2]}
-          zoom={9}
+          zoom={5}
           scrollWheelZoom={true}
           style={{ width: "100%", height: "450px", zIndex: "1" }}
 

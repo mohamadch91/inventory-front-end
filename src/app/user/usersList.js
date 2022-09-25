@@ -208,6 +208,8 @@ function UsersList() {
         .catch((err) => {
           if(err.response.data.username){
             toast.error(err.response.data.username[0]);
+            setIsLoading(false);
+
           }
           else{
           toast.error("There is a problem sending data");
@@ -247,6 +249,10 @@ function UsersList() {
                   setSelectedFacility(e.target.value);
                   setIsLoading(true);
                   getList(e.target.value);
+                   setAddRowFormData({
+                     ...addRowFormData,
+                     facilityid: e.target.value,
+                   });
                 }}
                 value={selectedFacility}
               >
@@ -599,14 +605,15 @@ function UsersList() {
                     <select
                       name="facilityid"
                       onChange={handleChangeAdd}
-                      value={selectedFacility}
+                      value={addRowFormData?.facilityid }
                     >
                       {facilities.map((item, index) => (
                         <option
                           key={item.id}
                           value={item.id}
-                          selected={item.id === addRowFormData?.facilityid}
+                          selected={parseInt(selectedFacility) === item.id}
                         >
+                          {console.log(parseInt(addRowFormData?.facilityid))}
                           {item.name}
                         </option>
                       ))}

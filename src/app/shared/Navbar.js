@@ -26,12 +26,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://inventory.runflare.run${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://inventory.runflare.run${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
@@ -77,7 +77,7 @@ class Navbar extends Component {
               }}
             />
             <Trans>Inventory and Gap Analysis</Trans> (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.35 (
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.40 (
             <Trans>You are in</Trans> {this.state.user?.facility_name})
           </div>
 

@@ -18,7 +18,7 @@
     -moz-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
     -ms-transition: width $action-transition-duration $action-transition-timing-function, background $action-transition-duration $action-transition-timing-function;
     background: $nvabar-brand-bg;
-    width: $sidebar-width-lg;
+    width: 243px;
     height: $navbar-height;
     @media (max-width: 991px) {
       width: 55px;
