@@ -20,9 +20,9 @@ i18n
     ns: ["translation"],
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "fa", "fr", "es"],
-    localePath: "http://127.0.0.1:8000/media/{{lng}}/{{ns}}.json",
+    localePath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
     backend: {
-      loadPath: "http://127.0.0.1:8000/languages/{{ns}}?name={{lng}}",
+      loadPath: "https://inventory.runflare.run/languages/{{ns}}?name={{lng}}",
       addPath: null,
       // request: async (options, url, payload, callback) => {
       //   try {

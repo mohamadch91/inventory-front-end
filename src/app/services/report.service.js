@@ -1,7 +1,7 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "http://127.0.0.1:8000/reports/";
+const API_URL = "https://inventory.runflare.run/reports/";
 
 class ReportService {
   getDownloadLinks() {
@@ -95,6 +95,11 @@ class ReportService {
   }
   putGapCCEPlan(payload) {
     return ApiManager.put(API_URL + "gapccePlan", payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  savegaps(payload, saved) {
+    return ApiManager.post(API_URL + "gapsave?condition=" + payload, saved, {
       headers: { Authorization: authHeader() },
     });
   }

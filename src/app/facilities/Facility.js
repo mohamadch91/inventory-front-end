@@ -32,6 +32,7 @@ import L from "leaflet";
 // import tileLayer from '../util/tileLayer';
 // import "leaflet/dist/leaflet.css";
 import "leaflet/dist/leaflet.css";
+import toast from "react-hot-toast";
 const parentFacilityField = {
   id: "parent-facility",
   type: "text",
@@ -87,15 +88,15 @@ const GetCoordinates = (props) => {
       console.log("salam");
     });
     map.on("click", (e) => {
-      window.navigator.geolocation.getCurrentPosition((pos)=> {
-        const { latitude, longitude } = pos.coords;
-        const data={
-          latlang:{
-          lat:latitude,
-          lng:longitude
-        }}
-        handleClick(data)
-      }, console.log);
+      // window.navigator.geolocation.getCurrentPosition((pos)=> {
+      //   const { latitude, longitude } = pos.coords;
+      //   const data={
+      //     latlang:{
+      //     lat:latitude,
+      //     lng:longitude
+      //   }}
+      //   handleClick(data)
+      // }, console.log);
       info.textContent = e.latlng;
       console.log(e)
       handleClick(e);
@@ -116,7 +117,7 @@ function Facility() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
   const pid = params.get("pid");
-const [map, setMap] = useState(null);
+const [map, setMap] = useState( null);
 const [Current, sercurrent] = useState([]);
 const [x1, setx1] = useState(
   null
@@ -135,6 +136,30 @@ const [x2, setx2] = useState(
       };
 
       if (id === "new") {
+        if(!navigator.geolocation){
+          toast.error("cannot get location");
+        }
+       navigator.geolocation.getCurrentPosition(
+         (pos) => {
+           console.log("salam");
+           console.log("salam");
+
+           const { latitude, longitude } = pos.coords;
+           console.log(pos);
+           const data = {
+             latlang: {
+               lat: latitude,
+               lng: longitude,
+             },
+           };
+           setMap(data);
+           console.log("salam");
+         },
+         () => {
+           console.log("khobi");
+         },
+         { enableHighAccuracy: true }
+       );
             setx1(
               JSON.parse(localStorage.getItem("country")) === null
                 ? 35
@@ -157,6 +182,8 @@ const [x2, setx2] = useState(
                     ["mainlocation"]?.split(",")[1]
                     ?.split(")")[0]
             );
+          
+         
         return defaultData;
       }
       const params={
@@ -479,7 +506,7 @@ window.handleMapClick = handleMapClick;
                   return (
                     <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
-                        {topic}
+                        <Trans>{topic}</Trans>
                       </StepLabel>
                     </Step>
                   );
@@ -656,6 +683,7 @@ window.handleMapClick = handleMapClick;
                                 setMap={setMap}
                               />
                               <>
+                              {console.log(map)}
                                 {map && (
                                   <Marker position={map} draggable={true}>
                                     <Popup position={map}>

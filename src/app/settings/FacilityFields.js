@@ -14,6 +14,8 @@ import "../styles/table.scss";
 import RelatedService from "../services/related.service";
 import "../styles/inputs.scss";
 import { Trans } from "react-i18next";
+import LeftArrowIcon from "../shared/LeftArrowIcon";
+import RightArrowIcon from "../shared/RightArrowIcon";
 
 function FieldsFacility() {
   const [activeStep, setActiveStep] = useState(0);
@@ -136,9 +138,19 @@ function FieldsFacility() {
                       onClick={handleBack}
                       sx={{ mr: 1 }}
                     >
+                      <LeftArrowIcon style={{ marginRight: 2 }} />
+
                       <Trans>Back</Trans>
                     </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
+                    <Box sx={{ flex: "0.48 0.4 auto" }} />
+
+                    <button
+                      className="btn btn-primary "
+                      onClick={onSaveHandler}
+                    >
+                      <Trans>SAVE ALL</Trans>
+                    </button>
+                    <Box sx={{ flex: "0.5 0.5 auto" }} />
                     <Button
                       disabled={
                         activeStep === Object.keys(fieldsCategories).length - 1
@@ -147,13 +159,8 @@ function FieldsFacility() {
                       sx={{ mr: 1 }}
                     >
                       <Trans>Next</Trans>
+                      <RightArrowIcon />
                     </Button>
-                    <button
-                      className="btn btn-primary "
-                      onClick={onSaveHandler}
-                    >
-                      <Trans>SAVE ALL</Trans>
-                    </button>
                   </Box>
                 </div>
               </div>

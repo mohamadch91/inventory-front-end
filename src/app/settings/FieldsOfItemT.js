@@ -16,6 +16,9 @@ import "../styles/table.scss";
 import RelatedService from "../services/related.service";
 import "../styles/inputs.scss";
 import { Trans } from "react-i18next";
+import LeftArrowIcon from "../shared/LeftArrowIcon";
+import RightArrowIcon from "../shared/RightArrowIcon";
+
 
 function FieldsOfItemT() {
   const [activeStep, setActiveStep] = useState(0);
@@ -54,7 +57,7 @@ function FieldsOfItemT() {
     {}
   );
 
-  const { data: relatedItemType } = useQuery(
+  const { data: relatedItemType, refetch: refetchRelatedx } = useQuery(
     ["related-item-type", selectedItemType?.id],
     async () => {
       const res = await RelatedService.getRelatedItemType(selectedItemType.id);
@@ -128,6 +131,7 @@ function FieldsOfItemT() {
 
   const onSaveHandler = async () => {
     const res = await RelatedService.putRelatedItemType(fieldsValue);
+    refetchRelatedx();
   };
 
   const handleNext = () => {
@@ -229,11 +233,22 @@ function FieldsOfItemT() {
                       color="inherit"
                       disabled={activeStep === 0}
                       onClick={handleBack}
-                      sx={{ mr: 1 }}
+                      sx={{ ml: 1,pl:1 }}
                     >
+                      <LeftArrowIcon style={{ marginRight: 2 }} />
+
                       <Trans>Back</Trans>
                     </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
+                    <Box sx={{ flex: "0.48 0.4 auto" }} />
+
+                    <button
+                      className="btn btn-primary "
+                      onClick={onSaveHandler}
+                    >
+                      <Trans>SAVE ALL</Trans>
+                    </button>
+                    <Box sx={{ flex: "0.5 0.5 auto" }} />
+
                     <Button
                       disabled={
                         activeStep === Object.keys(fieldsCategories).length - 1
@@ -242,13 +257,8 @@ function FieldsOfItemT() {
                       sx={{ mr: 1 }}
                     >
                       <Trans>Next</Trans>
+                      <RightArrowIcon />
                     </Button>
-                    <button
-                      className="btn btn-primary "
-                      onClick={onSaveHandler}
-                    >
-                      <Trans>SAVE ALL</Trans>
-                    </button>
                   </Box>
                 </div>
               </div>
@@ -277,7 +287,6 @@ function FieldsOfItemT() {
                             <Trans>
                               Is this field required for this item category?
                             </Trans>
-                            
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <Trans>Edit</Trans>

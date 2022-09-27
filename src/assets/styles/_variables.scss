@@ -68,7 +68,7 @@ $theme-gradient-colors: (
 ////////// COLOR VARIABLES //////////
 $content-bg: #f0f1f6;
 $footer-bg: $content-bg;
-$footer-color: ctheme-color(light);
+$footer-color: #001737;
 $border-color: rgba(151,151,151, .3);
 $circle-border:$white; 
 
@@ -124,7 +124,7 @@ $sidebar-light-menu-border-color: #f2edf3;
 
 
 $sidebar-dark-bg: #181824;
-$sidebar-dark-menu-color: #8e94a9;
+$sidebar-dark-menu-color: #ffffff;
 $sidebar-dark-menu-active-bg: transparent;
 $sidebar-dark-menu-active-color: #44ce42;
 $sidebar-dark-menu-hover-bg: transparent;
@@ -140,7 +140,7 @@ $sidebar-dark-menu-arrow-color: #9e9da0;
 
 $sidebar-menu-font-size: 0.937rem;
 $sidebar-menu-padding-y: .625rem;
-$sidebar-menu-padding-x: 2.375rem;
+$sidebar-menu-padding-x: 1rem;
 
 $sidebar-submenu-font-size: .8125rem;
 $sidebar-submenu-item-padding: .75rem 2rem .75rem 2rem;

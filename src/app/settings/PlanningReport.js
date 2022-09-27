@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -97,7 +97,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                      <Trans>Facility Name</Trans>;
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -115,7 +115,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Code:</Trans>
+                      <Trans>Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -135,7 +135,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                      <Trans>Levels</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -149,9 +149,13 @@ function PlanningReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {planningReportHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -163,7 +167,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -177,9 +181,13 @@ function PlanningReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {planningReportHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -193,7 +201,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -207,9 +215,13 @@ function PlanningReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {planningReportHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -223,7 +235,7 @@ function PlanningReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Storage Condition For Planning:</Trans>
+                      <Trans>Storage Condition For Planning</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -237,9 +249,13 @@ function PlanningReport() {
                       value={filterValues.degree}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {degrees.map((i) => (
                         <option key={i.id} value={i.id}>
                           {i.name}
@@ -250,11 +266,11 @@ function PlanningReport() {
                 </div>
               </div>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
-                  <Trans>General population:</Trans>
+                <label className="label col-sm-2 mt-3">
+                  <Trans>General populations</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -267,8 +283,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.general_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -283,11 +299,11 @@ function PlanningReport() {
                 />
               </Form.Group>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
+                <label className="label col-sm-2 mt-3">
                   <Trans>Under-1 Population</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -300,8 +316,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.under_1_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -316,11 +332,11 @@ function PlanningReport() {
                 />
               </Form.Group>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
+                <label className="label col-sm-2 mt-3">
                   <Trans>Require Capacity</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -333,8 +349,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.req_cap_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -349,11 +365,11 @@ function PlanningReport() {
                 />
               </Form.Group>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
+                <label className="label col-sm-2 mt-3">
                   <Trans>Available capacity (lit.)</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -366,8 +382,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.available_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -382,11 +398,11 @@ function PlanningReport() {
                 />
               </Form.Group>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
+                <label className="label col-sm-2 mt-3">
                   <Trans>Functional Capacity</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -399,8 +415,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.func_cap_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -415,11 +431,11 @@ function PlanningReport() {
                 />
               </Form.Group>
               <Form.Group className="row mt-1">
-                <label className="label col-sm-2">
+                <label className="label col-sm-2 mt-3">
                   <Trans>Shortage/Exces Capacity</Trans>
                 </label>
-                <label className="label-center col-sm-2">
-                  <Trans>from:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>from</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -432,8 +448,8 @@ function PlanningReport() {
                   }}
                   value={filterValues.excees_from}
                 />
-                <label className="label-center col-sm-2">
-                  <Trans>to:</Trans>
+                <label className="label-center col-sm-2 mt-3">
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -449,18 +465,18 @@ function PlanningReport() {
               </Form.Group>
 
               <div className="row mt-4">
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Reports</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>

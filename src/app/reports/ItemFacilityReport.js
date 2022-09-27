@@ -151,11 +151,11 @@ function ItemFacilityReport() {
       if (filter.length > 0 && filter !== "-1") {
         if(key==='item_class'){
           const item_class=selectedItem.item_class_name;
-          filterString += `${key}: ${item_class}, `;
+          filterString += `Item class: ${item_class}, `;
         }
         else if(key==='item_type'){
           const item_type=selectedItem.item_type.filter((item)=>item.id===parseInt(filter));
-          filterString += `${key}: ${item_type[0]?.name}, `;
+          filterString += `Items category: ${item_type[0]?.name}, `;
         }
           else if(key==='level'){
           const level=itemFacHelper.level.filter((item)=>item.id===parseInt(filter));
@@ -184,7 +184,17 @@ function ItemFacilityReport() {
           // find the item_power name by id
           const item_power=itemFacHelper.item_power.filter((item)=>item.id===parseInt(filter));
           filterString += `Item power : ${item_power[0]?.name}, `;
-        }else{
+        }
+        else if (key==='name'){
+        filterString += `Facility name: ${filter}, `;}
+
+        
+         else if (key==='code'){
+        filterString += `Code: ${filter}, `;
+      }
+
+        
+        else{
 
         filterString += `${key}: ${filter}, `;}
       }
@@ -565,13 +575,13 @@ function ItemFacilityReport() {
                     <Trans>Reports</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    <Trans>Clear</Trans>
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -583,15 +593,16 @@ function ItemFacilityReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>
-                Report</Trans>: <Trans>Item report by facility</Trans> ({country?.country})
-              
+              <Trans>Report</Trans>: <Trans>Item report by facility</Trans> (
+              {country?.country})
             </h4>
             <h6>
               <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h6>
+            <h6>
+              <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+            </h6>
             <div className="mt-3 table-container ">
               <SharedTable stickyHeader>
                 <TableHead>

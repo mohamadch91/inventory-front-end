@@ -188,16 +188,16 @@ function FacilityMapBasedReport() {
               <div className="row mt-4">
                 <div className="col-sm-1">
                   <button type="submit" className="btn btn-primary">
-                    Reports
+                    <Trans>Reports</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    Clear
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>

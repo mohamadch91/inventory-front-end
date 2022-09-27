@@ -100,36 +100,42 @@ const table2Data = [
     valueKey: "id",
     func: (val) => val,
     size: "fit",
+    align: "left",
   },
   {
     headTitle: "Level name",
     valueKey: "name",
     func: (val) => val,
     size: "fit",
+    align: "left",
   },
   {
     headTitle: "General population",
     valueKey: "general",
     func: (val) => separator(val),
     size: "large",
+    align: "right",
   },
   {
     headTitle: "Number of under-one children ",
     valueKey: "under1",
     func: (val) => separator(val),
     size: "large",
+    align: "right",
   },
   {
     headTitle: "Required capacity",
     valueKey: "req",
     func: (val) => (+val).toFixed(2),
     size: "fit",
+    align: "right",
   },
   {
     headTitle: "Available capacity ",
     valueKey: "available",
     func: (val) => (+val).toFixed(2),
     size: "large",
+    align: "right",
   },
   {
     headTitle:
@@ -137,18 +143,21 @@ const table2Data = [
     valueKey: "diff",
     func: (val) => val.toFixed(2),
     size: "large",
+    align: "right",
   },
   {
     headTitle: "Required capacity per target population",
     valueKey: "require_capacity",
     func: (val) => val.toFixed(2),
     size: "fit",
+    align: "left",
   },
   {
     headTitle: "Available capacity per target population",
     valueKey: "available_capacity",
     func: (val) => val.toFixed(2),
     size: "fit",
+    align: "right",
   },
   {
     headTitle:
@@ -156,6 +165,7 @@ const table2Data = [
     valueKey: "diff_capacity",
     func: (val) => val.toFixed(2),
     size: "large",
+    align: "right",
   },
 ];
 
@@ -300,6 +310,7 @@ function ProfileOfColdChain() {
                         key={cell.headTitle}
                         style={{
                           minWidth: cell.size === "large" ? "230px" : "auto",
+                          textAlign : cell.align
                         }}
                       >
                         <Trans>{cell.headTitle}</Trans>
@@ -312,7 +323,10 @@ function ProfileOfColdChain() {
                     return (
                       <TableRow key={index}>
                         {table2Data.map((data) => (
-                          <TableCell key={data.valueKey}>
+                          <TableCell
+                            style={{ textAlign: data.align }}
+                            key={data.valueKey}
+                          >
                             {data.func(report[data.valueKey]) ?? "-"}
                           </TableCell>
                         ))}

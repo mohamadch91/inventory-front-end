@@ -9,6 +9,7 @@ function LeftArrowIcon() {
         width="20px"
         height="20px"
         viewBox="0 0 400 400"
+        style={{marginRight:"5px"}}
       >
         <path
           fill="currentColor"

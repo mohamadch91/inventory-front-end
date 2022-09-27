@@ -58,6 +58,8 @@ function FacilityGapInformation() {
         count: values.count,
       };
       const res = await ReportService.postGapCCEPlan(payload);
+      fetchPQSData();
+
       return res.data;
     },
     onSuccess() {
@@ -69,6 +71,8 @@ function FacilityGapInformation() {
     mutationKey: ["plan-delete"],
     mutationFn: async (id) => {
       const res = await ReportService.deleteGapCCEPlan({ id });
+      fetchPQSData();
+
       return res.data;
     },
     onSuccess() {
@@ -80,6 +84,8 @@ function FacilityGapInformation() {
     mutationKey: ["plan-provided"],
     mutationFn: async (id) => {
       const res = await ReportService.putGapCCEPlan({ id });
+      fetchPQSData();
+
       return res.data;
     },
     onSuccess() {
@@ -212,7 +218,7 @@ function FacilityGapInformation() {
                       <Trans>PQS/PIS-Type:</Trans>
                     </p>
                     <p className=" col-sm-8">
-                      {(values.pqs?.pqs === 3
+                      {(values.pqs?.pqs === 4
                         ? pqsData?.data.type
                         : pqsData?.data.description) ?? "-"}
                     </p>
@@ -227,9 +233,9 @@ function FacilityGapInformation() {
                       <Trans>PQS/PIS-Manufacturer:</Trans>
                     </p>
                     <p className=" col-sm-8">
-                      {(values.pqs?.pqs === 3
+                      {(values.pqs?.pqs === 4
                         ? pqsData?.data.manufacturer
-                        : pqsData?.data.mak) ?? "-"}
+                        : pqsData?.data.make) ?? "-"}
                     </p>
                   </div>
                 </div>
@@ -238,7 +244,11 @@ function FacilityGapInformation() {
                     <p className="label col-sm-4">
                       <Trans>PQS/PIS-Refrigerant gas</Trans>
                     </p>
-                    <p className=" col-sm-8">{"-"}</p>
+                    <p className=" col-sm-8">
+                      {(values.pqs?.pqs === 3
+                        ? pqsData?.data.refrigerant
+                        : "-") ?? "-"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -322,8 +332,8 @@ function FacilityGapInformation() {
                     </p>
                     <p className=" col-sm-8">
                       {(values.pqs?.pqs === 3
-                        ? pqsData?.data.h
-                        : pqsData?.data.externalvolume) ?? "-"}
+                        ? pqsData?.data.h.toFixed(2)
+                        : pqsData?.data.externalvolume.toFixed(2)) ?? "-"}
                     </p>
                   </div>
                 </div>
@@ -359,18 +369,18 @@ function FacilityGapInformation() {
                 className="row mt-4 text-center"
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="submit"
                     disabled={values.count.length === 0 || isAddToPlanLoading}
                     className="btn btn-primary"
                   >
-                    Add To Plan
+                    <Trans>Add To Plan</Trans>
                   </button>
                 </div>
-                <Link to="/settings/planning-cce-gap" className="col-sm-1">
+                <Link to="/settings/planning-cce-gap" className="col-sm-2">
                   <button type="button" className="btn btn-info">
-                    Back To Plan
+                    <Trans>Back To Plan</Trans>
                   </button>
                 </Link>
               </div>
@@ -435,13 +445,13 @@ function FacilityGapInformation() {
                           style={{ cursor: "pointer", color: "red" }}
                           onClick={() => deletePlan(report.id)}
                         >
-                          Delete
+                          <Trans>Delete</Trans>
                         </TableCell>
                         <TableCell
                           style={{ cursor: "pointer", color: "green" }}
                           onClick={() => providedPlan(report.id)}
                         >
-                          Provided
+                          <Trans>Provided</Trans>
                         </TableCell>
                       </TableRow>
                     );

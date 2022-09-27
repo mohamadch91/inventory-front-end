@@ -111,7 +111,6 @@ const tableDegreeData = [
 function GapItemReport({i18n}) {
   const [filterValues, setFilterValues] = useState(defaultValues);
   const [selectedDegree, setSelectedDegree] = useState("1");
-
   const country = JSON.parse(localStorage.getItem("country")) || {};
 
   const { data: gapItemHelper, isLoading: isGapItemHelperLoading } = useQuery(
@@ -149,6 +148,15 @@ function GapItemReport({i18n}) {
       },
     }
   );
+  const saveGaps =() => {
+    
+    ReportService.savegaps(filterValues["degree"], reports?.save).then(
+      (res) => {
+        console.log(res);
+      }
+    );
+
+  }
     const printFilterValues = () => {
         let filter = "";
         for (const key in filterValues) {
@@ -518,13 +526,13 @@ function GapItemReport({i18n}) {
                     <Trans>Report</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    <Trans>Clear</Trans>
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -640,6 +648,11 @@ function GapItemReport({i18n}) {
                       <Trans>Export to MS Excel</Trans>
                     </button>
                   </a>
+                </div>
+                <div className="col-sm-2">
+                  <button onClick={saveGaps} className="btn btn-primary">
+                    <Trans>Save Reports</Trans>
+                  </button>
                 </div>
               </div>
             )}

@@ -27,11 +27,13 @@ function StepOperations(props) {
           <LeftArrowIcon sx={{ mr: 2 }} />
           <Trans>Back</Trans>
         </Button>
-        <Box sx={{ flex: "1 1 auto" }} />
+        <Box sx={{ flex: "0.5 0.5 auto" }} />
         <>
           {id !== "new" && activeStep !== stepsLength && (
             <>
-              <button className="btn btn-primary w-25 ">SAVE ALL</button>
+              <button className="btn btn-primary w-10 ">SAVE ALL</button>
+              <Box sx={{ flex: "0.6 0.5 auto" }} />
+
               <Button
                 disabled={isNextDisabled}
                 onClick={handleNext}
@@ -45,11 +47,15 @@ function StepOperations(props) {
           )}
           {id !== "new" && activeStep === stepsLength && (
             <>
-              <button className="btn btn-primary w-25 ">SAVE ALL</button>
-            
+              <Box sx={{ flex: "0.48 0.5 auto" }} />
+
+              <button className="btn btn-primary w-10 ">SAVE ALL</button>
             </>
           )}
           {id === "new" && activeStep !== stepsLength && (
+            <>
+        <Box sx={{ flex: "0.6 0.5 auto" }} />
+
             <Button
               disabled={isNextDisabled}
               onClick={handleNext}
@@ -59,9 +65,14 @@ function StepOperations(props) {
               <Trans>Next</Trans>
               <RightArrowIcon />
             </Button>
+            </>
           )}
           {id === "new" && activeStep === stepsLength && (
-            <button className="btn btn-primary w-25 ">SAVE ALL</button>
+            <>
+        <Box sx={{ flex: "0.6 0.5 auto" }} />
+
+            <button className="btn btn-primary w-10 ">SAVE ALL</button>
+            </>
           )}
         </>
       </Box>

@@ -141,7 +141,7 @@ const DynamicInput = (props) => {
         <Form.Control
           onChange={(e) => onChangeHandler(e.target.value === "true", field)}
           // defaultValue={defaultValue}
-          className="form-control"
+          className="form-control form-select"
           as="select"
           disabled={field.active ? !field.active : field.disabled}
           id={`field-${field.id}`}
@@ -162,7 +162,7 @@ const DynamicInput = (props) => {
               </option>
             )}
           </Translation>
-         
+
           <option
             selected={
               defaultValue !== null && defaultValue !== undefined

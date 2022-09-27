@@ -364,7 +364,7 @@ function Item() {
                   return (
                     <Step key={topic}>
                       <StepLabel style={{ width: "max-content" }}>
-                        {topic}
+                        <Trans>{topic}</Trans>
                       </StepLabel>
                     </Step>
                   );

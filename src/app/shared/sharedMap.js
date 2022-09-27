@@ -12,7 +12,7 @@ import L from "leaflet";
 // import "leaflet/dist/leaflet.css";
 import "leaflet/dist/leaflet.css";
 const center = [52.22977, 21.01178];
-delete L.Icon.Default.prototype._getIconUrl;
+// delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
@@ -69,10 +69,55 @@ const GetCoordinates = (props) => {
   return null;
 };
 
+
 const MapWrapper = (props) => {
+    const LeafIcon = L.Icon.extend({
+      options: {},
+    });
+
+    const blueIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|abcdef&chf=a,s,ee00FFFF",
+      }),
+      greenIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ecc71&chf=a,s,ee00FFFF",
+      }),
+      redIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ccc22&chf=a,s,ee00FFFF",
+      }),
+      yellowIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|4acc71&chf=a,s,ee00FFFF",
+      }),purpleIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|7dcc71&chf=a,s,ee00FFFF",
+      }),blackIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|3ccc71&chf=a,s,ee00FFFF",
+      }),roseIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2dcc71&chf=a,s,ee00FFFF",
+      }),pupIcon = new LeafIcon({
+        iconUrl:
+          "https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2eee71&chf=a,s,ee00FFFF",
+      });
+    const levels = {
+      1: blueIcon,
+      2: greenIcon,
+      3: redIcon,
+      4: yellowIcon,
+      5: purpleIcon,
+      6: blackIcon,
+      7: roseIcon,
+      8: pupIcon,
+    };
   const { locations } = props;
   const [map, setMap] = useState(null);
   const [Current, sercurrent] = useState([]);
+    // const [icon, setIcon] = useState(blueIcon);
+
   const [x1, setx1] = useState(
     JSON.parse(localStorage.getItem("country")) === null
       ? 35
@@ -144,7 +189,7 @@ const MapWrapper = (props) => {
           <>
             {locations?.map((e, i) => {
               return (
-                <Marker key={i} position={e.cordinates}>
+                <Marker key={i} position={e.cordinates} icon={levels[e.level] ?levels[e.level] :blueIcon } >
                   <Popup>
                     <span>{e.cordinates}</span>
                   </Popup>

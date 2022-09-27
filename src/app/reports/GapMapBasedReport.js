@@ -132,13 +132,13 @@ function GapMapBasedReport() {
                     <Trans>Reports</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
                     onClick={() => setFilterValues(defaultValues)}
                   >
-                    <Trans>Clear</Trans>
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -148,9 +148,12 @@ function GapMapBasedReport() {
       </div>
       <div className="p-3">
         <h3 className="text-black">
-          <Trans>Report</Trans>: <Trans>Gap map report</Trans> ({country?.country})
+          <Trans>Report</Trans>: <Trans>Gap map report</Trans> (
+          {country?.country})
         </h3>
-        <h5 className="text-black"><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h5>
+        <h5 className="text-black">
+          <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+        </h5>
         <SharedMap locations={reports} />
       </div>
     </div>

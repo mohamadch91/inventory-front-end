@@ -57,7 +57,7 @@ const WarningsTable = (props) => {
                 {data.map((el, i) => {
                   return (
                     <tr key={el.id} className="table-danger">
-                      <td key={el.id + i}> {i + 1} </td>
+                      <td key={el.id }> {i + 1} </td>
                       <td key={i + el.name}> {el.name} </td>
                       <td key={i + el.item_type}> {el.item_type} </td>
 
