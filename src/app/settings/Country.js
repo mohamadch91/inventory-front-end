@@ -67,6 +67,11 @@ export class Country extends Component {
       startDate: date,
     });
   };
+/**
+ * 
+ * @param {event} e
+ * set location when clickig on the map 
+ */
   handlemapclick(e) {
     let str = "LatLng(" + e.latlng.lat + "," + e.latlng.lng + ")";
     this.setState({ mainlocation: str});
