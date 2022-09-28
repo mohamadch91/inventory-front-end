@@ -18,6 +18,9 @@ L.Icon.Default.mergeOptions({
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
+/**
+ * @component render Country setting pages
+ */
 export class Country extends Component {
   constructor(props) {
     super(props);
