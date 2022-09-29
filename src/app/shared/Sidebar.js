@@ -47,7 +47,9 @@ class Sidebar extends Component {
       this.onRouteChanged();
     }
   }
-
+  /**
+   * change route on side bar click
+   */
   onRouteChanged() {
     document.querySelector("#sidebar").classList.remove("active");
     Object.keys(this.state).forEach((i) => {
