@@ -15,7 +15,10 @@ import {
 import * as rdd from "react-device-detect";
 import { history } from "../helpers/history";
 import Help from "../components/Help";
-
+/**
+ * @component side bar class component
+ * default template class
+ */
 class Sidebar extends Component {
   constructor(props) {
     super(props);
