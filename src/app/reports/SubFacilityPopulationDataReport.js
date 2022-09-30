@@ -101,7 +101,7 @@ function SubFacilityPopulationDataReport() {
                 <TableHead>
                   <TableRow>
                     <TableCell className="col-sm-2">
-                      <Trans>Facility name</Trans>
+                      <Trans>Facility Name</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Facility parent</Trans>

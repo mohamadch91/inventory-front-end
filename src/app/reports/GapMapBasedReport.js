@@ -6,6 +6,7 @@ import ReportService from "../services/report.service";
 import "./form.scss";
 import Spinner from "../shared/Spinner";
 import SharedMap from "../shared/sharedMap";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   degree: "1",
@@ -46,6 +47,10 @@ function GapMapBasedReport() {
         }
       }
       const res = await ReportService.getGapMap(params);
+       if (res.data.length === 0) {
+                  toast.error(<Trans>No data found</Trans>);
+
+       }
       return res.data;
     },
     {

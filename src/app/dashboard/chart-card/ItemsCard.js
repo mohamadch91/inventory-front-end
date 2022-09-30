@@ -33,7 +33,7 @@ const ItemsCard = () => {
   }
   // TODO: Remove error message at production
   if (err) {
-    toast.error("There was a problem loading data");
+    toast.error(<Trans>There was a problem loading data</Trans>);
     return <p>{err}</p>;
   }
 
@@ -42,6 +42,7 @@ const ItemsCard = () => {
   if (status === "completed" && itemClasses.length === 0) {
     // Setting item classes
     let tmp = [];
+    console.log(data)
     data?.map((el, i) => {
       tmp.push({ op: el.item_class, id: i });
     });
@@ -100,7 +101,7 @@ const ItemsCard = () => {
         <ChartDropDown
           onChange={itemChangeHandler}
           options={items}
-          text="Select item Category"
+          text="Select items Category"
         />
         <GaugeChart
           className="pt-3"

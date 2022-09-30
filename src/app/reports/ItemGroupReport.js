@@ -8,6 +8,7 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   name: "",
@@ -58,6 +59,10 @@ function ItemGroupReport() {
         }
       }
       const res = await ReportService.getItemGp(params);
+        if (res.data.length === 0) {
+                   toast.error(<Trans>No data found</Trans>);
+
+        }
       return res.data;
     },
     {
@@ -75,13 +80,16 @@ function ItemGroupReport() {
       const value = filterValues[key];
       if (value.length > 0 && value !== "-1") {
         if (key === "level"){
-          filter += `Level = ${value}- ${itemGpHelper.level.find((level) => level.id === parseInt(value)).name} `;
+          filter += `Level : ${value}- ${itemGpHelper.level.find((level) => level.id === parseInt(value)).name} `;
         }
         else if (key === "type"){
-          filter += `${key}= ${itemGpHelper.type.find((type) => type.id === parseInt(value)).name} `;
+          filter += `${key} : ${itemGpHelper.type.find((type) => type.id === parseInt(value)).name} `;
         }
         else if (key === "power"){
-          filter += `Power source = ${itemGpHelper.power.find((power) => power.id === parseInt(value)).name} `;
+          filter += `Power source : ${
+            itemGpHelper.power.find((power) => power.id === parseInt(value))
+              .name
+          } `;
         }
         else if (key === "item_class"){
            const item_class = selectedItem.item_class_name;
@@ -94,26 +102,47 @@ function ItemGroupReport() {
           filter += `Items category: ${item_type[0]?.name}, `;
         }
         else if (key === "physical"){
-          filter += `${key}= ${itemGpHelper.physical.find((physical) => physical.id === parseInt(value)).name} `;
+          filter += `Physical = ${itemGpHelper.physical.find((physical) => physical.id === parseInt(value)).name}, `;
         }
         else if (key === "financial"){
 
-          filter += `${key}= ${itemGpHelper.financial.find((financial) => financial.id === parseInt(value)).name} `;
+          filter += `Financial : ${
+            itemGpHelper.financial.find(
+              (financial) => financial.id === parseInt(value)
+            ).name
+          } `;
         }
         else if (key === "working"){
-          filter += `${key}= ${itemGpHelper.working.find((working) => working.id === parseInt(value)).name} `;
+          filter += `Working : ${
+            itemGpHelper.working.find(
+              (working) => working.id === parseInt(value)
+            ).name
+          } ,`;
         }
         else if (key === "item_power"){
-          filter += `Item Power source = ${itemGpHelper.item_power.find((item_power) => item_power.id === parseInt(value)).name} `;
+          filter += `Item Power source : ${
+            itemGpHelper.item_power.find(
+              (item_power) => item_power.id === parseInt(value)
+            ).name
+          }, `;
         }
-        else if (key === "manufacturer"){
-         const item_type = selectedItem.manufacturer.filter(
-           (item) => item.id === parseInt(value)
-         );
-         filter += `${key}: ${item_type[0]?.name}, `;
-        }
-        else {
-          filter += `${key}=${value}&`;
+        else if (key === "manufacturer") {
+          const item_type = selectedItem.manufacturer.filter(
+            (item) => item.id === parseInt(value)
+          );
+          filter += `Manufacturer: ${item_type[0]?.name}, `;
+        } else if (key === "year_from") {
+          filter += `From year :${value} ,`;
+        } else if (key === "year_to") {
+          filter += `To year =${value}, `;
+        } else if (key === "capacity_from") {
+          filter += `From capaciti :${value} ,`;
+        } else if (key === "capacity_to") {
+          filter += `To capacity :${value}, `;
+        } else if (key === "pqs") {
+          filter += `PQS Code:${value}, `;
+        } else {
+          filter += `${key}=${value}, `;
         }
       }
     }
@@ -142,7 +171,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name</Trans>:
+                      <Trans>Facility Name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -357,7 +386,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Physical condition:</Trans>
+                      <Trans>Physical condition</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -566,7 +595,7 @@ function ItemGroupReport() {
                           </option>
                         )}
                       </Translation>
-                      {Array.from({ length: 30 }).map((_, i) => {
+                      {Array.from({ length: 35 }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
                           <option key={year} value={year}>
@@ -597,7 +626,12 @@ function ItemGroupReport() {
                           </option>
                         )}
                       </Translation>
-                      {Array.from({ length: 30 }).map((_, i) => {
+                      {Array.from({
+                        length:
+                          new Date().getUTCFullYear() -
+                          filterValues.year_from +
+                          1,
+                      }).map((_, i) => {
                         const year = new Date().getUTCFullYear() - i;
                         return (
                           <option key={year} value={year}>
@@ -606,13 +640,12 @@ function ItemGroupReport() {
                         );
                       })}
                     </Form.Control>
-                    Year to can not be lower than from
                   </Form.Group>
                 </div>
                 <div className="col-sm-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>capacity</Trans>:
+                      <Trans>Capacity</Trans>:
                     </label>
                     <label className="label col-sm-2">
                       <Trans>from</Trans>:
@@ -620,6 +653,7 @@ function ItemGroupReport() {
                     <Form.Control
                       className="form-control col-sm-2"
                       type="number"
+                      min={0}
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
@@ -643,7 +677,8 @@ function ItemGroupReport() {
                         }));
                       }}
                       value={filterValues.capacity_to}
-                      as="select"
+                      type="number"
+                      min={0}
                     />
                   </Form.Group>
                 </div>
@@ -659,9 +694,12 @@ function ItemGroupReport() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      window.location.reload();
+                    }}
                   >
-                    <Trans>Clear</Trans>
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -673,8 +711,8 @@ function ItemGroupReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>
-                Report</Trans> : <Trans>Item grouped report</Trans> ({country?.country})
+              <Trans>Report</Trans> : <Trans>Item grouped report</Trans> (
+              {country?.country})
             </h4>
             <h6>
               Filters : {""} {printFilterValues()}

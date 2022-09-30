@@ -187,7 +187,7 @@ const DynamicInput = (props) => {
       </>
     );
   }
-  if(i18n.language!="en"){
+  if ((i18n.language != "en") & (i18n.language != "ar")) {
     numericKeys = "0123456789,:";
   }
   const validation = field.validation?.[0];

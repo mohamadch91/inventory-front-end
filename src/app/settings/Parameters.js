@@ -21,7 +21,8 @@ function Parameters() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -54,7 +55,8 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/facility-${item.id}`}>
-                          {item.name} ({item.description})
+                          <Trans>{item.name.replace(":", "")}</Trans> (
+                          {item.description})
                         </Link>
                       </TableCell>
                     </TableRow>
@@ -81,7 +83,8 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/type-${item.id}`}>
-                          {item.name} ({item.description})
+                          <Trans>{item.name.replace(":", "")}</Trans> (
+                          {item.description})
                         </Link>
                       </TableCell>
                     </TableRow>

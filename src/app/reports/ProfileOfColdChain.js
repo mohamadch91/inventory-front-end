@@ -9,7 +9,7 @@ import "../styles/table.scss";
 import { Form } from "react-bootstrap";
 import "./form.scss";
 import { separator } from "../helpers/separator";
-
+import { seperator } from "../helpers/seperator";
 const table1Data = [
   {
     headTitle: "Level",
@@ -126,14 +126,14 @@ const table2Data = [
   {
     headTitle: "Required capacity",
     valueKey: "req",
-    func: (val) => (+val).toFixed(2),
+    func: (val) => (+val).toFixed(2).toString().replace(".", seperator()),
     size: "fit",
     align: "right",
   },
   {
     headTitle: "Available capacity ",
     valueKey: "available",
-    func: (val) => (+val).toFixed(2),
+    func: (val) => (+val).toFixed(2).toString().replace(".", seperator()),
     size: "large",
     align: "right",
   },
@@ -141,21 +141,21 @@ const table2Data = [
     headTitle:
       "The difference between available capacity and required capacity ",
     valueKey: "diff",
-    func: (val) => val.toFixed(2),
+    func: (val) => val.toFixed(2).toString().replace(".", seperator()),
     size: "large",
     align: "right",
   },
   {
     headTitle: "Required capacity per target population",
     valueKey: "require_capacity",
-    func: (val) => val.toFixed(2),
+    func: (val) => val.toFixed(2).toString().replace(".", seperator()),
     size: "fit",
     align: "left",
   },
   {
     headTitle: "Available capacity per target population",
     valueKey: "available_capacity",
-    func: (val) => val.toFixed(2),
+    func: (val) => val.toFixed(2).toString().replace(".", seperator()),
     size: "fit",
     align: "right",
   },
@@ -163,7 +163,7 @@ const table2Data = [
     headTitle:
       "The difference between current available capacity and required capacity per target population",
     valueKey: "diff_capacity",
-    func: (val) => val.toFixed(2),
+    func: (val) => val.toFixed(2).toString().replace(".", seperator()),
     size: "large",
     align: "right",
   },

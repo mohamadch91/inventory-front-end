@@ -15,7 +15,7 @@ import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import "./message.scss";
 import { Link } from "react-router-dom";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 
 function MessageList() {
   const [list, setList] = useState([]);
@@ -27,14 +27,15 @@ function MessageList() {
   const [sentOrReceived, setSentOrReceived] = useState("r"); // r means received and s means sent
 
   function getList() {
-    if (sentOrReceived === "r") {
+    if (sentOrReceived === "s") {
       MessageService.getReceivedMessages()
         .then((res) => {
           setList(res.data);
           setIsLoading(false);
         })
         .catch((err) => {
-          toast.error("There is a problem loading data");
+                  toast.error(<Trans>There is a problem loading data</Trans>);
+
           setIsLoading(false);
         });
     } else {
@@ -44,7 +45,8 @@ function MessageList() {
           setIsLoading(false);
         })
         .catch((err) => {
-          toast.error("There is a problem loading data");
+                  toast.error(<Trans>There is a problem loading data</Trans>);
+
           setIsLoading(false);
         });
     }
@@ -71,7 +73,8 @@ function MessageList() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       const { subject, body, id, sender, reciever } = editFormData;
       const data = {
@@ -98,7 +101,7 @@ function MessageList() {
   return (
     <div className="item-class-page hr-page message-page">
       <h3 className="page-title mb-3">
-        <Trans>Messages List</Trans>
+        <Trans>Messages list</Trans>
       </h3>
       {isLoading ? (
         <Spinner />
@@ -120,12 +123,12 @@ function MessageList() {
                 }}
                 value={sentOrReceived}
               >
-                <Trans>
-                  <option value="s">Sent</option>
-                </Trans>
-                <Trans>
-                  <option value="r">Received</option>
-                </Trans>
+                <Translation>
+                  {(t, { i18n }) => <option value="s">{t("Sent")}</option>}
+                </Translation>
+                <Translation>
+                  {(t, { i18n }) => <option value="r">{t("Received")}</option>}
+                </Translation>
               </select>
             </div>
           </div>
@@ -136,7 +139,11 @@ function MessageList() {
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell>
-                      {sentOrReceived === "s" ? "Receiver" : "Sender"}
+                      {sentOrReceived === "s" ? (
+                        <Trans>Receiver</Trans>
+                      ) : (
+                        <Trans>Sender</Trans>
+                      )}
                     </TableCell>
                     <TableCell>
                       <Trans>Subject</Trans>

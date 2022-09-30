@@ -7,7 +7,7 @@ const FilterFormTextInput = (props) => {
     <Form.Group className="ml-2 w-100">
       <label className="py-2">
         {" "}
-        <Trans>Item Code</Trans>{" "}
+        <Trans>Item code</Trans>{" "}
       </label>
       <Form.Control
         style={{ width: "50%" }}

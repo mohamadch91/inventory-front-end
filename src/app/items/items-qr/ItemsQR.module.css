@@ -9,6 +9,7 @@
 
     .buttonResponsive{
         width: 100%;
+        font-size: 30px!important;
     }
     .scanPage{
         padding: 1rem;

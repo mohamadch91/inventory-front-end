@@ -8,6 +8,7 @@ import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   name: "",
@@ -66,6 +67,10 @@ function PlanningCCEGap() {
         }
       }
       const res = await ReportService.getPlanningCCEGap(params);
+        if (res.data.length === 0) {
+                   toast.error(<Trans>No data found</Trans>);
+
+        }
       return res.data;
     },
     {
@@ -158,7 +163,7 @@ function PlanningCCEGap() {
                           </option>
                         )}
                       </Translation>
-                    
+
                       {gapCCEHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -184,7 +189,7 @@ function PlanningCCEGap() {
                       value={filterValues.type}
                       as="select"
                     >
-                     <Translation>
+                      <Translation>
                         {(t, { i18n }) => (
                           <option i18n value="-1" selected disabled>
                             {t("Please select")}
@@ -218,7 +223,7 @@ function PlanningCCEGap() {
                       value={filterValues.power}
                       as="select"
                     >
-                     <Translation>
+                      <Translation>
                         {(t, { i18n }) => (
                           <option i18n value="-1" selected disabled>
                             {t("Please select")}
@@ -252,7 +257,7 @@ function PlanningCCEGap() {
                       value={filterValues.degree}
                       as="select"
                     >
-                     <Translation>
+                      <Translation>
                         {(t, { i18n }) => (
                           <option i18n value="-1" selected disabled>
                             {t("Please select")}
@@ -477,7 +482,10 @@ function PlanningCCEGap() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      window.location.reload();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>

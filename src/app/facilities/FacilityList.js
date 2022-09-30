@@ -196,7 +196,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
-                      <Trans>Facility name</Trans>:
+                      <Trans>Facility Name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control  col-sm-8"
@@ -476,13 +476,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     <Trans>Filter</Trans>
                   </button>
                 </div>
-                <div className="col-sm-1 mt-1">
+                <div className="col-sm-2">
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {setFilterValues(defaultValues); refetchFacilities();} }
                   >
-                    <Trans>Clear</Trans>
+                    <Trans>Clear Filter</Trans>
                   </button>
                 </div>
               </div>
@@ -528,9 +528,9 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 <TableHead>
                   <TableRow>
                     <TableCell className="col-sm-2">
-                      <Trans>Facility name</Trans>
+                      <Trans>Facility Name</Trans>
                     </TableCell>
-                    <TableCell className="col-sm-1">Level</TableCell>
+                    <TableCell className="col-sm-1"><Trans>Levels</Trans></TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Number of lower level facility</Trans>
                     </TableCell>
@@ -572,14 +572,14 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                         </TableCell>
                         <TableCell className="col-sm-2">
                           <Link to={`/facilities/info/${facility.id}`}>
-                            <Tooltip title="edit">
+                            <Tooltip title={<Trans>Edit</Trans>}>
                               <button className="edit-btn">
                                 <EditIcon />
                               </button>
                             </Tooltip>
                           </Link>
                           {((pid && index > 0) || !pid) && (
-                            <Tooltip title="Sub facilities">
+                            <Tooltip title={<Trans>Sub facilities</Trans>}>
                               <Link
                                 to={{
                                   pathname: "/facilities/list",
@@ -590,7 +590,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               </Link>
                             </Tooltip>
                           )}
-                          <Tooltip title="Add Sub Facility">
+                          <Tooltip title={<Trans>Add Sub Facility</Trans>}>
                             <Link
                               to={{
                                 pathname: "/facilities/info/new",
@@ -600,7 +600,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               <AddFacilityIcon />
                             </Link>
                           </Tooltip>
-                          <Tooltip title="Item list">
+                          <Tooltip title={<Trans>Item list</Trans>}>
                             <Link
                               to={{
                                 pathname: "/items/list",
@@ -610,7 +610,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               <MenuIcon />
                             </Link>
                           </Tooltip>
-                          <Tooltip title="Add item">
+                          <Tooltip title={<Trans>Add item</Trans>}>
                             <Link
                               to={{
                                 pathname: "/items/info/new",
@@ -620,7 +620,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               <AddItemIcon />
                             </Link>
                           </Tooltip>
-                          <Tooltip title="Delete facility">
+                          <Tooltip title={<Trans>Delete facility</Trans>}>
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}
@@ -641,7 +641,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     className="mb-1 mr-3  mt-5 mb-5 text-black"
                     style={{ marginLeft: "33%" }}
                   >
-                    <Trans>Delete facility</Trans>
+                    <Trans>Delete Facility</Trans>
                   </h1>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>

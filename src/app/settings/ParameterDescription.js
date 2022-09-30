@@ -33,7 +33,8 @@ function ParameterDescription() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -74,7 +75,8 @@ function ParameterDescription() {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
@@ -85,7 +87,8 @@ function ParameterDescription() {
           getData(params[0], params[1]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -99,7 +102,8 @@ function ParameterDescription() {
       return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = (({ name, enabled, order }) => ({
@@ -115,7 +119,8 @@ function ParameterDescription() {
           getData(params[0], params[1]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({
@@ -135,7 +140,7 @@ function ParameterDescription() {
       <h3 className="mb-3 param-name">{paramName}</h3>
       <div className="add-row mt-4 mb-4">
         <h3>
-          <Trans>Insert parameter In this row!</Trans>
+          <Trans>Insert parameter In this row :</Trans>
         </h3>
         <form onSubmit={handleSubmitNew}>
           <div className="row">

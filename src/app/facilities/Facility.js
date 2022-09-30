@@ -152,7 +152,7 @@ const [x2, setx2] = useState(
                lng: longitude,
              },
            };
-           setMap(data);
+           setMap(data.latlang);
            console.log("salam");
          },
          () => {
@@ -491,7 +491,7 @@ const [x2, setx2] = useState(
   };
 window.handleMapClick = handleMapClick;
 
-  const selectedLevel = levels[fieldsValue["level"] - 2];
+  const selectedLevel = levels.find((level) => level.id === fieldsValue.level);
   return (
     <form onSubmit={onSaveHandler}>
       <h3 className="page-title mb-3">
@@ -561,7 +561,7 @@ window.handleMapClick = handleMapClick;
                     textAlign: "right",
                   }}
                 >
-                  Facility name:
+                  <Trans>Facility Name</Trans>:
                 </label>
                 <div className={"col-sm-8"}>
                   <DynamicInput
@@ -683,7 +683,7 @@ window.handleMapClick = handleMapClick;
                                 setMap={setMap}
                               />
                               <>
-                              {console.log(map)}
+                                {console.log(map)}
                                 {map && (
                                   <Marker position={map} draggable={true}>
                                     <Popup position={map}>
@@ -711,6 +711,7 @@ window.handleMapClick = handleMapClick;
                       />
                     )}
                     <br />
+                    {console.log(selectedLevel)}
                     {JSON.parse(localStorage.getItem("country"))[
                       "poptarget"
                     ] === "General population" &&

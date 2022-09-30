@@ -166,7 +166,7 @@ const FilterForm = (props) => {
         />
         <FilterFormDD
           key={"C"}
-          label={"Item Category"}
+          label={"Items category"}
           options={itemTypeOptions}
           onChange={itemTypeDDHandler}
         />
@@ -184,7 +184,7 @@ const FilterForm = (props) => {
         />
         <FilterFormDD
           key={"F"}
-          label={"User"}
+          label={"Users"}
           options={usersOptions}
           onChange={userChangeHandler}
         />
@@ -216,7 +216,7 @@ const FilterForm = (props) => {
         <button
           onClick={submitHandler}
           type="button"
-          className={`btn btn-primary btn-fw mt-3  ${classes.buttonResponsive}`}
+          className={`btn btn-primary btn-fw mt-3 font-weight-bold  ${classes.buttonResponsive}`}
         >
           <Trans>Search QR code</Trans>
         </button>

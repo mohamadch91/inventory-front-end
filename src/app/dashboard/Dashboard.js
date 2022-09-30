@@ -15,7 +15,7 @@ const Dashboard = () => {
         <ItemsCard />
         <Facilities />
       </section>
-
+      <span id="warnings"></span>
       <section className={classes.warning}>
         <Warnings />
       </section>

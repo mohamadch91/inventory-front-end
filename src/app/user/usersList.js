@@ -95,7 +95,8 @@ function UsersList() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = (({
@@ -153,7 +154,8 @@ function UsersList() {
       }
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       const owner=JSON.parse(localStorage.getItem("user")).username
@@ -249,10 +251,10 @@ function UsersList() {
                   setSelectedFacility(e.target.value);
                   setIsLoading(true);
                   getList(e.target.value);
-                   setAddRowFormData({
-                     ...addRowFormData,
-                     facilityid: e.target.value,
-                   });
+                  setAddRowFormData({
+                    ...addRowFormData,
+                    facilityid: e.target.value,
+                  });
                 }}
                 value={selectedFacility}
               >
@@ -277,7 +279,7 @@ function UsersList() {
                       <Trans>Username</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Facility</Trans> <Trans>Name</Trans>
+                      <Trans>Facility Name</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Owner</Trans>
@@ -387,7 +389,9 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center"></div>
 
                   <div className="d-flex flex-column align-items-center">
-                    <label>Facility</label>
+                    <label>
+                      <Trans>Facility Name</Trans>
+                    </label>
                     <select
                       name="facilityid"
                       onChange={handleChangeEdit}
@@ -405,7 +409,7 @@ function UsersList() {
                     </select>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Name</label>
+                    <label><Trans>Name</Trans></label>
                     <input
                       name="name"
                       type="text"
@@ -415,7 +419,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Username</label>
+                    <label><Trans>Username</Trans></label>
                     <input
                       name="username"
                       type="text"
@@ -425,7 +429,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Password</label>
+                    <label><Trans>Password</Trans></label>
                     <input
                       name="password"
                       type="password"
@@ -435,7 +439,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Confirm Password</label>
+                    <label><Trans>Confirm Password</Trans></label>
                     <input
                       name="conf_password"
                       type="password"
@@ -457,13 +461,13 @@ function UsersList() {
                       }
                     }}
                   >
-                    Next
+                    <Trans>Next</Trans>
                   </button>
                 </>
               ) : (
                 <>
                   <div className="d-flex flex-column align-items-center">
-                    <label>ID Number</label>
+                    <label><Trans>ID Number</Trans></label>
                     <input
                       name="idnumber"
                       type="number"
@@ -472,7 +476,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Position</label>
+                    <label><Trans>Position</Trans></label>
                     <input
                       name="position"
                       type="text"
@@ -481,7 +485,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Phone Number</label>
+                    <label><Trans>Phone Number</Trans></label>
                     <input
                       name="phone"
                       type="tel"
@@ -491,7 +495,7 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Active</label>
+                      <label className="m-0 mr-2"><Trans>Active</Trans></label>
                       <input
                         name="is_active"
                         type="checkbox"
@@ -505,7 +509,7 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Manage Facilities</label>
+                      <label className="m-0 mr-2"><Trans>Manage Facilities</Trans></label>
                       <input
                         name="facadmin"
                         type="checkbox"
@@ -521,7 +525,7 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">Manage Items</label>
+                      <label className="m-0 mr-1"><Trans>Manage Items</Trans></label>
                       <input
                         name="itemadmin"
                         type="checkbox"
@@ -535,7 +539,7 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">View Reports</label>
+                      <label className="m-0 mr-2"><Trans>View Reports</Trans></label>
                       <input
                         name="reportadmin"
                         type="checkbox"
@@ -551,7 +555,7 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">Manage Users</label>
+                      <label className="m-0 mr-2"><Trans>Manage Users</Trans></label>
                       <input
                         name="useradmin"
                         type="checkbox"
@@ -600,12 +604,12 @@ function UsersList() {
 
                   <div className="d-flex flex-column align-items-center">
                     <label>
-                      <Trans>Facility</Trans>
+                      <Trans>Facility Name</Trans>
                     </label>
                     <select
                       name="facilityid"
                       onChange={handleChangeAdd}
-                      value={addRowFormData?.facilityid }
+                      value={addRowFormData?.facilityid}
                     >
                       {facilities.map((item, index) => (
                         <option

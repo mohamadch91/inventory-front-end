@@ -8,6 +8,7 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   name: "",
@@ -52,6 +53,10 @@ function FacilitySegmentationReport() {
         }
       }
       const res = await ReportService.getFacSeg(params);
+        if (res.data.length === 0) {
+                   toast.error(<Trans>No data found</Trans>);
+
+        }
       return res.data;
     },
     {
@@ -128,7 +133,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                      <Trans>Facility Name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -146,7 +151,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Code:</Trans>
+                      <Trans>Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -166,7 +171,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                      <Trans>Level</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -198,7 +203,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -226,7 +231,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -361,7 +366,10 @@ function FacilitySegmentationReport() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      window.location.reload();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>
@@ -389,7 +397,7 @@ function FacilitySegmentationReport() {
                 <TableHead>
                   <TableRow>
                     <TableCell className="col-sm-2">
-                      <Trans>Facility name</Trans>
+                      <Trans>Facility Name</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Facility parent</Trans>

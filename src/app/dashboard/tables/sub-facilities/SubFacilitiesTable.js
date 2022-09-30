@@ -6,12 +6,25 @@ const SubFacilitiesTable = (props) => {
   const generateRows = () => {
     let rows = [];
     for (let i = 0; i < props.data.length; i++) {
-      const variant = i % 2 === 0 ? "success" : "warning";
+      let variant = ""
+      let def = props.data[i].defined * 100;
+      if(def<20){
+        variant = "danger"
+      }
+      else if(def<50){
+        variant = "warning"
+      }
+      else if(def<80){
+        variant = "info"
+      }
+      else{
+        variant = "success"
+      }
 
       rows.push(
         <SubFacilitiesTableRow
           key={i + 1}
-          num={props.data[i].id}
+          num={props.data[i].code}
           name={props.data[i].name}
           level={props.data[i].level_id}
           levelName={props.data[i].level_name}
@@ -37,7 +50,7 @@ const SubFacilitiesTable = (props) => {
           <thead>
             <tr>
               <th>
-                <Trans>#</Trans>
+                <Trans>Code</Trans>
               </th>
               <th>
                 <Trans>Facility Name</Trans>
@@ -49,7 +62,7 @@ const SubFacilitiesTable = (props) => {
                 <Trans>Level Name</Trans>
               </th>
               <th>
-                <Trans>Registered</Trans>
+                <Trans>Sub facilities registered</Trans>
               </th>
               <th>
                 <Trans>Last Update</Trans>

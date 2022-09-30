@@ -37,7 +37,8 @@ function Manufacturer() {
         getManufacturers(data[0].id);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -49,7 +50,8 @@ function Manufacturer() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -91,7 +93,8 @@ function Manufacturer() {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
@@ -100,7 +103,8 @@ function Manufacturer() {
           getManufacturers(selectedItemClass);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -114,7 +118,8 @@ function Manufacturer() {
       return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPost = (({ describe, active, order, itemclass }) => ({
@@ -128,7 +133,8 @@ function Manufacturer() {
           getManufacturers(selectedItemClass);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({

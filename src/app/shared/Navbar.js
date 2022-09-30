@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Dropdown } from "react-bootstrap";
 import { withTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { HashLink as Links } from "react-router-hash-link";
 import i18n from "../../i18n";
 import eventBus from "../common/EventBus";
 import Help from "../components/Help";
 import { Trans } from "react-i18next";
+import dashboardService from "../services/dashboard.service";
 
 class Navbar extends Component {
   constructor(props) {
@@ -15,9 +17,25 @@ class Navbar extends Component {
       user: JSON.parse(localStorage.getItem("user")),
       logo1: null,
       logo2: null,
+      has_maintain: false,
     };
   }
   componentDidMount() {
+    console.log(this.state.user);
+    if (this.state.user !== undefined && this.state.user !== null) {
+      dashboardService.getAllWarningsData().then(
+        (res) => {
+          const sum =
+            res.data.seven_days + res.data.three_days + res.data.extended.count;
+          if (sum !== 0) {
+            this.setState({ has_maintain: true });
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
     let country = JSON.parse(localStorage.getItem("country"));
 
     if (country !== null) {
@@ -26,12 +44,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://inventory.runflare.run${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://inventory.runflare.run${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
@@ -41,10 +59,12 @@ class Navbar extends Component {
   languages = {
     en: "English",
     fr: "Français",
-    ar: "العربية",
-    fa: "فارسی",
+    ar: "عربی",
     es: "Español",
     ru: "Русский",
+    ot: "Other",
+    uk: "украї́нська",
+    ch: "Chinese",
   };
   render() {
     return (
@@ -77,7 +97,7 @@ class Navbar extends Component {
               }}
             />
             <Trans>Inventory and Gap Analysis</Trans> (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.55 (
+            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.6F (
             <Trans>You are in</Trans> {this.state.user?.facility_name})
           </div>
 
@@ -208,11 +228,13 @@ class Navbar extends Component {
               </Dropdown>
             </li>
 
-            <li className="nav-item">
+            <li className="nav-item" disabled>
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-bell-outline"></i>
-                  <span className="count-symbol bg-danger"></span>
+                  {this.state.has_maintain && (
+                    <span className="count-symbol bg-danger"></span>
+                  )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
                   <h6 className="p-3 mb-0 bg-primary text-white py-4">
@@ -232,12 +254,12 @@ class Navbar extends Component {
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject font-weight-normal mb-1">
-                        <Link to="/dashboard/maintenanceLog">
+                        <Links to="/dashboard#warnings">
                           <span>
                             <Trans>See</Trans> <Trans>all</Trans>{" "}
                             <Trans>Maintenance</Trans>
                           </span>
-                        </Link>
+                        </Links>
                       </h6>
                     </div>
                   </Dropdown.Item>

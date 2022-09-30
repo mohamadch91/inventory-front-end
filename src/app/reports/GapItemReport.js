@@ -8,8 +8,11 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
+import { toast } from "react-hot-toast";
+
 import API_URL from "../services/APIURL";
 import { separator } from "../helpers/separator";
+import  {seperator} from "../helpers/seperator";
 const defaultValues = {
   name: "",
   code: "",
@@ -88,23 +91,23 @@ const tableDegreeData = [
     headTitle: "Required capacity (lit.)",
     valueKey: "req",
     func: (val) => 
-      parseFloat(val).toFixed(2)
+      parseFloat(val).toFixed(2).toString().replace(".", seperator())
     ,
   },
   {
     headTitle: "All total available (lit.)",
     valueKey: "tcapacity",
-    func: (val) => parseFloat(val).toFixed(2),
+    func: (val) => parseFloat(val).toFixed(2).toString().replace(".", seperator()),
   },
   {
     headTitle: "Functioning Total Available (lit)",
     valueKey: "fcapacity",
-    func: (val) => parseFloat(val).toFixed(2),
+    func: (val) => parseFloat(val).toFixed(2).toString().replace(".", seperator()),
   },
   {
     headTitle: "Excess/ Shortage (lit.)",
     valueKey: "excees",
-    func: (val) => parseFloat(val).toFixed(2),
+    func: (val) => parseFloat(val).toFixed(2).toString().replace(".", seperator()),
   },
 ];
 
@@ -138,6 +141,10 @@ function GapItemReport({i18n}) {
         }
       }
       const res = await ReportService.getGapItem(params);
+      if(res.data.data.length === 0){
+                 toast.error(<Trans>No data found</Trans>);
+
+      }
       return res.data;
     },
     {
@@ -163,16 +170,22 @@ function GapItemReport({i18n}) {
             const filterValue = filterValues[key];
             if (filterValue.length > 0 && filterValue !== "-1") {
               if(key==='degree'){
-                filter += `Storage condition=${degrees.find((d) => d.id === filterValue).name} , `;
+                filter += `Storage condition:${
+                  degrees.find((d) => d.id === filterValue).name
+                } , `;
               }else if(key==='option'){
-                filter += `Option = ${options.find((d) => d.id === filterValue).name} , `;
+                filter += `Option : ${
+                  options.find((d) => d.id === filterValue).name
+                } , `;
               }
               else if(key==='type'){
-                filter += `Type = ${
-                  gapItemHelper?.type.find((d) => d.id === parseInt(filterValue)).name
+                filter += `Type : ${
+                  gapItemHelper?.type.find(
+                    (d) => d.id === parseInt(filterValue)
+                  ).name
                 } , `;
               }else if(key==='level'){
-                filter += `Level =   ${
+                filter += `Level :   ${
                   gapItemHelper?.level.find(
                     (d) => d.id === parseInt(filterValue)
                   ).id
@@ -190,16 +203,16 @@ function GapItemReport({i18n}) {
                 } , `;
               }
               else if (key === "code") {
-                                filter += `Code = ${filterValue} , `;
+                                filter += `Code : ${filterValue} , `;
 
               } else if (key === "name") {
-                filter += `Facility name = ${filterValue} , `;
+                filter += `Facility name : ${filterValue} , `;
               } else if (key === "year_from") {
-                filter += `Year from = ${filterValue} , `;
+                filter += `Year from : ${filterValue} , `;
               } else if (key === "year_to") {
-                filter += `Year to = ${filterValue} , `;
+                filter += `Year to : ${filterValue} , `;
               } else if (key === "calculate_for") {
-                filter += `Calculate for = ${filterValue} , `;
+                filter += `Calculate for : ${filterValue} , `;
               } else {
                 filter += `${key} = ${filterValue} , `;
               }}
@@ -232,7 +245,7 @@ function GapItemReport({i18n}) {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                      <Trans>Facility Name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -250,7 +263,7 @@ function GapItemReport({i18n}) {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Code:</Trans>
+                      <Trans>Code</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -530,7 +543,9 @@ function GapItemReport({i18n}) {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {setFilterValues(defaultValues);
+                    window.location.reload();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>

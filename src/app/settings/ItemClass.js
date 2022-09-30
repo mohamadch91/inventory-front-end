@@ -23,7 +23,8 @@ function ItemClass() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -47,7 +48,8 @@ function ItemClass() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       const newData = [...itemClasses];
@@ -64,7 +66,8 @@ function ItemClass() {
           getItemClasses();
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);

@@ -105,7 +105,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
       </h3>
       <div className="mt-3">
         <div>
-          <label className="mr-2 mb-1"> Deleted </label>
+          <label className="mr-2 mb-1">
+            {" "}
+            <Trans>Deleted</Trans>{" "}
+          </label>
           <input
             type="checkbox"
             checked={is_deleted}
@@ -119,7 +122,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
             style={{ marginLeft: "5%" }}
             type="submit"
           >
-            <Trans>filter</Trans>
+            <Trans>Filter</Trans>
           </button>
         </div>
         <div className="card">
@@ -141,7 +144,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <Trans>Manufacturer</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Last Changes On</Trans>
+                      <Trans>Last Changed on</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Edit</Trans>

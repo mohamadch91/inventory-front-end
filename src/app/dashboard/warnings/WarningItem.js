@@ -11,7 +11,7 @@ const WarningItem = (props) => {
           ⚠{" "}
         </p>
       </div>
-      <div className="activity-details">
+      <div className="activity-details" >
         <Link
           className={`p-0 btn btn-link btn-fw text-muted ${
             props.count === 0 ? "pe-none" : ""
@@ -19,14 +19,14 @@ const WarningItem = (props) => {
           style={{ fontSize: "16px", textDecorationColor: "#777" }}
           to={"dashboard/warnings-info/" + props.param}
         >
-          <Trans>
             {`(${props.count})  `}
-            {props.title}
-          </Trans>
+
+            <Trans>{props.title}</Trans>
           <label
             className={`badge badge-danger opacity-${props.badgeOp} `}
             style={{ fontSize: "12px" }}
           >
+             {"  "}
             <Trans>{props.badge}</Trans>
           </label>
           {props.maxExtended && (

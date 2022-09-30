@@ -52,11 +52,13 @@ const FacilityToPrint = forwardRef((props, ref) => {
           <div className="container">
             <div className=" text-center my-4">
               <div className="">
-                <h4>Inventory and Gap Analysis System (IGA)</h4>
+                <h4>
+                  <Trans>Inventory and Gap Analysis System</Trans> (IGA)
+                </h4>
               </div>
               <div>
                 <h4>
-                  Country:{" "}
+                  <Trans>Country</Trans>:{" "}
                   {JSON.parse(localStorage.getItem("country"))?.country}
                 </h4>
               </div>
@@ -69,13 +71,17 @@ const FacilityToPrint = forwardRef((props, ref) => {
                 } Facility information:`}
               </Trans>
             </h2>
-            <p>Date: -----------</p>
+            <p>
+              <Trans>Date</Trans>: -----------
+            </p>
             <div className="wrapper">
               <Row>
                 {data.map((item) => (
                   <>
                     <div style={{ width: "50%" }}>
-                      <h6>{item.name}</h6>
+                      <h6>
+                        <Trans>{item.name}</Trans>
+                      </h6>
                       <div
                         className="box mb-3 row"
                         style={{

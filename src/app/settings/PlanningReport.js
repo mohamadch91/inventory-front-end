@@ -8,6 +8,7 @@ import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   name: "",
@@ -64,6 +65,10 @@ function PlanningReport() {
         }
       }
       const res = await ReportService.getPlanningReport(params);
+        if (res.data.length === 0) {
+                   toast.error(<Trans>No data found</Trans>);
+
+        }
       return res.data;
     },
     {
@@ -474,7 +479,10 @@ function PlanningReport() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      window.location.reload();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>

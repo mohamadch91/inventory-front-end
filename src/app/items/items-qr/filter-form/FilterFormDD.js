@@ -1,6 +1,6 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import { Trans } from "react-i18next";
+import { Translation, Trans } from "react-i18next";
 
 const labelStyle = {
   display: "flex",
@@ -24,7 +24,7 @@ const FilterFormDD = (props) => {
         }`}
         style={labelStyle}
       >
-        <Trans> {props.label} </Trans>
+        <Trans>{props.label}</Trans>:
       </label>
       <div className="col-sm-7">
         <Form.Control
@@ -33,7 +33,17 @@ const FilterFormDD = (props) => {
           className="form-select"
           as="select"
         >
-          <option value="-1">Please select</option>
+          <Translation>
+            {(t, { i18n }) => (
+              <option
+                i18n
+                value="-1"
+                
+              >
+                {t("Please select")}
+              </option>
+            )}
+          </Translation>
           {props.options.map((el) => {
             return (
               <option key={el.id} value={el.id}>

@@ -18,7 +18,7 @@ function ReportToExcel() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
         setIsLoading(false);
       });
   }

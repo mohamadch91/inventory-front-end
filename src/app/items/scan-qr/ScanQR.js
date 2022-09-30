@@ -3,6 +3,7 @@ import { QrReader } from "react-qr-reader";
 import ResultTable from "./ResultTable";
 import adapter from "webrtc-adapter";
 import classes from "../items-qr/ItemsQR.module.css";
+import { Trans } from "react-i18next";
 
 const ScanQR = () => {
   const [QRString, setQRString] = useState();
@@ -35,7 +36,7 @@ const ScanQR = () => {
         type="button"
         className="btn btn-primary btn-fw mt-3 w-75 m-auto"
       >
-        Search QR code
+        <Trans>Search QR code</Trans>
       </button>
 
       {cameraAvailable && (
@@ -48,7 +49,7 @@ const ScanQR = () => {
       )}
       {QRString && !cameraAvailable && (
         <div className="w-75 m-auto pt-3 text-center">
-          <h3 className="display-4">Code Scanned Successfully</h3>
+          <h3 className="display-4"><Trans>Code Scanned Successfully</Trans></h3>
         </div>
       )}
 
@@ -60,7 +61,7 @@ const ScanQR = () => {
             type="button"
             className="btn btn-light btn-fw mt-3 w-25  "
           >
-            Search QR code
+            <Trans>Search QR code</Trans>
           </button>
         </div>
       )}

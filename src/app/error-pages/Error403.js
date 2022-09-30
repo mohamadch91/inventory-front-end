@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 export class Error403 extends Component {
   render() {
@@ -15,12 +16,14 @@ export class Error403 extends Component {
 
                */}
                 <div className="col-lg-6 error-page-divider text-lg-left pl-lg-4">
-                  <h2>SORRY!</h2>
+                  <h2>
+                    <Trans>SORRY</Trans>!
+                  </h2>
                   <h3 className="font-weight-light">
-                    Maximum sub facilityies has been reached!!!!!
+                   <Trans>Maximum sub facilityies has been reached</Trans>!!!!!
                   </h3>
                   <h3 className="font-weight-light">
-                    Please change values and try again!
+                    <Trans>Please change values and try again</Trans>!
                   </h3>
                 </div>
               </div>
@@ -30,7 +33,7 @@ export class Error403 extends Component {
                     className="text-white font-weight-medium"
                     to="/dashboard"
                   >
-                    Back to home
+                    <Trans>Back to home</Trans>
                   </Link>
                 </div>
               </div>

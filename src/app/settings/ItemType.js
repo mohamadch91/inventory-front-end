@@ -29,7 +29,8 @@ function ItemType() {
         getItemTypes();
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -42,7 +43,8 @@ function ItemType() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -93,7 +95,8 @@ function ItemType() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       const formToPut = (({ id, title, code, active, havePQS, itemclass }) => ({
@@ -109,7 +112,8 @@ function ItemType() {
           getItemTypes();
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -122,7 +126,8 @@ function ItemType() {
       return addRowFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = (({ title, code, active, havePQS }) => ({
@@ -139,9 +144,11 @@ function ItemType() {
       ItemsService.postItemType(formToPut)
         .then((res) => {
           getItemTypes();
+          setSelectedItemClass(0);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({

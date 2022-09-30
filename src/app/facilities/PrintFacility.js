@@ -44,9 +44,18 @@ const PrintFacility = () => {
 
   return (
     <Fragment>
-      <button className="btn btn-info btn-icon-text px-3 pr-4" onClick={handlePrint}>
+      <button
+        className="btn btn-info btn-icon-text px-3 pr-4"
+        onClick={handlePrint}
+      >
         <i className="mdi mdi-printer btn-icon-append " />
-        {loading ? <Trans>Loading...</Trans> : <Trans> Print</Trans>}
+        {loading ? (
+          <>
+            <Trans>Loading</Trans> ...
+          </>
+        ) : (
+          <Trans>Print</Trans>
+        )}
       </button>
 
       <FacilityToPrint ref={componentRef} />

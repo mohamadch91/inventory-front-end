@@ -11,7 +11,7 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 
 function HRList() {
   const genders = ["male", "female"];
@@ -45,7 +45,8 @@ function HRList() {
         getList(data[0].id);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -57,7 +58,8 @@ function HRList() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -97,7 +99,8 @@ function HRList() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = (({
@@ -137,7 +140,8 @@ function HRList() {
           setIsEditModalOpen(false);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
     }
@@ -149,7 +153,8 @@ function HRList() {
       return addRowFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPost = (({
@@ -185,7 +190,7 @@ function HRList() {
           setIsAddModalOpen(false);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+          toast.error(<Trans>There is a problem sending data</Trans>);
           setIsLoading(false);
         });
     }
@@ -426,7 +431,9 @@ function HRList() {
           </button>
           <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
             <form onSubmit={handleSubmitNew}>
-              <h3 className="mb-1">Human Resource Information</h3>
+              <h3 className="mb-1">
+                <Trans>Human Resource Information</Trans>
+              </h3>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
@@ -442,7 +449,6 @@ function HRList() {
                   value={addRowFormData?.facility}
                 >
                   {facilities.map((item, index) => (
-                    
                     <option
                       key={item.id}
                       value={item.id}
@@ -476,9 +482,13 @@ function HRList() {
                   value={addRowFormData?.position_level}
                 >
                   {positionLevels.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={item}>
+                          {t(item)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>
@@ -492,9 +502,13 @@ function HRList() {
                   value={addRowFormData?.educatioin_level}
                 >
                   {educationLevels.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={item}>
+                          {t(item)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>
@@ -508,9 +522,13 @@ function HRList() {
                   value={addRowFormData?.genders}
                 >
                   {genders.map((i, index) => (
-                    <option key={index} value={i}>
-                      {i}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={i}>
+                          {t(i)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>

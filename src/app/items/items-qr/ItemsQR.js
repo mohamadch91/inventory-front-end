@@ -1,4 +1,5 @@
 import React, { Fragment, useRef, useState } from "react";
+import { Trans } from "react-i18next";
 
 import FilterForm from "./filter-form/FilterForm";
 import QRTable from "./table/QRTable";
@@ -27,8 +28,9 @@ const ItemsQR = () => {
           <ReactToPrint
             trigger={() => (
               <div className={"d-flex justify-content-center py-3"}>
-                <button className={"btn btn-info btn-icon-text "}>
-                  Print <i className="mdi mdi-printer btn-icon-append" />
+                <button className={"btn btn-info btn-icon-text w-25  "}>
+                  <Trans>Print</Trans>{" "}
+                  <i className="mdi mdi-printer btn-icon-append" />
                 </button>
               </div>
             )}

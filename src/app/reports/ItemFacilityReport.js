@@ -8,6 +8,7 @@ import Spinner from "../shared/Spinner";
 import SharedTable from "../shared/SharedTable";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import "../styles/table.scss";
+import { toast } from "react-hot-toast";
 
 const defaultValues = {
   name: "",
@@ -25,7 +26,7 @@ const defaultValues = {
 
 const tableData = [
   {
-    headTitle: "Facility name",
+    headTitle: "Facility Name",
     group: "facility",
     valueKey: "fac_name",
   },
@@ -137,6 +138,10 @@ function ItemFacilityReport() {
         }
       }
       const res = await ReportService.getItemFac(params);
+      if (res.data.length === 0) {
+                 toast.error(<Trans>No data found</Trans>);
+
+      }
       return res.data;
     },
     {
@@ -226,7 +231,7 @@ function ItemFacilityReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Facility name:</Trans>
+                      <Trans>Facility Name</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-8"
@@ -579,7 +584,10 @@ function ItemFacilityReport() {
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => setFilterValues(defaultValues)}
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      window.location.reload();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>

@@ -10,21 +10,21 @@ import { Trans } from "react-i18next";
 
 const warningsData = [
   {
-    title: "Maintenance services must be done in   ",
+    title: "Maintenance services must be done in",
 
     badge: "7 Days",
   },
   {
-    title: "Maintenance services must be done in   ",
+    title: "Maintenance services must be done in",
 
     badge: "3 Days",
   },
   {
-    title: "Maintenance  services were ",
+    title: "Maintenance services were",
     badge: "not performed on time",
   },
   {
-    title: "Maintenance  services were ",
+    title: "Maintenance  services were",
     badge: "not performed on time",
   },
 ];
@@ -50,13 +50,15 @@ const Warnings = () => {
   }
 
   return (
-    <div className={`card-body recent-activity ${classes.warnings}`}>
+    <div
+      className={`card-body recent-activity ${classes.warnings}`}
+    >
       <h4 className="card-title">
         <Trans>Warnings</Trans>
       </h4>
 
       <p className="card-description">
-        <Trans>Warnings that need to be taken cared of</Trans>
+        <Trans>Warnings that need to be taken care of</Trans>
       </p>
 
       {data && (
@@ -89,6 +91,7 @@ const Warnings = () => {
           <LogBookItem />
         </div>
       )}
+     
     </div>
   );
 };

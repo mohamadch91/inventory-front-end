@@ -397,7 +397,7 @@ function Item() {
                     textAlign: "right",
                   }}
                 >
-                  Facility Name:
+                  <Trans>Facility Name</Trans>:
                 </label>
                 <div className={"col-sm-8"}>
                   <DynamicInput

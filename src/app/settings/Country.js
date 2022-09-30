@@ -79,13 +79,14 @@ export class Country extends Component {
       this.setState({ validated: false });
       event.preventDefault();
       event.stopPropagation();
-      toast.error("complete form correctly");
+      toast.error(<Trans>complete form correctly</Trans>);
       return;
     }
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      toast.error("complete form correctly");
+            toast.error(<Trans>complete form correctly</Trans>);
+
     } else {
       this.setState({ validated: true });
       let formData = new FormData();
@@ -107,7 +108,7 @@ export class Country extends Component {
       formData.append("logo2", this.state.logo2);
       formData.append("usingtool", this.state.requiredcapacities);
       formData.append("usingmaintenance", this.state.enableMaintaining);
-
+      console.log(this.state.country)
       if (this.state.user?.admin && Object.keys(this.state.country).length) {
         formData.append("id", this.state.country.id);
         UserService.editcountry(formData)
@@ -158,11 +159,11 @@ export class Country extends Component {
               enableMaintaining: country.usingmaintenance,
             });
             this.alerthandle("Country changed successfully", "success");
-            toast.success("Country changed successfully");
+            toast.success(<Trans>Country changed successfully</Trans>);
           })
           .catch((err) => {
             this.alerthandle("Country changed unsuccessfully", "error");
-            toast.error("Country changed unsuccessfully");
+            toast.error(<Trans>Country changed unsuccessfully</Trans>);
           });
       } else {
         UserService.addcountry(formData)

@@ -7,13 +7,14 @@ const FilterFormYearsInput = (props) => {
     <Form.Group className="pt-1 row">
       <label className="py-2">
         {" "}
-        <Trans>Years Installed:</Trans>{" "}
+        <Trans>Year installed</Trans>:{" "}
       </label>
       <Form.Control
         style={{ width: "100%" }}
         type="number"
         className="form-control col-sm-3 mt-2 ml-3"
         placeholder="from"
+        min={1990}
         aria-label="from-year"
         onChange={props.onFromChange}
       />

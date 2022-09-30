@@ -15,7 +15,7 @@ import LanguageService from "../services/language.service";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
 import "../styles/hr.scss";
-import "./itemClass.scss";
+import "./itemClassLang.scss";
 import "./itemType.scss";
 import "./editLang.scss";
 import { useTranslation } from "react-i18next";
@@ -24,10 +24,12 @@ function EditLanguage() {
   const languages = [
     { label: "English", value: "en" },
     { label: "Français", value: "fr" },
-    { label: "العربي", value: "ar" },
-    { label: "فارسی", value: "fa" },
+    { label: "عربي", value: "ar" },
     { label: "Española", value: "es" },
     { label: "Pусский", value: "ru" },
+    { label: "Other", value: "ot" },
+    { label: "украї́нська", value: "uk" },
+    { label: "Chinese", value: "ch" },
   ];
 
   const [editFormData, setEditFormData] = useState({});
@@ -60,7 +62,8 @@ function EditLanguage() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
     LanguageService.getTranslationsByQuery(query)
@@ -69,7 +72,8 @@ function EditLanguage() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -100,7 +104,8 @@ function EditLanguage() {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
@@ -113,7 +118,8 @@ function EditLanguage() {
           );
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -127,7 +133,8 @@ function EditLanguage() {
       return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPost = (({ language, word, translate }) => ({
@@ -144,7 +151,8 @@ function EditLanguage() {
           );
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({
@@ -263,6 +271,7 @@ function EditLanguage() {
                             <input
                               name="word"
                               type="text"
+                              disabled
                               onChange={handleChangeEdit}
                               value={editFormData?.word}
                             ></input>

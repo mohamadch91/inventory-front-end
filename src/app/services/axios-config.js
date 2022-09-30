@@ -1,6 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 import { responseMessages } from "../constants/response-messages";
+import { Translation, Trans } from "react-i18next";
 
 const ApiManager = axios.create({});
 
@@ -9,7 +10,7 @@ ApiManager.interceptors.response.use(
     if (response.config.method !== "get") {
       const message =
         responseMessages[response.status]?.fa || responseMessages.success.fa;
-      toast.success(message);
+      toast.success(<Trans>{message}</Trans>);
     }
     return response;
   },
@@ -28,7 +29,8 @@ ApiManager.interceptors.response.use(
     }
     const message =
       responseMessages[response.status]?.fa || responseMessages.failed.fa;
-    toast.error(message);
+
+    toast.error(<Trans>{message}</Trans>);
 
     return Promise.reject(error);
   }
