@@ -178,6 +178,13 @@ class Navbar extends Component {
       }
     );
   };
+  
+  /**
+   * when component munt called
+   * get warnings from API
+   * get unread mesaeg from API
+   * get country and user info also
+   */
   componentDidMount() {
     console.log(this.state.user);
     if (this.state.user !== undefined && this.state.user !== null) {
