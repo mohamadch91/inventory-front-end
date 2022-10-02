@@ -321,7 +321,7 @@ function Pqs3() {
               </TableBody>
             </SharedTable>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 15, 25, { label: "All", value: 5 }]}
+              rowsPerPageOptions={[5, 10, 15, 25, { label: "All", value: pqs4.length }]}
               colSpan={3}
               count={pqs4.length}
               rowsPerPage={rowsPerPage}
