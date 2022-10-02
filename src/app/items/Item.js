@@ -120,7 +120,6 @@ function Item() {
       parent,
     ],
     async () => {
-      console.log(selectedItemType);
       const res = await ItemService.getItemFields(
         selectedItemClass.item_class.id,
         selectedItemType.id,
@@ -129,8 +128,12 @@ function Item() {
       const result = {};
       if (res.data.fields) {
         for (const field of res.data.fields) {
+           if (id !== "new" && field.field.state === "same_item"){
+            continue;
+          }
           const fieldTopicInResult = result[field.field.topic] ?? [];
-          fieldTopicInResult.push(field.field);
+         
+            fieldTopicInResult.push(field.field);
           result[field.field.topic] = fieldTopicInResult;
         }
         const firstTopic = Object.keys(result)[0] ?? "Type";
