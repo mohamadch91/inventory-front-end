@@ -6,8 +6,13 @@ import { HashLink as Links } from "react-router-hash-link";
 import i18n from "../../i18n";
 import eventBus from "../common/EventBus";
 import Help from "../components/Help";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import dashboardService from "../services/dashboard.service";
+import Modal from "react-bootstrap/Modal";
+import "../styles/hr.scss";
+import "../settings/itemClass.scss";
+import "../settings/itemType.scss";
+import toast from "react-hot-toast";
 
 class Navbar extends Component {
   constructor(props) {
@@ -18,8 +23,50 @@ class Navbar extends Component {
       logo1: null,
       logo2: null,
       has_maintain: false,
+      Profmodal: false,
+      passModal: false,
+      changePassForm: {},
+      userInfo: {
+        name: JSON.parse(localStorage.getItem("user"))?.name,
+        idnumber: JSON.parse(localStorage.getItem("user"))?.idnumber,
+        phone: JSON.parse(localStorage.getItem("user"))?.phone,
+
+      },
     };
   }
+  ProfmodalOpen = () => {
+    this.setState({ Profmodal: true });
+  };
+  ProfmodalClose = () => {
+    this.setState({ Profmodal: false });
+  };
+  passModalOpen = () => {
+    this.setState({ passModal: true });
+  };
+  passModalClose = () => {
+    this.setState({ passModal: false });
+  };
+  handleChangePass = (e) => {
+    const { name, value } = e.target;
+    const new_data = this.state.changePassForm;
+    new_data[name] = value;
+    this.setState({ changePassForm: new_data });
+  };
+  sumbitChangepass =(e)=> {
+    e.preventDefault()
+    for (const key in this.state.changePassForm){
+      if(this.state.changePassForm[key]===""){
+        
+      }
+    }
+    
+  }
+  handleChangeUser = (e) => {
+    const { name, value } = e.target;
+    const new_data = this.state.userInfo;
+    new_data[name] = value;
+    this.setState({ userInfo: new_data });
+  };
   componentDidMount() {
     console.log(this.state.user);
     if (this.state.user !== undefined && this.state.user !== null) {
@@ -179,6 +226,87 @@ class Navbar extends Component {
                           : this.state.user.username}
                       </span>
                     </h5>
+                    <Dropdown.Item
+                      className="dropdown-item d-flex align-items-center justify-content-between"
+                      onClick={this.passModalOpen}
+                    >
+                      <span>
+                        <span>
+                          <Trans>Change password</Trans>
+                        </span>
+                      </span>
+                      <i className="mdi  mdi-account-key ml-1"></i>
+                    </Dropdown.Item>
+                    <Modal
+                      show={this.state.passModal}
+                      onHide={this.passModalClose}
+                      style={{ padding: "10px" }}
+                    >
+                      <form>
+                        <h3 className="mb-1 text-center fs-5">
+                          <Trans>Change password</Trans>
+                        </h3>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Old password</Trans>
+                          </label>
+                          <input
+                            name="old_password"
+                            type="text"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.old_password}
+                            required
+                          ></input>
+                        </div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>New passowrd</Trans>
+                          </label>
+                          <input
+                            name="new_password"
+                            type="text"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.new_password}
+                            required
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Confirm new password</Trans>
+                          </label>
+                          <input
+                            name="conf_password"
+                            type="text"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.conf_password}
+                            required
+                          ></input>
+                        </div>
+
+                        <button className="save-btn w-100" type="submit">
+                          <Trans>Save</Trans>
+                        </button>
+                      </form>
+                    </Modal>
+                    <Dropdown.Item
+                      className="dropdown-item d-flex align-items-center justify-content-between"
+                      onClick={(evt) => {
+                        eventBus.dispatch("logout");
+                      }}
+                    >
+                      <span>
+                        <span>
+                          <Trans>Profile</Trans>
+                        </span>
+                      </span>
+                      <i className="mdi mdi mdi-account-star ml-1"></i>
+                    </Dropdown.Item>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
                       href="/login"

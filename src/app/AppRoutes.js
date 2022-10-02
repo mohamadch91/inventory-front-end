@@ -93,6 +93,7 @@ class AppRoutes extends Component {
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
+          <Route exact path="/icons" component={Mdi} />
 
           <Route exact path="/message/new" component={NewMessage} />
           <Route exact path="/message/list" component={MessageList} />
