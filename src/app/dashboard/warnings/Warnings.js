@@ -53,11 +53,11 @@ const Warnings = () => {
     <div
       className={`card-body recent-activity ${classes.warnings}`}
     >
-      <h4 className="card-title">
+      <h2 className="card-title text-black text-bold">
         <Trans>Warnings</Trans>
-      </h4>
+      </h2>
 
-      <p className="card-description">
+      <p className="card-description text-black text-bold fs-5">
         <Trans>Warnings that need to be taken care of</Trans>
       </p>
 

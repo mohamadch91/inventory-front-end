@@ -35,11 +35,11 @@ const SubFacilitiesTable = (props) => {
   };
   return (
     <div className={"py-2 px-2"}>
-      <h4 className="card-title">
+      <h2 className="card-title  text-black text-bold">
         {" "}
         <Trans>Sub Facilities</Trans>
-      </h4>
-      <p className="card-description">
+      </h2>
+      <p className="card-description  text-black text-bold fs-5">
         <Trans>List of all sub-facilities</Trans>
       </p>
       <div className="table-responsive">

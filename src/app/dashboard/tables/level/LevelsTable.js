@@ -5,25 +5,31 @@ import { Trans } from "react-i18next";
 const LevelsTable = (props) => {
   return (
     <div className={"px-2 py-5"}>
-      <h4 className="card-title"> 🏢 <Trans>Facilities</Trans></h4>
-      <p className="card-description"> <Trans>Facilities owned separated by levels</Trans></p>
+      <h2 className="card-title  text-black text-bold">
+        {" "}
+        🏢 <Trans>Facilities</Trans>
+      </h2>
+      <p className="card-description  text-black text-bold fs-5">
+        {" "}
+        <Trans>Facilities owned separated by levels</Trans>
+      </p>
       <div className="table-responsive">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th>
+              <th className="text-bold fs-5">
                 <Trans>Levels</Trans>
               </th>
-              <th>
+              <th className="text-bold ">
                 <Trans>Level Name</Trans>
               </th>
-              <th>
+              <th className="text-bold ">
                 <Trans>Total number of facilities</Trans>
               </th>
-              <th>
+              <th className="text-bold ">
                 <Trans>Total number of sub-facilities</Trans>
               </th>
-              <th>
+              <th className="text-bold ">
                 <Trans>Number of Defined sub-level facilities</Trans>
               </th>
             </tr>
