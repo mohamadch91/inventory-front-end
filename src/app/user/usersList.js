@@ -409,7 +409,9 @@ function UsersList() {
                     </select>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Name</Trans></label>
+                    <label>
+                      <Trans>Name</Trans>
+                    </label>
                     <input
                       name="name"
                       type="text"
@@ -419,19 +421,25 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Username</Trans></label>
+                    <label>
+                      <Trans>Username</Trans>
+                    </label>
                     <input
                       name="username"
                       type="text"
                       onChange={handleChangeEdit}
                       value={editFormData?.username}
+                      autoComplete="off"
                       required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Password</Trans></label>
+                    <label>
+                      <Trans>Password</Trans>
+                    </label>
                     <input
                       name="password"
+                      autoComplete="off"
                       type="password"
                       onChange={handleChangeEdit}
                       value={editFormData?.password}
@@ -439,10 +447,13 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Confirm Password</Trans></label>
+                    <label>
+                      <Trans>Confirm Password</Trans>
+                    </label>
                     <input
                       name="conf_password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeEdit}
                       value={editFormData?.conf_password}
                       required
@@ -463,11 +474,23 @@ function UsersList() {
                   >
                     <Trans>Next</Trans>
                   </button>
+                  <button
+                    className="btn-danger text-dark w-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Close</Trans>
+                  </button>
                 </>
               ) : (
                 <>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>ID Number</Trans></label>
+                    <label>
+                      <Trans>ID Number</Trans>
+                    </label>
                     <input
                       name="idnumber"
                       type="number"
@@ -476,7 +499,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Position</Trans></label>
+                    <label>
+                      <Trans>Position</Trans>
+                    </label>
                     <input
                       name="position"
                       type="text"
@@ -485,7 +510,9 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label><Trans>Phone Number</Trans></label>
+                    <label>
+                      <Trans>Phone Number</Trans>
+                    </label>
                     <input
                       name="phone"
                       type="tel"
@@ -495,7 +522,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2"><Trans>Active</Trans></label>
+                      <label className="m-0 mr-2">
+                        <Trans>Active</Trans>
+                      </label>
                       <input
                         name="is_active"
                         type="checkbox"
@@ -509,7 +538,9 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2"><Trans>Manage Facilities</Trans></label>
+                      <label className="m-0 mr-2">
+                        <Trans>Manage Facilities</Trans>
+                      </label>
                       <input
                         name="facadmin"
                         type="checkbox"
@@ -525,7 +556,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1"><Trans>Manage Items</Trans></label>
+                      <label className="m-0 mr-1">
+                        <Trans>Manage Items</Trans>
+                      </label>
                       <input
                         name="itemadmin"
                         type="checkbox"
@@ -539,7 +572,9 @@ function UsersList() {
                       />
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2"><Trans>View Reports</Trans></label>
+                      <label className="m-0 mr-2">
+                        <Trans>View Reports</Trans>
+                      </label>
                       <input
                         name="reportadmin"
                         type="checkbox"
@@ -555,7 +590,9 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2"><Trans>Manage Users</Trans></label>
+                      <label className="m-0 mr-2">
+                        <Trans>Manage Users</Trans>
+                      </label>
                       <input
                         name="useradmin"
                         type="checkbox"
@@ -579,6 +616,16 @@ function UsersList() {
                   <button className="save-btn w-100" type="submit">
                     <Trans>Save</Trans>
                   </button>
+                  <button
+                    className="btn-danger text-dark w-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Close</Trans>
+                  </button>
                 </>
               )}
             </form>
@@ -589,8 +636,8 @@ function UsersList() {
           <Modal
             show={isAddModalOpen}
             onHide={() => {
-              setIsAddModalOpen(false);
-              setActiveStep(0);
+              // setIsAddModalOpen(false);
+              // setActiveStep(0);
             }}
           >
             <form onSubmit={handleSubmitNew}>
@@ -642,6 +689,7 @@ function UsersList() {
                     <input
                       name="username"
                       type="text"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.username}
                       required
@@ -654,6 +702,7 @@ function UsersList() {
                     <input
                       name="password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.password}
                       required
@@ -666,6 +715,7 @@ function UsersList() {
                     <input
                       name="conf_password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.conf_password}
                       required
@@ -686,6 +736,16 @@ function UsersList() {
                     }}
                   >
                     Next
+                  </button>
+                  <button
+                    className="btn-danger text-dark w-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Close</Trans>
                   </button>
                 </>
               ) : (
@@ -817,6 +877,16 @@ function UsersList() {
                   </button>
                   <button className="save-btn w-100 mb-3" type="submit">
                     <Trans>Save</Trans>
+                  </button>
+                  <button
+                    className="btn-danger text-dark w-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Close</Trans>
                   </button>
                 </>
               )}

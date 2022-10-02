@@ -4,6 +4,7 @@ import helpService from "../services/help.service";
 import API_URL from "../services/APIURL";
 import i18n from "../../i18n";
 import { useHistory } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 function Help() {
   const selectedLang = i18n.language;
@@ -27,7 +28,7 @@ function Help() {
         style={{ width: "fit-content" }}
       >
         <button className="btn btn-success text-dark fs-5" type="button">
-          Help
+          <Trans>Help</Trans>
         </button>
       </a>
     </div>

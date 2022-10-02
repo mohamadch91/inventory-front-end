@@ -116,9 +116,17 @@ class Navbar extends Component {
         new_data[key]=this.state.userInfo[key]
       }
     }
+    new_data['username']=this.state.user.username
     UserService.updateUser(id, new_data).then(
       (res) => {
         toast.success(<Trans>Profile update succesfully</Trans>);
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.phone=res.data.phone
+        user.idnumber=res.data.idnumber
+        user.name=res.data.name
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(user));
+        this.ProfmodalClose();
       },
       (err) => {
         toast.error(<Trans>Update profile failed</Trans>);
@@ -368,7 +376,7 @@ class Navbar extends Component {
                       onHide={this.ProfmodalClose}
                       style={{ padding: "10px" }}
                     >
-                      <form onSubmit={this.sumbitChangepass}>
+                      <form onSubmit={this.submitChaneprofile}>
                         <h3 className="mb-1 text-center fs-5">
                           <Trans>Update profile</Trans>
                         </h3>
@@ -386,7 +394,6 @@ class Navbar extends Component {
                             type="text"
                             onChange={this.handleChangeUser}
                             value={this.state.userInfo?.name}
-                            required
                           ></input>
                         </div>
 
@@ -396,10 +403,9 @@ class Navbar extends Component {
                           </label>
                           <input
                             name="idnumber"
-                            type="text"
+                            type="number"
                             onChange={this.handleChangeUser}
                             value={this.state.userInfo?.idnumber}
-                            required
                           ></input>
                         </div>
                         <div className="d-flex flex-column align-items-center">
@@ -408,10 +414,9 @@ class Navbar extends Component {
                           </label>
                           <input
                             name="phone"
-                            type="text"
-                            onChange={this.handleChangePass}
+                            type="number"
+                            onChange={this.handleChangeUser}
                             value={this.state.userInfo?.phone}
-                            required
                           ></input>
                         </div>
 
