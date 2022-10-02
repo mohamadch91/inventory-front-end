@@ -62,7 +62,7 @@ class Navbar extends Component {
     }
     const poorRegExp = /[a-z]/;
     const weakRegExp = /(?=.*?[0-9])/;
-    const newpass = this.state.changePassForm["new_password"];
+    const newpass = this.state.changePassForm["password"];
     const confpass = this.state.changePassForm["conf_password"];
     const poorPassword = poorRegExp.test(newpass);
     const weakPassword = weakRegExp.test(newpass);
@@ -82,9 +82,18 @@ class Navbar extends Component {
       UserService.changePassword(id, this.state.changePassForm).then(
         (res) => {
           toast.success(<Trans>Password change succesfully</Trans>);
+          this.passModalClose()
         },
         (err) => {
-          toast.error(<Trans>Erro occured</Trans>);
+          const data=err.response.data
+          if(data){
+            if(data.old_password){
+          toast.error(<Trans>Old password is not correct</Trans>);
+            }
+            if (data.password) {
+              toast.error(<Trans>Password is to common</Trans>);
+            }
+          }
         }
       );
     }
@@ -98,6 +107,24 @@ class Navbar extends Component {
     new_data[name] = value;
     this.setState({ userInfo: new_data });
   };
+  submitChaneprofile = (e) => {
+    e.preventDefault();
+    const id = this.state.user.id;
+    const new_data={}
+    for (const key in this.state.userInfo){
+      if(this.state.userInfo[key]!==""){
+        new_data[key]=this.state.userInfo[key]
+      }
+    }
+    UserService.updateUser(id, new_data).then(
+      (res) => {
+        toast.success(<Trans>Profile update succesfully</Trans>);
+      },
+      (err) => {
+        toast.error(<Trans>Update profile failed</Trans>);
+      }
+    );
+  }
   componentDidMount() {
     console.log(this.state.user);
     if (this.state.user !== undefined && this.state.user !== null) {
@@ -288,7 +315,7 @@ class Navbar extends Component {
                           </label>
                           <input
                             name="old_password"
-                            type="text"
+                            type="password"
                             onChange={this.handleChangePass}
                             value={this.state.changePassForm?.old_password}
                             required
@@ -300,10 +327,10 @@ class Navbar extends Component {
                             <Trans>New passowrd</Trans>
                           </label>
                           <input
-                            name="new_password"
-                            type="text"
+                            name="password"
+                            type="password"
                             onChange={this.handleChangePass}
-                            value={this.state.changePassForm?.new_password}
+                            value={this.state.changePassForm?.password}
                             required
                           ></input>
                         </div>
@@ -313,7 +340,7 @@ class Navbar extends Component {
                           </label>
                           <input
                             name="conf_password"
-                            type="text"
+                            type="password"
                             onChange={this.handleChangePass}
                             value={this.state.changePassForm?.conf_password}
                             required
@@ -327,9 +354,7 @@ class Navbar extends Component {
                     </Modal>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
-                      onClick={(evt) => {
-                        eventBus.dispatch("logout");
-                      }}
+                      onClick={this.ProfmodalOpen}
                     >
                       <span>
                         <span>
@@ -338,6 +363,63 @@ class Navbar extends Component {
                       </span>
                       <i className="mdi mdi mdi-account-star ml-1"></i>
                     </Dropdown.Item>
+                    <Modal
+                      show={this.state.Profmodal}
+                      onHide={this.ProfmodalClose}
+                      style={{ padding: "10px" }}
+                    >
+                      <form onSubmit={this.sumbitChangepass}>
+                        <h3 className="mb-1 text-center fs-5">
+                          <Trans>Update profile</Trans>
+                        </h3>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>name</Trans>
+                          </label>
+                          <input
+                            name="name"
+                            type="text"
+                            onChange={this.handleChangeUser}
+                            value={this.state.userInfo?.name}
+                            required
+                          ></input>
+                        </div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>ID Number</Trans>
+                          </label>
+                          <input
+                            name="idnumber"
+                            type="text"
+                            onChange={this.handleChangeUser}
+                            value={this.state.userInfo?.idnumber}
+                            required
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Phone Number</Trans>
+                          </label>
+                          <input
+                            name="phone"
+                            type="text"
+                            onChange={this.handleChangePass}
+                            value={this.state.userInfo?.phone}
+                            required
+                          ></input>
+                        </div>
+
+                        <button className="save-btn w-100" type="submit">
+                          <Trans>Save</Trans>
+                        </button>
+                      </form>
+                    </Modal>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
                       href="/login"
