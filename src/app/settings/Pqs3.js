@@ -23,6 +23,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Trans } from "react-i18next";
+import { seperator } from "../helpers/seperator";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -306,7 +307,9 @@ function Pqs3() {
                         <TableCell>{item.refrigerant}</TableCell>
                         <TableCell>{item.refrigeratorcapacity}</TableCell>
                         <TableCell>{item.freezercapacity}</TableCell>
-                        <TableCell>{item.kg_24_hrs}</TableCell>
+                        <TableCell>
+                          {item.kg_24_hrs.toString().replace(".", seperator())}
+                        </TableCell>
                         <TableCell>{item.h}</TableCell>
                         <TableCell>{item.w}</TableCell>
                         <TableCell>{item.l}</TableCell>
@@ -321,7 +324,13 @@ function Pqs3() {
               </TableBody>
             </SharedTable>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 15, 25, { label: "All", value: pqs4.length }]}
+              rowsPerPageOptions={[
+                5,
+                10,
+                15,
+                25,
+                { label: "All", value: pqs4.length },
+              ]}
               colSpan={3}
               count={pqs4.length}
               rowsPerPage={rowsPerPage}
