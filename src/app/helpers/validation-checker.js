@@ -1,5 +1,5 @@
 import { separator } from "../helpers/separator";
-
+import { seperator } from "../helpers/seperator";
 export const hasValidationError = (value, validation) => {
   if (typeof value !== "string" && typeof value !== "number") return false;
 
@@ -14,10 +14,9 @@ export const hasValidationError = (value, validation) => {
  console.log(_value.split("."));
   if (
     validation.float &&
-    _value.includes(".") &&
-    (_value).split(".")[1].length > validation.floating
+    _value.includes(seperator()) &&
+    _value.split(seperator())[1].length > validation.floating
   ) {
-   
     return `value must has ${validation.floating} decimals`;
   }
   // if (

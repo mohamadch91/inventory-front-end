@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { Trans } from "react-i18next";
 import LeftArrowIcon from "../shared/LeftArrowIcon";
 import RightArrowIcon from "../shared/RightArrowIcon";
+import { useHistory, useParams } from "react-router-dom";
 
 function StepOperations(props) {
   const {
@@ -14,6 +15,8 @@ function StepOperations(props) {
     isNextDisabled,
     id,
   } = props;
+  const history = useHistory();
+
   return (
     <div className="row mt-2">
       <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -30,7 +33,7 @@ function StepOperations(props) {
         <>
           {id !== "new" && activeStep !== stepsLength && (
             <>
-              <button className="btn btn-primary w-10 ">SAVE ALL</button>
+              <button className="btn btn-primary w-10 "><Trans>SAVE ALL</Trans></button>
               <Box sx={{ flex: "0.6 0.5 auto" }} />
 
               <Button
@@ -48,29 +51,31 @@ function StepOperations(props) {
             <>
               <Box sx={{ flex: "0.48 0.5 auto" }} />
 
-              <button className="btn btn-primary w-10 ">SAVE ALL</button>
+              <button className="btn btn-primary w-10 "><Trans>SAVE ALL</Trans></button>
             </>
           )}
           {id === "new" && activeStep !== stepsLength && (
             <>
-        <Box sx={{ flex: "0.6 0.5 auto" }} />
+              <Box sx={{ flex: "0.6 0.5 auto" }} />
 
-            <Button
-              disabled={isNextDisabled}
-              onClick={handleNext}
-              type="button"
-              sx={{ mr: 1 }}
-            >
-              <Trans>Next</Trans>
-              <RightArrowIcon />
-            </Button>
+              <Button
+                disabled={isNextDisabled}
+                onClick={handleNext}
+                type="button"
+                sx={{ mr: 1 }}
+              >
+                <Trans>Next</Trans>
+                <RightArrowIcon />
+              </Button>
             </>
           )}
           {id === "new" && activeStep === stepsLength && (
             <>
-        <Box sx={{ flex: "0.6 0.5 auto" }} />
+              <Box sx={{ flex: "0.6 0.5 auto" }} />
 
-            <button className="btn btn-primary w-10 ">SAVE ALL</button>
+              <button className="btn btn-primary w-10 ">
+                <Trans>SAVE ALL</Trans>
+              </button>
             </>
           )}
         </>

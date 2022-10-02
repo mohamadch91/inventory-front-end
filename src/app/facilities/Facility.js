@@ -20,6 +20,8 @@ import { Trans } from "react-i18next";
 import { separator } from "../helpers/separator";
 import StepOperations from "../components/StepOperations";
 import { useEffect } from "react";
+import { seperator } from "../helpers/seperator";
+
 import {
   MapContainer,
   useMap,
@@ -225,12 +227,21 @@ const [x2, setx2] = useState(
                 ?.split(")")[0]
         );
       }
+      for (const key in result) {
+        if (typeof result[key] === "number") {
+          if(result[key] %1 !==0){
+          result[key] = result[key]
+            .toFixed(2)
+            .toString()
+            .replace(".", seperator());
+        }
+      }
+    }
       return result;
     },
     {
       refetchOnMount: true,
       onSuccess(data) {
-        console.log(data)
         setFieldValue(data);
       },
     }

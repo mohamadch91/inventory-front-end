@@ -50,7 +50,18 @@ function Item() {
       if (id === "new") return defaultData;
 
       const res = await ItemService.getItems(id);
-      return { ...res.data[0]};
+      let item = res.data[0];
+      if (item["PQSPISCode"]){
+        setIsFromPQS(true);
+      }
+      for (const key in item) {
+        if (typeof item[key] === "number") {
+          if(item[key] % 1 !== 0){
+          item[key] = item[key].toFixed(2).toString().replace(".", seperator());
+          }
+        }
+      }
+      return { ...item };
     },
     {
       onSuccess(data) {
