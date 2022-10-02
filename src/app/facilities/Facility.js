@@ -63,7 +63,12 @@ function LocationMarker() {
     },
   });
 
-  return position === null ? null : <></>;
+ 
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  );
 }
 const GetCoordinates = (props) => {
   const map = useMap();
@@ -100,7 +105,6 @@ const GetCoordinates = (props) => {
       //   handleClick(data)
       // }, console.log);
       info.textContent = e.latlng;
-      console.log(e)
       handleClick(e);
     });
 
@@ -141,27 +145,7 @@ const [x2, setx2] = useState(
         if(!navigator.geolocation){
           toast.error("cannot get location");
         }
-       navigator.geolocation.getCurrentPosition(
-         (pos) => {
-           console.log("salam");
-           console.log("salam");
-
-           const { latitude, longitude } = pos.coords;
-           console.log(pos);
-           const data = {
-             latlang: {
-               lat: latitude,
-               lng: longitude,
-             },
-           };
-           setMap(data.latlang);
-           console.log("salam");
-         },
-         () => {
-           console.log("khobi");
-         },
-         { enableHighAccuracy: true }
-       );
+       
             setx1(
               JSON.parse(localStorage.getItem("country")) === null
                 ? 35
@@ -702,7 +686,6 @@ window.handleMapClick = handleMapClick;
                                 setMap={setMap}
                               />
                               <>
-                                {console.log(map)}
                                 {map && (
                                   <Marker position={map} draggable={true}>
                                     <Popup position={map}>
@@ -716,6 +699,31 @@ window.handleMapClick = handleMapClick;
                             </MapContainer>
                           )}
                         </div>
+                        <button
+                          className="btn btn-primary mt-2 w-50"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigator.geolocation.getCurrentPosition(
+                              (pos) => {
+                                const { latitude, longitude } = pos.coords;
+                                console.log(pos);
+                                const data = {
+                                  latlang: {
+                                    lat: latitude,
+                                    lng: longitude,
+                                  },
+                                };
+                                setMap(data.latlang);
+                                handleMapClick(data);
+                                
+                              },
+                              () => {},
+                              { enableHighAccuracy: true }
+                            );
+                          }}
+                        >
+                          Get current location
+                        </button>
                       </div>
                     ) : (
                       <DynamicInput

@@ -12,7 +12,6 @@ import {
 import L from "leaflet";
 // import tileLayer from '../util/tileLayer';
 // import "leaflet/dist/leaflet.css";
-import "./map.css";
 import "leaflet/dist/leaflet.css";
 const center = [52.22977, 21.01178];
 delete L.Icon.Default.prototype._getIconUrl;
@@ -35,7 +34,11 @@ function LocationMarker() {
     },
   });
 
-  return position === null ? null : <></>;
+  return position === null ? null : (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  );
 }
 const GetCoordinates = (props) => {
   const map = useMap();
@@ -126,6 +129,7 @@ const MapWrapper = (props) => {
       } else {
         setx1(parseFloat(temp));
         setx2(parseFloat(temp1));
+        setMap([parseFloat(temp), parseFloat(temp1)]);
       }
     }
     console.log(ans);
@@ -136,7 +140,7 @@ const MapWrapper = (props) => {
       {Current !== null && x1 && x2 && (
         <MapContainer
           center={[x1, x2]}
-          zoom={10}
+          zoom={5}
           scrollWheelZoom={true}
           style={{ width: "100%", height: "450px", zIndex: "1" }}
 
@@ -159,13 +163,29 @@ const MapWrapper = (props) => {
               </Marker>
             )}
           </>
-          <LocationMarker />
+          <LocationMarker className="salam" style={{ width: "100px !important", zIndex: "2" }} />
         </MapContainer>
       )}
       <button
         className="btn btn-primary mt-2 w-50"
-        onClick={() => {
-          props.handleSave();
+        onClick={(e) => {
+          e.preventDefault();
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              const { latitude, longitude } = pos.coords;
+              console.log(pos);
+              const data = {
+                latlang: {
+                  lat: latitude,
+                  lng: longitude,
+                },
+              };
+              setMap(data.latlang);
+              handl(data);
+            },
+            () => {},
+            { enableHighAccuracy: true }
+          );
         }}
       >
         Get current location
