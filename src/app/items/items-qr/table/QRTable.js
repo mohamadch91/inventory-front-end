@@ -51,7 +51,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
       <div className={"text-center"}>
         <div>
           <h4>
-            <Trans>Inventory and Gap Analysis System (IGA)</Trans>
+            <Trans>Inventory and Gap Analysis System</Trans> (IGA)
           </h4>
         </div>
         <div>
@@ -72,7 +72,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
                   </TableCell>
                   <TableCell className="col-sm-2">
                     <Trans>
-                      <Trans>Item category</Trans>
+                      <Trans>Items category</Trans>
                     </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">

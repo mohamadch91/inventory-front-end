@@ -141,87 +141,92 @@ const FilterForm = (props) => {
       value: e.target.checked,
     });
   };
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     if (filterState.facility === undefined || filterState.facility === "-1") {
-      toast.error("Please select a facility");
+      toast.error(<Trans>Please select a facility</Trans>);
     }
+    else{
     props.onSubmit(filterState);
+    }
   };
 
   return (
-    <div className="row">
-      <div className="col-sm-7">
-        <FilterFormDD
-          key={"A"}
-          isRequired={true}
-          label={"Main Facility"}
-          options={facilityOptions}
-          onChange={mainFacilityDDHandler}
-        />
-        <FilterFormDD
-          key={"B"}
-          label={"Item class"}
-          options={itemClassOptions}
-          onChange={itemClassDDHandler}
-        />
-        <FilterFormDD
-          key={"C"}
-          label={"Items category"}
-          options={itemTypeOptions}
-          onChange={itemTypeDDHandler}
-        />
-        <FilterFormDD
-          key={"D"}
-          label={"Working status"}
-          options={workingStatusOptions}
-          onChange={workingStatusDDHandler}
-        />
-        <FilterFormDD
-          key={"E"}
-          label={"Physical condition"}
-          options={physicalStatusOptions}
-          onChange={physicalConditionDDHandler}
-        />
-        <FilterFormDD
-          key={"F"}
-          label={"Users"}
-          options={usersOptions}
-          onChange={userChangeHandler}
-        />
-      </div>
-
-      <div className={`col-sm-4 `}>
-        <div className={classes.inputResponsive}>
-          <FilterFormYearsInput
-            onFromChange={yearFromChangeHandler}
-            from={filterState.year_from}
-            onToChange={yearToChangeHandler}
+    <form onSubmit={submitHandler}>
+      <div className="row">
+        <div className="col-sm-7">
+          <FilterFormDD
+            key={"A"}
+            isRequired={true}
+            label={"Main Facility"}
+            options={facilityOptions}
+            onChange={mainFacilityDDHandler}
+          />
+          <FilterFormDD
+            key={"B"}
+            label={"Item class"}
+            options={itemClassOptions}
+            onChange={itemClassDDHandler}
+          />
+          <FilterFormDD
+            key={"C"}
+            label={"Items category"}
+            options={itemTypeOptions}
+            onChange={itemTypeDDHandler}
+          />
+          <FilterFormDD
+            key={"D"}
+            label={"Working status"}
+            options={workingStatusOptions}
+            onChange={workingStatusDDHandler}
+          />
+          <FilterFormDD
+            key={"E"}
+            label={"Physical condition"}
+            options={physicalStatusOptions}
+            onChange={physicalConditionDDHandler}
+          />
+          <FilterFormDD
+            key={"F"}
+            label={"Users"}
+            options={usersOptions}
+            onChange={userChangeHandler}
           />
         </div>
 
-        <hr className="my-1" />
-        <div>
-          <FilterFormTextInput
-            onChange={itemCodeChangeHandler}
-            className={classes.codeInputResponsive}
+        <div className={`col-sm-4 `}>
+          <div className={classes.inputResponsive}>
+            <FilterFormYearsInput
+              onFromChange={yearFromChangeHandler}
+              from={filterState.year_from}
+              onToChange={yearToChangeHandler}
+            />
+          </div>
+
+          <hr className="my-1" />
+          <div>
+            <FilterFormTextInput
+              onChange={itemCodeChangeHandler}
+              className={classes.codeInputResponsive}
+            />
+          </div>
+
+          <hr className="my-1" />
+          <FilterFormCheckbox
+            onChange={functionalChangeHandler}
+            label={"Is functioning"}
           />
+
+          <button
+            // onClick={submitHandler}
+            type="submit"
+            className={`btn btn-primary btn-fw mt-3 font-weight-bold  ${classes.buttonResponsive}`}
+          >
+            <Trans>Search QR code</Trans>
+          </button>
         </div>
-
-        <hr className="my-1" />
-        <FilterFormCheckbox
-          onChange={functionalChangeHandler}
-          label={"Is functioning"}
-        />
-
-        <button
-          onClick={submitHandler}
-          type="button"
-          className={`btn btn-primary btn-fw mt-3 font-weight-bold  ${classes.buttonResponsive}`}
-        >
-          <Trans>Search QR code</Trans>
-        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -202,7 +202,7 @@ function ItemType() {
             </h3>
 
             <div className="row">
-              <div className="col-md-4 flex-column d-flex">
+              <div className="col-md-3 flex-column d-flex">
                 <label>
                   <Trans>Title</Trans>
                 </label>
@@ -214,7 +214,7 @@ function ItemType() {
                   required
                 ></input>
               </div>
-              <div className="col-md-4 flex-column d-flex">
+              <div className="col-md-3 flex-column d-flex">
                 <label>
                   <Trans>Item class</Trans>
                 </label>
@@ -234,13 +234,13 @@ function ItemType() {
                   ))}
                 </select>
               </div>
-              <div className="col-md-4 d-flex justify-content-center align-items-center">
+              <div className="col-md-6 d-flex justify-content-center align-items-center">
                 <label>
                   <Trans>Active</Trans>
                 </label>
                 <input
                   name="active"
-                  className="mr-4"
+                  className="mr-1"
                   type="checkbox"
                   onChange={() =>
                     setAddRowFormData({
@@ -255,7 +255,7 @@ function ItemType() {
                 </label>
                 <input
                   name="havePQS"
-                  className="mr-4"
+                  className="mr-1"
                   type="checkbox"
                   onChange={() =>
                     setAddRowFormData({
@@ -265,14 +265,14 @@ function ItemType() {
                   }
                   checked={addRowFormData?.havePQS}
                 ></input>
-                <button className="save-btn" onClick={handleSubmitNew}>
+                <button className="save-btn w-50" onClick={handleSubmitNew}>
                   <Trans>Save</Trans>
                 </button>
               </div>
             </div>
           </div>
           <h3 className="page-title mb-3">
-            <Trans>Item category list</Trans>
+            <Trans>Items category list</Trans>
           </h3>
           <div className="mb-2">
             <SharedTable>

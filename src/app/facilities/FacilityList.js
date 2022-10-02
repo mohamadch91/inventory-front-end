@@ -480,7 +480,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                   <button
                     type="button"
                     className="btn btn-secondary"
-                    onClick={() => {setFilterValues(defaultValues); refetchFacilities();} }
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      refetchFacilities();
+                    }}
                   >
                     <Trans>Clear Filter</Trans>
                   </button>
@@ -530,7 +533,9 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     <TableCell className="col-sm-2">
                       <Trans>Facility Name</Trans>
                     </TableCell>
-                    <TableCell className="col-sm-1"><Trans>Levels</Trans></TableCell>
+                    <TableCell className="col-sm-1">
+                      <Trans>Levels</Trans>
+                    </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Number of lower level facility</Trans>
                     </TableCell>
@@ -579,7 +584,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                             </Tooltip>
                           </Link>
                           {((pid && index > 0) || !pid) && (
-                            <Tooltip title={<Trans>Sub facilities</Trans>}>
+                            <Tooltip title={<Trans>Sub Facilities</Trans>}>
                               <Link
                                 to={{
                                   pathname: "/facilities/list",
@@ -641,7 +646,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     className="mb-1 mr-3  mt-5 mb-5 text-black"
                     style={{ marginLeft: "33%" }}
                   >
-                    <Trans>Delete Facility</Trans>
+                    <Trans>Delete facility</Trans>
                   </h1>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -659,9 +664,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       }}
                       // value={editFormData?.facility}
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {resons?.map((item, index) => (
                         <option key={item.id} value={item.id}>
                           {item.name}
@@ -675,7 +684,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     style={{ marginLeft: "24%" }}
                     type="submit"
                   >
-                    <Trans>Delete</Trans>
+                    <Trans>Delete facility</Trans>
                   </button>
 
                   <button

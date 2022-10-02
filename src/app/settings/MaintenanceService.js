@@ -354,9 +354,9 @@ function MaintenanceServiceComponent() {
                       <TableCell className="col-sm-2">
                         <Trans>Interval for locations</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-1">Enable</TableCell>
-                      <TableCell className="col-sm-1">Required</TableCell>
-                      <TableCell className="col-sm-1">Edit</TableCell>
+                      <TableCell className="col-sm-1"><Trans>Enable</Trans></TableCell>
+                      <TableCell className="col-sm-1"><Trans>Required</Trans></TableCell>
+                      <TableCell className="col-sm-1"><Trans>Edit</Trans></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

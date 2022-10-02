@@ -27,9 +27,9 @@ function EditLanguage() {
     { label: "عربي", value: "ar" },
     { label: "Española", value: "es" },
     { label: "Pусский", value: "ru" },
-    { label: "Other", value: "ot" },
     { label: "украї́нська", value: "uk" },
     { label: "Chinese", value: "ch" },
+    { label: "Other", value: "ot" },
   ];
 
   const [editFormData, setEditFormData] = useState({});
@@ -317,7 +317,7 @@ function EditLanguage() {
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
               <h3 className="mb-3 mt-3">
-                <Trans>Inset translation</Trans>
+                <Trans>Insert translation</Trans>
               </h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">

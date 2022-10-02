@@ -212,7 +212,7 @@ function MessageList() {
               </div>
               <div className="d-flex flex-column">
                 <label>
-                  <Trans>Message Body</Trans>
+                  <Trans>Message body</Trans>
                 </label>
                 <textarea
                   onChange={handleChangeEdit}
@@ -230,7 +230,7 @@ function MessageList() {
       )}
       <Link to="/message/new">
         <button className="save-btn mt-4">
-          <Trans>Send Message</Trans>
+          <Trans>Send message</Trans>
         </button>
       </Link>
     </div>

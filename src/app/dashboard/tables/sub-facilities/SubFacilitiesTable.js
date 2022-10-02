@@ -6,19 +6,16 @@ const SubFacilitiesTable = (props) => {
   const generateRows = () => {
     let rows = [];
     for (let i = 0; i < props.data.length; i++) {
-      let variant = ""
+      let variant = "";
       let def = props.data[i].defined * 100;
-      if(def<20){
-        variant = "danger"
-      }
-      else if(def<50){
-        variant = "warning"
-      }
-      else if(def<80){
-        variant = "info"
-      }
-      else{
-        variant = "success"
+      if (def < 20) {
+        variant = "danger";
+      } else if (def < 50) {
+        variant = "warning";
+      } else if (def < 80) {
+        variant = "info";
+      } else {
+        variant = "success";
       }
 
       rows.push(
@@ -43,7 +40,7 @@ const SubFacilitiesTable = (props) => {
         <Trans>Sub Facilities</Trans>
       </h4>
       <p className="card-description">
-        <Trans>list of all sub facilities </Trans>
+        <Trans>List of all sub-facilities</Trans>
       </p>
       <div className="table-responsive">
         <table className="table table-striped">

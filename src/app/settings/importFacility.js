@@ -391,7 +391,10 @@ export default function ImportFacility() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title"> Import facility</h1>
+        <h1 className="page-title">
+          {" "}
+          <Trans>Import facility</Trans>
+        </h1>
       </div>
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
@@ -404,7 +407,7 @@ export default function ImportFacility() {
                 component="div"
                 className=" mt-3 item-class-page"
               >
-                <Trans>Import Facility</Trans>
+                <Trans>Import facility</Trans>
               </Typography>
               <div className="col-md-12 item-class-page">
                 <label>
@@ -487,7 +490,7 @@ export default function ImportFacility() {
                     <TableCell padding="none" align="center">
                       {row.parentid}
                     </TableCell>
-                   
+
                     <TableCell padding="none" align="center">
                       {row.level}
                     </TableCell>

@@ -117,7 +117,7 @@ const ItemToPrint = forwardRef((props, ref) => {
                 ))}
               </select>
               <h3 className="col-md-2 mb-0 d-flex justify-content-center align-items-center">
-                <Trans>Item Category</Trans>:
+                <Trans>Items category</Trans>:
               </h3>
               <select
                 name="itemtype"
@@ -160,7 +160,9 @@ const ItemToPrint = forwardRef((props, ref) => {
             <div className="container">
               <div className={"text-center"}>
                 <div>
-                  <h4>Inventory and Gap Analysis System (IGA)</h4>
+                  <h4>
+                    <Trans>Inventory and Gap Analysis System</Trans> (IGA)
+                  </h4>
                 </div>
                 <div>
                   <h4>
@@ -180,7 +182,9 @@ const ItemToPrint = forwardRef((props, ref) => {
               <div className="wrapper">
                 <Row className={"row"}>
                   <div className={"w-50 m-3 col-5 "}>
-                    <h6>Facility name</h6>
+                    <h6>
+                      <Trans>Facility Name</Trans>
+                    </h6>
                     <div
                       className={" rounded box h-75"}
                       style={{
@@ -191,7 +195,9 @@ const ItemToPrint = forwardRef((props, ref) => {
                     </div>
                   </div>
                   <div className={"w-50 m-3 col-5 "}>
-                    <h6>Facility code</h6>
+                    <h6>
+                      <Trans>Facility code</Trans>
+                    </h6>
                     <div
                       className={" rounded box h-75"}
                       style={{
@@ -202,7 +208,9 @@ const ItemToPrint = forwardRef((props, ref) => {
                     </div>
                   </div>
                   <div className={"w-50 m-3 col-5 "}>
-                    <h6>Level</h6>
+                    <h6>
+                      <Trans>Levels</Trans>
+                    </h6>
                     <div
                       className={" rounded box h-75"}
                       style={{
@@ -213,7 +221,9 @@ const ItemToPrint = forwardRef((props, ref) => {
                     </div>
                   </div>
                   <div className={"w-50 m-3 col-5 "}>
-                    <h6>Item Category</h6>
+                    <h6>
+                      <Trans>Items category</Trans>
+                    </h6>
                     <div
                       className={" rounded box h-75"}
                       style={{

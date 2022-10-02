@@ -83,7 +83,7 @@ const Facilities = () => {
               <span>{chartData.subFacilities}</span>
               <p>
                 {" "}
-                <Trans>Sub Facilities defined</Trans>{" "}
+                <Trans>Sub-Facilities defined</Trans>{" "}
               </p>
             </div>
             <div>

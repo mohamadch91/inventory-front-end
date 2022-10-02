@@ -181,7 +181,7 @@ function FieldsOfItemT() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="col-sm-12">
-                      <Trans>Item category</Trans>
+                      <Trans>Items category</Trans>
                     </label>
                     <div className="col-sm-12">
                       <Form.Control

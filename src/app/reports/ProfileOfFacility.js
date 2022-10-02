@@ -20,7 +20,7 @@ const allTableData = {
       func: (val) => val,
     },
     {
-      headTitle: "Facility type",
+      headTitle: "Facility types",
       valueKey: "type",
       func: (val) => val,
     },
@@ -220,9 +220,9 @@ function ProfileOfFacility() {
         Object.keys(reports).map((key) => {
           const title =
             key === "general"
-              ? "General population"
+              ? (<Trans>General populations</Trans>)
               : key === "under_1"
-              ? "Under-1 Population"
+              ? (<Trans>Under-1 Population</Trans>)
               : "";
           return (
             <ReportTable

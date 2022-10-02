@@ -643,7 +643,7 @@ export default function DataTable() {
                   }}
                   colSpan={2}
                 >
-                  <Trans>Populations</Trans>
+                  <Trans>Population</Trans>
                 </TableCell>
               </TableRow>
               <TableRow className="item-class-page">

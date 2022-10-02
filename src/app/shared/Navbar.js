@@ -96,9 +96,9 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
-            <Trans>Inventory and Gap Analysis</Trans> (
-            {JSON.parse(localStorage.getItem("country"))?.codecountry}) V3.6F (
-            <Trans>You are in</Trans> {this.state.user?.facility_name})
+            <Trans>Inventory and Gap Analysis</Trans> v3.6F (
+            {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
+            {this.state.user?.facility_name} )
           </div>
 
           <ul className="navbar-nav navbar-nav-right">
@@ -256,8 +256,7 @@ class Navbar extends Component {
                       <h6 className="preview-subject font-weight-normal mb-1">
                         <Links to="/dashboard#warnings">
                           <span>
-                            <Trans>See</Trans> <Trans>all</Trans>{" "}
-                            <Trans>Maintenance</Trans>
+                            <Trans>See all Maintenance</Trans>
                           </span>
                         </Links>
                       </h6>

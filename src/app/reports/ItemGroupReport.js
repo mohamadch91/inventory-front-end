@@ -484,7 +484,7 @@ function ItemGroupReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Energy source for Cold chain</Trans>:
+                      <Trans>Energy source for cold chain equipment:</Trans>
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -715,10 +715,12 @@ function ItemGroupReport() {
               {country?.country})
             </h4>
             <h6>
-              Filters : {""} {printFilterValues()}
+              <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+            <h6>
+              <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+            </h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>

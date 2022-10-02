@@ -84,8 +84,8 @@ export class SubFacilityReportChart extends Component {
                 </h4>
                 <h6 className="mt-1">
                   {this.props.isGeneral
-                    ? (<Trans>General Population</Trans>)
-                    : (<Trans>Under 1 Population</Trans>)}
+                    ? (<Trans>General populations</Trans>)
+                    : (<Trans>Under-1 populations</Trans>)}
                 </h6>
                 {this.props.rows && (
                   <HorizontalBar

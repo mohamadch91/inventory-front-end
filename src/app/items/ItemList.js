@@ -13,7 +13,7 @@ import SharedTable from "../shared/SharedTable";
 import EditIcon from "../shared/EditIcon";
 import { Link, useHistory } from "react-router-dom";
 import ItemService from "../services/item.service";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import TrashIcon from "../shared/TrashIcon";
 import Modal from "react-bootstrap/Modal";
 
@@ -135,7 +135,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <Trans>Item class</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Item category</Trans>
+                      <Trans>Items category</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Code</Trans>
@@ -184,7 +184,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               <EditIcon />
                             </div>
                           </Link>
-                          <Tooltip title="Delete item">
+                          <Tooltip title={<Trans>Delete item</Trans>}>
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}
@@ -205,7 +205,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     className="mb-1 mr-3  mt-5 mb-5 text-black"
                     style={{ marginLeft: "33%" }}
                   >
-                    <Trans>Delete Item</Trans>
+                    <Trans>Delete item</Trans>
                   </h1>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -223,9 +223,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       }}
                       // value={editFormData?.facility}
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {resons?.map((item, index) => (
                         <option key={item.id} value={item.id}>
                           {item.name}
@@ -239,7 +243,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     style={{ marginLeft: "24%" }}
                     type="submit"
                   >
-                    <Trans>Delete</Trans>
+                    <Trans>Delete item</Trans>
                   </button>
                   <button
                     className="btn btn-danger text-dark w-50 mt-4 mb-2   "

@@ -477,7 +477,7 @@ function ItemFacilityReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Working condition</Trans>:
+                      <Trans>Working conditions</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -543,7 +543,7 @@ function ItemFacilityReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"

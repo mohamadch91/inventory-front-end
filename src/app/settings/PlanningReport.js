@@ -515,7 +515,7 @@ function PlanningReport() {
                       <Trans>Net vaccine storage capacity (lit.)</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Freezer Net Capacity (lit.)</Trans>
+                      <Trans>Freezer Net Capacity</Trans> (lit.)
                     </TableCell>
                     <TableCell>
                       <Trans>Assign</Trans>

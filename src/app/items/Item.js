@@ -453,7 +453,7 @@ function Item() {
                     textAlign: "right",
                   }}
                 >
-                  <Trans>Item Category</Trans>
+                  <Trans>Items category</Trans>
                 </label>
                 <div className="col-sm-8">
                   <Form.Control

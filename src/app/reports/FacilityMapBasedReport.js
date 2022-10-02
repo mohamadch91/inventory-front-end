@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Trans } from "react-i18next";
+import { Translation,Trans } from "react-i18next";
 import { useQuery } from "react-query";
 import { Form } from "react-bootstrap";
 import ReportService from "../services/report.service";
@@ -80,7 +80,7 @@ function FacilityMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Level:</Trans>
+                      <Trans>Levels</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -94,9 +94,14 @@ function FacilityMapBasedReport() {
                       value={filterValues.level}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+
                       {facMapHelper?.level.map((lev) => (
                         <option key={lev.id} value={lev.id}>
                           {`${lev.id} - ${lev.name}`}
@@ -108,7 +113,7 @@ function FacilityMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Type:</Trans>
+                      <Trans>Type</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -122,9 +127,13 @@ function FacilityMapBasedReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facMapHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -138,7 +147,7 @@ function FacilityMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Power source:</Trans>
+                      <Trans>Power source</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -152,9 +161,13 @@ function FacilityMapBasedReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facMapHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -166,7 +179,7 @@ function FacilityMapBasedReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Functioning Status:</Trans>
+                      <Trans>Functioning Status</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -180,9 +193,13 @@ function FacilityMapBasedReport() {
                       value={filterValues.func}
                       as="select"
                     >
-                      <option value="-1" selected disabled>
-                        Please select
-                      </option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option value="-1" selected disabled>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       <option value={true}>Working</option>
                       <option value={false}>Not working</option>
                     </Form.Control>
@@ -211,9 +228,12 @@ function FacilityMapBasedReport() {
       </div>
       <div className="p-3">
         <h4>
-          <Trans>Report Number: Facility Map-Based ({country?.country})</Trans>
+          <Trans>Report</Trans> : <Trans>Facility Map-Based</Trans> (
+          {country?.country})
         </h4>
-        <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+        <h6>
+          <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+        </h6>
         <SharedMap locations={reports} />
       </div>
     </div>

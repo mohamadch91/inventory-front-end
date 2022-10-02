@@ -566,7 +566,7 @@ function GapItemReport({i18n}) {
               <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+            <h6><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container ">
               <SharedTable>
                 <TableHead>
@@ -575,7 +575,7 @@ function GapItemReport({i18n}) {
                       <Trans>Facility information</Trans>
                     </TableCell>
                     <TableCell align="center" colSpan={2}>
-                      <Trans>Populations</Trans>
+                      <Trans>Population</Trans>
                     </TableCell>
                     {selectedDegree === "6" ? (
                       Array.from({ length: 5 }).map((_, i) => (

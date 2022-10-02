@@ -285,7 +285,7 @@ function FacilitySegmentationReport() {
                       <Trans>General population</Trans>:
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From</Trans>:
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -300,7 +300,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.gfrom}
                     />
                     <label className="label col-sm-1">
-                      <Trans>To</Trans>:
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -321,10 +321,10 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12">
                   <Form.Group className="row">
                     <label className="label col-sm-2">
-                      <Trans>Under-1 Population:</Trans>
+                      <Trans>Under-1 populations</Trans>:
                     </label>
                     <label className="label col-sm-1">
-                      <Trans>From</Trans>:
+                      <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -339,7 +339,7 @@ function FacilitySegmentationReport() {
                       value={filterValues.underfrom}
                     />
                     <label className="label col-sm-1">
-                      <Trans>To:</Trans>
+                      <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
@@ -388,10 +388,10 @@ function FacilitySegmentationReport() {
               </Trans>
             </h4>
             <h6>
-              Filters : {""} {printFilterValues()}
+              <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+            <h6><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>
@@ -415,7 +415,7 @@ function FacilitySegmentationReport() {
                       <Trans>Power</Trans>
                     </TableCell>
                     <TableCell className="col-sm-1">
-                      <Trans>owner</Trans>
+                      <Trans>Owner</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>Functioning status</Trans>

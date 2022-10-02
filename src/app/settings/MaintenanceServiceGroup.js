@@ -129,7 +129,7 @@ function MaintenanceServiceGroup() {
               </div>
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12"><Trans>item Category</Trans></label>
+                  <label className="col-sm-12"><Trans>Items category</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectItemTypeHandler}
@@ -151,7 +151,7 @@ function MaintenanceServiceGroup() {
               </div>
               <div className="col-sm-12 col-lg-4">
                 <Form.Group className="row">
-                  <label className="col-sm-12"><Trans>Maintenance Group</Trans></label>
+                  <label className="col-sm-12"><Trans>Maintenance group</Trans></label>
                   <div className="col-sm-12">
                     <Form.Control
                       onChange={selectGpHandler}

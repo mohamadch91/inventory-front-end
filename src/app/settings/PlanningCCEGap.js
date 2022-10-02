@@ -308,7 +308,7 @@ function PlanningCCEGap() {
               </Form.Group>
               <Form.Group className="row mt-1">
                 <label className="label col-sm-2 mt-3">
-                  <Trans>Under-1 Populations</Trans>
+                  <Trans>Under-1 populations</Trans>
                 </label>
                 <label className="label-center col-sm-2 mt-3">
                   <Trans>from</Trans>:
@@ -325,7 +325,7 @@ function PlanningCCEGap() {
                   value={filterValues.under_1_from}
                 />
                 <label className="label-center col-sm-2 mt-3">
-                  <Trans>to:</Trans>
+                  <Trans>to</Trans>:
                 </label>
                 <Form.Control
                   className="form-control col-sm-3"
@@ -374,7 +374,7 @@ function PlanningCCEGap() {
               </Form.Group>
               <Form.Group className="row mt-1">
                 <label className="label col-sm-2 mt-3">
-                  <Trans>Available capacity (lit.)</Trans>
+                  <Trans>Available capacity</Trans> (lit.)
                 </label>
                 <label className="label-center col-sm-2 mt-3">
                   <Trans>from</Trans>:
@@ -512,7 +512,7 @@ function PlanningCCEGap() {
                       <Trans>Facility Name</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Parent Facility</Trans>
+                      <Trans>Parent facility</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Level</Trans>
@@ -527,19 +527,19 @@ function PlanningCCEGap() {
                       <Trans>Power source</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Storage condition</Trans>
+                      <Trans>Storage conditions</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Require Capacity</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Available Capacity (lit.)</Trans>
+                      <Trans>Available capacity</Trans> (lit.)
                     </TableCell>
                     <TableCell>
                       <Trans>Functional Capacity</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>Shortage/exces Capacity</Trans>
+                      <Trans>Shortage/Exces Capacity</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Plan it</Trans>

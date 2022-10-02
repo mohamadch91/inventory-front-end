@@ -217,7 +217,9 @@ function Pqs3() {
             </h3>
             <div className="row">
               <div className="col-md-3 flex-column d-flex">
-                <label className="mb-3">Excel file</label>
+                <label className="mb-3">
+                  <Trans>Excel file</Trans>
+                </label>
                 <input
                   name="describe"
                   type="file"

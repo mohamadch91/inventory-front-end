@@ -6,6 +6,7 @@ import { Form } from 'react-bootstrap';
 import { connect } from "react-redux";
 import { login } from "../actions/auth";
 import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 import EventBus from "../common/EventBus";
 import PropTypes from "prop-types";
@@ -69,7 +70,7 @@ class Login extends Component {
 
    
     if(this.state.username==""){
-      toast.error("Please enter username");
+      toast.error(<Trans>Please enter username</Trans>);
       // this.alerthandle("Username is required","error")
       this.setState({
         loading: false,
@@ -78,7 +79,7 @@ class Login extends Component {
 
     }
     if(this.state.password==""){
-      toast.error("Password is required")
+      toast.error(<Trans>Password is required</Trans>)
       // this.alerthandle("Password is required","alert")
       this.setState({
         loading: false,
@@ -89,14 +90,14 @@ class Login extends Component {
 
       dispatch(login(this.state.username, this.state.password))
         .then((res) => {
-          toast.success("Login Successfull");
+          toast.success(<Trans>Login Successfull</Trans>);
           // this.alerthandle("Login Successful","success");
           
           history.push("/dashboard");
           window.location.reload();
         })
         .catch((err) => {
-          toast.error("Login Failed");
+          toast.error(<Trans>Login Failed</Trans>);
           // this.alerthandle("Login failed ","alert")
           this.setState({
             loading: false,
@@ -147,7 +148,7 @@ class Login extends Component {
                 className="my-5 new-margin  display-5 fw-bold "
                 style={{ color: "hsl(218, 81%, 95%)", fontSize: "30px" }}
               >
-                Inventory and Gap analyses system <br />
+                <Trans>Inventory and Gap analyses system</Trans> <br />
                 <span style={{ color: "hsl(218, 81%, 75%)" }}></span>
               </h1>
               <img className="who" src="./who-emblem.png" />
@@ -173,7 +174,7 @@ class Login extends Component {
                   >
                     <div className="form-outline mb-4 mt-2">
                       <label className="form-label" htmlFor="form3Example3">
-                        Username
+                        <Trans>Username</Trans>
                       </label>
                       <input
                         onChange={(e) => {
@@ -187,7 +188,7 @@ class Login extends Component {
 
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="form3Example4">
-                        Password
+                        <Trans>Password</Trans>
                       </label>
                       <input
                         onChange={(e) => {
@@ -210,7 +211,9 @@ class Login extends Component {
                       type="submit"
                       className="btn sign btn-primary btn-block mb-2"
                     >
-                      <h3 className='m-auto'>SIGN IN </h3>
+                      <h3 className="m-auto">
+                        <Trans>SIGN IN</Trans>{" "}
+                      </h3>
                       {this.state.loading && (
                         <span className="mr-2 pr-1 pl-2 spinner-border spinner-border-sm"></span>
                       )}

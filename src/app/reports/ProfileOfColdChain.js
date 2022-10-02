@@ -17,7 +17,7 @@ const table1Data = [
     func: (val) => val,
   },
   {
-    headTitle: "Level name",
+    headTitle: "Level Name",
     valueKey: "name",
     func: (val) => val,
   },
@@ -131,7 +131,7 @@ const table2Data = [
     align: "right",
   },
   {
-    headTitle: "Available capacity ",
+    headTitle: "Available capacity",
     valueKey: "available",
     func: (val) => (+val).toFixed(2).toString().replace(".", seperator()),
     size: "large",
@@ -139,7 +139,7 @@ const table2Data = [
   },
   {
     headTitle:
-      "The difference between available capacity and required capacity ",
+      "The difference between available capacity and required capacity",
     valueKey: "diff",
     func: (val) => val.toFixed(2).toString().replace(".", seperator()),
     size: "large",
@@ -242,7 +242,7 @@ function ProfileOfColdChain() {
                     </TableCell>
                     <TableCell colspan={2}></TableCell>
                     <TableCell align="center" colSpan={6}>
-                      <Trans>Not work items</Trans>
+                      <Trans>Not working items</Trans>
                     </TableCell>
                   </TableRow>
                   <TableRow>

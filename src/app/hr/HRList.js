@@ -359,9 +359,13 @@ function HRList() {
                   value={editFormData?.position_level}
                 >
                   {positionLevels.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={item}>
+                          {t(item)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>
@@ -375,9 +379,13 @@ function HRList() {
                   value={editFormData?.educatioin_level}
                 >
                   {educationLevels.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={item}>
+                          {t(item)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>
@@ -391,9 +399,13 @@ function HRList() {
                   value={editFormData?.genders}
                 >
                   {genders.map((i, index) => (
-                    <option key={index} value={i}>
-                      {i}
-                    </option>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <option key={index} value={i}>
+                          {t(i)}
+                        </option>
+                      )}
+                    </Translation>
                   ))}
                 </select>
               </div>
