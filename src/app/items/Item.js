@@ -15,6 +15,7 @@ import Select from "react-select";
 import StepOperations from "../components/StepOperations";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-tem";
 import { isRelatedFieldOkReq } from "../helpers/related-tem-req";
+import { seperator } from "../helpers/seperator";
 
 
 const facilityField = {
@@ -153,6 +154,7 @@ function Item() {
     const _fieldErrors = { ...fieldErrors };
     const currentStepFields = Object.values(itemFields)[activeStep];
     currentStepFields.forEach((field) => {
+      console.log(fieldsValue[field.state]);
       if (
         field.required &&
         !fieldsValue[field.state] &&
@@ -172,7 +174,6 @@ function Item() {
     });
      for (const key in relatedFields) {
        const fields = relatedFields[key];
-        console.log(fieldsValue[key]);
          if (fieldsValue[key] === true) {
            fields.forEach((field) => {
              delete _fieldErrors[field];
@@ -180,7 +181,6 @@ function Item() {
          }
        
      }
-     console.log(_fieldErrors);
     setFieldErrors(_fieldErrors);
     return Object.keys(_fieldErrors).length > 0;
   };
@@ -300,10 +300,8 @@ function Item() {
     }
 
     const cloneFieldsValue = { ...fieldsValue };
-    console.log(pqsData);
 
     const selectedPqs = pqsData.find((pqs) => pqs?.value?.id === value?.id).value;
-    console.log(selectedPqs);
     if(selectedPqs.ptype==3){
       cloneFieldsValue["PQSPISManufacturer"] = selectedPqs.make;
       cloneFieldsValue["PQSPISRefrigerantGas"] = selectedPqs.refrigerant;
@@ -311,11 +309,26 @@ function Item() {
       cloneFieldsValue["PQSPISTemperatureWorkingZone"] =
         selectedPqs.refrigerant;
       cloneFieldsValue["NetVaccineStorageCapacity"] =
-        selectedPqs.refrigeratorcapacity;
-      cloneFieldsValue["FreezerNetCapacity"] = selectedPqs.freezercapacity;
-      cloneFieldsValue["Height"] = selectedPqs.h;
-      cloneFieldsValue["Width"] = selectedPqs.w;
-      cloneFieldsValue["Length"] = selectedPqs.l;
+        selectedPqs.refrigeratorcapacity
+          .toFixed(2)
+          .toString()
+          .replace(".", seperator());
+      cloneFieldsValue["FreezerNetCapacity"] = selectedPqs.freezercapacity
+        .toFixed(2)
+        .toString()
+        .replace(".", seperator());
+      cloneFieldsValue["Height"] = selectedPqs.h
+        .toFixed(2)
+        .toString()
+        .replace(".", seperator());
+      cloneFieldsValue["Width"] = selectedPqs.w
+        .toFixed(2)
+        .toString()
+        .replace(".", seperator());
+      cloneFieldsValue["Length"] = selectedPqs.l
+        .toFixed(2)
+        .toString()
+        .replace(".", seperator());
 
 
       
@@ -327,12 +340,21 @@ function Item() {
       cloneFieldsValue["PQSPISRefrigerantGas"] ="--";
       cloneFieldsValue["PQSPISTemperatureWorkingZone"] = "--"
       cloneFieldsValue["NetVaccineStorageCapacity"] =
-        selectedPqs.vaccinenetstoragecapacity;
+        selectedPqs.vaccinenetstoragecapacity
+          .toFixed(2)
+          .toString()
+          .replace(".", seperator());
       cloneFieldsValue["CoolantPackNominalCapacity"] =
-        selectedPqs.coolantpacknominalcapacity;
+        selectedPqs.coolantpacknominalcapacity
+          .toFixed(2)
+          .toString()
+          .replace(".", seperator());
       cloneFieldsValue["NumberOfCoolantPacksRequired"] =
         selectedPqs.numbercoolantpacks;
-      cloneFieldsValue["ExternalSize"] = selectedPqs.externalvolume;
+      cloneFieldsValue["ExternalSize"] = selectedPqs.externalvolume
+        .toFixed(2)
+        .toString()
+        .replace(".", seperator());
 
 
     }

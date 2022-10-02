@@ -106,174 +106,180 @@ class Sidebar extends Component {
               </span>
             </Link>
           </li>{" "}
-          <li
-            className={
-              this.isPathActive("/facilities") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+          {this.user?.facility_admin && (
+            <li
               className={
-                this.state.facilitiesOpen
-                  ? "nav-link menu-expanded"
-                  : "nav-link"
+                this.isPathActive("/facilities")
+                  ? "nav-item active"
+                  : "nav-item"
               }
-              onClick={() => this.toggleMenuState("facilitiesOpen")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-table-large menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>
-                  <Trans>Facilities</Trans>
+              <div
+                className={
+                  this.state.facilitiesOpen
+                    ? "nav-link menu-expanded"
+                    : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("facilitiesOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-table-large menu-icon"></i>
                 </span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.facilitiesOpen}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/facilities/info")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/facilities/info/new"
-                  >
-                    <span>
-                      <Trans>New facility</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/facilities/list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/facilities/list"
-                  >
-                    <span>
-                      <Trans>Facility list</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/facilities/print")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/facilities/print"
-                  >
-                    <span>
-                      <Trans>Print new facility form</Trans>
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
-          <li
-            className={
-              this.isPathActive("/items") ? "nav-item active" : "nav-item"
-            }
-          >
-            <div
+                <span className="menu-title">
+                  <span>
+                    <Trans>Facilities</Trans>
+                  </span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.facilitiesOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/facilities/info")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/facilities/info/new"
+                    >
+                      <span>
+                        <Trans>New facility</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/facilities/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/facilities/list"
+                    >
+                      <span>
+                        <Trans>Facility list</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/facilities/print")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/facilities/print"
+                    >
+                      <span>
+                        <Trans>Print new facility form</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
+          {this.user?.itemadmin && (
+            <li
               className={
-                this.state.itemsOpen ? "nav-link menu-expanded" : "nav-link"
+                this.isPathActive("/items") ? "nav-item active" : "nav-item"
               }
-              onClick={() => this.toggleMenuState("itemsOpen")}
-              data-toggle="collapse"
             >
-              <span className="icon-bg">
-                <i className="mdi mdi-table-large menu-icon"></i>
-              </span>
-              <span className="menu-title">
-                <span>
-                  <Trans>Items</Trans>
+              <div
+                className={
+                  this.state.itemsOpen ? "nav-link menu-expanded" : "nav-link"
+                }
+                onClick={() => this.toggleMenuState("itemsOpen")}
+                data-toggle="collapse"
+              >
+                <span className="icon-bg">
+                  <i className="mdi mdi-table-large menu-icon"></i>
                 </span>
-              </span>
-              <i className="menu-arrow"></i>
-            </div>
-            <Collapse in={this.state.itemsOpen}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/info")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/info/new"
-                  >
-                    <span>
-                      <Trans>New item</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/list")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/list"
-                  >
-                    <span>
-                      <Trans>Item list</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/print")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/print"
-                  >
-                    <span>
-                      <Trans>Print new item form</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/qr")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/qr"
-                  >
-                    <span>
-                      <Trans>Item QRs</Trans>
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className={
-                      this.isPathActive("/items/scan-qr")
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    to="/items/scan-qr"
-                  >
-                    <span>
-                      <Trans>Scan QRs</Trans>
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            </Collapse>
-          </li>
+                <span className="menu-title">
+                  <span>
+                    <Trans>Items</Trans>
+                  </span>
+                </span>
+                <i className="menu-arrow"></i>
+              </div>
+              <Collapse in={this.state.itemsOpen}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/info")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/info/new"
+                    >
+                      <span>
+                        <Trans>New item</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/list")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/list"
+                    >
+                      <span>
+                        <Trans>Item list</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/print")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/print"
+                    >
+                      <span>
+                        <Trans>Print new item form</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/qr")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/qr"
+                    >
+                      <span>
+                        <Trans>Item QRs</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className={
+                        this.isPathActive("/items/scan-qr")
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      to="/items/scan-qr"
+                    >
+                      <span>
+                        <Trans>Scan QRs</Trans>
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </Collapse>
+            </li>
+          )}
           {isBrowser && (
             <>
               {this.country?.havehr && (
@@ -429,162 +435,165 @@ class Sidebar extends Component {
                   </ul>
                 </Collapse>
               </li>
-
-              <li
-                className={
-                  this.isPathActive("/reports") ? "nav-item active" : "nav-item"
-                }
-              >
-                <div
+              {this.user?.reportadmin && (
+                <li
                   className={
-                    this.state.reportsOpen
-                      ? "nav-link menu-expanded"
-                      : "nav-link"
+                    this.isPathActive("/reports")
+                      ? "nav-item active"
+                      : "nav-item"
                   }
-                  onClick={() => this.toggleMenuState("reportsOpen")}
-                  data-toggle="collapse"
                 >
-                  <span className="icon-bg">
-                    <i className="mdi mdi-table-large menu-icon"></i>
-                  </span>
-                  <span className="menu-title">
-                    <span>
-                      <Trans>Reports</Trans>
+                  <div
+                    className={
+                      this.state.reportsOpen
+                        ? "nav-link menu-expanded"
+                        : "nav-link"
+                    }
+                    onClick={() => this.toggleMenuState("reportsOpen")}
+                    data-toggle="collapse"
+                  >
+                    <span className="icon-bg">
+                      <i className="mdi mdi-table-large menu-icon"></i>
                     </span>
-                  </span>
-                  <i className="menu-arrow"></i>
-                </div>
-                <Collapse in={this.state.reportsOpen}>
-                  <ul className="nav flex-column sub-menu">
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/gap-item")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/gap-item"
-                      >
-                        <span>
-                          <Trans>Item gap report</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/item-fac")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/item-fac"
-                      >
-                        <span>
-                          <Trans>Item report by facility</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/fac-seg")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/fac-seg"
-                      >
-                        <span>
-                          <Trans>Facility segmentation</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/item-gp")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/item-gp"
-                      >
-                        <span>
-                          <Trans>Item grouped report</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/subfac-pop-data")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/subfac-pop-data"
-                      >
-                        <span>
-                          <Trans>Sub-facility populations report</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/fac-prof")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/fac-prof"
-                      >
-                        <span>
-                          <Trans>Profile of facilities</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/prof-cold-chain")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/prof-cold-chain"
-                      >
-                        <span>
-                          <Trans>Profile of cold chain equipment</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/fac-map-based")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/fac-map-based"
-                      >
-                        <span>
-                          <Trans>Facility map-based report</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link
-                        className={
-                          this.isPathActive("/reports/gap-map-based")
-                            ? "nav-link active"
-                            : "nav-link"
-                        }
-                        to="/reports/gap-map-based"
-                      >
-                        <span>
-                          <Trans>Gap map report</Trans>
-                        </span>
-                      </Link>
-                    </li>
-                  </ul>
-                </Collapse>
-              </li>
+                    <span className="menu-title">
+                      <span>
+                        <Trans>Reports</Trans>
+                      </span>
+                    </span>
+                    <i className="menu-arrow"></i>
+                  </div>
+                  <Collapse in={this.state.reportsOpen}>
+                    <ul className="nav flex-column sub-menu">
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/gap-item")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/gap-item"
+                        >
+                          <span>
+                            <Trans>Item gap report</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/item-fac")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/item-fac"
+                        >
+                          <span>
+                            <Trans>Item report by facility</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/fac-seg")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/fac-seg"
+                        >
+                          <span>
+                            <Trans>Facility segmentation</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/item-gp")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/item-gp"
+                        >
+                          <span>
+                            <Trans>Item grouped report</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/subfac-pop-data")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/subfac-pop-data"
+                        >
+                          <span>
+                            <Trans>Sub-facility populations report</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/fac-prof")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/fac-prof"
+                        >
+                          <span>
+                            <Trans>Profile of facilities</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/prof-cold-chain")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/prof-cold-chain"
+                        >
+                          <span>
+                            <Trans>Profile of cold chain equipment</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/fac-map-based")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/fac-map-based"
+                        >
+                          <span>
+                            <Trans>Facility map-based report</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                      <li className="nav-item">
+                        <Link
+                          className={
+                            this.isPathActive("/reports/gap-map-based")
+                              ? "nav-link active"
+                              : "nav-link"
+                          }
+                          to="/reports/gap-map-based"
+                        >
+                          <span>
+                            <Trans>Gap map report</Trans>
+                          </span>
+                        </Link>
+                      </li>
+                    </ul>
+                  </Collapse>
+                </li>
+              )}
 
               {this.user !== null && this.user.admin && (
                 <>

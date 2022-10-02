@@ -230,7 +230,7 @@ function FieldsOfItemT() {
                 <div className="row mt-2">
                   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                     <Button
-                      color="inherit"
+                      
                       disabled={activeStep === 0}
                       onClick={handleBack}
                       sx={{ ml: 1,pl:1 }}
