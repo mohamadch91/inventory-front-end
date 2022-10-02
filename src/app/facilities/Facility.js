@@ -436,6 +436,7 @@ const [x2, setx2] = useState(
 
   const onSaveHandler = async (e) => {
     e.preventDefault();
+    
     if (hasRequiredErrors()) {
       return;
     }
@@ -487,10 +488,17 @@ const [x2, setx2] = useState(
        }
      }
     }
+    const page = window.event.submitter.name === "saveNew" ? "new" : "edit";
+
     const res = await (id === "new"
       ? FacilitiesService.postFacility(_fieldsValue)
       : FacilitiesService.putFacility(_fieldsValue));
-    history.push(`/facilities/list`);
+    if (page==='new'){
+      window.location.reload();
+    }
+    else{
+      history.push(`/facilities/list`);
+    }
   };
 
   const handleMapClick = async (e) => {
@@ -722,7 +730,6 @@ window.handleMapClick = handleMapClick;
                       />
                     )}
                     <br />
-                    {console.log(selectedLevel)}
                     {JSON.parse(localStorage.getItem("country"))[
                       "poptarget"
                     ] === "General population" &&

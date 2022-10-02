@@ -278,11 +278,18 @@ function Item() {
         }
       }
     }
+    const page = window.event.submitter.name === "saveNew" ? "new" : "edit";
+
     const res = await (id === "new"
       ? ItemService.postItem(_fieldsValue)
       : ItemService.putItem(_fieldsValue));
+     if (page==="new") {
+        window.location.reload();
+     }
+     else{
     history.push(`/items/list`);
     setFieldValue(_fieldsValue);
+     }
   };
 
   const selectItemClassHandler = async (e) => {

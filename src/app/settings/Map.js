@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Translation,Trans } from "react-i18next";
+
 import {
   MapContainer,
   useMap,
@@ -51,7 +53,14 @@ const GetCoordinates = (props) => {
       },
 
       onAdd: function () {
-        info.textContent = "Click on map too add location";
+  
+         
+          <Translation>
+            {(t, { i18n }) =>
+              info.textContent=t("Click on map too add location")
+            }
+          </Translation>
+        
         return info;
       },
     });
@@ -153,6 +162,14 @@ const MapWrapper = (props) => {
           <LocationMarker />
         </MapContainer>
       )}
+      <button
+        className="btn btn-primary mt-2 w-50"
+        onClick={() => {
+          props.handleSave();
+        }}
+      >
+        Get current location
+      </button>
     </div>
   );
 };

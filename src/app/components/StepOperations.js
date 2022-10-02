@@ -33,7 +33,9 @@ function StepOperations(props) {
         <>
           {id !== "new" && activeStep !== stepsLength && (
             <>
-              <button className="btn btn-primary w-10 "><Trans>SAVE ALL</Trans></button>
+              <button className="btn btn-primary w-10 ">
+                <Trans>SAVE ALL</Trans>
+              </button>
               <Box sx={{ flex: "0.6 0.5 auto" }} />
 
               <Button
@@ -51,7 +53,13 @@ function StepOperations(props) {
             <>
               <Box sx={{ flex: "0.48 0.5 auto" }} />
 
-              <button className="btn btn-primary w-10 "><Trans>SAVE ALL</Trans></button>
+              <button
+                className="btn btn-primary w-10 "
+                value="saveAll"
+                name="saveaLL"
+              >
+                <Trans>SAVE ALL</Trans>
+              </button>
             </>
           )}
           {id === "new" && activeStep !== stepsLength && (
@@ -73,8 +81,11 @@ function StepOperations(props) {
             <>
               <Box sx={{ flex: "0.6 0.5 auto" }} />
 
-              <button className="btn btn-primary w-10 ">
+              <button className="btn btn-primary w-10 " name="save" value= "x">
                 <Trans>SAVE ALL</Trans>
+              </button>
+              <button className="btn btn-primary w-10 " name="saveNew" value="y">
+                <Trans>SAVE and New</Trans>
               </button>
             </>
           )}
