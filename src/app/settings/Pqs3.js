@@ -148,17 +148,18 @@ function Pqs3() {
       if (excel["Z" + i] === "###" || excel["Z" + i] === undefined) {
         x = 0.0;
       } else {
-        x = parseFloat(excel["Z" + i]);
+        x = parseFloat(excel["Z" + i].w);
       }
     if (excel["AA" + i] === "###" || excel["AA" + i] === undefined) {
       y = 0.0;
     } else {
-      y = parseFloat(excel["AA" + i]);
+      y = parseFloat(excel["AA" + i].w);
     }
     if (excel["AB" + i] === "###" || excel["AB" + i] === undefined) {
       z = 0.0;
     } else {
-      z = parseFloat(excel["AB" + i]);
+      console.log(excel["AB" + i])
+      z = parseFloat(excel["AB" + i].w);
     }
     
     
@@ -178,6 +179,7 @@ function Pqs3() {
       };
       pqs.push(data);
     }
+    // console.log(pqs)
     UserService.addpqs3(pqs)
       .then((res) => {
         toast.success("Data imported successfully");
@@ -311,9 +313,15 @@ function Pqs3() {
                           .toString()
                           .replace(".", seperator())}
                       </TableCell>
-                      <TableCell>{item.h}</TableCell>
-                      <TableCell>{item.w}</TableCell>
-                      <TableCell>{item.l}</TableCell>
+                      <TableCell>
+                        {item.h.toFixed(2).toString().replace(".", seperator())}
+                      </TableCell>
+                      <TableCell>
+                        {item.w.toFixed(2).toString().replace(".", seperator())}
+                      </TableCell>
+                      <TableCell>
+                        {item.l.toFixed(2).toString().replace(".", seperator())}
+                      </TableCell>
                     </TableRow>
                   ))}
                 {emptyRows > 0 && (
