@@ -23,6 +23,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Trans } from "react-i18next";
+import { seperator } from "../helpers/seperator";
 
 function TablePaginationActions(props) {
   const theme = useTheme();
@@ -212,8 +213,8 @@ TablePaginationActions.propTypes = {
                       required
                     ></input>
                   </div>
-                  <div className="col-md-4 flex-column d-flex mt-2">
-                    <label className="mb-3">
+                  <div className="col-md-4 flex-column d-flex ">
+                    <label className="">
                       <Trans>
                         If you click on submit, all old data will be erased!
                       </Trans>
@@ -231,7 +232,7 @@ TablePaginationActions.propTypes = {
                   </h4>
                 </div>
               </div>
-              <div>
+              <div className="table-container">
                 <SharedTable>
                   <TableHead>
                     <TableRow>
@@ -270,22 +271,25 @@ TablePaginationActions.propTypes = {
                           )
                         : pqs4
                       ).map((item, index) => (
-                        <>
-                          <TableRow>
-                            <TableCell>{item.pqsnumber}</TableCell>
-                            <TableCell>{item.type}</TableCell>
-                            <TableCell>{item.manufacturer}</TableCell>
-                            <TableCell>{item.model}</TableCell>
-                            <TableCell>
-                              {item.vaccinenetstoragecapacity}
-                            </TableCell>
-                            <TableCell>
-                              {item.coolantpacknominalcapacity}
-                            </TableCell>
-                            <TableCell>{item.numbercoolantpacks}</TableCell>
-                            <TableCell>{item.externalvolume}</TableCell>
-                          </TableRow>
-                        </>
+                        <TableRow key={index}>
+                          <TableCell>{item.pqsnumber}</TableCell>
+                          <TableCell>{item.type}</TableCell>
+                          <TableCell>{item.manufacturer}</TableCell>
+                          <TableCell>{item.model}</TableCell>
+                          <TableCell>
+                            {item.vaccinenetstoragecapacity}
+                          </TableCell>
+                          <TableCell>
+                            {item.coolantpacknominalcapacity}
+                          </TableCell>
+                          <TableCell>{item.numbercoolantpacks}</TableCell>
+                          <TableCell>
+                            {item.externalvolume
+                              .toFixed(2)
+                              .toString()
+                              .replace(".", seperator())}
+                          </TableCell>
+                        </TableRow>
                       ))}
                     {emptyRows > 0 && (
                       <TableRow style={{ height: 53 * emptyRows }}>
@@ -308,7 +312,7 @@ TablePaginationActions.propTypes = {
                   page={page}
                   SelectProps={{
                     inputProps: {
-                      "aria-label": (<Trans>rows per page</Trans>),
+                      "aria-label": <Trans>rows per page</Trans>,
                     },
                     native: true,
                   }}

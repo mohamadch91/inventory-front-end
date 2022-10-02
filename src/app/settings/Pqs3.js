@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
-import "./pqs.css";
 import ItemsService from "../services/items.service";
 import UserService from "../services/user.service";
 import * as XLSX from "xlsx";
@@ -228,8 +227,8 @@ function Pqs3() {
                   required
                 ></input>
               </div>
-              <div className="col-md-3 flex-column d-flex mt-2">
-                <label className="mb-3">
+              <div className="col-md-3 flex-column d-flex ">
+                <label className="">
                   <Trans>
                     If you click on submit, all old data will be erased!
                   </Trans>
@@ -247,7 +246,7 @@ function Pqs3() {
               </h4>
             </div>
           </div>
-          <div>
+          <div className="table-container">
             <SharedTable>
               <TableHead>
                 <TableRow>
@@ -298,23 +297,24 @@ function Pqs3() {
                       )
                     : pqs4
                   ).map((item, index) => (
-                    <>
-                      <TableRow>
-                        <TableCell>{item.pqscode}</TableCell>
-                        <TableCell>{item.description}</TableCell>
-                        <TableCell>{item.make}</TableCell>
-                        <TableCell>{item.model}</TableCell>
-                        <TableCell>{item.refrigerant}</TableCell>
-                        <TableCell>{item.refrigeratorcapacity}</TableCell>
-                        <TableCell>{item.freezercapacity}</TableCell>
-                        <TableCell>
-                          {item.kg_24_hrs.toString().replace(".", seperator())}
-                        </TableCell>
-                        <TableCell>{item.h}</TableCell>
-                        <TableCell>{item.w}</TableCell>
-                        <TableCell>{item.l}</TableCell>
-                      </TableRow>
-                    </>
+                    <TableRow key={index}>
+                      <TableCell>{item.pqscode}</TableCell>
+                      <TableCell>{item.description}</TableCell>
+                      <TableCell>{item.make}</TableCell>
+                      <TableCell>{item.model}</TableCell>
+                      <TableCell>{item.refrigerant}</TableCell>
+                      <TableCell>{item.refrigeratorcapacity}</TableCell>
+                      <TableCell>{item.freezercapacity}</TableCell>
+                      <TableCell>
+                        {item.kg_24_hrs
+                          .toFixed(2)
+                          .toString()
+                          .replace(".", seperator())}
+                      </TableCell>
+                      <TableCell>{item.h}</TableCell>
+                      <TableCell>{item.w}</TableCell>
+                      <TableCell>{item.l}</TableCell>
+                    </TableRow>
                   ))}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 53 * emptyRows }}>
