@@ -8,6 +8,7 @@ import eventBus from "../common/EventBus";
 import Help from "../components/Help";
 import { Translation,Trans } from "react-i18next";
 import dashboardService from "../services/dashboard.service";
+import UserService from "../services/user.service";
 import Modal from "react-bootstrap/Modal";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
@@ -56,9 +57,39 @@ class Navbar extends Component {
     e.preventDefault()
     for (const key in this.state.changePassForm){
       if(this.state.changePassForm[key]===""){
-        
+        toast.error(<Trans>There is a problem loading data</Trans>);
       }
     }
+    const poorRegExp = /[a-z]/;
+    const weakRegExp = /(?=.*?[0-9])/;
+    const newpass = this.state.changePassForm["new_password"];
+    const confpass = this.state.changePassForm["conf_password"];
+    const poorPassword = poorRegExp.test(newpass);
+    const weakPassword = weakRegExp.test(newpass);
+    if (newpass.length < 8) {
+      toast.error(<Trans>password length must be larger than 8</Trans>);
+    } else if (!weakPassword) {
+      toast.error(<Trans>password must be contain numerical charecters</Trans>);
+
+    } else if (!poorPassword) {
+      toast.error(<Trans>password must be contain charechters</Trans>);
+
+    } else if (newpass !== confpass) {
+      toast.error(<Trans>confirm password is wrong</Trans>);
+    }
+    else{
+      const id =this.state.user.id
+      UserService.changePassword(id, this.state.changePassForm).then(
+        (res) => {
+          toast.success(<Trans>Password change succesfully</Trans>);
+        },
+        (err) => {
+          toast.error(<Trans>Erro occured</Trans>);
+        }
+      );
+    }
+
+
     
   }
   handleChangeUser = (e) => {
@@ -242,7 +273,7 @@ class Navbar extends Component {
                       onHide={this.passModalClose}
                       style={{ padding: "10px" }}
                     >
-                      <form>
+                      <form onSubmit={this.sumbitChangepass}>
                         <h3 className="mb-1 text-center fs-5">
                           <Trans>Change password</Trans>
                         </h3>

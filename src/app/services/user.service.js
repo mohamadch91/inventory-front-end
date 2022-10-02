@@ -77,6 +77,11 @@ class UserService {
       headers: { Authorization: authHeader() },
     });
   }
+  changePassword(id,data){
+     return ApiManager.put(URL + "/auth/change_password/"+id+"/", data, {
+       headers: { Authorization: authHeader() },
+     });
+  }
 }
 
 export default new UserService();
