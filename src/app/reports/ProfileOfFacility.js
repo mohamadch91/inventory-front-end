@@ -214,16 +214,18 @@ function ProfileOfFacility() {
         {country?.country})
       </h3>
       <h5 className="text-black">
-        <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+        <Trans>Date</Trans>: {new Date().toLocaleDateString("en-GB")}
       </h5>
       {reports &&
         Object.keys(reports).map((key) => {
           const title =
-            key === "general"
-              ? (<Trans>General populations</Trans>)
-              : key === "under_1"
-              ? (<Trans>Under-1 Population</Trans>)
-              : "";
+            key === "general" ? (
+              <Trans>General populations</Trans>
+            ) : key === "under_1" ? (
+              <Trans>Under-1 Population</Trans>
+            ) : (
+              ""
+            );
           return (
             <ReportTable
               reports={reports[key]}

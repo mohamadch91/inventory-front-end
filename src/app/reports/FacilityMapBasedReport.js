@@ -227,13 +227,13 @@ function FacilityMapBasedReport() {
         </div>
       </div>
       <div className="p-3">
-        <h4>
+        <h2 className="text-dark fs-5">
           <Trans>Report</Trans> : <Trans>Facility Map-Based</Trans> (
           {country?.country})
-        </h4>
-        <h6>
+        </h2>
+        <h5 className="text-dark fs-5">
           <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
-        </h6>
+        </h5>
         <SharedMap locations={reports} />
       </div>
     </div>

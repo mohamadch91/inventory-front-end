@@ -566,7 +566,7 @@ function GapItemReport({i18n}) {
               <Trans>Filters</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h6>
+            <h6><Trans>Date</Trans>: {new Date().toLocaleDateString('en-GB')}</h6>
             <div className="mt-3 table-container ">
               <SharedTable>
                 <TableHead>

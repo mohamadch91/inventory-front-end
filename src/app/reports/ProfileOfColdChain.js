@@ -218,7 +218,7 @@ function ProfileOfColdChain() {
               <Trans>Profile of cold chain equipment</Trans> ({country?.country}
               )
             </h4>
-            <h6>Date: {new Date().toISOString().split("T")[0]}</h6>
+            <h6>Date: {new Date().toLocaleDateString("en-GB")}</h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>
@@ -310,7 +310,7 @@ function ProfileOfColdChain() {
                         key={cell.headTitle}
                         style={{
                           minWidth: cell.size === "large" ? "230px" : "auto",
-                          textAlign : cell.align
+                          textAlign: cell.align,
                         }}
                       >
                         <Trans>{cell.headTitle}</Trans>

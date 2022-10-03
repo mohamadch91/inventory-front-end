@@ -609,7 +609,7 @@ function ItemFacilityReport() {
             </h6>
 
             <h6>
-              <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+              <Trans>Date</Trans>: {new Date().toLocaleDateString("en-GB")}
             </h6>
             <div className="mt-3 table-container ">
               <SharedTable stickyHeader>

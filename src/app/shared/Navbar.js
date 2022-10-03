@@ -6,7 +6,7 @@ import { HashLink as Links } from "react-router-hash-link";
 import i18n from "../../i18n";
 import eventBus from "../common/EventBus";
 import Help from "../components/Help";
-import { Translation,Trans } from "react-i18next";
+import { Translation, Trans } from "react-i18next";
 import dashboardService from "../services/dashboard.service";
 import UserService from "../services/user.service";
 import Modal from "react-bootstrap/Modal";
@@ -31,7 +31,6 @@ class Navbar extends Component {
         name: JSON.parse(localStorage.getItem("user"))?.name,
         idnumber: JSON.parse(localStorage.getItem("user"))?.idnumber,
         phone: JSON.parse(localStorage.getItem("user"))?.phone,
-
       },
     };
   }
@@ -53,10 +52,10 @@ class Navbar extends Component {
     new_data[name] = value;
     this.setState({ changePassForm: new_data });
   };
-  sumbitChangepass =(e)=> {
-    e.preventDefault()
-    for (const key in this.state.changePassForm){
-      if(this.state.changePassForm[key]===""){
+  sumbitChangepass = (e) => {
+    e.preventDefault();
+    for (const key in this.state.changePassForm) {
+      if (this.state.changePassForm[key] === "") {
         toast.error(<Trans>There is a problem loading data</Trans>);
       }
     }
@@ -70,25 +69,22 @@ class Navbar extends Component {
       toast.error(<Trans>password length must be larger than 8</Trans>);
     } else if (!weakPassword) {
       toast.error(<Trans>password must be contain numerical charecters</Trans>);
-
     } else if (!poorPassword) {
       toast.error(<Trans>password must be contain charechters</Trans>);
-
     } else if (newpass !== confpass) {
       toast.error(<Trans>confirm password is wrong</Trans>);
-    }
-    else{
-      const id =this.state.user.id
+    } else {
+      const id = this.state.user.id;
       UserService.changePassword(id, this.state.changePassForm).then(
         (res) => {
           toast.success(<Trans>Password change succesfully</Trans>);
-          this.passModalClose()
+          this.passModalClose();
         },
         (err) => {
-          const data=err.response.data
-          if(data){
-            if(data.old_password){
-          toast.error(<Trans>Old password is not correct</Trans>);
+          const data = err.response.data;
+          if (data) {
+            if (data.old_password) {
+              toast.error(<Trans>Old password is not correct</Trans>);
             }
             if (data.password) {
               toast.error(<Trans>Password is to common</Trans>);
@@ -97,10 +93,7 @@ class Navbar extends Component {
         }
       );
     }
-
-
-    
-  }
+  };
   handleChangeUser = (e) => {
     const { name, value } = e.target;
     const new_data = this.state.userInfo;
@@ -110,20 +103,20 @@ class Navbar extends Component {
   submitChaneprofile = (e) => {
     e.preventDefault();
     const id = this.state.user.id;
-    const new_data={}
-    for (const key in this.state.userInfo){
-      if(this.state.userInfo[key]!==""){
-        new_data[key]=this.state.userInfo[key]
+    const new_data = {};
+    for (const key in this.state.userInfo) {
+      if (this.state.userInfo[key] !== "") {
+        new_data[key] = this.state.userInfo[key];
       }
     }
-    new_data['username']=this.state.user.username
+    new_data["username"] = this.state.user.username;
     UserService.updateUser(id, new_data).then(
       (res) => {
         toast.success(<Trans>Profile update succesfully</Trans>);
         const user = JSON.parse(localStorage.getItem("user"));
-        user.phone=res.data.phone
-        user.idnumber=res.data.idnumber
-        user.name=res.data.name
+        user.phone = res.data.phone;
+        user.idnumber = res.data.idnumber;
+        user.name = res.data.name;
         localStorage.removeItem("user");
         localStorage.setItem("user", JSON.stringify(user));
         this.ProfmodalClose();
@@ -132,7 +125,7 @@ class Navbar extends Component {
         toast.error(<Trans>Update profile failed</Trans>);
       }
     );
-  }
+  };
   componentDidMount() {
     console.log(this.state.user);
     if (this.state.user !== undefined && this.state.user !== null) {
@@ -157,12 +150,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
+        logo1: `https://inventory.runflare.run${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
+        logo2: `https://inventory.runflare.run${this.state.logo2}`,
       });
     }
   }
@@ -209,7 +202,7 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
-            <Trans>Inventory and Gap Analysis</Trans> v3.6F (
+            <Trans>Inventory and Gap Analysis</Trans> v3.61F (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
@@ -387,7 +380,7 @@ class Navbar extends Component {
 
                         <div className="d-flex flex-column align-items-center">
                           <label>
-                            <Trans>name</Trans>
+                            <Trans>Name</Trans>
                           </label>
                           <input
                             name="name"

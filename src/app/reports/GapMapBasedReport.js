@@ -157,7 +157,7 @@ function GapMapBasedReport() {
           {country?.country})
         </h3>
         <h5 className="text-black">
-          <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+          <Trans>Date</Trans>: {new Date().toLocaleDateString("en-GB")}
         </h5>
         <SharedMap locations={reports} />
       </div>
