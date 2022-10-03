@@ -16,3 +16,15 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+input[type="checkbox"]:disabled {
+  background: red;
+}
+input[type="checkbox"][disabled] {
+  background: red;
+  outline: red;
+}
+
+input[type="checkbox"]:disabled {
+  background: red;
+  border: 10px solid #d4d4d5;
+}

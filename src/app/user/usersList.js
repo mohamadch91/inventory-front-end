@@ -373,8 +373,8 @@ function UsersList() {
           <Modal
             show={isEditModalOpen}
             onHide={() => {
-              setIsEditModalOpen(false);
-              setActiveStep(0);
+              // setIsEditModalOpen(false);
+              // setActiveStep(0);
             }}
           >
             <form onSubmit={handleSubmitEdit}>
@@ -460,7 +460,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-5"
                     onClick={(e) => {
                       e.preventDefault();
                       if (
@@ -475,14 +475,14 @@ function UsersList() {
                     <Trans>Next</Trans>
                   </button>
                   <button
-                    className="btn-danger text-dark w-100"
+                    className="btn-danger text-dark w-25 ml-5"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsEditModalOpen(false);
                       setActiveStep(0);
                     }}
                   >
-                    <Trans>Close</Trans>
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               ) : (
@@ -608,23 +608,23 @@ function UsersList() {
                     </div>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-3 mr-4"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
                     <Trans>Back</Trans>
                   </button>
-                  <button className="save-btn w-100" type="submit">
+                  <button className="save-btn w-25 mr-4" type="submit">
                     <Trans>Save</Trans>
                   </button>
                   <button
-                    className="btn-danger text-dark w-100"
+                    className="btn-danger text-dark w-25 ml-2"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsEditModalOpen(false);
                       setActiveStep(0);
                     }}
                   >
-                    <Trans>Close</Trans>
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               )}
@@ -722,7 +722,7 @@ function UsersList() {
                     ></input>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-5"
                     onClick={(e) => {
                       e.preventDefault();
                       if (
@@ -738,14 +738,14 @@ function UsersList() {
                     Next
                   </button>
                   <button
-                    className="btn-danger text-dark w-100"
+                    className="btn-danger text-dark w-25 ml-5"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsAddModalOpen(false);
                       setActiveStep(0);
                     }}
                   >
-                    <Trans>Close</Trans>
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               ) : (
@@ -870,23 +870,23 @@ function UsersList() {
                     </div>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-4"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
                     <Trans>Back</Trans>
                   </button>
-                  <button className="save-btn w-100 mb-3" type="submit">
+                  <button className="save-btn w-25 mr-3 mb-3" type="submit">
                     <Trans>Save</Trans>
                   </button>
                   <button
-                    className="btn-danger text-dark w-100"
+                    className="btn-danger text-dark mr-4 btn-round w-25"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsAddModalOpen(false);
                       setActiveStep(0);
                     }}
                   >
-                    <Trans>Close</Trans>
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               )}

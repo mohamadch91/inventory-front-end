@@ -163,7 +163,10 @@ const MapWrapper = (props) => {
               </Marker>
             )}
           </>
-          <LocationMarker className="salam" style={{ width: "100px !important", zIndex: "2" }} />
+          <LocationMarker
+            className="salam"
+            style={{ width: "100px !important", zIndex: "2" }}
+          />
         </MapContainer>
       )}
       <button
@@ -188,7 +191,7 @@ const MapWrapper = (props) => {
           );
         }}
       >
-        Get current location
+        <Trans>Get current location</Trans>
       </button>
     </div>
   );

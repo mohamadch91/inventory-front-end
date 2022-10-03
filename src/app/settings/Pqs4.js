@@ -214,7 +214,7 @@ TablePaginationActions.propTypes = {
                     ></input>
                   </div>
                   <div className="col-md-4 flex-column d-flex ">
-                    <label className="">
+                    <label className=" mb-3">
                       <Trans>
                         If you click on submit, all old data will be erased!
                       </Trans>

@@ -6,7 +6,7 @@ import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
-import "./itemClass.scss";
+import "./itemClassLang.scss";
 import "../styles/inputs.scss";
 import { Trans } from "react-i18next";
 
@@ -86,7 +86,7 @@ function ItemClass() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell></TableCell>
+                  <TableCell>Id</TableCell>
                   <TableCell><Trans>Title</Trans></TableCell>
                   <TableCell><Trans>Code</Trans></TableCell>
                   <TableCell><Trans>Active</Trans></TableCell>

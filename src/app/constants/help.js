@@ -1,10 +1,12 @@
 export const languages = {
   en: "English",
   fr: "Français",
-  ar: "العربية",
-  fa: "فارسی",
+  ar: "عربی",
   es: "Español",
   ru: "Русский",
+  ot: "Other",
+  uk: "украї́нська",
+  ch: "Chinese",
 };
 
 export const pages = {

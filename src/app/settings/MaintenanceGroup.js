@@ -174,7 +174,7 @@ function MaintenanceGroupComponent() {
         <div className="card">
           <div className="card-body">
             <h3 className="page-title mb-3">
-              {isEditMode ? "Edit Maintenance Group" : "New Maintenance Group"}
+              {isEditMode ? (<Trans>Edit Maintenance Group</Trans>) : (<Trans>New maintenance group</Trans>)}
             </h3>
             <Form.Group className="row">
               <label

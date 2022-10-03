@@ -1,7 +1,7 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "https://inventory.runflare.run/items/";
+const API_URL = "http://127.0.0.1:8000/items/";
 
 class ItemService {
   getItemClasses() {

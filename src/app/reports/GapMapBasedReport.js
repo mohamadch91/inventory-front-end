@@ -132,15 +132,15 @@ function GapMapBasedReport() {
                 </div>
               </div>
               <div className="row mt-4">
-                <div className="col-sm-1">
-                  <button type="submit" className="btn btn-primary">
+                <div className="col-sm-2">
+                  <button type="submit" className="btn btn-primary fs-5">
                     <Trans>Reports</Trans>
                   </button>
                 </div>
-                <div className="col-sm-2">
+                <div className="col-sm-3">
                   <button
                     type="button"
-                    className="btn btn-secondary"
+                    className="btn btn-primary fs-5"
                     onClick={() => setFilterValues(defaultValues)}
                   >
                     <Trans>Clear Filter</Trans>

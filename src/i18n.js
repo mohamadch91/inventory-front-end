@@ -20,9 +20,9 @@ i18n
     ns: ["translation"],
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-    localePath: "https://inventory.runflare.run/media/{{lng}}/{{ns}}.json",
+    localePath: "http://127.0.0.1:8000/media/{{lng}}/{{ns}}.json",
     backend: {
-      loadPath: "https://inventory.runflare.run/languages/{{ns}}?name={{lng}}",
+      loadPath: "http://127.0.0.1:8000/languages/{{ns}}?name={{lng}}",
       addPath: null,
       // request: async (options, url, payload, callback) => {
       //   try {
@@ -30,7 +30,7 @@ i18n
       //     console.log(translation);
       //     callback({
       //       status: 200,
-      //       data: JSON.stringify(translation.data),
+      //       data: JSON.stringify(translation.data),Ne2wncDXEDH72uf
       //     });
       //   } catch (e) {
       //     callback(e);

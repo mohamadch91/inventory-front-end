@@ -263,6 +263,12 @@ function Item() {
         .flat()
         .find((field) => field.state === key);
       if(field === undefined) {
+        if (typeof _fieldsValue[key] === "string") {
+          if (_fieldsValue[key].includes(seperator())){
+            _fieldsValue[key] = parseFloat(_fieldsValue[key].replace(",", "."));
+          }
+        }
+
         continue;
       }
       if (_fieldsValue[key] === "" || _fieldsValue[key] === null) {

@@ -121,8 +121,8 @@ function MangeHelp() {
                 </div>
                 <div className="row">
                   <button
-                    className="btn btn-primary mt-3"
-                    style={{ marginLeft: "auto", width: "72px" }}
+                    className="btn btn-primary mt-3 "
+                    style={{ marginLeft: "auto", width: "100px" }}
                     type="submit"
                   >
                     <Trans>Save</Trans>

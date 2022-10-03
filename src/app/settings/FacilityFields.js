@@ -147,7 +147,7 @@ function FieldsFacility() {
                       className="btn btn-primary "
                       onClick={onSaveHandler}
                     >
-                      <Trans>SAVE ALL</Trans>
+                      <Trans>Save all</Trans>
                     </button>
                     <Box sx={{ flex: "0.5 0.5 auto" }} />
                     <Button
