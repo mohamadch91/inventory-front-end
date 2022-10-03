@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8000/help/";
+const API_URL = "http://46.105.58.235:8000/help/";
 
 class HelpService {
   getHelpContent(lang, page) {
