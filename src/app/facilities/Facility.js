@@ -548,7 +548,7 @@ window.handleMapClick = handleMapClick;
                     textAlign: "right",
                   }}
                 >
-                  Parent facility:
+                  <Trans>Parent facility</Trans>:
                 </label>
                 <div className={"col-sm-8"}>
                   <DynamicInput
@@ -604,7 +604,7 @@ window.handleMapClick = handleMapClick;
                     textAlign: "right",
                   }}
                 >
-                  Level:
+                  <Trans>Levels</Trans>:
                 </label>
                 <div className={"col-sm-8"}>
                   <DynamicInput
@@ -721,7 +721,6 @@ window.handleMapClick = handleMapClick;
                                 };
                                 setMap(data.latlang);
                                 handleMapClick(data);
-                                
                               },
                               () => {},
                               { enableHighAccuracy: true }

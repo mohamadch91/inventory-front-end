@@ -576,22 +576,32 @@ export default function DataTable() {
                   </label>
                   <div className="row d-flex mb-2 ">
                     <div className="col-md-3">
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={handleImport}
-                      />
+                      <label className="btn btn-primary">
+                        <Trans>Choose file</Trans>
+                        <input
+                          type="file"
+                          id="Upload"
+                          className="form-control filestyle"
+                          style={{ display: "none" }}
+                          onChange={handleImport}
+                        />
+                      </label>
                     </div>
-                    <div className="col-md-3 ml-2 mt-1">
+                    <div className="col-md-3 ml-2">
                       <Button
                         variant="contained"
-                        color="primary"
+                        className="btn btn-primary"
                         onClick={() => {
                           handleExcel();
                         }}
                       >
                         <Trans>Submit</Trans>
                       </Button>
+                    </div>
+                    <div className="col-md-3 ml-2 mt-1">
+                      <a href="./sample/Facility-import-sampleV1.xlsx" download>
+                        <Trans>Download sample excel file</Trans>
+                      </a>
                     </div>
                   </div>
                 </div>

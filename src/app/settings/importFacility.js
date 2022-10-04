@@ -423,11 +423,16 @@ export default function ImportFacility() {
                 </label>
                 <div className="row d-flex mb-2 ">
                   <div className="col-md-3">
-                    <input
-                      type="file"
-                      className="form-control"
-                      onChange={handleImport}
-                    />
+                    <label className="btn btn-primary">
+                      <Trans>Choose file</Trans>
+
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={handleImport}
+                        style={{ display: "none" }}
+                      />
+                    </label>
                   </div>
                   <div className="col-md-3 ml-2 mt-1">
                     <Button
@@ -439,6 +444,11 @@ export default function ImportFacility() {
                     >
                       <Trans>Submit</Trans>
                     </Button>
+                  </div>
+                  <div className="col-md-3 ml-2 mt-1">
+                    <a href="./sample/Level-import-sampleV1.xlsx" download>
+                      <Trans>Download sample excel file</Trans>
+                    </a>
                   </div>
                 </div>
               </div>

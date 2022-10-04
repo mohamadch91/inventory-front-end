@@ -142,6 +142,7 @@ TablePaginationActions.propTypes = {
     reader.readAsBinaryString(file);
   };
   const handleExcel = () => {
+    setIsLoading(true);
    let pqs=[]
     const len=XLSX.utils.sheet_to_json(excel).length+2;
     for (let i=6;i<len;i++){
@@ -164,10 +165,11 @@ TablePaginationActions.propTypes = {
         pqs.push(data)
     }
     UserService.addpqs4(pqs).then((res) => {
-        toast.success("Data imported successfully");
+        toast.success(<Trans>Data imported successfully</Trans>);
         getPqs();
         }).catch((err) => {
-            toast.error("There is a problem importing data");
+            toast.error(<Trans>There is a problem importing data</Trans>);
+            setIsLoading(false);
         }
     )
         
@@ -202,16 +204,20 @@ TablePaginationActions.propTypes = {
                   <Trans>Insert PQS excel file</Trans>
                 </h3>
                 <div className="row">
-                  <div className="col-md-4 flex-column d-flex">
+                  <div className="col-md-3 flex-column d-flex">
                     <label className="mb-3">
                       <Trans>From Excel file</Trans>
                     </label>
-                    <input
-                      name="describe"
-                      type="file"
-                      onChange={handleImport}
-                      required
-                    ></input>
+                    <label className="btn btn-primary w-25">
+                      <Trans>Choose file</Trans>
+                      <input
+                        name="describe"
+                        type="file"
+                        onChange={handleImport}
+                        style={{ display: "none" }}
+                        required
+                      ></input>
+                    </label>
                   </div>
                   <div className="col-md-4 flex-column d-flex ">
                     <label className=" mb-3">
@@ -222,6 +228,11 @@ TablePaginationActions.propTypes = {
                     <button onClick={handleExcel} className="save-btn">
                       <Trans>Submit</Trans>
                     </button>
+                  </div>
+                  <div className="col-md-3 ml-2 mt-1">
+                    <a href="./sample/PQS-import-sampleV1.xlsx" download>
+                      <Trans>Download sample excel file</Trans>
+                    </a>
                   </div>
                 </div>
               </div>
