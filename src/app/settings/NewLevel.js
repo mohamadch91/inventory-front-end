@@ -294,8 +294,12 @@ export default function DataTable() {
       !isMinpopMaxpopValid(rows[editableRowId - 1].maxpop) ||
       !isMinpopMaxpopValid(rows[editableRowId - 1].minpop)
     ) {
-      toast.error("Please fill the fields with right format");
-    } else {
+      toast.error(<Trans>Please fill the fields with right format</Trans>);
+    }
+    else if (parseInt(rows[editableRowId - 1].maxpop) < parseInt(rows[editableRowId - 1].minpop)) {
+      toast.error(<Trans>Maximum population must be greater than minimum value</Trans>)
+    }
+    else {
       UserService.putLevels(rows)
         .then((response) => {
           const country = JSON.parse(localStorage.getItem("country"));
@@ -973,7 +977,7 @@ export default function DataTable() {
                           }}
                           name="maxpop"
                           type="number"
-                          min="0"
+                          min={rows[i].minpop}
                           max="100000000"
                           step="1"
                         />

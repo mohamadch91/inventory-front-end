@@ -22,6 +22,8 @@ import "./newLevel.scss";
 import { visuallyHidden } from "@mui/utils";
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
+import Spinner from "../shared/Spinner";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -239,7 +241,7 @@ export default function ImportFacility() {
   const [isEdit, setEdit] = React.useState(false);
   const [disable, setDisable] = React.useState(true);
   const [showConfirm, setShowConfirm] = React.useState(false);
-
+  const [isLoading,setIsloading]=React.useState(false);
   const isMinpopMaxpopValid = (text) => {
     if (
       text.toString().length > 0 &&
@@ -359,6 +361,7 @@ export default function ImportFacility() {
     reader.readAsBinaryString(file);
   };
   const handleExcel = () => {
+    setIsloading(true);
     let levels = [];
     for (let i = 0; i < excel.length; i++) {
       let data = excel[i];
@@ -376,18 +379,23 @@ export default function ImportFacility() {
     FacilitiesService.importFacilities(levels)
       .then((response) => {
         toast.success("Facility import succesfully");
-       
+        setIsloading(false);
         setRows(response.data);
       })
       .catch((err) => {
         console.log(err)
         toast.error(JSON.stringify(err.response.data));
+        setIsloading(false);
       })
       .finally(() => {
       });
     console.log(levels);
+      
   };
- 
+  if(isLoading){
+    <Spinner/>
+    // console.log("loading")
+  }
   return (
     <div>
       <div className="page-header">

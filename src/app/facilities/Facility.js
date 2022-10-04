@@ -321,19 +321,24 @@ const [x2, setx2] = useState(
       currentStepFields.push(facilityNameField);
     }
     currentStepFields.forEach((field) => {
+      console.log(fieldsValue[field.stateName]);
       if (
         field.required &&
         !fieldsValue[field.stateName] &&
-        !isRelatedFieldOkReq(field.stateName, fieldsValue)
+        !isRelatedFieldOkReq(field.stateName, fieldsValue) &&
+        fieldsValue[field.stateName]!==0
       ) {
-        if(field.type==="bool"){
-          if(fieldsValue[field.stateName]===undefined || fieldsValue[field.stateName]===null){
-          _fieldErrors[field.stateName] = "this field is required!";
+        if (field.type === "bool") {
+          if (
+            fieldsValue[field.stateName] === undefined ||
+            fieldsValue[field.stateName] === null
+          ) {
+            _fieldErrors[field.stateName] = "this field is required!";
           }
+        } else {
+          _fieldErrors[field.stateName] = "this field is required!";
         }
-        else{
-        _fieldErrors[field.stateName] = "this field is required!";
-      }}
+      }
     });
     for (const key in relatedFields) {
       const fields = relatedFields[key];
@@ -367,6 +372,7 @@ const [x2, setx2] = useState(
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setFieldErrors({});
   };
 
   const onChangeHandler = (value, field) => {

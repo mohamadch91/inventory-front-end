@@ -173,7 +173,8 @@ function Item() {
       if (
         field.required &&
         !fieldsValue[field.state] &&
-        !isRelatedFieldOkReq(field.state, fieldsValue)
+        !isRelatedFieldOkReq(field.state, fieldsValue) &&
+        fieldsValue[field.state]!==0
       ) {
         if (field.type === "bool") {
           if (
@@ -208,6 +209,8 @@ function Item() {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setFieldErrors({});
+
   };
 
   const onChangeHandler = async (value, field) => {
