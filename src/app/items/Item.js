@@ -88,8 +88,19 @@ function Item() {
       {
         refetchOnMount: true,
         onSuccess(data) {
+          if (id === "new") {
           setSelectedItemClass(data[0]);
-          setSelectedItemType(data[0]?.item_type?.[0]);
+          setSelectedItemType(data[0]?.item_type?.[0]);}
+          else{
+            const item_class = data.find(
+              (item) => item?.item_class?.id === fieldsValue.item_class
+            );
+            console.log(item_class);
+            setSelectedItemClass(item_class);
+            const item_type= item_class?.item_type?.find((item) => item.id === fieldsValue.item_type);
+            setSelectedItemType(item_type);
+           
+          }
         },
       }
     );
@@ -97,6 +108,7 @@ function Item() {
   const { data: pqsData, isLoading: isPqsLoading } = useQuery(
     ["pqs", selectedItemType?.id],
     async () => {
+      console.log(selectedItemType?.id);
       const res = await ItemService.getPQS(selectedItemType?.id);
       return res?.data?.map((item) => ({
         label: item.pqsnumber ?? item.pqscode,
