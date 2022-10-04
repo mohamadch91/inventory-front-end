@@ -1,7 +1,7 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "http://46.105.58.235:8000/reports/";
+const API_URL = "https://api.invgap.org/reports/";
 
 class ReportService {
   getDownloadLinks() {

@@ -2,7 +2,7 @@ import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 import axios from "axios";
 
-const API_URL = "http://46.105.58.235:8000/facilities/";
+const API_URL = "https://api.invgap.org/facilities/";
 
 class FacilitiesService {
   getFacilities(params) {
@@ -48,7 +48,7 @@ class FacilitiesService {
   }
   importFacilities(payload) {
     return ApiManager.post(
-      "http://46.105.58.235:8000/facilities/" + "import",
+      "https://api.invgap.org/facilities/" + "import",
       payload,
       {
         headers: { Authorization: authHeader() },

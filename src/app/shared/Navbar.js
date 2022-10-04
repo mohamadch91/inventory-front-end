@@ -150,12 +150,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://46.105.58.235:8000${this.state.logo1}`,
+        logo1: `https://api.invgap.org${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `http://46.105.58.235:8000${this.state.logo2}`,
+        logo2: `https://api.invgap.org${this.state.logo2}`,
       });
     }
   }
@@ -202,7 +202,7 @@ class Navbar extends Component {
                 objectFit: "contain",
               }}
             />
-            <Trans>Inventory and Gap Analysis</Trans> v3.61F (
+            <Trans>Inventory and Gap Analysis</Trans> v3.62F (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
