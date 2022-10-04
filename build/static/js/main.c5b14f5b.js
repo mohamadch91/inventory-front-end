@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (e, t) {
                     return s()
-                      .post("http://127.0.0.1:8000/auth/login/", {
+                      .post("http://46.105.58.235:8000/auth/login/", {
                         username: e,
                         password: t,
                       })
@@ -37,7 +37,7 @@
                             access: e.data.access,
                           };
                           return s()
-                            .get("http://127.0.0.1:8000/user-data/", {
+                            .get("http://46.105.58.235:8000/user-data/", {
                               headers: { Authorization: "Bearer " + t.access },
                             })
                             .then(function (e) {
@@ -623,7 +623,7 @@
       },
       80794: function (e, t) {
         "use strict";
-        t.Z = "http://127.0.0.1:8000";
+        t.Z = "http://46.105.58.235:8000";
       },
       54318: function (e, t, n) {
         "use strict";
@@ -737,7 +737,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://127.0.0.1:8000/dashboard",
+          s = "http://46.105.58.235:8000/dashboard",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -820,7 +820,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://127.0.0.1:8000/help/",
+          s = "http://46.105.58.235:8000/help/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -865,7 +865,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://127.0.0.1:8000/item/",
+          s = "http://46.105.58.235:8000/item/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -991,7 +991,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://127.0.0.1:8000/items/",
+          s = "http://46.105.58.235:8000/items/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1124,8 +1124,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://127.0.0.1:8000/settings/",
-          u = "http://127.0.0.1:8000",
+          s = "http://46.105.58.235:8000/settings/",
+          u = "http://46.105.58.235:8000",
           l = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -5841,9 +5841,10 @@
             ns: ["translation"],
             defaultNS: "translation",
             supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-            localePath: "http://127.0.0.1:8000/media/{{lng}}/{{ns}}.json",
+            localePath: "http://46.105.58.235:8000/media/{{lng}}/{{ns}}.json",
             backend: {
-              loadPath: "http://127.0.0.1:8000/languages/{{ns}}?name={{lng}}",
+              loadPath:
+                "http://46.105.58.235:8000/languages/{{ns}}?name={{lng}}",
               addPath: null,
               crossDomain: !0,
               withCredentials: !0,
@@ -30977,15 +30978,13 @@
                   (this.mutateOptions = t),
                   this.currentMutation &&
                     this.currentMutation.removeObserver(this),
-                  (this.currentMutation = this.client
-                    .getMutationCache()
-                    .build(
-                      this.client,
-                      (0, h.Z)({}, this.options, {
-                        variables:
-                          "undefined" !== typeof e ? e : this.options.variables,
-                      })
-                    )),
+                  (this.currentMutation = this.client.getMutationCache().build(
+                    this.client,
+                    (0, h.Z)({}, this.options, {
+                      variables:
+                        "undefined" !== typeof e ? e : this.options.variables,
+                    })
+                  )),
                   this.currentMutation.addObserver(this),
                   this.currentMutation.execute()
                 );
@@ -31495,12 +31494,10 @@
                         e(t.currentResult);
                       }),
                     e.cache &&
-                      t.client
-                        .getQueryCache()
-                        .notify({
-                          query: t.currentQuery,
-                          type: "observerResultsUpdated",
-                        });
+                      t.client.getQueryCache().notify({
+                        query: t.currentQuery,
+                        type: "observerResultsUpdated",
+                      });
                 });
               }),
               t
@@ -40431,11 +40428,15 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "http://127.0.0.1:8000".concat(this.state.logo1),
+                        logo1: "http://46.105.58.235:8000".concat(
+                          this.state.logo1
+                        ),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "http://127.0.0.1:8000".concat(this.state.logo2),
+                        logo2: "http://46.105.58.235:8000".concat(
+                          this.state.logo2
+                        ),
                       });
                 },
               },

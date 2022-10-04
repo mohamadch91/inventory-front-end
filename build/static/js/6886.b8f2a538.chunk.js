@@ -7,7 +7,7 @@
         n = r(43144),
         a = r(39877),
         s = r(54318),
-        c = "http://127.0.0.1:8000/related/",
+        c = "http://46.105.58.235:8000/related/",
         l = (function () {
           function e() {
             (0, i.Z)(this, e);

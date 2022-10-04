@@ -1239,7 +1239,7 @@
         s = t(43144),
         l = t(39877),
         a = t(54318),
-        r = (t(74569), "http://127.0.0.1:8000/facilities/"),
+        r = (t(74569), "http://46.105.58.235:8000/facilities/"),
         i = (function () {
           function e() {
             (0, c.Z)(this, e);
@@ -1303,7 +1303,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return l.Z.post(
-                    "http://127.0.0.1:8000/facilities/import",
+                    "http://46.105.58.235:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, a.Z)() } }
                   );
@@ -1336,7 +1336,7 @@
         s = t(43144),
         l = t(54318),
         a = t(39877),
-        r = "http://127.0.0.1:8000/reports/",
+        r = "http://46.105.58.235:8000/reports/",
         i = (function () {
           function e() {
             (0, c.Z)(this, e);

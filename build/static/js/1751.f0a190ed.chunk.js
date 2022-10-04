@@ -678,7 +678,7 @@
         s = l(43144),
         r = l(54318),
         c = l(39877),
-        o = "http://127.0.0.1:8000/reports/",
+        o = "http://46.105.58.235:8000/reports/",
         t = (function () {
           function e() {
             (0, a.Z)(this, e);
