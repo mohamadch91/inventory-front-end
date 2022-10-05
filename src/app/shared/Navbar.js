@@ -134,6 +134,11 @@ class Navbar extends Component {
       );
     }
   };
+  /**
+   * 
+   * @param {event} e
+   * cahnge user state data in user profile 
+   */
   handleChangeUser = (e) => {
     const { name, value } = e.target;
     const new_data = this.state.userInfo;
