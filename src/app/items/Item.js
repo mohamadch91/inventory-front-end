@@ -350,6 +350,7 @@ function Item() {
   };
 
   const selectPQSHandler = () => {
+    // console.log(fieldsValue["PQSPISCode"]);
     const value = pqsData.find(
       (pqs) => pqs.label === fieldsValue["PQSPISCode"]
     )?.value;
@@ -618,6 +619,7 @@ function Item() {
                                 <Select
                                   options={pqsData}
                                   onChange={(e) => {
+                                    console.log("on change ")
                                     onChangeHandler(e.label, pqsField);
                                   }}
                                   value={{
@@ -627,26 +629,17 @@ function Item() {
                                         pqs.label === fieldsValue["PQSPISCode"]
                                     )?.value,
                                   }}
-                                  onBlur={(e) => {
-                                    const value = e.target.value;
-                                    if (value.length > 0) {
-                                      onChangeHandler(value, pqsField);
-                                    }
-                                  }}
+                                  // onBlur={(e) => {
+                                  //   const value = e.target.value;
+                                  //   console.log(e.target.value)
+                                  //   if (value.length > 0) {
+                                  //     console.log("onBlur");
+                                  //     onChangeHandler(value, pqsField);
+                                  //   }
+                                  // }}
                                 />
                               ) : (
-                                // <DynamicInput
-                                //   field={{
-                                //     ...pqsField,
-                                //     type: "select",
-                                //     params: pqsData,
-                                //   }}
-                                //   onChangeHandler={(value, field) => {
-                                //     onChangeHandler(value, field);
-                                //     selectPQSHandler(value);
-                                //   }}
-                                //   defaultValue={fieldsValue[pqsField.state]}
-                                // />
+                              
                                 <DynamicInput
                                   field={pqsField}
                                   onChangeHandler={onChangeHandler}

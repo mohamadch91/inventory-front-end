@@ -25,9 +25,9 @@ function Help() {
       <a
         href={API_URL + helpData.abr}
         target="_blank"
-        style={{ width: "fit-content" }}
+        style={{ width: "fit-content"  }}
       >
-        <button className="btn btn-success text-dark fs-5" type="button">
+        <button className="btn btn-success text-dark " style={{fontSize:"14px"}} type="button">
           <Trans>Help</Trans>
         </button>
       </a>

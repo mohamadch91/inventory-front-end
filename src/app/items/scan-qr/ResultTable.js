@@ -30,32 +30,48 @@ const ResultTable = (props) => {
 
   return (
     <div className="table-responsive mt-3">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>
+      <div className="column">
+        <div className="row">
+          <div className="col-6">
+            <h4 className="text-black">
               <Trans>Item class</Trans>
-            </th>
-            <th>
+            </h4>
+          </div>
+          <div className="col-6">
+            <h4 className="text-black">{data[0]?.item_class}</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <h4 className="text-black">
               <Trans>Items category</Trans>
-            </th>
-            <th>
+            </h4>
+          </div>
+          <div className="col-6">
+            <h4 className="text-black">{data[0]?.item_type}</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <h4 className="text-black">
               <Trans>PQS code</Trans>
-            </th>
-            <th>
+            </h4>
+          </div>
+          <div className="col-6">
+            <h4 className="text-black">{data[0]?.pqs_code}</h4>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <h4 className="text-black">
               <Trans>Code</Trans>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{data[0]?.item_class}</td>
-            <td>{data[0]?.item_type}</td>
-            <td>{data[0]?.pqs_code}</td>
-            <td>{data[0]?.code}</td>
-          </tr>
-        </tbody>
-      </table>
+            </h4>
+          </div>
+          <div className="col-6">
+            <h4 className="text-black">{data[0]?.code}</h4>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

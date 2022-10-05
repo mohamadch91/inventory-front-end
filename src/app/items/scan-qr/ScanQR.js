@@ -30,18 +30,18 @@ const ScanQR = () => {
   };
 
   return (
-    <div className={`card w-75 m-auto ${classes.scanPage}`}>
+    <div className={`card w-75 h-100 m-auto ${classes.scanPage}`}>
       <button
         onClick={submitHandler}
         type="button"
-        className="btn btn-primary btn-fw mt-3 w-75 m-auto"
+        className="btn btn-primary   w-75 "
       >
         <Trans>Search QR code</Trans>
       </button>
 
       {cameraAvailable && (
         <QrReader
-          className={"w-75 m-auto "}
+          className={" w-100 m-auto h-100 "}
           onResult={scanHandler}
           constraints={{ facingMode: "environment" }}
           scanDelay={100}
@@ -49,7 +49,12 @@ const ScanQR = () => {
       )}
       {QRString && !cameraAvailable && (
         <div className="w-75 m-auto pt-3 text-center">
-          <h3 className="display-4"><Trans>Code Scanned Successfully</Trans></h3>
+          <h3 className="display-4 text-black">
+            <Trans>Code Scanned Successfully</Trans>
+          </h3>
+          <h3 className="display-4 text-black">
+            <Trans>{QRString}</Trans>
+          </h3>
         </div>
       )}
 
@@ -59,7 +64,7 @@ const ScanQR = () => {
           <button
             onClick={refreshHandler}
             type="button"
-            className="btn btn-light btn-fw mt-3 w-25  "
+            className="btn btn-light btn-fw mt-3 w-25 mb-3  "
           >
             <Trans>Search QR code</Trans>
           </button>

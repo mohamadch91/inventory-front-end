@@ -27,9 +27,11 @@ const QRTable = React.forwardRef((props, refToPrint) => {
   }
   if (data.length === 0) {
     return (
-      <EmptyDataBaseMessage
-        message={"Could not find any data with the information provided "}
-      />
+      <div className="mb-5">
+        <EmptyDataBaseMessage
+          message={"Could not find any data with the information provided"}
+        />
+      </div>
     );
   }
 

@@ -153,7 +153,7 @@ const FilterForm = (props) => {
 
   return (
     <form onSubmit={submitHandler}>
-      <div className="row">
+      <div className="row mb-5">
         <div className="col-sm-7">
           <FilterFormDD
             key={"A"}

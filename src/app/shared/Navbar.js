@@ -150,12 +150,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://api.invgap.org${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://api.invgap.org${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
@@ -175,14 +175,7 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <Link className="navbar-brand brand-logo" to="/dashboard">
-            <img src={this.state.logo1} alt="logo" />
-          </Link>
-          <Link className="navbar-brand brand-logo-mini" to="/dashboard">
-            <img src={this.state.logo2} alt="logo" />
-          </Link>
-        </div>
+        <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"></div>
         <div className="navbar-menu-wrapper d-flex align-items-stretch">
           <button
             className="navbar-toggler navbar-toggler align-self-center"
@@ -192,26 +185,51 @@ class Navbar extends Component {
             <span className="mdi mdi-menu"></span>
           </button>
           <div className="search-field d-none d-md-block">
-            <img
-              src={require("../../assets/images/home/nav-logo.jpg")}
-              alt="profile"
-              className={"pl-3"}
-              style={{
-                maxWidth: "100%",
-                maxHeight: "100%",
-                objectFit: "contain",
-              }}
-            />
+            <div className="w-100 h-100 ">
+              <img
+                src={require("../../assets/images/home/nav-logo.jpg")}
+                alt="profile"
+                className={"pl-1"}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
+              <img
+                className={"pl-1"}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+                src={this.state.logo1}
+                alt="logo"
+              />
+              <img
+                className={"pl-1"}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+                src={this.state.logo2}
+                alt="logo"
+              />
+            </div>
+          </div>
+          <div
+            className="text-center align-item-center align-center pl-3 "
+            style={{ marginTop: "1.2rem" }}
+          >
             <Trans>Inventory and Gap Analysis</Trans> v3.62F (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
-
           <ul className="navbar-nav navbar-nav-right">
             <li className="nav-item nav-profile  d-xl-flex">
               <Help />
             </li>
-
             <li className="nav-item nav-profile nav-language  d-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
@@ -243,7 +261,6 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
             <li className="nav-item nav-profile nav-language">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
@@ -436,7 +453,6 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
             <li className="nav-item d-none">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
@@ -466,7 +482,6 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
             <li className="nav-item" disabled>
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
