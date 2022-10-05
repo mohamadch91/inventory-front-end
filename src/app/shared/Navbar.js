@@ -145,10 +145,17 @@ class Navbar extends Component {
     new_data[name] = value;
     this.setState({ userInfo: new_data });
   };
+  /**
+   * 
+   * @param {event} e 
+   * send new profile data to api 
+   * 
+   */
   submitChaneprofile = (e) => {
     e.preventDefault();
     const id = this.state.user.id;
     const new_data = {};
+    //Check for field empty or not
     for (const key in this.state.userInfo) {
       if (this.state.userInfo[key] !== "") {
         new_data[key] = this.state.userInfo[key];
