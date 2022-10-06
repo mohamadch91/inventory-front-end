@@ -714,12 +714,12 @@ window.handleMapClick = handleMapClick;
                                 const { latitude, longitude } = pos.coords;
                                 console.log(pos);
                                 const data = {
-                                  latlang: {
+                                  latlng: {
                                     lat: latitude,
                                     lng: longitude,
                                   },
                                 };
-                                setMap(data.latlang);
+                                setMap(data.latlng);
                                 handleMapClick(data);
                               },
                               () => {},
