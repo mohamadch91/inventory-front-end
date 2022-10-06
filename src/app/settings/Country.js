@@ -64,7 +64,8 @@ export class Country extends Component {
     });
   };
   handlemapclick(e) {
-    this.setState({ mainlocation: e.latlng });
+    let str = "LatLng(" + e.latlng.lat + "," + e.latlng.lng + ")";
+    this.setState({ mainlocation: str});
   }
 
   handleSubmit = (event) => {
