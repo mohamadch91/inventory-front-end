@@ -60,6 +60,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
   } = useQuery(["facility-list", pid], async () => {
     const params = {
     };
+    setFacModals(false);
+    setFacMod(null);
     for (const key in filterValues) {
       const filter = filterValues[key];
       if (filter.length > 0 && filter !== "-1") {
@@ -878,7 +880,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}
-                              onClick={() => openDeleteModal(facMod?.id)}
+                              onClick={() => {
+                                setFacModals(false);
+                        setFacMod(null);
+                                openDeleteModal(facMod?.id)}}
                             >
                               <TrashIcon />
                             </button>
