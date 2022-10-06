@@ -14,7 +14,7 @@ import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import toast from "react-hot-toast";
-
+import "../styles/navbar.scss"
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -189,38 +189,23 @@ class Navbar extends Component {
               <img
                 src={require("../../assets/images/home/nav-logo.jpg")}
                 alt="profile"
-                className={"pl-1"}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
+                className={"pl-1 images"}
               />
               <img
-                className={"pl-1"}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
+                className={"pl-1 images"}
                 src={this.state.logo1}
                 alt="logo"
               />
               <img
-                className={"pl-1"}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
+                className={"pl-1 images"}
                 src={this.state.logo2}
                 alt="logo"
               />
             </div>
           </div>
           <div
-            className="text-center align-item-center align-center pl-3 "
-            style={{ marginTop: "1.2rem" }}
+            className="text-center align-item-center align-center pl-3 sys-text "
+           
           >
             <Trans>Inventory and Gap Analysis</Trans> v3.62F (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
