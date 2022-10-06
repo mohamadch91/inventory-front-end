@@ -220,6 +220,10 @@ class Navbar extends Component {
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
+          <div className="text-center align-item-center align-center pl-3 sys-text-mobile ">
+            <Trans>IGA</Trans> :
+            {this.state.user?.facility_name}
+          </div>
           <ul className="navbar-nav navbar-nav-right">
             {isBrowser && (
               <li className="nav-item nav-profile  d-xl-flex">
@@ -258,7 +262,7 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item nav-profile nav-language">
+            <li className="nav-item nav-profile nav-language d-flex">
               <Dropdown>
                 <Dropdown.Toggle className="nav-link count-indicator">
                   <div className="nav-profile-img">
