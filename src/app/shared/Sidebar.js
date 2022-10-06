@@ -14,6 +14,7 @@ import {
 } from "react-device-detect";
 import * as rdd from "react-device-detect";
 import { history } from "../helpers/history";
+import Help from "../components/Help";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -946,6 +947,13 @@ class Sidebar extends Component {
                 </>
               )}
             </>
+          )}
+          {!isBrowser && (
+            <div className="ml-4 mt-2">
+              <li className="nav-item nav-profile ml-5  d-xl-flex">
+                <Help />
+              </li>
+            </div>
           )}
           {/* Logout*/}
           <li className="nav-item sidebar-user-actions py-5">

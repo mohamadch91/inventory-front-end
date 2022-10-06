@@ -15,6 +15,12 @@ import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import toast from "react-hot-toast";
 import "../styles/navbar.scss"
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -175,7 +181,10 @@ class Navbar extends Component {
   render() {
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"></div>
+        {isBrowser && (
+          <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"></div>
+        )}
+
         <div className="navbar-menu-wrapper d-flex align-items-stretch">
           <button
             className="navbar-toggler navbar-toggler align-self-center"
@@ -184,37 +193,40 @@ class Navbar extends Component {
           >
             <span className="mdi mdi-menu"></span>
           </button>
-          <div className="search-field d-none d-md-block">
-            <div className="w-100 h-100 ">
-              <img
-                src={require("../../assets/images/home/nav-logo.jpg")}
-                alt="profile"
-                className={"pl-1 images"}
-              />
-              <img
-                className={"pl-1 images"}
-                src={this.state.logo1}
-                alt="logo"
-              />
-              <img
-                className={"pl-1 images"}
-                src={this.state.logo2}
-                alt="logo"
-              />
+          {isBrowser && (
+            <div className="search-field d-none d-md-block">
+              <div className="w-100 h-100 ">
+                <img
+                  src={require("../../assets/images/home/nav-logo.jpg")}
+                  alt="profile"
+                  className={"pl-1 images"}
+                />
+                <img
+                  className={"pl-1 images"}
+                  src={this.state.logo1}
+                  alt="logo"
+                />
+                <img
+                  className={"pl-1 images"}
+                  src={this.state.logo2}
+                  alt="logo"
+                />
+              </div>
             </div>
-          </div>
-          <div
-            className="text-center align-item-center align-center pl-3 sys-text "
-           
-          >
+          )}
+
+          <div className="text-center align-item-center align-center pl-3 sys-text ">
             <Trans>Inventory and Gap Analysis</Trans> v3.62F (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
           <ul className="navbar-nav navbar-nav-right">
-            <li className="nav-item nav-profile  d-xl-flex">
-              <Help />
-            </li>
+            {isBrowser && (
+              <li className="nav-item nav-profile  d-xl-flex">
+                <Help />
+              </li>
+            )}
+
             <li className="nav-item nav-profile nav-language  d-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
@@ -247,7 +259,7 @@ class Navbar extends Component {
               </Dropdown>
             </li>
             <li className="nav-item nav-profile nav-language">
-              <Dropdown alignRight>
+              <Dropdown>
                 <Dropdown.Toggle className="nav-link count-indicator">
                   <div className="nav-profile-img">
                     <img
