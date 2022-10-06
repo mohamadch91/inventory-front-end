@@ -16,7 +16,14 @@ import ItemService from "../services/item.service";
 import { Translation,Trans } from "react-i18next";
 import TrashIcon from "../shared/TrashIcon";
 import Modal from "react-bootstrap/Modal";
+import InformationIcon from "../shared/InformationIcon";
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 function ItemList() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -26,6 +33,8 @@ const [itemId, setItemId] = React.useState(null);
 const [resons, setResons] = React.useState([]);
 const [reasonsLoding, setReasonsLoding] = React.useState(false);
 const [reason, setReason] = React.useState("");
+const [itemModalOpen, setItemModalOpen] = React.useState(false);
+const [itemModalInfo, setItemModalInfo] = React.useState(null);
 const [is_deleted, setIsDeleted] = React.useState(false);
   const {
     data: items,
@@ -127,138 +136,354 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         </div>
         <div className="card">
           <div className="card-body">
-            <div className="mt-5 table-container">
-              <SharedTable>
-                <TableHead>
-                  <TableRow>
-                    <TableCell className="col-sm-2">
-                      <Trans>Item class</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Items category</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Code</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Manufacturer</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Last Changed on</Trans>
-                    </TableCell>
-                    <TableCell className="col-sm-2">
-                      <Trans>Edit</Trans>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {items?.map((item) => {
-                    const itemClass = itemClassesAndTypes?.find(
-                      (itemC) => itemC.item_class.id === item.item_class
-                    );
-                    const itemType = itemClass?.item_type.find(
-                      (itemT) => itemT.id === item.item_type
-                    );
-                    return (
-                      <TableRow key={item.id}>
-                        <TableCell className="col-sm-2">
-                          {itemClass?.item_class.title ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {itemType?.title ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {item.code ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {item.Manufacturer ?? "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          {item?.updated_at
-                            ? convertDate(item.updated_at)
+            {isBrowser ? (
+              <div className="mt-5 table-container">
+                <SharedTable>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className="col-sm-2">
+                        <Trans>Item class</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Items category</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Code</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Manufacturer</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Last Changed on</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-2">
+                        <Trans>Edit</Trans>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {items?.map((item) => {
+                      const itemClass = itemClassesAndTypes?.find(
+                        (itemC) => itemC.item_class.id === item.item_class
+                      );
+                      const itemType = itemClass?.item_type.find(
+                        (itemT) => itemT.id === item.item_type
+                      );
+                      return (
+                        <TableRow key={item.id}>
+                          <TableCell className="col-sm-2">
+                            {itemClass?.item_class.title ?? "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            {itemType?.title ?? "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            {item.code ?? "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            {item.Manufacturer ?? "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            {item?.updated_at
+                              ? convertDate(item.updated_at)
+                              : "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            <Link to={`/items/info/${item.id}`}>
+                              <div style={{ width: "20px", height: "20px" }}>
+                                <EditIcon />
+                              </div>
+                            </Link>
+                            <Tooltip title={<Trans>Delete item</Trans>}>
+                              <button
+                                className="edit-btn"
+                                disabled={isDeleteLoading}
+                                onClick={() => openDeleteModal(item.id)}
+                              >
+                                <TrashIcon />
+                              </button>
+                            </Tooltip>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </SharedTable>
+                <Modal show={openModal} onHide={() => setOpenModal(false)}>
+                  <form onSubmit={deletefac}>
+                    <h1
+                      className="mb-1 mr-3  mt-5 mb-5 text-black"
+                      style={{ marginLeft: "33%" }}
+                    >
+                      <Trans>Delete item</Trans>
+                    </h1>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
+
+                    <div className="d-flex flex-column align-items-center w-100">
+                      <label>
+                        <Trans>Delete reasons</Trans>
+                      </label>
+                      <select
+                        name="Delete reasons"
+                        onChange={(event) => {
+                          setReason(event.target.value);
+                        }}
+                        // value={editFormData?.facility}
+                      >
+                        <Translation>
+                          {(t, { i18n }) => (
+                            <option i18n value="-1" selected>
+                              {t("Please select")}
+                            </option>
+                          )}
+                        </Translation>
+                        {resons?.map((item, index) => (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <button
+                      className="btn btn-success text-dark w-50 mt-4 mb-2   "
+                      style={{ marginLeft: "24%" }}
+                      type="submit"
+                    >
+                      <Trans>Delete item</Trans>
+                    </button>
+                    <button
+                      className="btn btn-danger text-dark w-50 mt-4 mb-2   "
+                      style={{ marginLeft: "24%" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpenModal(false);
+                      }}
+                    >
+                      <Trans>Cancel</Trans>
+                    </button>
+                  </form>
+                </Modal>
+              </div>
+            ) : (
+              <div className="mt-5 table-container">
+                <SharedTable>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className="col-sm-2">
+                        <Trans>Code</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-1">
+                        <Trans>Information</Trans>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {items?.map((item) => {
+                      const itemClass = itemClassesAndTypes?.find(
+                        (itemC) => itemC.item_class.id === item.item_class
+                      );
+                      const itemType = itemClass?.item_type.find(
+                        (itemT) => itemT.id === item.item_type
+                      );
+                      return (
+                        <TableRow key={item.id}>
+                          <TableCell className="col-sm-2">
+                            {item.code ?? "-"}
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            <button
+                              className="edit-btn"
+                              style={{ marginLeft: "24%" }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setItemModalOpen(true);
+                                setItemModalInfo(item);
+                              }}
+                            >
+                              <InformationIcon />
+                            </button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </SharedTable>
+                <Modal
+                  id={`item-modal`}
+                  show={itemModalOpen}
+                  onHide={() => {
+                    setItemModalOpen(false);
+                    setItemModalInfo(null);
+                  }}
+                >
+                  <div className="column">
+                    <div className="row">
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Trans>Item class</Trans>
+                        </h4>
+                      </div>
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          {itemClassesAndTypes?.find(
+                            (itemC) =>
+                              itemC.item_class.id === itemModalInfo?.item_class
+                          )?.item_class.title ?? "-"}
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Trans>Items category</Trans>
+                        </h4>
+                      </div>
+                      <div className="col-6 align-items-center d-flex justify-content-center">
+                        <h4 className="text-center align-center text-black">
+                          {itemClassesAndTypes
+                            ?.find(
+                              (itemC) =>
+                                itemC.item_class.id === itemModalInfo?.item_class
+                            )
+                            ?.item_type.find(
+                              (itemT) => itemT.id === itemModalInfo?.item_type
+                            )?.title ?? "-"}
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Trans>Manufacturer</Trans>
+                        </h4>
+                      </div>
+                      <div className="col-6 ">
+                        <h4 className="text-center text-black">
+                          {itemModalInfo?.Manufacturer ?? "-"}
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Trans>Last Changed on</Trans>
+                        </h4>
+                      </div>
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          {itemModalInfo?.updated_at
+                            ? convertDate(itemModalInfo?.updated_at)
                             : "-"}
-                        </TableCell>
-                        <TableCell className="col-sm-2">
-                          <Link to={`/items/info/${item.id}`}>
-                            <div style={{ width: "20px", height: "20px" }}>
+                        </h4>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Trans>Tool box</Trans>
+                        </h4>
+                      </div>
+                      <div className="col-6">
+                        <h4 className="text-center text-black">
+                          <Link to={`/items/info/${itemModalInfo?.id}`}>
+                           
                               <EditIcon />
-                            </div>
+                           
                           </Link>
                           <Tooltip title={<Trans>Delete item</Trans>}>
                             <button
                               className="edit-btn"
                               disabled={isDeleteLoading}
-                              onClick={() => openDeleteModal(item.id)}
+                              onClick={() => openDeleteModal(itemModalInfo?.id)}
                             >
                               <TrashIcon />
                             </button>
                           </Tooltip>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </SharedTable>
-              <Modal show={openModal} onHide={() => setOpenModal(false)}>
-                <form onSubmit={deletefac}>
-                  <h1
-                    className="mb-1 mr-3  mt-5 mb-5 text-black"
-                    style={{ marginLeft: "33%" }}
-                  >
-                    <Trans>Delete item</Trans>
-                  </h1>
-                  <div className="d-flex flex-column align-items-center"></div>
-                  <div className="d-flex flex-column align-items-center"></div>
-                  <div className="d-flex flex-column align-items-center"></div>
-                  <div className="d-flex flex-column align-items-center"></div>
-
-                  <div className="d-flex flex-column align-items-center w-100">
-                    <label>
-                      <Trans>Delete reasons</Trans>
-                    </label>
-                    <select
-                      name="Delete reasons"
-                      onChange={(event) => {
-                        setReason(event.target.value);
-                      }}
-                      // value={editFormData?.facility}
-                    >
-                      <Translation>
-                        {(t, { i18n }) => (
-                          <option i18n value="-1" selected>
-                            {t("Please select")}
-                          </option>
-                        )}
-                      </Translation>
-                      {resons?.map((item, index) => (
-                        <option key={item.id} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </select>
+                        </h4>
+                      </div>
+                    </div>
                   </div>
+                  <div className="text-right ">
+                    <button
+                      className="btn btn-danger text-dark w-50 mt-4 mb-2   "
+                      style={{ marginLeft: "24%" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setItemModalOpen(false);
+                        setItemModalInfo(null);
+                      }}
+                    >
+                      <Trans>Close</Trans>
+                    </button>
+                  </div>
+                </Modal>
+                <Modal show={openModal} onHide={() => setOpenModal(false)}>
+                  <form onSubmit={deletefac}>
+                    <h1
+                      className="mb-1 mr-3  mt-5 mb-5 text-black"
+                      style={{ marginLeft: "33%" }}
+                    >
+                      <Trans>Delete item</Trans>
+                    </h1>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
+                    <div className="d-flex flex-column align-items-center"></div>
 
-                  <button
-                    className="btn btn-success text-dark w-50 mt-4 mb-2   "
-                    style={{ marginLeft: "24%" }}
-                    type="submit"
-                  >
-                    <Trans>Delete item</Trans>
-                  </button>
-                  <button
-                    className="btn btn-danger text-dark w-50 mt-4 mb-2   "
-                    style={{ marginLeft: "24%" }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      setOpenModal(false);
-                    }}
-                  >
-                    <Trans>Cancel</Trans>
-                  </button>
-                </form>
-              </Modal>
-            </div>
+                    <div className="d-flex flex-column align-items-center w-100">
+                      <label>
+                        <Trans>Delete reasons</Trans>
+                      </label>
+                      <select
+                        name="Delete reasons"
+                        onChange={(event) => {
+                          setReason(event.target.value);
+                        }}
+                        // value={editFormData?.facility}
+                      >
+                        <Translation>
+                          {(t, { i18n }) => (
+                            <option i18n value="-1" selected>
+                              {t("Please select")}
+                            </option>
+                          )}
+                        </Translation>
+                        {resons?.map((item, index) => (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <button
+                      className="btn btn-success text-dark w-50 mt-4 mb-2   "
+                      style={{ marginLeft: "24%" }}
+                      type="submit"
+                    >
+                      <Trans>Delete item</Trans>
+                    </button>
+                    <button
+                      className="btn btn-danger text-dark w-50 mt-4 mb-2   "
+                      style={{ marginLeft: "24%" }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setOpenModal(false);
+                      }}
+                    >
+                      <Trans>Cancel</Trans>
+                    </button>
+                  </form>
+                </Modal>
+              </div>
+            )}
           </div>
         </div>
       </div>

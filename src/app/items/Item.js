@@ -650,7 +650,7 @@ function Item() {
                             {pqsField.state === "PQSPISCode" && (
                               <div className="col-sm-1">
                                 <button
-                                  className="btn btn-primary w-100 h-100"
+                                  className="btn btn-primary w-100 h-100 mt-1"
                                   onClick={selectPQSHandler}
                                   type="button"
                                 >

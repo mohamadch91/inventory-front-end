@@ -489,7 +489,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 <div className="col-sm-3">
                   <button
                     type="button"
-                    className="btn btn-primary fs-5  "
+                    className="btn btn-primary fs-5 mt-1 "
                     onClick={() => {
                       setFilterValues(defaultValues);
                       refetchFacilities();
