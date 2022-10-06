@@ -164,20 +164,22 @@ class Sidebar extends Component {
                       </span>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link
-                      className={
-                        this.isPathActive("/facilities/print")
-                          ? "nav-link active"
-                          : "nav-link"
-                      }
-                      to="/facilities/print"
-                    >
-                      <span>
-                        <Trans>Print new facility form</Trans>
-                      </span>
-                    </Link>
-                  </li>
+                  {isBrowser && (
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/facilities/print")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/facilities/print"
+                      >
+                        <span>
+                          <Trans>Print new facility form</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                  )}
                 </ul>
               </Collapse>
             </li>
@@ -235,20 +237,23 @@ class Sidebar extends Component {
                       </span>
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link
-                      className={
-                        this.isPathActive("/items/print")
-                          ? "nav-link active"
-                          : "nav-link"
-                      }
-                      to="/items/print"
-                    >
-                      <span>
-                        <Trans>Print new item form</Trans>
-                      </span>
-                    </Link>
-                  </li>
+                  {isBrowser && (
+                    <li className="nav-item">
+                      <Link
+                        className={
+                          this.isPathActive("/items/print")
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
+                        to="/items/print"
+                      >
+                        <span>
+                          <Trans>Print new item form</Trans>
+                        </span>
+                      </Link>
+                    </li>
+                  )}
+
                   <li className="nav-item">
                     <Link
                       className={

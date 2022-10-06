@@ -6,7 +6,7 @@ import classes from "../items-qr/ItemsQR.module.css";
 import { Trans } from "react-i18next";
 
 const ScanQR = () => {
-  const [QRString, setQRString] = useState();
+  const [QRString, setQRString] = useState(null);
   const [cameraAvailable, setCameraAvailable] = useState(true);
   const [showResult, setShowResult] = useState(false);
 
