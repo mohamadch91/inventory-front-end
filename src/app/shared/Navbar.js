@@ -14,7 +14,7 @@ import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import toast from "react-hot-toast";
-import "../styles/navbar.scss"
+import "../styles/navbar.scss";
 import {
   BrowserView,
   MobileView,
@@ -156,12 +156,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
+        logo1: `https://api.invgap.org${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
+        logo2: `https://api.invgap.org${this.state.logo2}`,
       });
     }
   }
@@ -221,8 +221,7 @@ class Navbar extends Component {
             {this.state.user?.facility_name} )
           </div>
           <div className="text-center align-item-center align-center pl-3 sys-text-mobile ">
-            <Trans>IGA</Trans> :
-            {this.state.user?.facility_name}
+            <Trans>IGA</Trans> :{this.state.user?.facility_name}
           </div>
           <ul className="navbar-nav navbar-nav-right">
             {isBrowser && (

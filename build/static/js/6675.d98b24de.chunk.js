@@ -1239,7 +1239,7 @@
         s = t(43144),
         l = t(39877),
         a = t(54318),
-        i = (t(74569), "http://127.0.0.1:8000/facilities/"),
+        i = (t(74569), "https://api.invgap.org/facilities/"),
         r = (function () {
           function e() {
             (0, c.Z)(this, e);
@@ -1303,7 +1303,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return l.Z.post(
-                    "http://127.0.0.1:8000/facilities/import",
+                    "https://api.invgap.org/facilities/import",
                     e,
                     { headers: { Authorization: (0, a.Z)() } }
                   );
@@ -1336,7 +1336,7 @@
         s = t(43144),
         l = t(54318),
         a = t(39877),
-        i = "http://127.0.0.1:8000/reports/",
+        i = "https://api.invgap.org/reports/",
         r = (function () {
           function e() {
             (0, c.Z)(this, e);
