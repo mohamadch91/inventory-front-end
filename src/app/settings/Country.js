@@ -357,7 +357,7 @@ export class Country extends Component {
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            disabled={!this.state.user?.admin}
+                            disabled={true}
                             required
                             isInvalid={!this.isCountryCodeValid()}
                             isValid={this.isCountryCodeValid()}
