@@ -173,12 +173,15 @@ const ItemToPrint = forwardRef((props, ref) => {
               </div>
               <h2 className="display-4">
                 <Trans>
-                  {`Facility ${
-                    JSON.parse(localStorage.getItem("user"))?.facility_name
-                  } Item information:`}
+                  <Trans>Facility</Trans>{" "}
+                  {JSON.parse(localStorage.getItem("user"))?.facility_name}{" "}
+                  <Trans>Item information</Trans>:
                 </Trans>
               </h2>
-              <p> Date: --------</p>
+              <p>
+                {" "}
+                <Trans>Date</Trans>: --------
+              </p>
               <div className="wrapper">
                 <Row className={"row"}>
                   <div className={"w-50 m-3 col-5 "}>

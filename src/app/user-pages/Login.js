@@ -148,7 +148,7 @@ class Login extends Component {
                 className="my-5 new-margin  display-5 fw-bold "
                 style={{ color: "hsl(218, 81%, 95%)", fontSize: "30px" }}
               >
-                <Trans>Inventory and Gap analyses system</Trans> <br />
+                <Trans>Inventory and Gap Analysis System</Trans> <br />
                 <span style={{ color: "hsl(218, 81%, 75%)" }}></span>
               </h1>
               <img className="who" src="./who-emblem.png" />

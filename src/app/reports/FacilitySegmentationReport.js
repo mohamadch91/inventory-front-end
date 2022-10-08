@@ -217,7 +217,13 @@ function FacilitySegmentationReport() {
                       value={filterValues.type}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.type.map((ty) => (
                         <option key={ty.id} value={ty.id}>
                           {ty.name}
@@ -245,7 +251,13 @@ function FacilitySegmentationReport() {
                       value={filterValues.power}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       {facSegHelper?.power.map((pow) => (
                         <option key={pow.id} value={pow.id}>
                           {pow.name}
@@ -257,7 +269,7 @@ function FacilitySegmentationReport() {
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
                     <label className="label col-sm-4">
-                      <Trans>Functioning status</Trans>:
+                      <Trans>Functioning Status</Trans>:
                     </label>
                     <Form.Control
                       className="form-select col-sm-8"
@@ -271,7 +283,13 @@ function FacilitySegmentationReport() {
                       value={filterValues.func}
                       as="select"
                     >
-                      <option value="-1">Please select</option>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
                       <option value={true}>Working</option>
                       <option value={false}>Not working</option>
                     </Form.Control>
@@ -388,10 +406,12 @@ function FacilitySegmentationReport() {
               </Trans>
             </h4>
             <h6>
-              <Trans>Filters</Trans> : {""} {printFilterValues()}
+              <Trans>Filter</Trans> : {""} {printFilterValues()}
             </h6>
 
-            <h6><Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}</h6>
+            <h6>
+              <Trans>Date</Trans>: {new Date().toISOString().split("T")[0]}
+            </h6>
             <div className="mt-3 table-container">
               <SharedTable>
                 <TableHead>
@@ -418,7 +438,7 @@ function FacilitySegmentationReport() {
                       <Trans>Owner</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
-                      <Trans>Functioning status</Trans>
+                      <Trans>Functioning Status</Trans>
                     </TableCell>
                   </TableRow>
                 </TableHead>

@@ -271,7 +271,9 @@ function UsersList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
+                    <TableCell>
+                      <Trans>ID</Trans>
+                    </TableCell>
                     <TableCell>
                       <Trans>Name</Trans>
                     </TableCell>
@@ -735,7 +737,7 @@ function UsersList() {
                       }
                     }}
                   >
-                    Next
+                    <Trans>Next</Trans>
                   </button>
                   <button
                     className="btn-danger text-dark w-25 ml-5"

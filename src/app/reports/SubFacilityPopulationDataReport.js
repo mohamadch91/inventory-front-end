@@ -116,7 +116,7 @@ function SubFacilityPopulationDataReport() {
                       <Trans>Type</Trans>
                     </TableCell>
                     <TableCell className="col-sm-1">
-                      <Trans>Underage</Trans>
+                      <Trans>Under 1</Trans>
                     </TableCell>
                     <TableCell className="col-sm-2">
                       <Trans>General populations</Trans>

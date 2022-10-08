@@ -225,7 +225,7 @@ function ItemFacilityReport() {
               }}
             >
               <h4>
-                <Trans>Filters</Trans>
+                <Trans>Filter</Trans>
               </h4>
               <div className="row mt-5">
                 <div className="col-sm-12 col-lg-6">
@@ -605,7 +605,7 @@ function ItemFacilityReport() {
               {country?.country})
             </h4>
             <h6>
-              <Trans>Filters</Trans> : {""} {printFilterValues()}
+              <Trans>Filter</Trans> : {""} {printFilterValues()}
             </h6>
 
             <h6>

@@ -12,10 +12,11 @@ const ResultTable = (props) => {
       console.log(props.QRString);
       if(props.QRString!==null){
       const res = await ItemService.getQrData("code=" + props.QRString);
+      console.log(res.data)
       return res.data;
       }
       else{
-        return []
+        return [];
       }
     },
     {
@@ -26,7 +27,7 @@ const ResultTable = (props) => {
   if (formDataIsLoading) {
     return <Spinner />;
   }
-  if (!formDataIsLoading && data.length === 0) {
+  if (!formDataIsLoading && data.length ===0) {
     return (
       <EmptyDataBaseMessage
         message={"No data was found with the desired QR code"}
@@ -110,7 +111,7 @@ const ResultTable = (props) => {
         <div className="row">
           <div className="col-6">
             <h4 className="text-black">
-              <Trans>Manufacturers</Trans>
+              <Trans>Manufacturer</Trans>
             </h4>
           </div>
           <div className="col-6">
@@ -120,11 +121,17 @@ const ResultTable = (props) => {
         <div className="row">
           <div className="col-6">
             <h4 className="text-black">
-              <Trans>Functioning</Trans>
+              <Trans>Functioning Status</Trans>
             </h4>
           </div>
           <div className="col-6">
-            <h4 className="text-black">{data?.functioning? (<Trans>Working</Trans>) : (<Trans>Not working</Trans>)}</h4>
+            <h4 className="text-black">
+              {data?.functioning ? (
+                <Trans>Working</Trans>
+              ) : (
+                <Trans>Not working</Trans>
+              )}
+            </h4>
           </div>
         </div>
       </div>

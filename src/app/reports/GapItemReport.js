@@ -239,7 +239,7 @@ function GapItemReport({i18n}) {
               }}
             >
               <h4>
-                <Trans>Filters</Trans>
+                <Trans>Filter</Trans>
               </h4>
               <div className="row mt-5">
                 <div className="col-sm-12 col-lg-6">
@@ -563,7 +563,7 @@ function GapItemReport({i18n}) {
               <Trans> ({country?.country})</Trans>
             </h4>
             <h6>
-              <Trans>Filters</Trans> : {""} {printFilterValues()}
+              <Trans>Filter</Trans> : {""} {printFilterValues()}
             </h6>
 
             <h6><Trans>Date</Trans>: {new Date().toLocaleDateString('en-GB')}</h6>

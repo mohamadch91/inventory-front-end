@@ -506,7 +506,7 @@ function PlanningCCEGap() {
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <Trans>Planned</Trans>
+                      <Trans>Planned </Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Facility Name</Trans>

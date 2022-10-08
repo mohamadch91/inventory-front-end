@@ -172,7 +172,7 @@ function Item() {
         //static fields
         result[firstTopic].unshift({
           id: "code",
-          name: "Item code:",
+          name: "Item code",
           topic: firstTopic,
           type: "text",
           active: false,

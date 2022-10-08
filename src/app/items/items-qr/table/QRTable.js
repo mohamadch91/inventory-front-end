@@ -84,7 +84,7 @@ const QRTable = React.forwardRef((props, refToPrint) => {
                   </TableCell>
                   <TableCell className="col-sm-2">
                     <Trans>
-                      <Trans>code</Trans>
+                      <Trans>Code</Trans>
                     </Trans>
                   </TableCell>
                   <TableCell className="col-sm-2">

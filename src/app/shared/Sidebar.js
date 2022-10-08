@@ -419,7 +419,7 @@ class Sidebar extends Component {
                         to="/message/new"
                       >
                         <span>
-                          <Trans>New Message</Trans>
+                          <Trans>New message</Trans>
                         </span>
                       </Link>
                     </li>
@@ -434,7 +434,7 @@ class Sidebar extends Component {
                         to="/message/list"
                       >
                         <span>
-                          <Trans>Message list</Trans>
+                          <Trans>Messages list</Trans>
                         </span>
                       </Link>
                     </li>

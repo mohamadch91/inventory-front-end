@@ -246,7 +246,9 @@ function HRList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Id</TableCell>
+                    <TableCell>
+                      <Trans>ID</Trans>
+                    </TableCell>
                     <TableCell>
                       <Trans>Full Name</Trans>
                     </TableCell>
@@ -309,7 +311,7 @@ function HRList() {
           >
             <form onSubmit={handleSubmitEdit}>
               <h3 className="mb-1">
-                <Trans>Human Resource Information</Trans>
+                <Trans>Human resource information</Trans>
               </h3>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
@@ -444,7 +446,7 @@ function HRList() {
           <Modal show={isAddModalOpen} onHide={() => setIsAddModalOpen(false)}>
             <form onSubmit={handleSubmitNew}>
               <h3 className="mb-1">
-                <Trans>Human Resource Information</Trans>
+                <Trans>Human resource information</Trans>
               </h3>
               <div className="d-flex flex-column align-items-center"></div>
               <div className="d-flex flex-column align-items-center"></div>
