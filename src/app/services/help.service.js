@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://demoapi1.invgap.org/help/";
+const API_URL = "https://demoapi3.invgap.org/help/";
 
 class HelpService {
   getHelpContent(lang, page) {
