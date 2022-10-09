@@ -216,7 +216,7 @@ class Navbar extends Component {
           )}
 
           <div className="text-center align-item-center align-center pl-3 sys-text ">
-            <Trans>Inventory and Gap Analysis</Trans> v3.62F (
+            <Trans>Inventory and Gap Analysis</Trans> v3.0 (
             {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
             {this.state.user?.facility_name} )
           </div>
