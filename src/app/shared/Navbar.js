@@ -156,12 +156,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://demoapi3.invgap.org${this.state.logo1}`,
+        logo1: `https://api.invgap.org${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://demoapi3.invgap.org${this.state.logo2}`,
+        logo2: `https://api.invgap.org${this.state.logo2}`,
       });
     }
   }
@@ -194,8 +194,8 @@ class Navbar extends Component {
             <span className="mdi mdi-menu"></span>
           </button>
           {isBrowser && (
-            <div className="search-field d-none d-md-block">
-              <div className="w-100 h-100 ">
+            <div className="search-field search d-none d-md-block">
+              <div className="w-100 h-100">
                 <img
                   src={require("../../assets/images/home/nav-logo.jpg")}
                   alt="profile"

@@ -4,6 +4,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     background-color: white;
+    text-align: center !important;
+align-items: center !important;
+justify-content: center !important;
+display: flex !important;
+flex-direction: column !important;
+
 }
 @media (max-width: 768px) {
     .card {

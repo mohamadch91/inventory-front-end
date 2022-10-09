@@ -58,7 +58,7 @@ const Facilities = () => {
 
   return (
     <div className={classes.facilities}>
-      <Card className="w-50">
+      <Card className="w-50  ">
         <h3>
           🏢 <Trans>Facilities</Trans>{" "}
         </h3>
