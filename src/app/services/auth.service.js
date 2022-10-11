@@ -10,8 +10,8 @@ import axios from "axios";
  * @constant {string} API_URL Url for login api
  * @constant {string} USER_PROFILE Url for user profile api
  */
-const API_URL = "https://demoapi3.invgap.org/auth/login/";
-const USER_PROFILE = "https://demoapi3.invgap.org/user-data/";
+const API_URL = "http://api.invgap.org/auth/login/";
+const USER_PROFILE = "http://api.invgap.org/user-data/";
 class AuthService {
   /**
    *

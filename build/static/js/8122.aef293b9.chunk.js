@@ -154,7 +154,7 @@
         r = n(74569),
         i = n.n(r),
         u = n(54318),
-        c = "https://demoapi3.invgap.org/hr/",
+        c = "http://api.invgap.org/hr/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -213,7 +213,7 @@
         r = n(74569),
         i = n.n(r),
         u = n(54318),
-        c = "https://demoapi3.invgap.org/message/",
+        c = "http://api.invgap.org/message/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);
