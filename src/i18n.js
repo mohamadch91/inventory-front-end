@@ -20,9 +20,9 @@ i18n
     ns: ["translation"],
     defaultNS: "translation",
     supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-    localePath: "http://api.invgap.org/media/{{lng}}/{{ns}}.json",
+    localePath: "https://demoapi1.invgap.org/media/{{lng}}/{{ns}}.json",
     backend: {
-      loadPath: "http://api.invgap.org/languages/{{ns}}?name={{lng}}",
+      loadPath: "https://demoapi1.invgap.org/languages/{{ns}}?name={{lng}}",
       addPath: null,
       // request: async (options, url, payload, callback) => {
       //   try {
