@@ -96,7 +96,7 @@ function PlanningReport() {
               }}
             >
               <h4>
-                <Trans>Filters</Trans>
+                <Trans>Filter</Trans>
               </h4>
               <div className="row mt-5">
                 <div className="col-sm-12 col-lg-6">
@@ -509,7 +509,7 @@ function PlanningReport() {
                       <Trans>PQS/PIS Code</Trans>
                     </TableCell>
                     <TableCell>
-                      <Trans>PQS/PIS-Type</Trans>
+                      <Trans>PQS/PIS type</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Net vaccine storage capacity (lit.)</Trans>

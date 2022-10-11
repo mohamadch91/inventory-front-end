@@ -1213,7 +1213,7 @@
         c = l(43144),
         s = l(54318),
         r = l(39877),
-        t = "https://demoapi3.invgap.org/reports/",
+        t = "http://127.0.0.1:8000/reports/",
         i = (function () {
           function e() {
             (0, a.Z)(this, e);

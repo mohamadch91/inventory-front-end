@@ -317,7 +317,7 @@ export class Country extends Component {
             <div className="card">
               <div className="card-body">
                 <h4 className="card-title">
-                  <Trans>Add country</Trans>
+                  <Trans>Add Country</Trans>
                 </h4>
                 <Form
                   noValidate
@@ -327,7 +327,7 @@ export class Country extends Component {
                 >
                   <h3 className=" card-description text-bold">
                     {" "}
-                    <Trans>Country</Trans> <Trans>info</Trans>
+                    <Trans>Country</Trans> <Trans>Information</Trans>
                   </h3>
                   <div className="row">
                     <div className="col-md-6">
@@ -423,7 +423,7 @@ export class Country extends Component {
                           />
 
                           <label className="col-sm-3 col-form-label  ">
-                            <Trans>Value:</Trans> {this.state.levels}{" "}
+                            <Trans>Value</Trans>: {this.state.levels}{" "}
                           </label>
                         </div>
                       </Form.Group>
@@ -450,18 +450,25 @@ export class Country extends Component {
                               lang="es"
                               accept="image/png, image/jpeg, image/jpg"
                             />
-                            <label
-                              className="custom-file-label"
-                              htmlFor="customFileLang"
-                            >
-                              {this.state.logo !== null
-                                ? this.state.logo.name
-                                : "Upload image"}
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFileLang"
+                                  datacustomattr={t("Browse")}
+                                >
+                                  {this.state.logo !== null ? (
+                                    this.state.logo.name
+                                  ) : (
+                                    <Trans>Upload image</Trans>
+                                  )}
 
-                              {typeof this.state.logo === "string"
-                                ? this.state.logo.split("/")[2]
-                                : ""}
-                            </label>
+                                  {typeof this.state.logo === "string"
+                                    ? this.state.logo.split("/")[2]
+                                    : ""}
+                                </label>
+                              )}
+                            </Translation>
                           </div>
                         </div>
                       </Form.Group>
@@ -484,17 +491,24 @@ export class Country extends Component {
                               lang="es"
                               accept="image/png, image/jpeg, image/jpg"
                             />
-                            <label
-                              className="custom-file-label"
-                              htmlFor="customFileLang1"
-                            >
-                              {this.state.slogo !== null
-                                ? this.state.slogo.name
-                                : "Upload image"}
-                              {typeof this.state.slogo === "string"
-                                ? this.state.slogo.split("/")[2]
-                                : ""}
-                            </label>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFileLang1"
+                                  datacustomattr={t("Browse")}
+                                >
+                                  {this.state.slogo !== null ? (
+                                    this.state.slogo.name
+                                  ) : (
+                                    <Trans>Upload image</Trans>
+                                  )}
+                                  {typeof this.state.slogo === "string"
+                                    ? this.state.slogo.split("/")[2]
+                                    : ""}
+                                </label>
+                              )}
+                            </Translation>
                           </div>
                         </div>
                       </Form.Group>
@@ -655,7 +669,7 @@ export class Country extends Component {
                                 </option>
                               )}
                             </Translation>
-                            
+
                             <Translation>
                               {(t, { i18n }) => (
                                 <option value={false}>

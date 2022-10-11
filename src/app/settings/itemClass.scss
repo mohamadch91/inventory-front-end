@@ -29,8 +29,10 @@
     border-bottom: 10px solid rgb(40, 136, 254);
   }
   .edit-btn {
-    width: 2rem;
-    height: 2rem;
+    min-width: 5.5rem;
+  min-height: 2rem;
+        width: max-content;
+    height: max-content;
     outline: none;
     border: none;
     border-radius: 3px;
@@ -62,8 +64,10 @@
     background: #d8d8d85b;
   }
   .edit-btn {
-    width: 2rem;
-    height: 2rem;
+    min-width: 5.5rem;
+  min-height: 2rem;
+    width: max-content;
+    height: max-content;
     outline: none;
     border: none;
     border-radius: 3px;
@@ -71,11 +75,13 @@
   }
 }
 .save-btn {
+  min-width: 5.5rem;
+  min-height: 2rem;
   border: none;
   background: #1de172;
   border-radius: 5px;
-  width: 5.5rem;
-  height: 2rem;
+      width: max-content;
+    height: max-content;
 }
 .close-btn {
   width: 1rem;

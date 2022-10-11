@@ -210,7 +210,7 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected} <Trans>selected</Trans>
         </Typography>
       ) : (
         <Typography
@@ -219,7 +219,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Imported Facilities
+          <Trans>Imported Facilities</Trans>
         </Typography>
       )}
     </Toolbar>

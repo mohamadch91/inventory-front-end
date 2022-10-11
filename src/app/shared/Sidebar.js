@@ -883,7 +883,9 @@ class Sidebar extends Component {
                             to="/settings/planning-cce-gap"
                           >
                             <span>
-                              <Trans>Planning CCE Gap</Trans>
+                              <Trans>
+                                Planning for Cold Chain Equipment Gap
+                              </Trans>
                             </span>
                           </Link>
                         </li>

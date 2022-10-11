@@ -86,7 +86,7 @@ function PlanningCCEGap() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Planning CCE Gap</Trans>
+        <Trans>Planning for Cold Chain Equipment Gap</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -98,7 +98,7 @@ function PlanningCCEGap() {
               }}
             >
               <h4>
-                <Trans>Filters</Trans>
+                <Trans>Filter</Trans>
               </h4>
               <div className="row mt-5">
                 <div className="col-sm-12 col-lg-6">
@@ -506,7 +506,7 @@ function PlanningCCEGap() {
                 <TableHead>
                   <TableRow>
                     <TableCell>
-                      <Trans>Planned </Trans>
+                      <Trans>Planned</Trans>
                     </TableCell>
                     <TableCell>
                       <Trans>Facility Name</Trans>
