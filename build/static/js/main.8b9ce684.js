@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (e, t) {
                     return s()
-                      .post("http://api.invgap.org/auth/login/", {
+                      .post("https://api.invgap.org/auth/login/", {
                         username: e,
                         password: t,
                       })
@@ -37,7 +37,7 @@
                             access: e.data.access,
                           };
                           return s()
-                            .get("http://api.invgap.org/user-data/", {
+                            .get("https://api.invgap.org/user-data/", {
                               headers: { Authorization: "Bearer " + t.access },
                             })
                             .then(function (e) {
@@ -636,7 +636,7 @@
       },
       80794: function (e, t) {
         "use strict";
-        t.Z = "http://api.invgap.org";
+        t.Z = "https://api.invgap.org";
       },
       54318: function (e, t, n) {
         "use strict";
@@ -750,7 +750,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://api.invgap.org/dashboard",
+          s = "https://api.invgap.org/dashboard",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -833,7 +833,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://api.invgap.org/help/",
+          s = "https://api.invgap.org/help/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -878,7 +878,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "http://api.invgap.org/item/",
+          s = "https://api.invgap.org/item/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1004,7 +1004,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://api.invgap.org/items/",
+          s = "https://api.invgap.org/items/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1137,8 +1137,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "http://api.invgap.org/settings/",
-          u = "http://api.invgap.org",
+          s = "https://api.invgap.org/settings/",
+          u = "https://api.invgap.org",
           l = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -5854,9 +5854,9 @@
             ns: ["translation"],
             defaultNS: "translation",
             supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-            localePath: "http://api.invgap.org/media/{{lng}}/{{ns}}.json",
+            localePath: "https://api.invgap.org/media/{{lng}}/{{ns}}.json",
             backend: {
-              loadPath: "http://api.invgap.org/languages/{{ns}}?name={{lng}}",
+              loadPath: "https://api.invgap.org/languages/{{ns}}?name={{lng}}",
               addPath: null,
               crossDomain: !0,
               withCredentials: !0,
@@ -40441,11 +40441,15 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "http://api.invgap.org".concat(this.state.logo1),
+                        logo1: "https://api.invgap.org".concat(
+                          this.state.logo1
+                        ),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "http://api.invgap.org".concat(this.state.logo2),
+                        logo2: "https://api.invgap.org".concat(
+                          this.state.logo2
+                        ),
                       });
                 },
               },
