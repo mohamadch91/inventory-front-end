@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/3780.d60d37aa.chunk.css","mappings":"AAAA,mBACE,YACF,CCFA,OACE,oBAAuB","sources":["app/settings/country.css","app/settings/country.scss"],"sourcesContent":[".leaflet-container {\n  height: 18rem;\n}\n","select {\n  color: black !important;\n}\n"],"names":[],"sourceRoot":""}
