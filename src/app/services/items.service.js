@@ -1,7 +1,7 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "https://demoapi2.invgap.org/items/";
+const API_URL = "https://demoapi3.invgap.org/items/";
 
 class ItemService {
   getItemClasses() {
