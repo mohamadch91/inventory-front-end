@@ -34,6 +34,7 @@ import * as XLSX from "xlsx";
 import SharedTable from "../shared/SharedTable";
 import CloseIcon from "../shared/CloseIcon";
 import { Trans } from "react-i18next";
+import { seperator } from "../helpers/seperator";
 
 function createData(
   id,
@@ -300,7 +301,29 @@ export default function DataTable() {
       toast.error(<Trans>Maximum population must be greater than minimum value</Trans>)
     }
     else {
-      UserService.putLevels(rows)
+      console.log(rows)
+      const row_data=rows
+      for (let i=0;i<row_data.length;i++){
+        row_data[i].uppervol = parseFloat(row_data[i].uppervol.replace(seperator(),".")).toFixed(2);
+        row_data[i].undervol = parseFloat(row_data[i].undervol.replace(seperator(), ".")).toFixed(2);
+        row_data[i].m25vol = parseFloat(row_data[i].m25vol.replace(seperator(), ".")).toFixed(2);
+        row_data[i].m70vol = parseFloat(row_data[i].m70vol.replace(seperator(), ".")).toFixed(2);
+        row_data[i].dryvol = parseFloat(row_data[i].dryvol.replace(seperator(), ".")).toFixed(2);
+        row_data[i].m25volnew = parseFloat(row_data[i].m25volnew.replace(seperator(), ".")).toFixed(2);
+        row_data[i].m70volnew = parseFloat(row_data[i].m70volnew.replace(seperator(), ".")).toFixed(2);
+        row_data[i].uppervolnew = parseFloat(
+          row_data[i].uppervolnew.replace(seperator(), ".")
+        ).toFixed(2);
+        row_data[i].undervolnew = parseFloat(
+          row_data[i].undervolnew.replace(seperator(), ".")
+        ).toFixed(2);
+        row_data[i].dryvolnew = parseFloat(
+          row_data[i].dryvolnew.replace(seperator(), ".")
+        ).toFixed(2);
+
+
+      }
+      UserService.putLevels(row_data)
         .then((response) => {
           const country = JSON.parse(localStorage.getItem("country"));
           let row = [];
@@ -311,16 +334,20 @@ export default function DataTable() {
                 response.data[i].name,
                 parseInt(response.data[i].maxpop),
                 parseInt(response.data[i].minpop),
-                response.data[i].uppervol,
-                response.data[i].undervol,
-                response.data[i].m25vol,
-                response.data[i].m70vol,
-                response.data[i].dryvol,
-                response.data[i].m25volnew,
-                response.data[i].m70volnew,
-                response.data[i].uppervolnew,
-                response.data[i].undervolnew,
-                response.data[i].dryvolnew,
+                response.data[i].uppervol.toString().replace(".", seperator()),
+                response.data[i].undervol.toString().replace(".", seperator()),
+                response.data[i].m25vol.toString().replace(".", seperator()),
+                response.data[i].m70vol.toString().replace(".", seperator()),
+                response.data[i].dryvol.toString().replace(".", seperator()),
+                response.data[i].m25volnew.toString().replace(".", seperator()),
+                response.data[i].m70volnew.toString().replace(".", seperator()),
+                response.data[i].uppervolnew
+                  .toString()
+                  .replace(".", seperator()),
+                response.data[i].undervolnew
+                  .toString()
+                  .replace(".", seperator()),
+                response.data[i].dryvolnew.toString().replace(".", seperator()),
                 response.data[i].country,
                 response.data[i].parent
               )
@@ -423,11 +450,12 @@ export default function DataTable() {
     }
   };
   const capacityValidator = (text) => {
-    const check = parseFloat(text);
+    const check = parseFloat(text.replace(seperator(),"."));
+    
     if (check < 0) {
       return false;
     }
-    if (check.toString().length > 0) {
+    if (check.toString().length > 0 ) {
       return true;
     }
     return true;
@@ -526,16 +554,16 @@ export default function DataTable() {
               response.data[i].name,
               parseInt(response.data[i].maxpop),
               parseInt(response.data[i].minpop),
-              response.data[i].uppervol,
-              response.data[i].undervol,
-              response.data[i].m25vol,
-              response.data[i].m70vol,
-              response.data[i].dryvol,
-              response.data[i].m25volnew,
-              response.data[i].m70volnew,
-              response.data[i].uppervolnew,
-              response.data[i].undervolnew,
-              response.data[i].dryvolnew,
+              response.data[i].uppervol.toString().replace(".", seperator()),
+              response.data[i].undervol.toString().replace(".", seperator()),
+              response.data[i].m25vol.toString().replace(".", seperator()),
+              response.data[i].m70vol.toString().replace(".", seperator()),
+              response.data[i].dryvol.toString().replace(".", seperator()),
+              response.data[i].m25volnew.toString().replace(".", seperator()),
+              response.data[i].m70volnew.toString().replace(".", seperator()),
+              response.data[i].uppervolnew.toString().replace(".", seperator()),
+              response.data[i].undervolnew.toString().replace(".", seperator()),
+              response.data[i].dryvolnew.toString().replace(".", seperator()),
               response.data[i].country,
               response.data[i].parent
             )
@@ -811,11 +839,21 @@ export default function DataTable() {
                           isValid={capacityValidator(rows[i].m25vol)}
                           isInvalid={!capacityValidator(rows[i].m25vol)}
                           value={rows[i].m25vol}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="m25vol"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -827,11 +865,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].uppervol)}
                           value={rows[i].uppervol}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="uppervol"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -842,11 +890,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].undervol)}
                           value={rows[i].undervol}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="undervol"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -857,11 +915,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].m70vol)}
                           value={rows[i].m70vol}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="m70vol"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -872,11 +940,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].dryvol)}
                           value={rows[i].dryvol}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="dryvol"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -890,11 +968,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].m25volnew)}
                           value={rows[i].m25volnew}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="m25volnew"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -905,11 +993,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].uppervolnew)}
                           value={rows[i].uppervolnew}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="uppervolnew"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -919,11 +1017,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].undervolnew)}
                           value={rows[i].undervolnew}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="undervolnew"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -934,11 +1042,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].m70volnew)}
                           value={rows[i].m70volnew}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="m70volnew"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />
@@ -953,11 +1071,21 @@ export default function DataTable() {
                           required
                           isValid={capacityValidator(rows[i].dryvolnew)}
                           value={rows[i].dryvolnew}
+                          onKeyPress={(e) => {
+                            e.persist();
+                            const numericKeys = "0123456789" + seperator();
+                            if (numericKeys.indexOf(e.key) === -1) {
+                              e.preventDefault();
+                              return;
+                            }
+
+                            handleInputChange(e, i);
+                          }}
                           onChange={(e) => {
                             handleInputChange(e, i);
                           }}
                           name="dryvolnew"
-                          type="number"
+                          type="text"
                           placeholder="0"
                           min="0"
                         />

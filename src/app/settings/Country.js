@@ -8,6 +8,7 @@ import * as XLSX from "xlsx";
 import { toast } from "react-hot-toast";
 import Map from "./Map";
 import { Translation,Trans } from "react-i18next";
+import { seperator } from "../helpers/seperator";
 
 import "./country.scss";
 delete L.Icon.Default.prototype._getIconUrl;
@@ -101,9 +102,14 @@ export class Country extends Component {
       if (this.state.slogo !== null && typeof this.state.slogo !== "string") {
         formData.append("secondLogo", this.state.slogo);
       }
-
+      let rate =this.state.growthRate
+      rate=rate.replace(seperator(),".")
+      rate=parseFloat(rate)
       formData.append("poptarget", this.state.targetpopulation);
-      formData.append("poprate", this.state.growthRate);
+      formData.append(
+        "poprate",
+                  rate
+      );
       formData.append("havehr", this.state.enableHR);
       formData.append("mainlocation", this.state.mainlocation);
       formData.append("logo2", this.state.logo2);
@@ -527,9 +533,20 @@ export class Country extends Component {
                               disabled={!this.state.user?.admin}
                               required
                               isValid={true}
-                              value={this.state.growthRate}
-                              onChange={(e) => {
-                                let number = e.target.value;
+                              value={this.state.growthRate
+                                .toString()
+                                .replace(".", seperator())}
+                              onKeyPress={(e) => {
+                                e.persist();
+                                const numericKeys="0123456789"+seperator()
+                                if (numericKeys.indexOf(e.key)===-1){
+                                   e.preventDefault();
+                                   return;
+                                }
+                                let number = e.target.value.replace(
+                                  seperator(),
+                                  "."
+                                );
                                 const flag = number.split(".").length;
                                 if (flag > 1) {
                                   const num = number.split(".")[0];
@@ -540,10 +557,29 @@ export class Country extends Component {
                                 }
 
                                 this.setState({
-                                  growthRate: parseFloat(number),
+                                  growthRate: number.replace(".", seperator()),
+                                });
+                                
+                              }}
+                              onChange={(e) => {
+                                let number = e.target.value.replace(
+                                  seperator(),
+                                  "."
+                                );
+                                const flag = number.split(".").length;
+                                if (flag > 1) {
+                                  const num = number.split(".")[0];
+                                  const floatpoint = number
+                                    .split(".")[1]
+                                    .slice(0, 2);
+                                  number = num + "." + floatpoint;
+                                }
+
+                                this.setState({
+                                  growthRate: number.replace(".", seperator()),
                                 });
                               }}
-                              type="number"
+                              type="string"
                               className="form-control"
                               aria-label="Amount (to the nearest dollar)"
                             />

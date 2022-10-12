@@ -1,4 +1,4 @@
-/*! For license information please see main.8b9ce684.js.LICENSE.txt */
+/*! For license information please see main.ce19006a.js.LICENSE.txt */
 !(function () {
   var e = {
       48858: function (e, t, n) {
@@ -30990,13 +30990,15 @@
                   (this.mutateOptions = t),
                   this.currentMutation &&
                     this.currentMutation.removeObserver(this),
-                  (this.currentMutation = this.client.getMutationCache().build(
-                    this.client,
-                    (0, h.Z)({}, this.options, {
-                      variables:
-                        "undefined" !== typeof e ? e : this.options.variables,
-                    })
-                  )),
+                  (this.currentMutation = this.client
+                    .getMutationCache()
+                    .build(
+                      this.client,
+                      (0, h.Z)({}, this.options, {
+                        variables:
+                          "undefined" !== typeof e ? e : this.options.variables,
+                      })
+                    )),
                   this.currentMutation.addObserver(this),
                   this.currentMutation.execute()
                 );
@@ -31506,10 +31508,12 @@
                         e(t.currentResult);
                       }),
                     e.cache &&
-                      t.client.getQueryCache().notify({
-                        query: t.currentQuery,
-                        type: "observerResultsUpdated",
-                      });
+                      t.client
+                        .getQueryCache()
+                        .notify({
+                          query: t.currentQuery,
+                          type: "observerResultsUpdated",
+                        });
                 });
               }),
               t
@@ -37756,8 +37760,8 @@
           3629: "eb4b15d9",
           3701: "c8ad2144",
           3723: "3bef0f86",
-          3780: "31fb9a36",
-          3990: "8f4871c1",
+          3780: "532a4987",
+          3990: "eceefdb6",
           4004: "d24a526b",
           4045: "e91b3c74",
           4084: "7361ba9f",
@@ -37765,7 +37769,7 @@
           4672: "3233cd82",
           4744: "97a088c2",
           4941: "aee6cfb4",
-          4991: "2e02fb24",
+          4991: "75a9857d",
           5229: "78e0044e",
           5257: "a8dcef27",
           5390: "9d93ba0b",
@@ -37795,7 +37799,7 @@
           8239: "8aec3be1",
           8303: "58e2c459",
           8455: "8d583b6d",
-          8472: "c5b1caf9",
+          8472: "5fea4b5c",
           8546: "0cfd655a",
           8577: "44b16bb8",
           8654: "d16051f4",
@@ -42924,4 +42928,4 @@
           });
     })();
 })();
-//# sourceMappingURL=main.8b9ce684.js.map
+//# sourceMappingURL=main.ce19006a.js.map
