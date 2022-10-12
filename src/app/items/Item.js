@@ -127,7 +127,17 @@ function Item() {
       }
       const res = await ItemService.getPQS(id_param);
       return res?.data?.map((item) => ({
-        label: item.pqsnumber ?? item.pqscode,
+        label:
+          item.pqsnumber +
+            " , " +
+            item.type +
+            " , " +
+            item.vaccinenetstoragecapacity ??
+          item.pqscode +
+            " , " +
+            item.description +
+            " , " +
+            item.freezercapacity,
         value: item,
       }));
     },
@@ -352,7 +362,7 @@ function Item() {
   const selectPQSHandler = () => {
     // console.log(fieldsValue["PQSPISCode"]);
     const value = pqsData.find(
-      (pqs) => pqs.label === fieldsValue["PQSPISCode"]
+      (pqs) => pqs.label.split(" , ")[0] === fieldsValue["PQSPISCode"]
     )?.value;
     if (value === undefined) {
       //TODO: show a correct massage to user
@@ -619,14 +629,18 @@ function Item() {
                                 <Select
                                   options={pqsData}
                                   onChange={(e) => {
-                                    console.log("on change ")
-                                    onChangeHandler(e.label, pqsField);
+                                    console.log("on change ");
+                                    onChangeHandler(
+                                      e.label.split(" , ")[0],
+                                      pqsField
+                                    );
                                   }}
                                   value={{
                                     label: fieldsValue["PQSPISCode"],
                                     value: pqsData.find(
                                       (pqs) =>
-                                        pqs.label === fieldsValue["PQSPISCode"]
+                                        pqs.label.split(" , ")[0] ===
+                                        fieldsValue["PQSPISCode"]
                                     )?.value,
                                   }}
                                   // onBlur={(e) => {
@@ -639,7 +653,6 @@ function Item() {
                                   // }}
                                 />
                               ) : (
-                              
                                 <DynamicInput
                                   field={pqsField}
                                   onChangeHandler={onChangeHandler}
@@ -667,9 +680,9 @@ function Item() {
               </>
             )}
             {Object.values(itemFields)[activeStep]?.map((field) => {
-               if (!isRelatedFieldOk(field.state, fieldsValue)) {
-                 return null;
-               }
+              if (!isRelatedFieldOk(field.state, fieldsValue)) {
+                return null;
+              }
               const hasRequiredError = !!fieldErrors[field.state];
               return (
                 <div className="row" key={field.name}>
