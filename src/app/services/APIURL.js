@@ -1,2 +1,2 @@
-const API_URL = "https://api.invgap.org";
+const API_URL = "https://demoapi1.invgap.org";
 export default API_URL;
