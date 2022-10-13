@@ -128,16 +128,16 @@ function Item() {
       const res = await ItemService.getPQS(id_param);
       return res?.data?.map((item) => ({
         label:
-          item.pqsnumber +
+          item.pqsnumber  ? (item.pqsnumber +
             " , " +
             item.type +
             " , " +
-            item.vaccinenetstoragecapacity ??
-          item.pqscode +
+            item.vaccinenetstoragecapacity) : (item.pqscode +
             " , " +
             item.description +
             " , " +
-            item.freezercapacity,
+            item.freezercapacity)
+          ,
         value: item,
       }));
     },
