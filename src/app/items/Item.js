@@ -105,16 +105,21 @@ function Item() {
 
           }
           else{
-            console.log(fieldsValue);
+            if (fieldsValue==={}){
+              
+              setSelectedItemClass(data[0]);
+              setSelectedItemType(data[0]?.item_type?.[0]);
+              window.location.reload();
+            }
+            else{
             const item_class = data.find(
               (item) => item?.item_class?.id === fieldsValue.item_class
             );
-            console.log(item_class);
             const item_type= item_class?.item_type?.find((item) => item.id === fieldsValue.item_type);
             setSelectedItemClass(item_class);
 
             setSelectedItemType(item_type);
-           
+            }
           }
         },
       }
@@ -132,6 +137,9 @@ function Item() {
         id_param=1
         if(fieldsValue!=={}){
           id_param=fieldsValue['item_type']
+        }
+        else{
+          window.location.reload()
         }
       }
       const res = await ItemService.getPQS(id_param);
