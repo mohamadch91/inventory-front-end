@@ -118,6 +118,7 @@ function Item() {
       let id_param=0
       if(id=='new'){
         id_param = selectedItemType?.id;
+        
       }
       else{
         id_param=1
@@ -126,18 +127,25 @@ function Item() {
         }
       }
       const res = await ItemService.getPQS(id_param);
+      if (res.data.length===0){
+        return []
+      }
       return res?.data?.map((item) => ({
-        label:
-          item.pqsnumber  ? (item.pqsnumber +
+        label: item.pqsnumber
+          ? (item.pqsnumber +
             " , " +
             item.type +
             " , " +
-            item.vaccinenetstoragecapacity) : (item.pqscode +
+            item.vaccinenetstoragecapacity +
+            " , " +
+            item.manufacturer
+          ):(item.pqscode +
             " , " +
             item.description +
             " , " +
-            item.freezercapacity)
-          ,
+            item.freezercapacity +
+            " , " +
+            item.make),
         value: item,
       }));
     },
