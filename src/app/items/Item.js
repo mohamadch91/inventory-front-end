@@ -16,6 +16,7 @@ import StepOperations from "../components/StepOperations";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-tem";
 import { isRelatedFieldOkReq } from "../helpers/related-tem-req";
 import { seperator } from "../helpers/seperator";
+import toast from "react-hot-toast";
 
 
 const facilityField = {
@@ -88,7 +89,11 @@ function Item() {
           ...preValues,
           facility: res.data.facility,
         }));
-       
+        const datas = res.data.data.filter((item) => item.item_type.length > 0);
+        if (datas.length ===0){
+          toast.error(<Trans>No available item found</Trans>);
+          history.push("/settings/item-t-level");
+        }
         return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
