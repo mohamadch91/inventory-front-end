@@ -88,6 +88,7 @@ function Item() {
           ...preValues,
           facility: res.data.facility,
         }));
+       
         return res.data.data.filter((item) => item.item_type.length > 0);
       },
       {
@@ -95,7 +96,9 @@ function Item() {
         onSuccess(data) {
           if (id === "new") {
           setSelectedItemClass(data[0]);
-          setSelectedItemType(data[0]?.item_type?.[0]);}
+          setSelectedItemType(data[0]?.item_type?.[0]);
+
+          }
           else{
             console.log(fieldsValue);
             const item_class = data.find(
