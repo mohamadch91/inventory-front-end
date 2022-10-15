@@ -1,5 +1,9 @@
 import { useReducer, useCallback } from "react";
-
+/**
+ * @param  {Reducer} state
+ * @param  {ACTION} action
+ * define custom hook with HTTP to send request
+ */
 function httpReducer(state, action) {
   if (action.type === "SEND") {
     return {
