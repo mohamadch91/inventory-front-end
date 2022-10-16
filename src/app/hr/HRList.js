@@ -39,7 +39,9 @@ function HRList() {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+  /**
+   * fetch facilities from API
+   */
   function getFacilities() {
     HRService.getFacilities()
       .then((res) => {
