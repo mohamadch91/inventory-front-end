@@ -12,7 +12,12 @@ import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import { Translation,Trans } from "react-i18next";
-
+/**
+ * @component HRList
+ * show HR page
+ * can see add or edit HR,s
+ * 
+ */
 function HRList() {
   const genders = ["male", "female"];
   const positionLevels = ["Nurse", "Vaccinator", "Assistant"];
