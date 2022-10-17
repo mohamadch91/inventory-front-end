@@ -15,14 +15,14 @@ function NewMessage() {
   const [selected, setSelected] = useState([]);
 
   function getFacilities() {
-    HRService.getFacilities()
+    MessageService.getfacilities()
       .then((res) => {
         const data = res.data;
         setFacilities(data);
         setIsLoading(false);
       })
       .catch((err) => {
-                toast.error(<Trans>There is a problem loading data</Trans>);
+        toast.error(<Trans>There is a problem loading data</Trans>);
 
         setIsLoading(false);
       });

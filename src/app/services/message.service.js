@@ -21,7 +21,7 @@ class MessageService {
     });
   }
   putMessage(data) {
-    return axiApiManageros.put(API_URL, data, {
+    return ApiManager.put(API_URL, data, {
       headers: { Authorization: authHeader() },
     });
   }
