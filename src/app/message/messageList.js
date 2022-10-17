@@ -24,7 +24,7 @@ function MessageList() {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [sentOrReceived, setSentOrReceived] = useState("r"); // r means received and s means sent
+  const [sentOrReceived, setSentOrReceived] = useState("s"); // r means received and s means sent
 
   function getList() {
     if (sentOrReceived === "s") {
@@ -86,14 +86,14 @@ function MessageList() {
       data.reciever = reciever.id;
       MessageService.putMessage(data)
         .then((res) => {
-          toast.success("Message sent successfully");
+          toast.success(<Trans>Message sent successfully</Trans>);
           getList();
           setEditFormData({});
           setSelected([]);
           setIsEditModalOpen(false);
         })
         .catch((err) => {
-          toast.error("There is a problem sending message");
+          toast.error(<Trans>There is a problem sending message</Trans>);
         });
     }
   }
