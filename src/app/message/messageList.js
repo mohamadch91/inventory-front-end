@@ -24,17 +24,17 @@ function MessageList() {
   const [selectedFacility, setSelectedFacility] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selected, setSelected] = useState([]);
-  const [sentOrReceived, setSentOrReceived] = useState("s"); // r means received and s means sent
+  const [sentOrReceived, setSentOrReceived] = useState("r"); // r means received and s means sent
 
-  function getList() {
-    if (sentOrReceived === "s") {
+  function getList(type) {
+    if (type === "r") {
       MessageService.getReceivedMessages()
         .then((res) => {
           setList(res.data);
           setIsLoading(false);
         })
         .catch((err) => {
-                  toast.error(<Trans>There is a problem loading data</Trans>);
+          toast.error(<Trans>There is a problem loading data</Trans>);
 
           setIsLoading(false);
         });
@@ -45,7 +45,7 @@ function MessageList() {
           setIsLoading(false);
         })
         .catch((err) => {
-                  toast.error(<Trans>There is a problem loading data</Trans>);
+          toast.error(<Trans>There is a problem loading data</Trans>);
 
           setIsLoading(false);
         });
@@ -53,7 +53,7 @@ function MessageList() {
   }
 
   useEffect(() => {
-    getList();
+    getList(sentOrReceived);
   }, []);
 
   function handleEdit(i) {
@@ -86,14 +86,14 @@ function MessageList() {
       data.reciever = reciever.id;
       MessageService.putMessage(data)
         .then((res) => {
-          toast.success(<Trans>Message sent successfully</Trans>);
-          getList();
+          toast.success("Message sent successfully");
+          getList(sentOrReceived);
           setEditFormData({});
           setSelected([]);
           setIsEditModalOpen(false);
         })
         .catch((err) => {
-          toast.error(<Trans>There is a problem sending message</Trans>);
+          toast.error("There is a problem sending message");
         });
     }
   }
@@ -119,7 +119,7 @@ function MessageList() {
                 onChange={(e) => {
                   setSentOrReceived(e.target.value);
                   setIsLoading(true);
-                  getList();
+                  getList(e.target.value);
                 }}
                 value={sentOrReceived}
               >

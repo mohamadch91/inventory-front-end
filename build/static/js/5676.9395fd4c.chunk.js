@@ -743,7 +743,7 @@
         Y = a(43144),
         ee = a(39877),
         te = a(54318),
-        ae = "http://127.0.0.1:8000/languages/",
+        ae = "https://demoapi3.invgap.org/languages/",
         ne = new ((function () {
           function e() {
             (0, K.Z)(this, e);

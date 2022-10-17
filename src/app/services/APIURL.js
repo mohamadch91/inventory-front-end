@@ -1,2 +1,2 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "https://demoapi3.invgap.org";
 export default API_URL;
