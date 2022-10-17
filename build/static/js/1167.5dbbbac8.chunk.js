@@ -8,7 +8,7 @@
         c = i(74569),
         a = i.n(c),
         t = i(54318),
-        r = "http://127.0.0.1:8000/hr/",
+        r = "https://demoapi3.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -117,7 +117,7 @@
         v = i(43144),
         p = i(39877),
         g = i(54318),
-        b = "http://127.0.0.1:8000/auth/",
+        b = "https://demoapi3.invgap.org/auth/",
         Z = new ((function () {
           function e() {
             (0, f.Z)(this, e);

@@ -7,7 +7,7 @@
         t = i(43144),
         s = i(39877),
         c = i(54318),
-        l = "http://127.0.0.1:8000/maintanance/",
+        l = "https://demoapi3.invgap.org/maintanance/",
         r = (function () {
           function e() {
             (0, a.Z)(this, e);

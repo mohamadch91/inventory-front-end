@@ -392,7 +392,7 @@
         t = r(43144),
         s = r(54318),
         c = r(39877),
-        i = "http://127.0.0.1:8000/reports/",
+        i = "https://demoapi3.invgap.org/reports/",
         l = (function () {
           function e() {
             (0, n.Z)(this, e);
