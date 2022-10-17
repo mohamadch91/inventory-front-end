@@ -343,7 +343,7 @@
         i = t(74569),
         c = t.n(i),
         a = t(54318),
-        l = "https://demoapi1.invgap.org/hr/",
+        l = "https://api.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -401,7 +401,7 @@
         r = t(43144),
         i = (t(74569), t(39877)),
         c = t(54318),
-        a = "https://demoapi1.invgap.org/message/",
+        a = "https://api.invgap.org/message/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);
