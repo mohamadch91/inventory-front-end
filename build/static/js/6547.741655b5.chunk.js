@@ -343,7 +343,7 @@
         i = s(74569),
         c = s.n(i),
         a = s(54318),
-        l = "https://demoapi3.invgap.org/hr/",
+        l = "http://127.0.0.1:8000/hr/",
         d = (function () {
           function e() {
             (0, t.Z)(this, e);
@@ -402,7 +402,7 @@
         i = s(74569),
         c = s.n(i),
         a = s(54318),
-        l = "https://demoapi3.invgap.org/message/",
+        l = "http://127.0.0.1:8000/message/",
         d = (function () {
           function e() {
             (0, t.Z)(this, e);

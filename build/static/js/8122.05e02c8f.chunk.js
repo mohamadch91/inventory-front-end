@@ -154,7 +154,7 @@
         r = t(74569),
         i = t.n(r),
         u = t(54318),
-        c = "https://demoapi3.invgap.org/hr/",
+        c = "http://127.0.0.1:8000/hr/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -213,7 +213,7 @@
         r = t(74569),
         i = t.n(r),
         u = t(54318),
-        c = "https://demoapi3.invgap.org/message/",
+        c = "http://127.0.0.1:8000/message/",
         l = (function () {
           function e() {
             (0, s.Z)(this, e);

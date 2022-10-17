@@ -7,7 +7,7 @@
         i = t(43144),
         r = t(39877),
         o = t(54318),
-        l = (t(74569), "https://demoapi3.invgap.org/facilities/"),
+        l = (t(74569), "http://127.0.0.1:8000/facilities/"),
         s = (function () {
           function e() {
             (0, n.Z)(this, e);
@@ -71,7 +71,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return r.Z.post(
-                    "https://demoapi3.invgap.org/facilities/import",
+                    "http://127.0.0.1:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, o.Z)() } }
                   );

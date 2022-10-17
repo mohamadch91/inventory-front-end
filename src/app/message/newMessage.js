@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import HRService from "../services/hr.service";
 import MessageService from "../services/message.service";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
@@ -41,7 +40,7 @@ function NewMessage() {
   function handleSubmit(e) {
     e.preventDefault();
     if (selected.length === 0) {
-      toast.error("Please select at least one facility");
+      toast.error(<Trans>Please select at least one facility</Trans>);
     } else {
       const { subject, body } = formData;
       const data = {
@@ -51,12 +50,12 @@ function NewMessage() {
       };
       MessageService.sendMessage(data)
         .then((res) => {
-          toast.success("Message sent successfully");
+          toast.success(<Trans>Message sent successfully</Trans>);
           setFormData({});
           setSelected([]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending message");
+          toast.error(<Trans>There is a problem sending message</Trans>);
         });
     }
   }
