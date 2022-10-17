@@ -164,7 +164,7 @@
         a = s(43144),
         i = (s(74569), s(39877)),
         c = s(54318),
-        r = "https://demoapi2.invgap.org/message/",
+        r = "https://demoapi1.invgap.org/message/",
         l = (function () {
           function e() {
             (0, t.Z)(this, e);
