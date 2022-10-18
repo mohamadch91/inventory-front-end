@@ -406,7 +406,7 @@
         t = s(74569),
         i = s.n(t),
         l = s(54318),
-        a = "https://api.invgap.org/hr/",
+        a = "https://demoapi1.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, c.Z)(this, e);
