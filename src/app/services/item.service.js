@@ -1,10 +1,10 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8000/item/";
+const API_URL = "https://api.invgap.org/item/";
 
 class ItemService {
-  getItems(id, facility, deleted) {
+  getItems(id, facility, deleted, filters) {
     const params = {};
     if (id) {
       params.id = id;
@@ -14,6 +14,9 @@ class ItemService {
     }
     if (deleted) {
       params.deleted = deleted;
+    }
+    for (const key in filters) {
+      params[key] = filters[key];
     }
 
     return ApiManager.get(API_URL, {

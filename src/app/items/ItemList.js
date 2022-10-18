@@ -18,6 +18,7 @@ import TrashIcon from "../shared/TrashIcon";
 import Modal from "react-bootstrap/Modal";
 import InformationIcon from "../shared/InformationIcon";
 import { Form } from "react-bootstrap";
+import { toast } from "react-hot-toast";
 
 import {
   BrowserView,
@@ -36,7 +37,8 @@ const defaultValues = {
   yfrom: "",
   yto: "",
   functioning: "",
-  underto: "",
+  isDel:false,
+
 };
 function ItemList() {
   const history = useHistory();
@@ -51,6 +53,8 @@ const [itemModalOpen, setItemModalOpen] = React.useState(false);
 const [itemModalInfo, setItemModalInfo] = React.useState(null);
 const [is_deleted, setIsDeleted] = React.useState(false);
   const [filterValues, setFilterValues] = React.useState(defaultValues);
+  const [selectedItem, setSelectedItem] = React.useState(null);
+
 
   const {
     data: items,
@@ -59,7 +63,18 @@ const [is_deleted, setIsDeleted] = React.useState(false);
   } = useQuery(
     ["item-default-value", facility],
     async () => {
-      const res = await ItemService.getItems(undefined, facility,is_deleted);
+      const params = {};
+      
+      for (const key in filterValues) {
+        const filter = filterValues[key];
+        if (filter.length > 0 && filter !== "-1") {
+          params[key] = filter;
+        }
+      }
+      const res = await ItemService.getItems(undefined, facility,is_deleted,params);
+        if (res.data.length === 0) {
+          toast.error(<Trans>No data found</Trans>);
+        }
       return res.data;
     },
     {
@@ -79,7 +94,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
       }
     );
  const { data: facSegHelper, isLoading: isFacSegHelperLoading } = useQuery(
-   ["fac-seg-helper"],
+   ["item-helper"],
    async () => {
      const res = await ItemService.getQrHelper();
      return res.data;
@@ -375,17 +390,91 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                 </div>
               </div>
               <div className="row mt-1">
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 mt-2">
+                      <Trans>Item class</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          item_class: value,
+                          item_type: "-1",
+                        }));
+                        setSelectedItem(
+                          facSegHelper.items.find(
+                            (i) => i.item_class.id === +value
+                          )
+                        );
+                      }}
+                      value={filterValues.item_class}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      {facSegHelper?.items?.map((i) => (
+                        <option key={i.item_class.id} value={i.item_class.id}>
+                          {i.item_class.title}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 mt-2">
+                      <Trans>Items category</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      disabled={!selectedItem}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          item_type: value,
+                        }));
+                      }}
+                      value={filterValues.item_type}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      {selectedItem?.item_type.map((i) => (
+                        <option key={i.id} value={i.id}>
+                          {i.title}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
                 <div className="col-sm-12">
                   <Form.Group className="row">
-                    <label className="label col-sm-2">
-                      <Trans>Year Installed</Trans>:
+                    <label className="label col-sm-2 mt-2">
+                      <Trans>Year installed</Trans>:
                     </label>
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-2">
                       <Trans>from</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
                       type="number"
+                      min={1990}
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({
@@ -395,12 +484,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       }}
                       value={filterValues.yfrom}
                     />
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-2">
                       <Trans>to</Trans>:
                     </label>
                     <Form.Control
                       className="form-control col-sm-4"
                       type="number"
+                      min={filterValues.yfrom}
                       onChange={(e) => {
                         const value = e.target.value;
                         setFilterValues((preValues) => ({

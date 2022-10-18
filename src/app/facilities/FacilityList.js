@@ -372,10 +372,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-1">
                 <div className="col-sm-12">
                   <Form.Group className="row">
-                    <label className="label col-sm-2">
+                    <label className="label col-sm-2 mt-3">
                       <Trans>General populations</Trans>:
                     </label>
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-3">
                       <Trans>from</Trans>:
                     </label>
                     <Form.Control
@@ -390,7 +390,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       }}
                       value={filterValues.gfrom}
                     />
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-3">
                       <Trans>to</Trans>:
                     </label>
                     <Form.Control
@@ -411,10 +411,10 @@ const [is_deleted, setIsDeleted] = React.useState(false);
               <div className="row mt-1">
                 <div className="col-sm-12">
                   <Form.Group className="row">
-                    <label className="label col-sm-2">
+                    <label className="label col-sm-2 mt-3">
                       <Trans>Under-1 Populations</Trans>:
                     </label>
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-3">
                       <Trans>from</Trans>:
                     </label>
                     <Form.Control
@@ -429,7 +429,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       }}
                       value={filterValues.underfrom}
                     />
-                    <label className="label col-sm-1">
+                    <label className="label col-sm-1 mt-3">
                       <Trans>to</Trans>:
                     </label>
                     <Form.Control
@@ -468,17 +468,16 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <Translation>
                         {(t, { i18n }) => (
                           <>
-                          <option i18n value="-1" selected>
-                            {t("Please select")}
-                          </option>
+                            <option i18n value="-1" selected>
+                              {t("Please select")}
+                            </option>
                             <option value={true}>{t("Yes")}</option>
                             <option value={false} selected>
                               {t("No")}
                             </option>
-                            </>
+                          </>
                         )}
                       </Translation>
-                    
                     </Form.Control>
                   </Form.Group>
                 </div>
@@ -757,8 +756,6 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                 <InformationIcon />
                               </button>
                             </TableCell>
-
-                        
                           </TableRow>
                         </>
                       );
@@ -837,7 +834,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               </button>
                             </Tooltip>
                           </Link>
-                          {((pid && facMod?.id!==pid > 0) || !pid) && (
+                          {((pid && facMod?.id !== pid > 0) || !pid) && (
                             <Tooltip title={<Trans>Sub Facilities</Trans>}>
                               <Link
                                 to={{
@@ -885,8 +882,9 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               disabled={isDeleteLoading}
                               onClick={() => {
                                 setFacModals(false);
-                        setFacMod(null);
-                                openDeleteModal(facMod?.id)}}
+                                setFacMod(null);
+                                openDeleteModal(facMod?.id);
+                              }}
                             >
                               <TrashIcon />
                             </button>
