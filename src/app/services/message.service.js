@@ -2,7 +2,7 @@ import axios from "axios";
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://api.invgap.org/message/";
+const API_URL = "http://127.0.0.1:8000/message/";
 
 class MessageService {
   getReceivedMessages() {
@@ -27,6 +27,11 @@ class MessageService {
   }
   getfacilities() {
     return ApiManager.get(API_URL + "helper", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getUnreadMessages() {
+    return ApiManager.get(API_URL + "unread-count", {
       headers: { Authorization: authHeader() },
     });
   }

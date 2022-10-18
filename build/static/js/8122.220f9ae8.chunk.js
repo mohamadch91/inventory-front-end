@@ -164,7 +164,7 @@
         a = s(43144),
         i = (s(74569), s(39877)),
         c = s(54318),
-        r = "https://api.invgap.org/message/",
+        r = "http://127.0.0.1:8000/message/",
         l = (function () {
           function e() {
             (0, t.Z)(this, e);

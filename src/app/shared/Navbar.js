@@ -32,6 +32,7 @@ class Navbar extends Component {
       has_maintain: false,
       Profmodal: false,
       passModal: false,
+      messageCount: 0,
       changePassForm: {},
       userInfo: {
         name: JSON.parse(localStorage.getItem("user"))?.name,
@@ -156,12 +157,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://api.invgap.org${this.state.logo1}`,
+        logo1: `http://127.0.0.1:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://api.invgap.org${this.state.logo2}`,
+        logo2: `http://127.0.0.1:8000${this.state.logo2}`,
       });
     }
   }
