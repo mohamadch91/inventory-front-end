@@ -17,6 +17,7 @@ import { Translation,Trans } from "react-i18next";
 import TrashIcon from "../shared/TrashIcon";
 import Modal from "react-bootstrap/Modal";
 import InformationIcon from "../shared/InformationIcon";
+import { Form } from "react-bootstrap";
 
 import {
   BrowserView,
@@ -24,6 +25,19 @@ import {
   isBrowser,
   isMobile,
 } from "react-device-detect";
+const defaultValues = {
+  name: "",
+  code: "",
+  level: "-1",
+  type: "-1",
+  power: "-1",
+  func: "-1",
+  gfrom: "",
+  gto: "",
+  underfrom: "",
+  underto: "",
+  isDel: false,
+};
 function ItemList() {
   const history = useHistory();
   const params = new URLSearchParams(history.location.search);
@@ -36,6 +50,8 @@ const [reason, setReason] = React.useState("");
 const [itemModalOpen, setItemModalOpen] = React.useState(false);
 const [itemModalInfo, setItemModalInfo] = React.useState(null);
 const [is_deleted, setIsDeleted] = React.useState(false);
+  const [filterValues, setFilterValues] = React.useState(defaultValues);
+
   const {
     data: items,
     isLoading: isItemsDefaultLoading,
@@ -62,7 +78,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         refetchOnMount: true,
       }
     );
-
+ const { data: facSegHelper, isLoading: isFacSegHelperLoading } = useQuery(
+   ["fac-seg-helper"],
+   async () => {
+     const res = await ItemService.getQrHelper();
+     return res.data;
+   }
+ );
   const { isLoading: isDeleteLoading, mutateAsync: deleteItem } = useMutation({
     mutationFn: async (id) => {
       const res = await ItemService.deleteItem(id);
@@ -91,6 +113,52 @@ const [is_deleted, setIsDeleted] = React.useState(false);
    setOpenModal(true);
    setReasonsLoding(false);
  };
+ const printFilterValues = () => {
+   let filter = "";
+   for (const key in filterValues) {
+     const value = filterValues[key];
+     if (value.length > 0 && value !== "-1") {
+       if (key === "power") {
+         // find power whith value=id
+         const power = facSegHelper.power.find((p) => p.id === parseInt(value));
+         filter += `Power source: ${power.name}, `;
+       } else if (key === "func") {
+         // find func whith value=id
+         console.log(value);
+         if (value === "true") {
+           filter += `Function: Working, `;
+         } else {
+           filter += `Function: Not working, `;
+         }
+       } else if (key === "type") {
+         // find type whith value=id
+         const type = facSegHelper.type.find((t) => t.id === parseInt(value));
+         filter += `Type: ${type.name}, `;
+       } else if (key === "level") {
+         // find level whith value=id
+         const level = facSegHelper.level.find((l) => l.id === parseInt(value));
+         filter += `Level: ${level.id} - ${level.name} , `;
+       } else if (key === "gfrom") {
+         filter += `General population from: ${value}, `;
+       } else if (key === "gto") {
+         filter += `General population to: ${value}, `;
+       } else if (key === "underfrom") {
+         filter += `Under 1 population from: ${value}, `;
+       } else if (key === "underto") {
+         filter += `Under 1 population to: ${value}, `;
+       } else if (key === "is_deleted") {
+         if (value) {
+           filter += `Deleted: Yes, `;
+         } else {
+           filter += `Deleted: No, `;
+         }
+       } else {
+         filter += `${key}=${value}, `;
+       }
+     }
+   }
+   return filter;
+ };
  const handledeletChange =()=>{
     setIsDeleted(!is_deleted)
  }
@@ -113,27 +181,319 @@ const [is_deleted, setIsDeleted] = React.useState(false);
         <Trans>Item list</Trans>
       </h3>
       <div className="mt-3">
-        <div>
-          <label className="mr-2 mb-1">
-            {" "}
-            <Trans>Deleted</Trans>{" "}
-          </label>
-          <input
-            type="checkbox"
-            checked={is_deleted}
-            onChange={handledeletChange}
-            className="mt-1 "
-          />
-
-          <button
-            className="btn btn-success text-dark w-25  mb-2   "
-            onClick={() => refetchItems()}
-            style={{ marginLeft: "5%" }}
-            type="submit"
-          >
-            <Trans>Filter</Trans>
-          </button>
+        <div className="card">
+          <div className="card-body py-3">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                refetchItems();
+              }}
+            >
+              <h4>
+                <Trans>Filter</Trans>
+              </h4>
+              <div className="row mt-5">
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Facility Name</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control  col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          name: value,
+                        }));
+                      }}
+                      value={filterValues.name}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Code</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          code: value,
+                        }));
+                      }}
+                      value={filterValues.code}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Levels</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          level: value,
+                        }));
+                      }}
+                      value={filterValues.level}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      {facSegHelper?.level.map((lev) => (
+                        <option key={lev.id} value={lev.id}>
+                          {`${lev.id} - ${lev.name}`}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Type</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          type: value,
+                        }));
+                      }}
+                      value={filterValues.type}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      {facSegHelper?.type.map((ty) => (
+                        <option key={ty.id} value={ty.id}>
+                          {ty.name}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Power source</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          power: value,
+                        }));
+                      }}
+                      value={filterValues.power}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      {facSegHelper?.power.map((pow) => (
+                        <option key={pow.id} value={pow.id}>
+                          {pow.name}
+                        </option>
+                      ))}
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+                <div className="col-sm-12 col-lg-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Functioning Status</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          func: value,
+                        }));
+                      }}
+                      value={filterValues.func}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      <option value={true}>Working</option>
+                      <option value={false}>Not working</option>
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-12">
+                  <Form.Group className="row">
+                    <label className="label col-sm-2">
+                      <Trans>General populations</Trans>:
+                    </label>
+                    <label className="label col-sm-1">
+                      <Trans>from</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-4"
+                      type="number"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          gfrom: value,
+                        }));
+                      }}
+                      value={filterValues.gfrom}
+                    />
+                    <label className="label col-sm-1">
+                      <Trans>to</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-4"
+                      type="number"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          gto: value,
+                        }));
+                      }}
+                      value={filterValues.gto}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-12">
+                  <Form.Group className="row">
+                    <label className="label col-sm-2">
+                      <Trans>Under-1 Populations</Trans>:
+                    </label>
+                    <label className="label col-sm-1">
+                      <Trans>from</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-4"
+                      type="number"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          underfrom: value,
+                        }));
+                      }}
+                      value={filterValues.underfrom}
+                    />
+                    <label className="label col-sm-1">
+                      <Trans>to</Trans>:
+                    </label>
+                    <Form.Control
+                      className="form-control col-sm-4"
+                      type="number"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          underto: value,
+                        }));
+                      }}
+                      value={filterValues.underto}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-1">
+                <div className="col-sm-6">
+                  <Form.Group className="row">
+                    <label className="label col-sm-4 d-flex justify-content-center mt-1  align-items-center">
+                      <Trans>Deleted</Trans>
+                    </label>
+                    <Form.Control
+                      className="form-select col-sm-8"
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setFilterValues((preValues) => ({
+                          ...preValues,
+                          is_deleted: value,
+                        }));
+                      }}
+                      value={filterValues.is_deleted}
+                      as="select"
+                    >
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <option i18n value="-1" selected>
+                            {t("Please select")}
+                          </option>
+                        )}
+                      </Translation>
+                      <option value={true}>Yes</option>
+                      <option value={false} selected>
+                        No
+                      </option>
+                    </Form.Control>
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-sm-2 ">
+                  <button type="submit" className="btn btn-primary fs-5">
+                    <Trans>Filter</Trans>
+                  </button>
+                </div>
+                <div className="col-sm-3">
+                  <button
+                    type="button"
+                    className="btn btn-primary fs-5 mt-1 "
+                    onClick={() => {
+                      setFilterValues(defaultValues);
+                      refetchItems();
+                    }}
+                  >
+                    <Trans>Clear Filter</Trans>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+      <div className="mt-3">
         <div className="card">
           <div className="card-body">
             {isBrowser ? (
@@ -348,7 +708,8 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           {itemClassesAndTypes
                             ?.find(
                               (itemC) =>
-                                itemC.item_class.id === itemModalInfo?.item_class
+                                itemC.item_class.id ===
+                                itemModalInfo?.item_class
                             )
                             ?.item_type.find(
                               (itemT) => itemT.id === itemModalInfo?.item_type
@@ -385,15 +746,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     <div className="row">
                       <div className="col-6">
                         <h4 className="text-center text-black">
-                          <Trans>Tool box</Trans>
+                          <Trans>Tool box</Trans>blank
                         </h4>
                       </div>
                       <div className="col-6">
                         <h4 className="text-center text-black">
                           <Link to={`/items/info/${itemModalInfo?.id}`}>
-                           
-                              <EditIcon />
-                           
+                            <EditIcon />
                           </Link>
                           <Tooltip title={<Trans>Delete item</Trans>}>
                             <button
