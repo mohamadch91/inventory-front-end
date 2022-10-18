@@ -9,6 +9,7 @@ import Help from "../components/Help";
 import { Translation, Trans } from "react-i18next";
 import dashboardService from "../services/dashboard.service";
 import UserService from "../services/user.service";
+import MessageService from "../services/message.service";
 import Modal from "react-bootstrap/Modal";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
@@ -148,6 +149,9 @@ class Navbar extends Component {
           console.log(err);
         }
       );
+      MessageService.getUnreadMessages().then((res) => {
+        this.setState({ messageCount: res.data });
+      });
     }
     let country = JSON.parse(localStorage.getItem("country"));
 
@@ -454,11 +458,13 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item d-none">
+            <li className="nav-item ">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-email-outline"></i>
-                  <span className="count-symbol bg-warning"></span>
+                  {this.state.messageCount !== 0 && (
+                    <span className="count-symbol bg-warning"></span>
+                  )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
                   <h6 className="p-3 bg-primary text-white py-4 mb-0">
@@ -473,8 +479,8 @@ class Navbar extends Component {
                       <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
                         <Link to="/message/list">
                           <span>
-                            <Trans>See</Trans> <Trans>all</Trans>{" "}
-                            <Trans>message</Trans>
+                            <Trans>You have</Trans> {this.state.messageCount}{" "}
+                            <Trans>unread messages</Trans>
                           </span>
                         </Link>
                       </h6>
