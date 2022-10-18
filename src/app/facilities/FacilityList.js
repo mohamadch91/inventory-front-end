@@ -467,15 +467,18 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                     >
                       <Translation>
                         {(t, { i18n }) => (
+                          <>
                           <option i18n value="-1" selected>
                             {t("Please select")}
                           </option>
+                            <option value={true}>{t("Yes")}</option>
+                            <option value={false} selected>
+                              {t("No")}
+                            </option>
+                            </>
                         )}
                       </Translation>
-                      <option value={true}>Yes</option>
-                      <option value={false} selected>
-                        No
-                      </option>
+                    
                     </Form.Control>
                   </Form.Group>
                 </div>
