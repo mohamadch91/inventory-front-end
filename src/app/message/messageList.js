@@ -191,7 +191,14 @@ function MessageList() {
                 </TableHead>
                 <TableBody>
                   {list &&
-                    list.map((item, index) => (
+                    list.map((item, index) => {
+                      let checked= item.read;
+                      if(!checked){
+                        checked=undefined;
+                      }
+
+                      return (
+                      
                       <>
                         <TableRow>
                           <TableCell>{index + 1}</TableCell>
@@ -209,6 +216,7 @@ function MessageList() {
                             <TableCell>
                               <input
                                 disabled={item.read}
+                                 checked={checked}
                                 type="checkbox"
                                 onChange={(e) => {
                                   // e.preventDefault();
@@ -227,7 +235,8 @@ function MessageList() {
                           </TableCell>
                         </TableRow>
                       </>
-                    ))}
+                    )
+                              })}
                 </TableBody>
               </SharedTable>
             </div>
