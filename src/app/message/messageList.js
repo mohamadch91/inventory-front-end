@@ -25,7 +25,7 @@ function MessageList() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selected, setSelected] = useState([]);
   const [sentOrReceived, setSentOrReceived] = useState("r"); // r means received and s means sent
-
+  const [readedMessage, setReadedMessage] = useState([]);
   function getList(type) {
     if (type === "r") {
       MessageService.getReceivedMessages()
@@ -61,12 +61,37 @@ function MessageList() {
     setEditFormData(formData);
     setIsEditModalOpen(true);
   }
+  function handleReadmessages(){
+    MessageService.readMessage(readedMessage)
+    .then((res) => {
+      toast.success(<Trans>Messages readed succesfully</Trans>
+      );
+      getList(sentOrReceived);
+    }
+    )
+    .catch((err) => {
+      toast.error(<Trans>Problem in reading messages</Trans>)
+    })
 
+
+  }
   function handleChangeEdit(e) {
     const { name, value } = e.target;
     setEditFormData({ ...editFormData, [name]: value });
   }
-
+  function handleChangeRead(i){
+    const x = readedMessage;
+    if (x.includes(i)){
+      const index = x.indexOf(i);
+      if (index > -1) {
+        x.splice(index, 1);
+      }
+    }
+    else{
+      x.push(i);
+    }
+    setReadedMessage(x);
+  }
   function handleSubmitEdit(e) {
     e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
@@ -154,6 +179,11 @@ function MessageList() {
                     <TableCell>
                       <Trans>Date</Trans>
                     </TableCell>
+                    {sentOrReceived === "r" && (
+                      <TableCell>
+                        <Trans>Read</Trans>
+                      </TableCell>
+                    )}
                     <TableCell>
                       <Trans>Edit</Trans>
                     </TableCell>
@@ -175,6 +205,18 @@ function MessageList() {
                           <TableCell>
                             {new Date(item.created_at).toLocaleDateString("en")}
                           </TableCell>
+                          {sentOrReceived === "r" && (
+                            <TableCell>
+                              <input
+                                disabled={item.read}
+                                type="checkbox"
+                                onChange={(e) => {
+                                  // e.preventDefault();
+                                  handleChangeRead(item.id);
+                                }}
+                              ></input>
+                            </TableCell>
+                          )}
                           <TableCell>
                             <button
                               className="edit-btn"
@@ -233,6 +275,9 @@ function MessageList() {
           <Trans>Send message</Trans>
         </button>
       </Link>
+      <button onClick={handleReadmessages} className="save-btn mt-4 ml-5">
+        <Trans>Read selected messages</Trans>
+      </button>
     </div>
   );
 }

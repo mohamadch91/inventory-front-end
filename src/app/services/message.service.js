@@ -35,6 +35,11 @@ class MessageService {
       headers: { Authorization: authHeader() },
     });
   }
+  readMessage(data){
+    return ApiManager.post(API_URL + "read-message", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
 }
 
 export default new MessageService();
