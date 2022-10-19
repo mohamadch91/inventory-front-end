@@ -106,20 +106,24 @@ function Item() {
 
           }
           else{
-            if (fieldsValue==={}){
-              console.log("salam")
+            console.log(fieldsValue);
+            if (Object.keys(fieldsValue).length === 0) {
+              window.location.reload();
               setSelectedItemClass(data[0]);
               setSelectedItemType(data[0]?.item_type?.[0]);
-              window.location.reload();
-            }
-            else{
-            const item_class = data.find(
-              (item) => item?.item_class?.id === fieldsValue.item_class
-            );
-            const item_type= item_class?.item_type?.find((item) => item.id === fieldsValue.item_type);
-            setSelectedItemClass(item_class);
+            } else {
+              const item_class = data.find(
+                (item) => item?.item_class?.id === fieldsValue.item_class
+              );
+              const item_type = item_class?.item_type?.find(
+                (item) => item.id === fieldsValue.item_type
+              );
+              console.log(fieldsValue);
+              console.log(item_class);
+              console.log(item_type);
+              setSelectedItemClass(item_class);
 
-            setSelectedItemType(item_type);
+              setSelectedItemType(item_type);
             }
           }
         },
@@ -231,6 +235,7 @@ function Item() {
     console.log(selectedItemType)
     if (selectedItemType){ 
       refetchItemFields();}
+   
   }, [selectedItemType]);
 
   const hasRequiredErrors = () => {
