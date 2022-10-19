@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (e, t) {
                     return s()
-                      .post("https://demoapi2.invgap.org/auth/login/", {
+                      .post("https://demoapi1.invgap.org/auth/login/", {
                         username: e,
                         password: t,
                       })
@@ -37,7 +37,7 @@
                             access: e.data.access,
                           };
                           return s()
-                            .get("https://demoapi2.invgap.org/user-data/", {
+                            .get("https://demoapi1.invgap.org/user-data/", {
                               headers: { Authorization: "Bearer " + t.access },
                             })
                             .then(function (e) {
@@ -636,7 +636,7 @@
       },
       80794: function (e, t) {
         "use strict";
-        t.Z = "https://demoapi2.invgap.org";
+        t.Z = "https://demoapi1.invgap.org";
       },
       54318: function (e, t, n) {
         "use strict";
@@ -750,7 +750,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://demoapi2.invgap.org/dashboard",
+          s = "https://demoapi1.invgap.org/dashboard",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -833,7 +833,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://demoapi2.invgap.org/help/",
+          s = "https://demoapi1.invgap.org/help/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -878,7 +878,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://demoapi2.invgap.org/item/",
+          s = "https://demoapi1.invgap.org/item/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1004,7 +1004,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://demoapi2.invgap.org/items/",
+          s = "https://demoapi1.invgap.org/items/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1137,7 +1137,7 @@
           i = n(43144),
           o = (n(74569), n(39877)),
           a = n(54318),
-          s = "https://demoapi2.invgap.org/message/",
+          s = "https://demoapi1.invgap.org/message/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -1212,8 +1212,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://demoapi2.invgap.org/settings/",
-          u = "https://demoapi2.invgap.org",
+          s = "https://demoapi1.invgap.org/settings/",
+          u = "https://demoapi1.invgap.org",
           l = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -5929,10 +5929,10 @@
             ns: ["translation"],
             defaultNS: "translation",
             supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-            localePath: "https://demoapi2.invgap.org/media/{{lng}}/{{ns}}.json",
+            localePath: "https://demoapi1.invgap.org/media/{{lng}}/{{ns}}.json",
             backend: {
               loadPath:
-                "https://demoapi2.invgap.org/languages/{{ns}}?name={{lng}}",
+                "https://demoapi1.invgap.org/languages/{{ns}}?name={{lng}}",
               addPath: null,
               crossDomain: !0,
               withCredentials: !0,
@@ -40523,13 +40523,13 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "https://demoapi2.invgap.org".concat(
+                        logo1: "https://demoapi1.invgap.org".concat(
                           this.state.logo1
                         ),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "https://demoapi2.invgap.org".concat(
+                        logo2: "https://demoapi1.invgap.org".concat(
                           this.state.logo2
                         ),
                       });

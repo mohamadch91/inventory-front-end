@@ -7,7 +7,7 @@
         r = l(43144),
         c = l(54318),
         s = l(39877),
-        t = "https://demoapi2.invgap.org/reports/",
+        t = "https://demoapi1.invgap.org/reports/",
         o = (function () {
           function e() {
             (0, a.Z)(this, e);
