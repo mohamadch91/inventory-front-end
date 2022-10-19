@@ -1031,7 +1031,7 @@
         t = a(43144),
         l = a(54318),
         c = a(39877),
-        o = "https://demoapi3.invgap.org/reports/",
+        o = "https://demoapi2.invgap.org/reports/",
         i = (function () {
           function e() {
             (0, r.Z)(this, e);
