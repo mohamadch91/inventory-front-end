@@ -99,6 +99,7 @@ function Item() {
       {
         refetchOnMount: true,
         onSuccess(data) {
+          console.log(data)
           if (id === "new") {
           setSelectedItemClass(data[0]);
           setSelectedItemType(data[0]?.item_type?.[0]);
@@ -106,7 +107,7 @@ function Item() {
           }
           else{
             if (fieldsValue==={}){
-              
+              console.log("salam")
               setSelectedItemClass(data[0]);
               setSelectedItemType(data[0]?.item_type?.[0]);
               window.location.reload();
@@ -136,10 +137,11 @@ function Item() {
       else{
         id_param=1
         if(fieldsValue!=={}){
+          console.log("hi")
           id_param=fieldsValue['item_type']
         }
         else{
-          window.location.reload()
+          window.location.reload();
         }
       }
       const res = await ItemService.getPQS(id_param);
@@ -183,11 +185,13 @@ function Item() {
       parent,
     ],
     async () => {
+      
       const res = await ItemService.getItemFields(
         selectedItemClass.item_class.id,
         selectedItemType.id,
         parent
       );
+      console.log(res)
       const result = {};
       if (res.data.fields) {
         for (const field of res.data.fields) {
@@ -224,7 +228,9 @@ function Item() {
   );
 
   useEffect(() => {
-    if (selectedItemType) refetchItemFields();
+    console.log(selectedItemType)
+    if (selectedItemType){ 
+      refetchItemFields();}
   }, [selectedItemType]);
 
   const hasRequiredErrors = () => {
@@ -463,7 +469,7 @@ function Item() {
     isItemsFieldsIdle ||
     isPqsLoading
   ) {
-    return <Spinner />;
+     return <Spinner />;
   }
 
   return (
