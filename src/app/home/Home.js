@@ -4,6 +4,10 @@ import {
   } from 'react-router-dom';
   import React, { Component }  from 'react';
   import './css/home.css';
+/**
+ * Home component 
+ * if you want to use remove
+ */
 function Home() {
  
   return (
