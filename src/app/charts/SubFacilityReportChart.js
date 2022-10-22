@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import { HorizontalBar } from "react-chartjs-2";
 import { Trans } from "react-i18next";
+/**
+ * component for the SubFacilityReportChart
+ * @returns {JSX.Element} The SubFacilityReportChart
+ * @param {props} rows get the rows from the props
+ * select some random colors for the chart
+ * set the data for the chart
+ * set the options for the chart
+ * 
+ */
 
+/**
+ * @constant {array} backgroundColor
+ * @constant {array} borderColor
+ * containt some random colors for the chart
+ * contain some random colors for the chart border
+ */
 const backgroundColors = [
   "rgba(255, 99, 132, 0.2)",
   "rgba(54, 162, 235, 0.2)",
@@ -18,8 +33,21 @@ const borderColors = [
   "rgba(153, 102, 255, 1)",
   "rgba(255, 159, 64, 1)",
 ];
+/**
+ * component for the SubFacilityReportChart
+ * @returns {JSX.Element} The SubFacilityReportChart
+ * @param {props} rows get the rows from the props
+ * select some random colors for the chart
+ * set the data for the chart
+ * set the options for the chart
+ * 
+ */
 
 export class SubFacilityReportChart extends Component {
+  /**
+   * @param  {array} rows
+   * get array of rows and return the result table with colors and data for the chart
+   */
   generateData = (rows) => {
     const result = {
       labels: [],
@@ -35,11 +63,16 @@ export class SubFacilityReportChart extends Component {
       ],
     };
     for (const row of rows) {
+      // get the random color from the backgroundColors array
+
       const randomIndex = Math.floor(Math.random() * 6);
+      
       result.labels.push(row.name);
       result.datasets[0].data.push(
+        // if the isGeneral is true then get the general population
         this.props.isGeneral ? row.generalpopulation : row.underage
       );
+      // set random colors for background and border
       result.datasets[0].backgroundColor.push(backgroundColors[randomIndex]);
       result.datasets[0].borderColor.push(borderColors[randomIndex]);
     }
@@ -83,6 +116,7 @@ export class SubFacilityReportChart extends Component {
                   <Trans>Sub-facility populations data</Trans>
                 </h4>
                 <h6 className="mt-1">
+          {/* check for general population selected or under one selected */}
                   {this.props.isGeneral
                     ? (<Trans>General populations</Trans>)
                     : (<Trans>Under-1 populations</Trans>)}
