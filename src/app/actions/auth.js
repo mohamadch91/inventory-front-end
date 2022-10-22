@@ -7,6 +7,7 @@ import {
   SET_MESSAGE,
 } from "./types";
 import AuthService from "../services/auth.service";
+import { VerticalAlignBottom } from "@mui/icons-material";
 /*
 import Authentication servisece from services folder
 */
@@ -60,13 +61,22 @@ import Authentication servisece from services folder
 //   );
 // };
 
+/**
+ * 
+ * @param  {user USERNAME} username
+ * @param  {user password} password
+ * @returns {dispatch} dispatch 
+ * if you login successfully, you will get a message
+ * if you login fail, you will get a message
+ * function for user login
+ */
 export const login = (username, password) => (dispatch) => {
   return AuthService.login(username, password).then(
     (data) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { user: data },
-      });
+      }); 
 
       return Promise.resolve();
     },
@@ -91,7 +101,11 @@ export const login = (username, password) => (dispatch) => {
     }
   );
 };
-
+/**
+ * function for login reducer
+ * @returns {dispatch} dispatch
+ * @param  {type of reducer} =>(dispatch)
+ */
 export const logout = () => (dispatch) => {
   AuthService.logout();
 

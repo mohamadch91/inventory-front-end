@@ -9,9 +9,12 @@ import i18n from "../../i18n";
  * use the Help component to display the help text
  */
 function AboutIGA() {
+  // GET THE LANGUAGE FROM THE i18n
+  
   const language= i18n.language;
   return (
     <div>
+      {/* help component  */}
       <Help selectedLang={language} selectedPage="admin_guide" />
     </div>
   );
