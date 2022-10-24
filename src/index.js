@@ -9,7 +9,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 import "./i18n";
 import { QueryClient, QueryClientProvider } from "react-query";
-
+/**
+ * define the query client
+ * @type {QueryClient}
+ * @property {Object} defaultOptions - the default options of the query client
+ * @property {Object} defaultOptions.queries - the default options of the queries
+ * 
+ */
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 0 } },
 });
