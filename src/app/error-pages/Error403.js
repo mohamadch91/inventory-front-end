@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Trans } from "react-i18next";
-
+/**
+ * @component Error403 component is used to display the 403 error page
+ * @returns {JSX.Element} Error403 component
+ * @example
+ * <Error403 />
+ * error 403 in this project is used to display the error page when the user is can not add facility
+ */
 export class Error403 extends Component {
   render() {
     return (
