@@ -4,7 +4,14 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
 import PrintItem from "./items/PrintItem";
-
+/**
+ * @component AppRuotes - Main component for routing
+ * @param {Object} props - Props
+ * import all  components here
+ * @returns {JSX} - JSX
+ * @example
+ * <AppRoutes />
+ */
 const Dashboard = lazy(() => import("./dashboard/Dashboard"));
 const WarningsTablePage = lazy(() =>
   import("./dashboard/warnings/tables/WarningsTablePage")
