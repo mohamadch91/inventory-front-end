@@ -2,8 +2,20 @@ import i18n from "i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
-import axios from "axios";
-
+/**
+ * @type {Object}
+ * @property {Object} resources - the resources of the i18n
+ * define i18n for support multi language
+ * @property {Object} resources.en - the english resources
+ * @property {Object} resources.fr - the french resources
+ * @property {Object} resources.ar - the arabic resources
+ * @property {Object} resources.es - the spanish resources
+ * @property {Object} resources.ru - the russian resources
+ * @property {Object} resources.ot - the other resources
+ * @property {Object} resources.uk - the ukrainian resources
+ * @property {Object} resources.ch - the chinese resources
+ * @property {Object} lng - the language of the i18n
+ */
 i18n
   // load translation using http -> see /public/locales
   // learn more: https://github.com/i18next/i18next-http-backend
@@ -19,23 +31,11 @@ i18n
     fallbackLng: "en",
     ns: ["translation"],
     defaultNS: "translation",
+    // define languages we support
     supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
-    localePath: "https://demoapi1.invgap.org/media/{{lng}}/{{ns}}.json",
     backend: {
       loadPath: "https://demoapi1.invgap.org/languages/{{ns}}?name={{lng}}",
       addPath: null,
-      // request: async (options, url, payload, callback) => {
-      //   try {
-      //     const translation = await axios.get(url);
-      //     console.log(translation);
-      //     callback({
-      //       status: 200,
-      //       data: JSON.stringify(translation.data),Ne2wncDXEDH72uf
-      //     });
-      //   } catch (e) {
-      //     callback(e);
-      //   }
-      // },
       crossDomain: true,
       withCredentials: true,
       requestOptions: {
