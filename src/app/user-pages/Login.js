@@ -43,9 +43,7 @@ class Login extends Component {
       open:false
     };
   }
-  alerthandle(message,type){
-    this.setState({content:message,type:type,snackopen:true})
-  }
+
 
   onChangeUsername(e) {
     console.log(e.target.value);
@@ -71,7 +69,6 @@ class Login extends Component {
    
     if(this.state.username==""){
       toast.error(<Trans>Please enter username</Trans>);
-      // this.alerthandle("Username is required","error")
       this.setState({
         loading: false,
       });
@@ -80,7 +77,6 @@ class Login extends Component {
     }
     if(this.state.password==""){
       toast.error(<Trans>Password is required</Trans>)
-      // this.alerthandle("Password is required","alert")
       this.setState({
         loading: false,
       });
@@ -91,14 +87,12 @@ class Login extends Component {
       dispatch(login(this.state.username, this.state.password))
         .then((res) => {
           toast.success(<Trans>Login Successfull</Trans>);
-          // this.alerthandle("Login Successful","success");
           
           history.push("/dashboard");
           window.location.reload();
         })
         .catch((err) => {
           toast.error(<Trans>Login Failed</Trans>);
-          // this.alerthandle("Login failed ","alert")
           this.setState({
             loading: false,
           });
@@ -119,10 +113,7 @@ class Login extends Component {
         showPassword: !this.state.values.showPassword,
       },
     });
-    // setValues({
-    //   ...values,
-    //   showPassword: !values.showPassword,
-    // });
+ 
   };
 
   handleMouseDownPassword(event) {
@@ -201,10 +192,7 @@ class Login extends Component {
                     </div>
 
                     <div className="form-check d-flex justify-content-center mb-4">
-                      {/* <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                  <label className="form-check-label" for="form2Example33">
-                    Subscribe to our newsletter
-                  </label> */}
+                 
                     </div>
 
                     <button
@@ -224,26 +212,7 @@ class Login extends Component {
             </div>
           </div>
         </div>
-        <Toast
-          style={{
-            position: "absolute",
-            top: "90vh",
-            right: "18vw",
-            backgroundColor:
-              this.state.type == "success" ? "hsl(218, 81%, 95%)" : "#F8D7DA",
-            color: "#000",
-          }}
-          onClose={(e) => {
-            this.handleClosesnack(e);
-          }}
-          show={this.state.snackopen}
-          delay={3000}
-          autohide
-          className="d-inline-block m-1"
-          bg={this.state.type}
-        >
-          <Toast.Body>{this.state.content}</Toast.Body>
-        </Toast>
+  
       </section>
     );
   }
