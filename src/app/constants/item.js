@@ -1,3 +1,12 @@
+/**
+ * PQS field names
+ * @type {Object}
+ * @property {string} name - the name of the field
+ * @property {string} label - the label of the field
+ * @property {string} type - the type of the field
+ * @property {string} state - the state of the field 
+ * state property is used in backend to determine key of json must be send to backend
+ */
 export const fromPQSFields = [
   {
     id: "PQSPISCode",

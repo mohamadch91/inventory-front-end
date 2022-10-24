@@ -1,3 +1,8 @@
+/**
+ * @constant responseMessages - Response messages for the application
+ * @type {Object}
+ * get status from request and then get message from this object
+ */
 export const responseMessages = {
   //series 2xx
   200: {
@@ -14,26 +19,6 @@ export const responseMessages = {
   },
   204: {
     fa: "No content",
-  },
-
-  //series 3xx
-  300: {
-    fa: "یکی از موارد را انتخاب کنید",
-  },
-  301: {
-    fa: "صفحه انتقال یافته است",
-  },
-  302: {
-    fa: "درخواست پیدا شد",
-  },
-  304: {
-    fa: "اصلاح نشده",
-  },
-  305: {
-    fa: "نیاز به اتصال پروکسی",
-  },
-  306: {
-    fa: "نیاز به تغییر پروکسی",
   },
 
   //series 4xx
@@ -57,21 +42,7 @@ export const responseMessages = {
   500: {
     fa: "Server error",
   },
-  501: {
-    fa: "خطا از سمت سرور",
-  },
-  503: {
-    fa: "خطا از سمت سرور",
-  },
-  504: {
-    fa: "خطا از سمت سرور",
-  },
-  505: {
-    fa: "خطا از سمت سرور",
-  },
-  511: {
-    fa: "خطا از سمت سرور",
-  },
+ 
 
   //default
   success: { fa: "Succesfull" },
