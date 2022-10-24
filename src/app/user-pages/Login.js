@@ -17,7 +17,16 @@ import { withRouter } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 
-
+/**
+ * @component Login component is used to login the user
+ * @param {object} props
+ * @param {boolean} props.isLoggedIn isLoggedIn is a boolean value which is used to check if the user is logged in or not
+ * @param {object} props.message message is an object which contains the message to be displayed
+ * @returns {JSX.Element} Login component
+ * @example
+ * <Login />
+ * 
+ */
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +44,6 @@ class Login extends Component {
       values: {
         showPassword: false,
       },
-      snackopen:false,
       loadfile:false,
       type:"success",
       progress:0,
@@ -44,21 +52,36 @@ class Login extends Component {
     };
   }
 
-
+  /**
+   * @param  {event} e is an event
+   * @function onChangeUsername is used to set the username in the state
+   * change user username come from the form
+   */
   onChangeUsername(e) {
-    console.log(e.target.value);
     this.setState({
       username: e.target.value,
       name: e.target.value,
     });
   }
-
+  /**
+   * @param  {event} e is an event
+   * @function onChangePassword is used to set the password in the state
+   * change user password come from the form
+   */
   onChangePassword(e) {
     this.setState({
       password: e.target.value,
     });
   }
   
+   /**
+    * @param  {event} e is an event
+    * @function handleLogin is used to login the user
+    * if the user is logged in successfully then redirect to the home page
+    * if the user is not logged in successfully then display the error message
+    * 
+    * 
+    */
    handleLogin(e) {
     e.preventDefault();
 
@@ -99,30 +122,27 @@ class Login extends Component {
         });
  
   }
-  handleClosesnack = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({snackopen:false})
-  };
-  handleClickShowPassword = () => {
-    this.setState({
-      values: {
-        ...this.state.values,
-        showPassword: !this.state.values.showPassword,
-      },
-    });
+  /**
+   * 
+   * if you want add show password button please use this function
+   * and uncomment the code in the render function
+   */
+  // handleClickShowPassword = () => {
+  //   this.setState({
+  //     values: {
+  //       ...this.state.values,
+  //       showPassword: !this.state.values.showPassword,
+  //     },
+  //   });
  
-  };
+  // };
 
-  handleMouseDownPassword(event) {
-    event.preventDefault();
-  }
+  // handleMouseDownPassword(event) {
+  //   event.preventDefault();
+  // }
 
   render() {
     const { isLoggedIn, message } = this.props;
-    console.log(isLoggedIn);
     if (isLoggedIn) {
       return <Redirect to="/dashboard" />;
     }
