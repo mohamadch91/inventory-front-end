@@ -1,3 +1,7 @@
+/*
+change scrool bar for all the app
+*/
+
 ::-webkit-scrollbar {
   width: 15px;
 }
