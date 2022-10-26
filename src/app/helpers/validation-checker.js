@@ -27,7 +27,10 @@ export const hasValidationError = (value, validation) => {
 
   return false;
 };
-
+/**
+ * @param  {String} value
+ * check time in hh:mm format or not
+ */
 export const timeValidationError = (value) => {
   const isValid = /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(
     value
