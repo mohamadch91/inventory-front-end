@@ -24,17 +24,7 @@ export const hasValidationError = (value, validation) => {
   ) {
     return `value must has ${validation.floating} decimals`;
   }
-  // if (
-  //   validation.digits !== -1 &&
-  //   _value
-  //     .toString()
-  //     .replaceAll(",", "")
-  //     .replaceAll(".", "")
-  //     .replaceAll(":", "").length >
-  //     validation.digits + (validation.floating > 0 ? validation.floating : 0)
-  // ) {
-  //   return `value must be ${validation.digits} digits`;
-  // }
+
   return false;
 };
 
