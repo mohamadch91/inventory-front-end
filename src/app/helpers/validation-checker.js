@@ -1,5 +1,10 @@
 import { separator } from "../helpers/separator";
 import { seperator } from "../helpers/seperator";
+/**
+ * @param  {*} value value of field
+ * @param  {JSON} validation validation object get from api
+ * check field is valid or not
+ */
 export const hasValidationError = (value, validation) => {
   if (typeof value !== "string" && typeof value !== "number") return false;
 
