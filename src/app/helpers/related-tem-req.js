@@ -1,7 +1,12 @@
 export const relatedFields = {
   IsItFunctioning: ["ReasonsForNotFunctioning", "NotInUseSince"],
 };
-
+/**
+ * 
+ * @param {*} currentFieldStateName 
+ * @param {*} fieldsValue 
+ * @returns Boolean if related checked return true
+ */
 export const isRelatedFieldOkReq = (currentFieldStateName, fieldsValue) => {
   for (const key in relatedFields) {
     const fields = relatedFields[key];
