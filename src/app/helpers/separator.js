@@ -6,7 +6,11 @@ export const separator = (x) => {
   x = parseInt(x);
   return thousandSeparator(x);
 };
-
+/**
+ * @param  {Integer} n
+ * @param  {BOOL} sep
+ * check need seperator or not
+ */
 function thousandSeparator(n, sep) {
   function reverse(text) {
 
