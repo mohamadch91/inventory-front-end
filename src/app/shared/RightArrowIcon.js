@@ -1,3 +1,7 @@
+/**
+ * retun an svg
+ * @component right arrow
+ */
 function RightArrowIcon() {
   return (
     <>
