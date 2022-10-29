@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
-import { returnDate } from "../items/ItemToPrint";
 
 const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
