@@ -112,6 +112,10 @@ const GetCoordinates = (props) => {
 
   return null;
 };
+/**
+ * 
+ * @returns {JSX} return facility component
+ */
 function Facility() {
   const [activeStep, setActiveStep] = useState(0);
   const [fieldsValue, setFieldValue] = useState({});
