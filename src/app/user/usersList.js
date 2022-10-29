@@ -13,10 +13,20 @@ import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import { Trans } from "react-i18next";
-
+/**
+ * @component Users List components load the users list and 
+ * can add or modify users
+ * @returns JSX elements
+ */
 function UsersList() {
   const [list, setList] = useState([]);
+  /**
+   * @constant {JSON} editFormData json for edited user data
+   */
   const [editFormData, setEditFormData] = useState({});
+  /**
+   * @constant {JSON} addRowFormData json for add user datas
+   */
   const [addRowFormData, setAddRowFormData] = useState({
     facadmin: false,
     itemadmin: false,
@@ -32,7 +42,9 @@ function UsersList() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-
+  /**
+   * @function getFacilities fetch facilities from server
+   */
   function getFacilities() {
     HRService.getFacilities()
       .then((res) => {
@@ -43,11 +55,15 @@ function UsersList() {
         getList(data[0].id);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
         setIsLoading(false);
       });
   }
-
+  /**
+   * @param  {Int} id facility id
+   * fetch facility users by facility id
+   * 
+   */
   function getList(id) {
     UserListService.getUsersByFacilityId(id)
       .then((res) => {
@@ -55,7 +71,7 @@ function UsersList() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
         setIsLoading(false);
       });
   }
@@ -72,13 +88,19 @@ function UsersList() {
       });
     }
   }, [facilities]);
-
+  /**
+   * @param  {int} i user id 
+   * set edited user id 
+   * 
+   */
   function handleEdit(i) {
     const formData = list.find((item) => item.pk === i.pk);
     setEditFormData(formData);
     setIsEditModalOpen(true);
   }
-
+  /**
+   * @param  {event} e change event 
+   */
   function handleChangeEdit(e) {
     const { name, value } = e.target;
     setEditFormData({ ...editFormData, [name]: value });
@@ -88,15 +110,17 @@ function UsersList() {
     const { name, value } = e.target;
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
-
+  /**
+   * @param  {event} e
+   * send data to api
+   */
   function handleSubmitEdit(e) {
     e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-            toast.error(<Trans>Please fill all the fields</Trans>);
-
+      toast.error(<Trans>Please fill all the fields</Trans>);
     } else {
       setIsLoading(true);
       let formToPut = (({
@@ -135,30 +159,36 @@ function UsersList() {
           setEditFormData({});
           setIsEditModalOpen(false);
           setActiveStep(0);
-          toast.success("user edit succesfuly");
+          toast.success(<Trans>user edit succesfuly</Trans>);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+          toast.error(<Trans>There is a problem sending data</Trans>);
           setIsLoading(false);
         });
     }
   }
-
+  /**
+   * @param  {event} e
+   * sumbit new user to api
+   */
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
       console.log(key);
+      /**
+       * check for empty or not 
+       * empty is ok
+       */
       if (key !== "idnumber" || key !== "phone" || key !== "position") {
         console.log(addRowFormData[key]);
         return addRowFormData[key] !== "";
       }
     });
     if (!isValid) {
-            toast.error(<Trans>Please fill all the fields</Trans>);
-
+      toast.error(<Trans>Please fill all the fields</Trans>);
     } else {
       setIsLoading(true);
-      const owner=JSON.parse(localStorage.getItem("user")).username
+      const owner = JSON.parse(localStorage.getItem("user")).username;
       let formToPost = (({
         password,
         is_active,
@@ -185,10 +215,9 @@ function UsersList() {
         reportadmin,
         useradmin,
         name,
-        
       }))(addRowFormData);
       console.log(formToPost);
-      formToPost.owner=owner
+      formToPost.owner = owner;
       UserListService.addUser(formToPost)
         .then((res) => {
           toast.success("user added successfully");
@@ -208,23 +237,27 @@ function UsersList() {
           setActiveStep(0);
         })
         .catch((err) => {
-          if(err.response.data.username){
+          if (err.response.data.username) {
             toast.error(err.response.data.username[0]);
             setIsLoading(false);
-
-          }
-          else{
-          toast.error("There is a problem sending data");
-          setIsLoading(false);
+          } else {
+            toast.error("There is a problem sending data");
+            setIsLoading(false);
           }
         });
     }
   }
-
+  /**
+   * close or open modal
+   * !! change modal state 
+   */
   function toggleModal() {
     setIsAddModalOpen((prevState) => !prevState);
   }
-
+  /**
+   * @param  {int} id facility id
+   * find facility by its id in list 
+   */
   function findFacilityById(id) {
     return facilities.find((item) => item.id === id);
   }
