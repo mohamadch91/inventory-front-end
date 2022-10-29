@@ -31,7 +31,6 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
-
 import "leaflet/dist/leaflet.css";
 import toast from "react-hot-toast";
 const parentFacilityField = {
@@ -49,6 +48,10 @@ L.Icon.Default.mergeOptions({
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
+/**
+ * @compoenent location marker compnent
+ * @return {JSX} marker tag
+ */
 function LocationMarker() {
   const [position, setPosition] = useState(null);
   const map = useMapEvents({
