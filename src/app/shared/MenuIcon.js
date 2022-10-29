@@ -1,3 +1,7 @@
+/**
+ * retun an svg
+ * @component Menun Icon
+ */
 function MenuIcon() {
   return (
     <>
