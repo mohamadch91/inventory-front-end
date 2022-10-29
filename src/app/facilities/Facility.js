@@ -72,6 +72,11 @@ function LocationMarker() {
     </Marker>
   );
 }
+/**
+ * 
+ * @param {*} props 
+ * @returns {JSX} get user cordinates from gps
+ */
 const GetCoordinates = (props) => {
   const map = useMap();
   const handleClick = (e) => {
@@ -97,15 +102,7 @@ const GetCoordinates = (props) => {
       console.log("salam");
     });
     map.on("click", (e) => {
-      // window.navigator.geolocation.getCurrentPosition((pos)=> {
-      //   const { latitude, longitude } = pos.coords;
-      //   const data={
-      //     latlang:{
-      //     lat:latitude,
-      //     lng:longitude
-      //   }}
-      //   handleClick(data)
-      // }, console.log);
+ 
       info.textContent = e.latlng;
       handleClick(e);
     });
