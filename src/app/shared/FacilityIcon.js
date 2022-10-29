@@ -1,3 +1,7 @@
+/**
+ * retun an svg
+ * @component FacilityIcon
+ */
 function FacilityIcon() {
   return (
     <>
