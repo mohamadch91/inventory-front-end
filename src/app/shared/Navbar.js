@@ -17,11 +17,13 @@ import "../settings/itemType.scss";
 import toast from "react-hot-toast";
 import "../styles/navbar.scss";
 import {
-  BrowserView,
-  MobileView,
+
   isBrowser,
-  isMobile,
 } from "react-device-detect";
+/**
+ * @component navbar component
+ * @return {JSX} return nav bar component
+ */
 class Navbar extends Component {
   constructor(props) {
     super(props);
@@ -42,24 +44,54 @@ class Navbar extends Component {
       },
     };
   }
+  /**
+   * open profile modal
+   * @function
+   *
+   */
   ProfmodalOpen = () => {
     this.setState({ Profmodal: true });
   };
+  /**
+   * close profile modal
+   * @function
+   *
+   */
   ProfmodalClose = () => {
     this.setState({ Profmodal: false });
   };
+  /**
+   * open password modal
+   * @function
+   *
+   */
   passModalOpen = () => {
     this.setState({ passModal: true });
   };
+  /**
+   * close password modal
+   * @function
+   *
+   */
   passModalClose = () => {
     this.setState({ passModal: false });
   };
+  /**
+   * @param  {event} e
+   * handle password change input event
+   * just change the state
+   */
   handleChangePass = (e) => {
     const { name, value } = e.target;
     const new_data = this.state.changePassForm;
     new_data[name] = value;
     this.setState({ changePassForm: new_data });
   };
+  /**
+   * @param  {event} e click event
+   * change password
+   * send dataa to api
+   */
   sumbitChangepass = (e) => {
     e.preventDefault();
     for (const key in this.state.changePassForm) {
@@ -67,6 +99,9 @@ class Navbar extends Component {
         toast.error(<Trans>There is a problem loading data</Trans>);
       }
     }
+    /**
+     * check regex of length and password strength
+     */
     const poorRegExp = /[a-z]/;
     const weakRegExp = /(?=.*?[0-9])/;
     const newpass = this.state.changePassForm["password"];
