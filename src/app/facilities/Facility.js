@@ -31,8 +31,7 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import L from "leaflet";
-// import tileLayer from '../util/tileLayer';
-// import "leaflet/dist/leaflet.css";
+
 import "leaflet/dist/leaflet.css";
 import toast from "react-hot-toast";
 const parentFacilityField = {
