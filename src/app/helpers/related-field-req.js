@@ -18,7 +18,11 @@ export const relatedFields = {
   ],
   other_service: ["other_services"],
 };
-
+/**
+ * @param  {String} currentFieldStateName name of field in json key send to api
+ * @param  {} fieldsValue field value
+ * this component just check if related field ok check for required
+ */
 export const isRelatedFieldOkReq = (currentFieldStateName, fieldsValue) => {
   for (const key in relatedFields) {
     const fields = relatedFields[key];
