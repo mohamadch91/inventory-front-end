@@ -14,7 +14,11 @@ export const relatedFields = {
   ],
   other_service: ["other_services"],
 };
-
+/**
+ * @param  {String} currentFieldStateName
+ * @param  {JSON} fieldsValue
+ * function to check if related field checkd show field
+ */
 export const isRelatedFieldOk = (currentFieldStateName, fieldsValue) => {
   for (const key in relatedFields) {
     const fields = relatedFields[key];
