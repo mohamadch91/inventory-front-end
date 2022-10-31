@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/user-pages/Login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/user-pages/Login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./css/login.css";
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import { connect } from "react-redux";
+import { login } from "../actions/auth";
+import { Link } from "react-router-dom";
+import { Trans } from "react-i18next";
+
+import EventBus from "../common/EventBus";
+import PropTypes from "prop-types";
+
+import { Toast } from "react-bootstrap";
+// import { withTranslation } from "react-i18next";
+import { withRouter } from "react-router-dom";
+import toast from "react-hot-toast";
+
+/**
+ *   Login component is used to login the user
+ * @param {object} props
+ * @param {boolean} props.isLoggedIn isLoggedIn is a boolean value which is used to check if the user is logged in or not
+ * @param {object} props.message message is an object which contains the message to be displayed
+ * @returns {JSX.Element} Login component
+ * @example
+ * &lt;Login />
+ *
+ */
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
+    this.alerthandle = this.alerthandle.bind(this);
+    this.state = {
+      username: "",
+      password: "",
+      content: "",
+      loading: false,
+      name: "",
+      values: {
+        showPassword: false,
+      },
+      loadfile: false,
+      type: "success",
+      progress: 0,
+      source: null,
+      open: false,
+    };
+  }
+
+  /**
+   * @param  {event} e is an event
+   * @function onChangeUsername is used to set the username in the state
+   * change user username come from the form
+   */
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value,
+      name: e.target.value,
+    });
+  }
+  /**
+   * @param  {event} e is an event
+   * @function onChangePassword is used to set the password in the state
+   * change user password come from the form
+   */
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value,
+    });
+  }
+
+  /**
+   * @param  {event} e is an event
+   * @function handleLogin is used to login the user
+   * if the user is logged in successfully then redirect to the home page
+   * if the user is not logged in successfully then display the error message
+   *
+   *
+   */
+  handleLogin(e) {
+    e.preventDefault();
+
+    this.setState({
+      loading: true,
+    });
+
+    if (this.state.username == "") {
+      toast.error(&lt;Trans>Please enter username&lt;/Trans>);
+      this.setState({
+        loading: false,
+      });
+      return;
+    }
+    if (this.state.password == "") {
+      toast.error(&lt;Trans>Password is required&lt;/Trans>);
+      this.setState({
+        loading: false,
+      });
+      return;
+    }
+    const { dispatch, history } = this.props;
+
+    dispatch(login(this.state.username, this.state.password))
+      .then((res) => {
+        toast.success(&lt;Trans>Login Successfull&lt;/Trans>);
+
+        history.push("/dashboard");
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast.error(&lt;Trans>Login Failed&lt;/Trans>);
+        this.setState({
+          loading: false,
+        });
+      });
+  }
+  /**
+   *
+   * if you want add show password button please use this function
+   * and uncomment the code in the render function
+   */
+  // handleClickShowPassword = () => {
+  //   this.setState({
+  //     values: {
+  //       ...this.state.values,
+  //       showPassword: !this.state.values.showPassword,
+  //     },
+  //   });
+
+  // };
+
+  // handleMouseDownPassword(event) {
+  //   event.preventDefault();
+  // }
+
+  render() {
+    const { isLoggedIn, message } = this.props;
+    if (isLoggedIn) {
+      return &lt;Redirect to="/dashboard" />;
+    }
+
+    return (
+      &lt;section className="background-radial-gradient overflow-hidden w-100">
+        &lt;div className="container mobile-padding px-4 py-5 px-md-5 text-center text-lg-start my-5">
+          &lt;div className="row mobile gx-lg-5 align-items-center mb-5 new_row ">
+            &lt;div
+              className="col-lg-6 mb-5 zero_margin mb-lg-0"
+              style={{ Zindex: "10", marginRight: "10%" }}
+            >
+              &lt;h1
+                className="my-5 new-margin  display-5 fw-bold "
+                style={{ color: "hsl(218, 81%, 95%)", fontSize: "30px" }}
+              >
+                &lt;Trans>Inventory and Gap Analysis System&lt;/Trans> &lt;br />
+                &lt;span style={{ color: "hsl(218, 81%, 75%)" }}>&lt;/span>
+              &lt;/h1>
+              &lt;img className="who" src="./who-emblem.png" />
+            &lt;/div>
+
+            &lt;div className="offset-1 offset-sm-0 col-lg-4 zero_margin mb-5 mb-lg-0 position-relative mt-5">
+              &lt;div
+                id="radius-shape-1"
+                className="position-absolute rounded-circle shadow-5-strong"
+              >&lt;/div>
+              &lt;div
+                id="radius-shape-2"
+                className="position-absolute shadow-5-strong"
+              >&lt;/div>
+
+              &lt;div className="card bg-glass new-margin  mb-5 mt-5">
+                &lt;div className="card-body px-5 py-5 px-md-5 col-md-12">
+                  &lt;Form
+                    onSubmit={this.handleLogin}
+                    ref={(c) => {
+                      this.form = c;
+                    }}
+                  >
+                    &lt;div className="form-outline mb-4 mt-2">
+                      &lt;label className="form-label" htmlFor="form3Example3">
+                        &lt;Trans>Username&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        onChange={(e) => {
+                          this.onChangeUsername(e);
+                        }}
+                        type="text"
+                        id="form3Example3"
+                        className="form-control"
+                      />
+                    &lt;/div>
+
+                    &lt;div className="form-outline mb-4">
+                      &lt;label className="form-label" htmlFor="form3Example4">
+                        &lt;Trans>Password&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        onChange={(e) => {
+                          this.onChangePassword(e);
+                        }}
+                        type="password"
+                        id="form3Example4"
+                        className="form-control"
+                      />
+                    &lt;/div>
+
+                    &lt;div className="form-check d-flex justify-content-center mb-4">&lt;/div>
+
+                    &lt;button
+                      type="submit"
+                      className="btn sign btn-primary btn-block mb-2"
+                    >
+                      &lt;h3 className="m-auto">
+                        &lt;Trans>SIGN IN&lt;/Trans>{" "}
+                      &lt;/h3>
+                      {this.state.loading &amp;&amp; (
+                        &lt;span className="mr-2 pr-1 pl-2 spinner-border spinner-border-sm">&lt;/span>
+                      )}
+                    &lt;/button>
+                  &lt;/Form>
+                &lt;/div>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>
+      &lt;/section>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  const { isLoggedIn } = state.auth;
+  const { message } = state.message;
+  return {
+    isLoggedIn,
+    message,
+  };
+}
+
+export default connect(mapStateToProps)(Login);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="AuthService.html">AuthService</a></li><li><a href="AuthVerify.html">AuthVerify</a></li><li><a href="Error403.html">Error403</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Login.html">Login</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="SubFacilityReportChart.html">SubFacilityReportChart</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutIGA">AboutIGA</a></li><li><a href="global.html#AddFacilityIcon">AddFacilityIcon</a></li><li><a href="global.html#AddItemIcon">AddItemIcon</a></li><li><a href="global.html#addRowFormData">addRowFormData</a></li><li><a href="global.html#borderColor">borderColor</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#clearMessage">clearMessage</a></li><li><a href="global.html#CloseIcon">CloseIcon</a></li><li><a href="global.html#componentDidMountisusedtocheckifthecurrentuserisloggedinornot">componentDidMount is used to check if the current user is logged in or not</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DynamicInput">DynamicInput</a></li><li><a href="global.html#editFormData">editFormData</a></li><li><a href="global.html#EditIcon">EditIcon</a></li><li><a href="global.html#EmptyDataBaseMessage">EmptyDataBaseMessage</a></li><li><a href="global.html#eventBus">eventBus</a></li><li><a href="global.html#Facility">Facility</a></li><li><a href="global.html#FacilityIcon">FacilityIcon</a></li><li><a href="global.html#fromPQSFields">fromPQSFields</a></li><li><a href="global.html#fullPageLayoutRoutes">fullPageLayoutRoutes</a></li><li><a href="global.html#GetCoordinates">GetCoordinates</a></li><li><a href="global.html#getFacilitiesfetchfacilitiesfromserver">getFacilities fetch facilities from server</a></li><li><a href="global.html#handleLoginisusedtologintheuseriftheuserisloggedinsuccessfullythenredirecttothehomepageiftheuserisnotloggedinsuccessfullythendisplaytheerrormessage">handleLogin is used to login the user
+if the user is logged in successfully then redirect to the home page
+if the user is not logged in successfully then display the error message</a></li><li><a href="global.html#Help">Help</a></li><li><a href="global.html#id">id</a></li><li><a href="global.html#InformationIcon">InformationIcon</a></li><li><a href="global.html#isFullPageLayout">isFullPageLayout</a></li><li><a href="global.html#languages">languages</a></li><li><a href="global.html#LeftArrowIcon">LeftArrowIcon</a></li><li><a href="global.html#LocationMarker">LocationMarker</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#MenuIcon">MenuIcon</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#numericKeys">numericKeys</a></li><li><a href="global.html#onChangePasswordisusedtosetthepasswordinthestatechangeuserpasswordcomefromtheform">onChangePassword is used to set the password in the state
+change user password come from the form</a></li><li><a href="global.html#onChangeUsernameisusedtosettheusernameinthestatechangeuserusernamecomefromtheform">onChangeUsername is used to set the username in the state
+change user username come from the form</a></li><li><a href="global.html#onRouteChangedisusedtocheckifthecurrentrouteisafullpagelayoutornotdefinethelogouteventbusforreadeventbusdocumentpleaseseecommon/EventBus.js">onRouteChanged is used to check if the current route is a full page layout or not
+define the logout event bus
+for read event bus document please see common/EventBus.js</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#parseJwt">parseJwt</a></li><li><a href="global.html#queryClient">queryClient</a></li><li><a href="global.html#renderisusedtorenderthecomponent">render is used to render the component</a></li><li><a href="global.html#responseMessages">responseMessages</a></li><li><a href="global.html#RightArrowIcon">RightArrowIcon</a></li><li><a href="global.html#setMessage">setMessage</a></li><li><a href="global.html#StepOperations">StepOperations</a></li><li><a href="global.html#TrashIcon">TrashIcon</a></li><li><a href="global.html#useHttp">useHttp</a></li><li><a href="global.html#USER_PROFILE">USER_PROFILE</a></li><li><a href="global.html#UsersList">UsersList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 31 2022 09:18:31 GMT+0330 (Iran Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

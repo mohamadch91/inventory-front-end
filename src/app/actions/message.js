@@ -1,6 +1,6 @@
 import { SET_MESSAGE, CLEAR_MESSAGE } from "./types";
 /**
- * @param  {message of dispatches funcyions} message
+ * @param  {string} message message of dispatches functions
  * @param  {SET_MESSAGE} type imported from types.js
  * @param  {message} payload message set the message for paiload of functions
  * function for set messages

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 // import { span } from 'react-i18next';
 import { Trans } from "react-i18next";
 
 /**
- * @component footer 
- * footer component 
- * @return {JSX} 
+ *   footer
+ * footer component
+ * @return {JSX}
  */
 class Footer extends Component {
-  render () {
+  render() {
     return (
       <footer className="footer">
         <div className="container-fluid">

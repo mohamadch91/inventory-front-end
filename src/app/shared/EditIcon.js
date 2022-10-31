@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component EditIcon
+ *   EditIcon
  */
 function EditIcon() {
   return (

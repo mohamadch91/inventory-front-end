@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component FacilityIcon
+ *   FacilityIcon
  */
 function FacilityIcon() {
   return (

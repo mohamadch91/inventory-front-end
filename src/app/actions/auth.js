@@ -12,9 +12,9 @@ import { VerticalAlignBottom } from "@mui/icons-material";
 import Authentication servisece from services folder
 */
 /**
- * @param  {get username for register} username
- * @param  {get email for register} email
- * @param  {get password for register} password
+ * @param  {string} username get username for register
+ * @param  {string} email get email for register
+ * @param  {string} password get password for register
  * @returns {dispatch} dispatch
  * if you register successfully, you will get a message
  * if you register fail, you will get a message
@@ -63,8 +63,8 @@ import Authentication servisece from services folder
 
 /**
  * 
- * @param  {user USERNAME} username
- * @param  {user password} password
+ * @param  {string} username user USERNAME
+ * @param  {string} password user password
  * @returns {dispatch} dispatch 
  * if you login successfully, you will get a message
  * if you login fail, you will get a message
@@ -104,7 +104,7 @@ export const login = (username, password) => (dispatch) => {
 /**
  * function for login reducer
  * @returns {dispatch} dispatch
- * @param  {type of reducer} =>(dispatch)
+ * @param  {type_of_reducer} =>(dispatch)
  */
 export const logout = () => (dispatch) => {
   AuthService.logout();

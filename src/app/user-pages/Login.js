@@ -1,8 +1,7 @@
-
-import './css/login.css'
+import "./css/login.css";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { Form } from 'react-bootstrap';
+import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
 import { login } from "../actions/auth";
 import { Link } from "react-router-dom";
@@ -11,21 +10,20 @@ import { Trans } from "react-i18next";
 import EventBus from "../common/EventBus";
 import PropTypes from "prop-types";
 
-import {Toast} from 'react-bootstrap';
+import { Toast } from "react-bootstrap";
 // import { withTranslation } from "react-i18next";
-import { withRouter } from 'react-router-dom';
-import toast from 'react-hot-toast';
-
+import { withRouter } from "react-router-dom";
+import toast from "react-hot-toast";
 
 /**
- * @component Login component is used to login the user
+ *   Login component is used to login the user
  * @param {object} props
  * @param {boolean} props.isLoggedIn isLoggedIn is a boolean value which is used to check if the user is logged in or not
  * @param {object} props.message message is an object which contains the message to be displayed
  * @returns {JSX.Element} Login component
  * @example
  * <Login />
- * 
+ *
  */
 class Login extends Component {
   constructor(props) {
@@ -34,21 +32,21 @@ class Login extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
-   this.alerthandle=this.alerthandle.bind(this);
+    this.alerthandle = this.alerthandle.bind(this);
     this.state = {
       username: "",
       password: "",
-      content:"",
+      content: "",
       loading: false,
       name: "",
       values: {
         showPassword: false,
       },
-      loadfile:false,
-      type:"success",
-      progress:0,
-      source:null,
-      open:false
+      loadfile: false,
+      type: "success",
+      progress: 0,
+      source: null,
+      open: false,
     };
   }
 
@@ -73,33 +71,31 @@ class Login extends Component {
       password: e.target.value,
     });
   }
-  
-   /**
-    * @param  {event} e is an event
-    * @function handleLogin is used to login the user
-    * if the user is logged in successfully then redirect to the home page
-    * if the user is not logged in successfully then display the error message
-    * 
-    * 
-    */
-   handleLogin(e) {
+
+  /**
+   * @param  {event} e is an event
+   * @function handleLogin is used to login the user
+   * if the user is logged in successfully then redirect to the home page
+   * if the user is not logged in successfully then display the error message
+   *
+   *
+   */
+  handleLogin(e) {
     e.preventDefault();
 
     this.setState({
       loading: true,
     });
 
-   
-    if(this.state.username==""){
+    if (this.state.username == "") {
       toast.error(<Trans>Please enter username</Trans>);
       this.setState({
         loading: false,
       });
       return;
-
     }
-    if(this.state.password==""){
-      toast.error(<Trans>Password is required</Trans>)
+    if (this.state.password == "") {
+      toast.error(<Trans>Password is required</Trans>);
       this.setState({
         loading: false,
       });
@@ -107,23 +103,22 @@ class Login extends Component {
     }
     const { dispatch, history } = this.props;
 
-      dispatch(login(this.state.username, this.state.password))
-        .then((res) => {
-          toast.success(<Trans>Login Successfull</Trans>);
-          
-          history.push("/dashboard");
-          window.location.reload();
-        })
-        .catch((err) => {
-          toast.error(<Trans>Login Failed</Trans>);
-          this.setState({
-            loading: false,
-          });
+    dispatch(login(this.state.username, this.state.password))
+      .then((res) => {
+        toast.success(<Trans>Login Successfull</Trans>);
+
+        history.push("/dashboard");
+        window.location.reload();
+      })
+      .catch((err) => {
+        toast.error(<Trans>Login Failed</Trans>);
+        this.setState({
+          loading: false,
         });
- 
+      });
   }
   /**
-   * 
+   *
    * if you want add show password button please use this function
    * and uncomment the code in the render function
    */
@@ -134,7 +129,7 @@ class Login extends Component {
   //       showPassword: !this.state.values.showPassword,
   //     },
   //   });
- 
+
   // };
 
   // handleMouseDownPassword(event) {
@@ -211,9 +206,7 @@ class Login extends Component {
                       />
                     </div>
 
-                    <div className="form-check d-flex justify-content-center mb-4">
-                 
-                    </div>
+                    <div className="form-check d-flex justify-content-center mb-4"></div>
 
                     <button
                       type="submit"
@@ -232,7 +225,6 @@ class Login extends Component {
             </div>
           </div>
         </div>
-  
       </section>
     );
   }

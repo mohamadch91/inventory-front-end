@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component Trash icon
+ *   Trash icon
  */
 function TrashIcon() {
   return (

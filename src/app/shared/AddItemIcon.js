@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component AddItemIcon
+ *   AddItemIcon
  */
 function AddItemIcon() {
   return (

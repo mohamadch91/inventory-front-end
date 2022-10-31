@@ -14,7 +14,7 @@ import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import { Trans } from "react-i18next";
 /**
- * @component Users List components load the users list and 
+ *   Users List components load the users list and
  * can add or modify users
  * @returns JSX elements
  */
@@ -62,7 +62,7 @@ function UsersList() {
   /**
    * @param  {Int} id facility id
    * fetch facility users by facility id
-   * 
+   *
    */
   function getList(id) {
     UserListService.getUsersByFacilityId(id)
@@ -89,9 +89,9 @@ function UsersList() {
     }
   }, [facilities]);
   /**
-   * @param  {int} i user id 
-   * set edited user id 
-   * 
+   * @param  {int} i user id
+   * set edited user id
+   *
    */
   function handleEdit(i) {
     const formData = list.find((item) => item.pk === i.pk);
@@ -99,7 +99,7 @@ function UsersList() {
     setIsEditModalOpen(true);
   }
   /**
-   * @param  {event} e change event 
+   * @param  {event} e change event
    */
   function handleChangeEdit(e) {
     const { name, value } = e.target;
@@ -176,7 +176,7 @@ function UsersList() {
     const isValid = Object.keys(addRowFormData).every((key) => {
       console.log(key);
       /**
-       * check for empty or not 
+       * check for empty or not
        * empty is ok
        */
       if (key !== "idnumber" || key !== "phone" || key !== "position") {
@@ -249,14 +249,14 @@ function UsersList() {
   }
   /**
    * close or open modal
-   * !! change modal state 
+   * !! change modal state
    */
   function toggleModal() {
     setIsAddModalOpen((prevState) => !prevState);
   }
   /**
    * @param  {int} id facility id
-   * find facility by its id in list 
+   * find facility by its id in list
    */
   function findFacilityById(id) {
     return facilities.find((item) => item.id === id);

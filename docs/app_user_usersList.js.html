@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/user/usersList.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/user/usersList.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import Modal from "react-bootstrap/Modal";
+import { useEffect, useState } from "react";
+import EditIcon from "../shared/EditIcon";
+import SharedTable from "../shared/SharedTable";
+import toast from "react-hot-toast";
+import HRService from "../services/hr.service";
+import UserListService from "../services/user-list.service";
+import Spinner from "../shared/Spinner";
+import "../styles/table.scss";
+import "../styles/inputs.scss";
+import "../styles/hr.scss";
+import "../settings/itemClass.scss";
+import "../settings/itemType.scss";
+import { Trans } from "react-i18next";
+/**
+ *   Users List components load the users list and
+ * can add or modify users
+ * @returns JSX elements
+ */
+function UsersList() {
+  const [list, setList] = useState([]);
+  /**
+   * @constant {JSON} editFormData json for edited user data
+   */
+  const [editFormData, setEditFormData] = useState({});
+  /**
+   * @constant {JSON} addRowFormData json for add user datas
+   */
+  const [addRowFormData, setAddRowFormData] = useState({
+    facadmin: false,
+    itemadmin: false,
+    reportadmin: false,
+    useradmin: false,
+    is_active: false,
+    password: "",
+    conf_password: "",
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [facilities, setFacilities] = useState([]);
+  const [selectedFacility, setSelectedFacility] = useState(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  /**
+   * @function getFacilities fetch facilities from server
+   */
+  function getFacilities() {
+    HRService.getFacilities()
+      .then((res) => {
+        const data = res.data;
+        setFacilities(data);
+        setSelectedFacility(data[0].id);
+        setIsLoading(false);
+        getList(data[0].id);
+      })
+      .catch((err) => {
+        toast.error(&lt;Trans>There is a problem loading data&lt;/Trans>);
+        setIsLoading(false);
+      });
+  }
+  /**
+   * @param  {Int} id facility id
+   * fetch facility users by facility id
+   *
+   */
+  function getList(id) {
+    UserListService.getUsersByFacilityId(id)
+      .then((res) => {
+        setList(res.data);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        toast.error(&lt;Trans>There is a problem loading data&lt;/Trans>);
+        setIsLoading(false);
+      });
+  }
+
+  useEffect(() => {
+    getFacilities();
+  }, []);
+
+  useEffect(() => {
+    if (facilities) {
+      setAddRowFormData({
+        ...addRowFormData,
+        facilityid: facilities[0]?.id,
+      });
+    }
+  }, [facilities]);
+  /**
+   * @param  {int} i user id
+   * set edited user id
+   *
+   */
+  function handleEdit(i) {
+    const formData = list.find((item) => item.pk === i.pk);
+    setEditFormData(formData);
+    setIsEditModalOpen(true);
+  }
+  /**
+   * @param  {event} e change event
+   */
+  function handleChangeEdit(e) {
+    const { name, value } = e.target;
+    setEditFormData({ ...editFormData, [name]: value });
+  }
+
+  function handleChangeAdd(e) {
+    const { name, value } = e.target;
+    setAddRowFormData({ ...addRowFormData, [name]: value });
+  }
+  /**
+   * @param  {event} e
+   * send data to api
+   */
+  function handleSubmitEdit(e) {
+    e.preventDefault();
+    const isValid = Object.keys(editFormData).every((key) => {
+      return editFormData[key] !== "";
+    });
+    if (!isValid) {
+      toast.error(&lt;Trans>Please fill all the fields&lt;/Trans>);
+    } else {
+      setIsLoading(true);
+      let formToPut = (({
+        pk,
+        password,
+        is_active,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+      }) => ({
+        pk,
+
+        password,
+        is_active,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+      }))(editFormData);
+      console.log(editFormData);
+      UserListService.updateUser(formToPut)
+        .then((res) => {
+          setIsLoading(true);
+          getList(selectedFacility);
+          setEditFormData({});
+          setIsEditModalOpen(false);
+          setActiveStep(0);
+          toast.success(&lt;Trans>user edit succesfuly&lt;/Trans>);
+        })
+        .catch((err) => {
+          toast.error(&lt;Trans>There is a problem sending data&lt;/Trans>);
+          setIsLoading(false);
+        });
+    }
+  }
+  /**
+   * @param  {event} e
+   * sumbit new user to api
+   */
+  function handleSubmitNew(e) {
+    e.preventDefault();
+    const isValid = Object.keys(addRowFormData).every((key) => {
+      console.log(key);
+      /**
+       * check for empty or not
+       * empty is ok
+       */
+      if (key !== "idnumber" || key !== "phone" || key !== "position") {
+        console.log(addRowFormData[key]);
+        return addRowFormData[key] !== "";
+      }
+    });
+    if (!isValid) {
+      toast.error(&lt;Trans>Please fill all the fields&lt;/Trans>);
+    } else {
+      setIsLoading(true);
+      const owner = JSON.parse(localStorage.getItem("user")).username;
+      let formToPost = (({
+        password,
+        is_active,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+        name,
+      }) => ({
+        password,
+        is_active,
+        facilityid,
+        username,
+        idnumber,
+        position,
+        phone,
+        facadmin,
+        itemadmin,
+        reportadmin,
+        useradmin,
+        name,
+      }))(addRowFormData);
+      console.log(formToPost);
+      formToPost.owner = owner;
+      UserListService.addUser(formToPost)
+        .then((res) => {
+          toast.success("user added successfully");
+          setIsLoading(true);
+          getList(selectedFacility);
+          setAddRowFormData({
+            ...addRowFormData,
+            facadmin: false,
+            itemadmin: false,
+            reportadmin: false,
+            useradmin: false,
+            is_active: true,
+            password: "",
+            conf_password: "",
+          });
+          setIsAddModalOpen(false);
+          setActiveStep(0);
+        })
+        .catch((err) => {
+          if (err.response.data.username) {
+            toast.error(err.response.data.username[0]);
+            setIsLoading(false);
+          } else {
+            toast.error("There is a problem sending data");
+            setIsLoading(false);
+          }
+        });
+    }
+  }
+  /**
+   * close or open modal
+   * !! change modal state
+   */
+  function toggleModal() {
+    setIsAddModalOpen((prevState) => !prevState);
+  }
+  /**
+   * @param  {int} id facility id
+   * find facility by its id in list
+   */
+  function findFacilityById(id) {
+    return facilities.find((item) => item.id === id);
+  }
+
+  return (
+    &lt;div className="item-class-page hr-page">
+      &lt;h3 className="page-title mb-3">
+        &lt;Trans>User by Facility&lt;/Trans>
+      &lt;/h3>
+      {isLoading ? (
+        &lt;Spinner />
+      ) : (
+        &lt;>
+          &lt;div className="row mb-4 mt-4">
+            &lt;div className="col-md-2 d-flex align-items-center">
+              &lt;h4 className="page-title">
+                &lt;Trans>Main Facility&lt;/Trans>
+              &lt;/h4>
+            &lt;/div>
+            &lt;div className="col-md-10 d-flex">
+              &lt;select
+                name="facilityid"
+                onChange={(e) => {
+                  setSelectedFacility(e.target.value);
+                  setIsLoading(true);
+                  getList(e.target.value);
+                  setAddRowFormData({
+                    ...addRowFormData,
+                    facilityid: e.target.value,
+                  });
+                }}
+                value={selectedFacility}
+              >
+                {facilities.map((item, index) => (
+                  &lt;option key={item.id} value={item.id}>
+                    {item.name}
+                  &lt;/option>
+                ))}
+              &lt;/select>
+            &lt;/div>
+          &lt;/div>
+          {facilities &amp;&amp; list &amp;&amp; list.length > 0 &amp;&amp; (
+            &lt;div>
+              &lt;SharedTable>
+                &lt;TableHead>
+                  &lt;TableRow>
+                    &lt;TableCell>
+                      &lt;Trans>ID&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Name&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Username&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Facility Name&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Owner&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Manage Facilities&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Manage Items&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>View Reports&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Manage Users&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Active&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Position&lt;/Trans>
+                    &lt;/TableCell>
+                    &lt;TableCell>
+                      &lt;Trans>Edit&lt;/Trans>
+                    &lt;/TableCell>
+                  &lt;/TableRow>
+                &lt;/TableHead>
+                &lt;TableBody>
+                  {list &amp;&amp;
+                    list.map((item, index) => (
+                      &lt;>
+                        &lt;TableRow>
+                          &lt;TableCell>{item.pk}&lt;/TableCell>
+                          &lt;TableCell>{item.name}&lt;/TableCell>
+                          &lt;TableCell>{item.username}&lt;/TableCell>
+                          &lt;TableCell>
+                            {findFacilityById(item.facilityid)?.name}
+                          &lt;/TableCell>
+                          &lt;TableCell>{item?.owner}&lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;input
+                              type="checkbox"
+                              checked={item.facadmin}
+                              disabled
+                            >&lt;/input>
+                          &lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;input
+                              type="checkbox"
+                              checked={item.itemadmin}
+                              disabled
+                            >&lt;/input>
+                          &lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;input
+                              type="checkbox"
+                              checked={item.reportadmin}
+                              disabled
+                            >&lt;/input>
+                          &lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;input
+                              type="checkbox"
+                              checked={item.useradmin}
+                              disabled
+                            >&lt;/input>
+                          &lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;input
+                              type="checkbox"
+                              checked={item.is_active}
+                              disabled
+                            >&lt;/input>
+                          &lt;/TableCell>
+                          &lt;TableCell>{item.position}&lt;/TableCell>
+                          &lt;TableCell>
+                            &lt;button
+                              className="edit-btn"
+                              onClick={(event) => handleEdit(item)}
+                            >
+                              &lt;EditIcon />
+                            &lt;/button>
+                          &lt;/TableCell>
+                        &lt;/TableRow>
+                      &lt;/>
+                    ))}
+                &lt;/TableBody>
+              &lt;/SharedTable>
+            &lt;/div>
+          )}
+          &lt;Modal
+            show={isEditModalOpen}
+            onHide={() => {
+              // setIsEditModalOpen(false);
+              // setActiveStep(0);
+            }}
+          >
+            &lt;form onSubmit={handleSubmitEdit}>
+              {activeStep === 0 ? (
+                &lt;>
+                  &lt;h3 className="mb-3 text-center">
+                    &lt;Trans>Edit&lt;/Trans> &lt;Trans>user&lt;/Trans>
+                  &lt;/h3>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Facility Name&lt;/Trans>
+                    &lt;/label>
+                    &lt;select
+                      name="facilityid"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.facilityid}
+                    >
+                      {facilities.map((item, index) => (
+                        &lt;option
+                          key={item.id}
+                          value={item.id}
+                          selected={item.id === editFormData?.facilityid}
+                        >
+                          {item.name}
+                        &lt;/option>
+                      ))}
+                    &lt;/select>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Name&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="name"
+                      type="text"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.name}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Username&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="username"
+                      type="text"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.username}
+                      autoComplete="off"
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Password&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="password"
+                      autoComplete="off"
+                      type="password"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.password}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Confirm Password&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="conf_password"
+                      type="password"
+                      autoComplete="off"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.conf_password}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;button
+                    className="save-btn w-25 ml-5 mr-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (
+                        editFormData?.password === editFormData?.conf_password
+                      ) {
+                        setActiveStep((prev) => prev + 1);
+                      } else {
+                        toast.error("Passwords doesn't match");
+                      }
+                    }}
+                  >
+                    &lt;Trans>Next&lt;/Trans>
+                  &lt;/button>
+                  &lt;button
+                    className="btn-danger text-dark w-25 ml-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    &lt;Trans>Cancel&lt;/Trans>
+                  &lt;/button>
+                &lt;/>
+              ) : (
+                &lt;>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>ID Number&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="idnumber"
+                      type="number"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.idnumber}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Position&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="position"
+                      type="text"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.position}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Phone Number&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="phone"
+                      type="tel"
+                      onChange={handleChangeEdit}
+                      value={editFormData?.phone}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Active&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="is_active"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            is_active: !editFormData.is_active,
+                          })
+                        }
+                        checked={editFormData?.is_active}
+                      />
+                    &lt;/div>
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Manage Facilities&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="facadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            facadmin: !editFormData.facadmin,
+                          })
+                        }
+                        checked={editFormData?.facadmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-1">
+                        &lt;Trans>Manage Items&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="itemadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            itemadmin: !editFormData.itemadmin,
+                          })
+                        }
+                        checked={editFormData?.itemadmin}
+                      />
+                    &lt;/div>
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>View Reports&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="reportadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            reportadmin: !editFormData.reportadmin,
+                          })
+                        }
+                        checked={editFormData?.reportadmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-12">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Manage Users&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="useradmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setEditFormData({
+                            ...editFormData,
+                            useradmin: !editFormData.useradmin,
+                          })
+                        }
+                        checked={editFormData?.useradmin}
+                        value={editFormData?.useradmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;button
+                    className="save-btn w-25 ml-3 mr-4"
+                    onClick={() => setActiveStep((prev) => prev - 1)}
+                  >
+                    &lt;Trans>Back&lt;/Trans>
+                  &lt;/button>
+                  &lt;button className="save-btn w-25 mr-4" type="submit">
+                    &lt;Trans>Save&lt;/Trans>
+                  &lt;/button>
+                  &lt;button
+                    className="btn-danger text-dark w-25 ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    &lt;Trans>Cancel&lt;/Trans>
+                  &lt;/button>
+                &lt;/>
+              )}
+            &lt;/form>
+          &lt;/Modal>
+          &lt;button className="modal-btn" onClick={toggleModal}>
+            &lt;Trans>Add user&lt;/Trans>
+          &lt;/button>
+          &lt;Modal
+            show={isAddModalOpen}
+            onHide={() => {
+              // setIsAddModalOpen(false);
+              // setActiveStep(0);
+            }}
+          >
+            &lt;form onSubmit={handleSubmitNew}>
+              {activeStep === 0 ? (
+                &lt;>
+                  &lt;h3 className="mb-3 text-center">Add user&lt;/h3>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">&lt;/div>
+
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Facility Name&lt;/Trans>
+                    &lt;/label>
+                    &lt;select
+                      name="facilityid"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.facilityid}
+                    >
+                      {facilities.map((item, index) => (
+                        &lt;option
+                          key={item.id}
+                          value={item.id}
+                          selected={parseInt(selectedFacility) === item.id}
+                        >
+                          {console.log(parseInt(addRowFormData?.facilityid))}
+                          {item.name}
+                        &lt;/option>
+                      ))}
+                    &lt;/select>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Name&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="name"
+                      type="text"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.name}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Username&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="username"
+                      type="text"
+                      autoComplete="off"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.username}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Password&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="password"
+                      type="password"
+                      autoComplete="off"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.password}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Confirm Password&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="conf_password"
+                      type="password"
+                      autoComplete="off"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.conf_password}
+                      required
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;button
+                    className="save-btn w-25 ml-5 mr-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (
+                        addRowFormData?.password ===
+                        addRowFormData?.conf_password
+                      ) {
+                        setActiveStep((prev) => prev + 1);
+                      } else {
+                        toast.error("Passwords doesn't match");
+                      }
+                    }}
+                  >
+                    &lt;Trans>Next&lt;/Trans>
+                  &lt;/button>
+                  &lt;button
+                    className="btn-danger text-dark w-25 ml-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    &lt;Trans>Cancel&lt;/Trans>
+                  &lt;/button>
+                &lt;/>
+              ) : (
+                &lt;>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>ID Number&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="idnumber"
+                      type="number"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.idnumber}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Position&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="position"
+                      type="text"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.position}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="d-flex flex-column align-items-center">
+                    &lt;label>
+                      &lt;Trans>Phone Number&lt;/Trans>
+                    &lt;/label>
+                    &lt;input
+                      name="phone"
+                      type="tel"
+                      onChange={handleChangeAdd}
+                      value={addRowFormData?.phone}
+                    >&lt;/input>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Active&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="is_active"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            is_active: !addRowFormData.is_active,
+                          })
+                        }
+                        checked={addRowFormData?.is_active}
+                      />
+                    &lt;/div>
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Manage Facilities&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="facadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            facadmin: !addRowFormData.facadmin,
+                          })
+                        }
+                        checked={addRowFormData?.facadmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-1">
+                        &lt;Trans>Manage Items&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="itemadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            itemadmin: !addRowFormData.itemadmin,
+                          })
+                        }
+                        checked={addRowFormData?.itemadmin}
+                      />
+                    &lt;/div>
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-6">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>View Reports&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="reportadmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            reportadmin: !addRowFormData.reportadmin,
+                          })
+                        }
+                        checked={addRowFormData?.reportadmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;div className="row mt-3">
+                    &lt;div className="d-flex align-items-center justify-content-center col-sm-12">
+                      &lt;label className="m-0 mr-2">
+                        &lt;Trans>Manage Users&lt;/Trans>
+                      &lt;/label>
+                      &lt;input
+                        name="useradmin"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            useradmin: !addRowFormData.useradmin,
+                          })
+                        }
+                        checked={addRowFormData?.useradmin}
+                      />
+                    &lt;/div>
+                  &lt;/div>
+                  &lt;button
+                    className="save-btn w-25 ml-5 mr-4"
+                    onClick={() => setActiveStep((prev) => prev - 1)}
+                  >
+                    &lt;Trans>Back&lt;/Trans>
+                  &lt;/button>
+                  &lt;button className="save-btn w-25 mr-3 mb-3" type="submit">
+                    &lt;Trans>Save&lt;/Trans>
+                  &lt;/button>
+                  &lt;button
+                    className="btn-danger text-dark mr-4 btn-round w-25"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    &lt;Trans>Cancel&lt;/Trans>
+                  &lt;/button>
+                &lt;/>
+              )}
+            &lt;/form>
+          &lt;/Modal>
+        &lt;/>
+      )}
+    &lt;/div>
+  );
+}
+
+export default UsersList;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="AuthService.html">AuthService</a></li><li><a href="AuthVerify.html">AuthVerify</a></li><li><a href="Error403.html">Error403</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Login.html">Login</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="SubFacilityReportChart.html">SubFacilityReportChart</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutIGA">AboutIGA</a></li><li><a href="global.html#AddFacilityIcon">AddFacilityIcon</a></li><li><a href="global.html#AddItemIcon">AddItemIcon</a></li><li><a href="global.html#addRowFormData">addRowFormData</a></li><li><a href="global.html#borderColor">borderColor</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#clearMessage">clearMessage</a></li><li><a href="global.html#CloseIcon">CloseIcon</a></li><li><a href="global.html#componentDidMountisusedtocheckifthecurrentuserisloggedinornot">componentDidMount is used to check if the current user is logged in or not</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DynamicInput">DynamicInput</a></li><li><a href="global.html#editFormData">editFormData</a></li><li><a href="global.html#EditIcon">EditIcon</a></li><li><a href="global.html#EmptyDataBaseMessage">EmptyDataBaseMessage</a></li><li><a href="global.html#eventBus">eventBus</a></li><li><a href="global.html#Facility">Facility</a></li><li><a href="global.html#FacilityIcon">FacilityIcon</a></li><li><a href="global.html#fromPQSFields">fromPQSFields</a></li><li><a href="global.html#fullPageLayoutRoutes">fullPageLayoutRoutes</a></li><li><a href="global.html#GetCoordinates">GetCoordinates</a></li><li><a href="global.html#getFacilitiesfetchfacilitiesfromserver">getFacilities fetch facilities from server</a></li><li><a href="global.html#handleLoginisusedtologintheuseriftheuserisloggedinsuccessfullythenredirecttothehomepageiftheuserisnotloggedinsuccessfullythendisplaytheerrormessage">handleLogin is used to login the user
+if the user is logged in successfully then redirect to the home page
+if the user is not logged in successfully then display the error message</a></li><li><a href="global.html#Help">Help</a></li><li><a href="global.html#id">id</a></li><li><a href="global.html#InformationIcon">InformationIcon</a></li><li><a href="global.html#isFullPageLayout">isFullPageLayout</a></li><li><a href="global.html#languages">languages</a></li><li><a href="global.html#LeftArrowIcon">LeftArrowIcon</a></li><li><a href="global.html#LocationMarker">LocationMarker</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#MenuIcon">MenuIcon</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#numericKeys">numericKeys</a></li><li><a href="global.html#onChangePasswordisusedtosetthepasswordinthestatechangeuserpasswordcomefromtheform">onChangePassword is used to set the password in the state
+change user password come from the form</a></li><li><a href="global.html#onChangeUsernameisusedtosettheusernameinthestatechangeuserusernamecomefromtheform">onChangeUsername is used to set the username in the state
+change user username come from the form</a></li><li><a href="global.html#onRouteChangedisusedtocheckifthecurrentrouteisafullpagelayoutornotdefinethelogouteventbusforreadeventbusdocumentpleaseseecommon/EventBus.js">onRouteChanged is used to check if the current route is a full page layout or not
+define the logout event bus
+for read event bus document please see common/EventBus.js</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#parseJwt">parseJwt</a></li><li><a href="global.html#queryClient">queryClient</a></li><li><a href="global.html#renderisusedtorenderthecomponent">render is used to render the component</a></li><li><a href="global.html#responseMessages">responseMessages</a></li><li><a href="global.html#RightArrowIcon">RightArrowIcon</a></li><li><a href="global.html#setMessage">setMessage</a></li><li><a href="global.html#StepOperations">StepOperations</a></li><li><a href="global.html#TrashIcon">TrashIcon</a></li><li><a href="global.html#useHttp">useHttp</a></li><li><a href="global.html#USER_PROFILE">USER_PROFILE</a></li><li><a href="global.html#UsersList">UsersList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 31 2022 09:18:31 GMT+0330 (Iran Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

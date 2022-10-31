@@ -1,7 +1,7 @@
 // import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 /**
- * @component Error404 component is used to display the 404 error page
+ *   Error404 component is used to display the 404 error page
  * @returns {JSX.Element} Error404 component
  * @example
  * <Error404 />
@@ -9,8 +9,8 @@
  * if you want to add a new error page you should add it in the error-pages folder
  * and add the route in the App.js file
  * and add the route in the AppRoutes.js file
- * also need to uncomment this code in here 
- * 
+ * also need to uncomment this code in here
+ *
  */
 // export class Error404 extends Component {
 //   render() {

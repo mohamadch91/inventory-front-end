@@ -14,7 +14,7 @@ for install dependencies please read Project installation file
 2. Download one editor for example Visual Studio Code
     you can download it from https://code.visualstudio.com/Download
 3. Open the project in the editor
-4. on the side bar click on the search icon and search for https://example.com "
+4. on the side bar click on the search icon and search for https://example.com"
 5. replace the url with your backend url 
 6. you can run the project by running the command :
 ### `serve -s build`

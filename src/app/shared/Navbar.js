@@ -16,12 +16,9 @@ import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
 import toast from "react-hot-toast";
 import "../styles/navbar.scss";
-import {
-
-  isBrowser,
-} from "react-device-detect";
+import { isBrowser } from "react-device-detect";
 /**
- * @component navbar component
+ *   navbar component
  * @return {JSX} return nav bar component
  */
 class Navbar extends Component {

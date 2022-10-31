@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Trans } from "react-i18next";
 /**
- * @component Error403 component is used to display the 403 error page
+ *   Error403 component is used to display the 403 error page
  * @returns {JSX.Element} Error403 component
  * @example
  * <Error403 />
@@ -26,7 +26,7 @@ export class Error403 extends Component {
                     <Trans>SORRY</Trans>!
                   </h2>
                   <h3 className="font-weight-light">
-                   <Trans>Maximum sub facilityies has been reached</Trans>!!!!!
+                    <Trans>Maximum sub facilityies has been reached</Trans>!!!!!
                   </h3>
                   <h3 className="font-weight-light">
                     <Trans>Please change values and try again</Trans>!

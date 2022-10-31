@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component Left
+ *   Left
  */
 function LeftArrowIcon() {
   return (

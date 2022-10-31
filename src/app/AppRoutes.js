@@ -5,7 +5,7 @@ import Spinner from "../app/shared/Spinner";
 import { connect } from "react-redux";
 import PrintItem from "./items/PrintItem";
 /**
- * @component AppRuotes - Main component for routing
+ *   AppRuotes - Main component for routing
  * @param {Object} props - Props
  * import all  components here
  * @returns {JSX} - JSX
@@ -88,7 +88,7 @@ const ProfileOfFacility = lazy(() => import("./reports/ProfileOfFacility"));
 const ProfileOfColdChain = lazy(() => import("./reports/ProfileOfColdChain"));
 const GapItemReport = lazy(() => import("./reports/GapItemReport"));
 const GapMapBasedReport = lazy(() => import("./reports/GapMapBasedReport"));
-const Facimport= lazy(() => import("./settings/importFacility"));
+const Facimport = lazy(() => import("./settings/importFacility"));
 class AppRoutes extends Component {
   render() {
     return (

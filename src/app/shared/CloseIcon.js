@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component CloseIcon
+ *   CloseIcon
  */
 function CloseIcon() {
   return (

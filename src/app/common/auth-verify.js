@@ -14,7 +14,7 @@ const parseJwt = (token) => {
 
 
 /**
- * @param  {reducers state} props
+ * @param  {state} props reducers state
  * component for check if token is  invalid logout the user check token expire time 
  * and now time if token is expired logout the user
  */

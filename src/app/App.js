@@ -14,7 +14,7 @@ import { logout } from "./actions/auth";
 import { history } from "./helpers/history";
 import { Toaster } from "react-hot-toast";
 /**
- * @component App component is the main component of the application
+ *   App component is the main component of the application
  * @param {object} props
  * @param {object} props.user user object
  * we use navbar side bar and footer in this component
@@ -41,14 +41,14 @@ class App extends Component {
      * @function componentDidMount is used to check if the current user is logged in or not
      * @function componentDidUpdate is used to check if the current route is changed or not
      * @function render is used to render the component
-     * 
+     *
      */
     history.listen((location) => {
       props.dispatch(clearMessage()); // clear message when changing location
     });
   }
   state = {};
-  
+
   /**
    * @function componentDidMount is used to check if the current user is logged in or not
    * @returns {JSX.Element} App component
@@ -71,7 +71,7 @@ class App extends Component {
     });
     this.onRouteChanged();
   }
-  
+
   /**
    * logOut is used to log out the current user and redirect to login page
    * dispatch logout action
@@ -89,7 +89,6 @@ class App extends Component {
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <div className="container-scroller">
-        
         <Toaster />
         {navbarComponent}
         <div className="container-fluid page-body-wrapper">
@@ -121,7 +120,7 @@ class App extends Component {
 
   onRouteChanged() {
     const { i18n } = this.props;
-    
+
     window.scrollTo(0, 0);
     /**
      * @constant {Array} fullPageLayoutRoutes is an array which contains the full page layout routes
@@ -137,7 +136,7 @@ class App extends Component {
      * if the current route is a full page layout then set the isFullPageLayout state to true
      * else set the isFullPageLayout state to false
      * @constant {boolean} isFullPageLayout is a boolean value which is used to check if the current route is a full page layout or not
-     * 
+     *
      */
     for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
       if (this.props.location.pathname === fullPageLayoutRoutes[i]) {

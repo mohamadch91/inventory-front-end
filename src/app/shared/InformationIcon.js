@@ -1,6 +1,6 @@
 /**
  * retun an svg
- * @component Information icon
+ *   Information icon
  */
 function InformationIcon() {
   return (
