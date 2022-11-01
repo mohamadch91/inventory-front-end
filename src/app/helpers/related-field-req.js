@@ -1,3 +1,7 @@
+/**
+ * related field of facility 
+ * that measn if this fields are checekd show other fields
+ */
 export const relatedFields = {
   is_suitable: ["is_suitable_reason"],
   haveimmservice: [
