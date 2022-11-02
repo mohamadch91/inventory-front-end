@@ -7,7 +7,9 @@ import Warnings from "./warnings/Warnings";
 import classes from "./Dashbord.module.css";
 
 import DashboardTables from "./tables/DashboardTables";
-
+/**
+ * dashboard page component
+ */
 const Dashboard = () => {
   return (
     <main>
