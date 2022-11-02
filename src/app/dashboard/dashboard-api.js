@@ -29,7 +29,9 @@ export async function getFacilities() {
     }
   }
 }
-
+/**
+ * get subfacility and level data from api
+ */
 export async function getTablesData() {
   try {
     const res = await DashboardService.getAllTablesData();
