@@ -10,7 +10,9 @@ export async function getItemsAndTypes() {
     throw new Error("Error fetching data from back-end " + error.message);
   }
 }
-
+/**
+ * get all facility names from server
+ */
 export async function getFacilities() {
   try {
     const res = await DashboardService.getAllFacilities();
