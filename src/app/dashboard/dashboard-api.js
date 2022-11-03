@@ -1,5 +1,7 @@
 import DashboardService from "../services/dashboard.service";
-
+/**
+ * get all item types (category) and classes from server
+ */
 export async function getItemsAndTypes() {
   try {
     const res = await DashboardService.getAllDashboardItems();
