@@ -26,7 +26,9 @@ const WarningsTablePage = () => {
       refetchOnMount: true,
     }
   );
-
+  /**
+   * send API reqeuest when maintance done
+   */
   const onMarkAsDoneHandler = async () => {
     const payload = [];
     selectedAsDone.map((el) => {
