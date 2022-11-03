@@ -7,7 +7,9 @@ import Spinner from "../../../shared/Spinner";
 import DashboardService from "../../../services/dashboard.service";
 
 import toast from "react-hot-toast";
-
+/**
+ * page include warning table
+ */
 const WarningsTablePage = () => {
   const [selectedAsDone, setSelectedAsDone] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
