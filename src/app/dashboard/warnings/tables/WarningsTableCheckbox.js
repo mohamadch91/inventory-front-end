@@ -1,6 +1,9 @@
 import React from "react";
 import { Trans } from "react-i18next";
-
+/**
+ * @param  {} props
+ * component for show checkbox in wanings
+ */
 const WarningsTableCheckbox = (props) => {
   return (
     <div className="form-check pl-2 ">
