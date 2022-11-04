@@ -1,7 +1,10 @@
 import React from "react";
 import WarningsTableCheckbox from "./WarningsTableCheckbox";
 import { Trans } from "react-i18next";
-
+/**
+ * @param  {OBJECT} prop
+ * component for show warning for each item
+ */
 const WarningsTable = (props) => {
   const { data, setState, state } = props;
 
