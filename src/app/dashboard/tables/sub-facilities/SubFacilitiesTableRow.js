@@ -1,5 +1,10 @@
 import React from "react";
 import { ProgressBar } from "react-bootstrap";
+/**
+ * @param  {JSONOBJECT} props
+ * for show each row in subfac table in dashbaord
+ * 
+ */
 const SubFacilitiesTableRow = (props) => {
   const updatedOn = props.updatedOn.split("T")[0].replace(/-/g, " / ");
 
