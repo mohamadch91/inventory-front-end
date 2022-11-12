@@ -1,7 +1,10 @@
 import LevelsTableRow from "./LevelsTableRow";
 import React from "react";
 import { Trans } from "react-i18next";
-
+/**
+ * @param  {JSON} props
+ * level table for show level facility datas
+ */
 const LevelsTable = (props) => {
   return (
     <div className={"px-2 py-5"}>
