@@ -1,7 +1,10 @@
 import React from "react";
 import SubFacilitiesTableRow from "./SubFacilitiesTableRow";
 import { Trans } from "react-i18next";
-
+/**
+ * @param  {JOSN} props
+ * component for show sub facility table in dashboard
+ */
 const SubFacilitiesTable = (props) => {
   const generateRows = () => {
     let rows = [];
