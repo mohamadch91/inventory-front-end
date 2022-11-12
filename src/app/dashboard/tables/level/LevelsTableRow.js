@@ -1,5 +1,8 @@
 import React from "react";
-
+/**
+ * @param  {OBJECT} props
+ * component for show each row in level table
+ */
 const LevelsTableRow = (props) => {
   return (
     <tr>
