@@ -31,8 +31,7 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
-    this.handleClickShowPassword = this.handleClickShowPassword.bind(this);
-    this.alerthandle = this.alerthandle.bind(this);
+
     this.state = {
       username: "",
       password: "",

@@ -112,6 +112,8 @@ function ItemType() {
           getItemTypes();
         })
         .catch((err) => {
+                    toast.error(<Trans>{err.response.data}</Trans>);
+
                     toast.error(<Trans>There is a problem sending data</Trans>);
 
           setIsLoading(false);
@@ -147,6 +149,8 @@ function ItemType() {
           setSelectedItemClass(0);
         })
         .catch((err) => {
+                    toast.error(<Trans>{err.response.data}</Trans>);
+             
                     toast.error(<Trans>There is a problem sending data</Trans>);
 
           setIsLoading(false);
