@@ -106,6 +106,7 @@ const GetCoordinates = (props) => {
       info.textContent = e.latlng;
       handleClick(e);
     });
+    
 
     map.addControl(new positon());
   }, [map]);

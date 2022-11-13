@@ -23,13 +23,13 @@ const LogBookDetailsPage = lazy(() =>
   import("./dashboard/warnings/tables/logbook/LogBookDetailsPage")
 );
 
-const Mdi = lazy(() => import("./icons/Mdi"));
+// const Mdi = lazy(() => import("./icons/Mdi"));
 
 const Error403 = lazy(() => import("./error-pages/Error403"));
 const Error409 = lazy(() => import("./error-pages/Error409"));
 
 const Login = lazy(() => import("./user-pages/Login"));
-const Register1 = lazy(() => import("./user-pages/Register"));
+// const Register1 = lazy(() => import("./user-pages/Register"));
 const Country = lazy(() => import("./settings/Country"));
 const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
 const ItemClass = lazy(() => import("./settings/ItemClass"));
@@ -97,7 +97,7 @@ class AppRoutes extends Component {
           <Route exact path="/hr/list" component={HRList} />
 
           <Route exact path="/user/list" component={UsersList} />
-          <Route exact path="/icons" component={Mdi} />
+          {/* <Route exact path="/icons" component={Mdi} /> */}
 
           <Route exact path="/message/new" component={NewMessage} />
           <Route exact path="/message/list" component={MessageList} />
@@ -240,7 +240,7 @@ class AppRoutes extends Component {
             component={WarningsTablePage}
           />
 
-          <Route path="/user-pages/register-1" component={Register1} />
+          {/* <Route path="/user-pages/register-1" component={Register1} /> */}
 
           <Route path="/error-pages/error-403" component={Error403} />
           <Route path="/error-pages/error-409" component={Error409} />
