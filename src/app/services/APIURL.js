@@ -1,2 +1,2 @@
-const API_URL = " https://tlsapi.invgap.org";
+const API_URL = " https://ukrapi.invgap.org";
 export default API_URL;
