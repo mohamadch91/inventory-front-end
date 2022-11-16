@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = " https://ukrapi.invgap.org/languages/";
+const API_URL = " https://phiapi.invgap.org/languages/";
 
 class HRService {
   getTranslations() {
