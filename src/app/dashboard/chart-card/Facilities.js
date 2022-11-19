@@ -9,6 +9,9 @@ import GaugeChart from "react-gauge-chart";
 import { Trans } from "react-i18next";
 import DashboardService from "../../services/dashboard.service";
 import { useQuery } from "react-query";
+/**
+ * Component for facility card on dashboard
+ */
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState();
