@@ -15,7 +15,7 @@ import { useQuery } from "react-query";
 const Facilities = () => {
   const [facilities, setFacilities] = useState([]);
   const [chartData, setChartData] = useState();
-
+  // use query for get all facility servies
   const { data, isLoading, isFetched } = useQuery(
     ["charts-facilities"],
     async () => {
