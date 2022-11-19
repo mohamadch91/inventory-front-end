@@ -9,6 +9,9 @@ import classes from "./ItemCard.module.css";
 import toast from "react-hot-toast";
 import GaugeChart from "react-gauge-chart";
 import { Trans } from "react-i18next";
+/**
+ * component for item card in dashboard
+ */
 
 const ItemsCard = () => {
   const [itemClasses, setItemClasses] = useState([]);
