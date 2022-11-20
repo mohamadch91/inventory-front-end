@@ -406,7 +406,7 @@
         t = s(74569),
         i = s.n(t),
         l = s(54318),
-        a = "http://127.0.0.1:8000/hr/",
+        a = " https://api.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, r.Z)(this, e);

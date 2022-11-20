@@ -34,7 +34,7 @@ i18n
     // define languages we support
     supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
     backend: {
-      loadPath: "http://127.0.0.1:8000/languages/{{ns}}?name={{lng}}",
+      loadPath: " https://api.invgap.org/languages/{{ns}}?name={{lng}}",
       addPath: null,
       crossDomain: true,
       withCredentials: true,
