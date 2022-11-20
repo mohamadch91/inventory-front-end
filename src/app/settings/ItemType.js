@@ -69,7 +69,7 @@ function ItemType() {
     setAddRowFormData({
       ...addRowFormData,
       itemClass: itemClasses[0],
-      active: false,
+      active: true,
       havePQS: false,
     });
   }, [itemClasses]);
@@ -146,7 +146,7 @@ function ItemType() {
       ItemsService.postItemType(formToPut)
         .then((res) => {
           getItemTypes();
-          setSelectedItemClass(0);
+          // setSelectedItemClass(0);
         })
         .catch((err) => {
                     toast.error(<Trans>{err.response.data}</Trans>);
@@ -157,8 +157,8 @@ function ItemType() {
         });
       setAddRowFormData({
         ...addRowFormData,
-        itemClass: itemClasses[0],
-        active: false,
+        // itemClass: itemClasses[0],
+        active: true,
         havePQS: false,
         title: "",
       });
@@ -213,6 +213,7 @@ function ItemType() {
                 <input
                   name="title"
                   type="text"
+                  tabIndex={1}
                   onChange={handleChangeAdd}
                   value={addRowFormData?.title}
                   required
@@ -224,6 +225,7 @@ function ItemType() {
                 </label>
                 <select
                   name="itemClass"
+                  tabIndex={2}
                   onChange={handleChangeAdd}
                   value={addRowFormData?.itemClass}
                 >
@@ -244,6 +246,7 @@ function ItemType() {
                 </label>
                 <input
                   name="active"
+                  tabIndex={3}
                   className="mr-1"
                   type="checkbox"
                   onChange={() =>
@@ -260,6 +263,7 @@ function ItemType() {
                 <input
                   name="havePQS"
                   className="mr-1"
+                  tabIndex={4}
                   type="checkbox"
                   onChange={() =>
                     setAddRowFormData({
@@ -269,7 +273,11 @@ function ItemType() {
                   }
                   checked={addRowFormData?.havePQS}
                 ></input>
-                <button className="save-btn w-50" onClick={handleSubmitNew}>
+                <button
+                  tabIndex={5}
+                  className="save-btn w-50"
+                  onClick={handleSubmitNew}
+                >
                   <Trans>Save</Trans>
                 </button>
               </div>
@@ -317,16 +325,22 @@ function ItemType() {
                         <TableCell>
                           <input
                             type="checkbox"
+                            className="custom-check"
                             checked={itemType.active}
+                            id="cb1"
                             disabled
                           ></input>
+                          <label for="cb1"></label>
                         </TableCell>
                         <TableCell>
                           <input
                             type="checkbox"
+                            className="custom-check"
+                            id="cb1"
                             checked={itemType.havePQS}
                             disabled
                           ></input>
+                          <label for="cb1"></label>
                         </TableCell>
                         <TableCell>
                           <button

@@ -7,7 +7,7 @@
         r = t(43144),
         c = t(39877),
         a = t(54318),
-        l = " https://phiapi.invgap.org/related/",
+        l = "http://127.0.0.1:8000/related/",
         s = (function () {
           function e() {
             (0, i.Z)(this, e);

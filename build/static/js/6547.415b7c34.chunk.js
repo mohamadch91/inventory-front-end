@@ -406,7 +406,7 @@
         t = s(74569),
         i = s.n(t),
         l = s(54318),
-        a = " https://phiapi.invgap.org/hr/",
+        a = "http://127.0.0.1:8000/hr/",
         d = (function () {
           function e() {
             (0, r.Z)(this, e);
