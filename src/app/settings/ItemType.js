@@ -39,7 +39,15 @@ function ItemType() {
     ItemsService.getItemTypes()
       .then((res) => {
         setItemTypes(res.data);
-        setFilteredItemTypes(res.data);
+        if (selectedItemClass && selectedItemClass !== "0") {
+          setFilteredItemTypes(
+            res?.data?.filter(
+              (item) => item.itemclass === parseInt(selectedItemClass)
+            )
+          );
+        } else {
+          setFilteredItemTypes(res.data);
+        }
         setIsLoading(false);
       })
       .catch((err) => {
@@ -54,6 +62,7 @@ function ItemType() {
   }, []);
 
   useEffect(() => {
+    console.log(selectedItemClass);
     if (selectedItemClass && selectedItemClass !== "0") {
       setFilteredItemTypes(
         itemTypes?.filter(
