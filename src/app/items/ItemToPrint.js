@@ -251,21 +251,28 @@ const ItemToPrint = forwardRef((props, ref) => {
                           {item.field.params.length !== 0
                             ? item.field.params.map((param) => (
                                 <div className="param col-md-6">
-                                  <input
-                                    className="m-1  "
-                                    type="checkbox"
-                                    checked={false}
-                                    style={{
-                                      Background: "white",
-                                      Border: "1px solid #ababab70",
-                                      BorderRadius: "5px",
-                                      Padding: "0.5rem",
-                                      marginRight: "5px",
-                                    }}
-                                  />
-                                  <span className="mr-3">
-                                    {param.name || param.describe}
-                                  </span>
+                                  <div class="form-check form-check-primary mt-3">
+                                    <label className="form-check-label">
+                                      <input
+                                        className="m-1  "
+                                        type="checkbox"
+                                        checked={false}
+                                        style={{
+                                          Background: "white",
+                                          Border: "1px solid #ababab70",
+                                          BorderRadius: "5px",
+                                          Padding: "0.5rem",
+                                          marginRight: "5px",
+                                        }}
+                                      />
+
+                                      <i className="input-helper mt-3">
+                                        <span className="mr-3 ml-4">
+                                          {param.name || param.describe}
+                                        </span>
+                                      </i>
+                                    </label>
+                                  </div>
                                 </div>
                               ))
                             : spaceMaker}

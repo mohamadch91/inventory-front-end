@@ -11,7 +11,9 @@ const FilterFormCheckbox = (props) => {
           className="form-check-input"
         />
         <i className="input-helper" />
-        <Trans>{props.label}</Trans>
+        <span className="ml-4">
+          <Trans>{props.label}</Trans>
+        </span>
       </label>
     </div>
   );
