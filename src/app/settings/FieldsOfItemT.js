@@ -326,24 +326,42 @@ function FieldsOfItemT() {
                                   )}
                                 </TableCell>
                                 <TableCell className="col-sm-2">
-                                  <input
-                                    type="checkbox"
-                                    disabled={!relatedItemType}
-                                    checked={isEnable}
-                                    onChange={(e) =>
-                                      onFieldChangeHandler(e, field, "enable")
-                                    }
-                                  />
+                                  <div class="form-check form-check-primary mt-3">
+                                    <label className="form-check-label">
+                                      <input
+                                        type="checkbox"
+                                        disabled={!relatedItemType}
+                                        checked={isEnable}
+                                        onChange={(e) =>
+                                          onFieldChangeHandler(
+                                            e,
+                                            field,
+                                            "enable"
+                                          )
+                                        }
+                                      />
+                                      <i className="input-helper mt-3"></i>
+                                    </label>
+                                  </div>
                                 </TableCell>
                                 <TableCell className="col-sm-4">
-                                  <input
-                                    type="checkbox"
-                                    disabled={!isEnable}
-                                    checked={isRequired}
-                                    onChange={(e) =>
-                                      onFieldChangeHandler(e, field, "required")
-                                    }
-                                  />
+                                  <div class="form-check form-check-primary mt-3">
+                                    <label className="form-check-label">
+                                      <input
+                                        type="checkbox"
+                                        disabled={!isEnable}
+                                        checked={isRequired}
+                                        onChange={(e) =>
+                                          onFieldChangeHandler(
+                                            e,
+                                            field,
+                                            "required"
+                                          )
+                                        }
+                                      />
+                                      <i className="input-helper mt-3"></i>
+                                    </label>
+                                  </div>
                                 </TableCell>
 
                                 {editedField?.id === field.id ? (

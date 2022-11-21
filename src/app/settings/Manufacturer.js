@@ -219,11 +219,16 @@ function Manufacturer() {
                           </TableCell>
                           <TableCell>{item.order}</TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.active}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.active}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <button
@@ -271,17 +276,22 @@ function Manufacturer() {
                             ></input>
                           </TableCell>
                           <TableCell>
-                            <input
-                              name="active"
-                              type="checkbox"
-                              onChange={() =>
-                                setEditFormData({
-                                  ...editFormData,
-                                  active: !editFormData.active,
-                                })
-                              }
-                              checked={editFormData?.active}
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  name="active"
+                                  type="checkbox"
+                                  onChange={() =>
+                                    setEditFormData({
+                                      ...editFormData,
+                                      active: !editFormData.active,
+                                    })
+                                  }
+                                  checked={editFormData?.active}
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <button
@@ -354,22 +364,27 @@ function Manufacturer() {
                     required
                   ></input>
                 </div>
-                <div className="col-md-3 d-flex justify-content-center align-items-center">
+                <div className="col-md-3 d-flex justify-content-center align-items-center mt-3">
                   <label>
                     <Trans>Active</Trans>
                   </label>
-                  <input
-                    name="active"
-                    className="mr-4"
-                    type="checkbox"
-                    onChange={() =>
-                      setAddRowFormData({
-                        ...addRowFormData,
-                        active: !addRowFormData.active,
-                      })
-                    }
-                    checked={addRowFormData?.active}
-                  ></input>
+                  <div class="form-check form-check-primary mt-3">
+                    <label className="form-check-label">
+                      <input
+                        name="active"
+                        className="mr-4"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            active: !addRowFormData.active,
+                          })
+                        }
+                        checked={addRowFormData?.active}
+                      ></input>
+                      <i className="input-helper mt-3"></i>
+                    </label>
+                  </div>
                   <button className="save-btn" type="submit">
                     <Trans>Save</Trans>
                   </button>

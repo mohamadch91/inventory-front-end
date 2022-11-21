@@ -162,7 +162,12 @@ function MaintenanceServiceComponent() {
                     >
                       {selectedItemClassAndItemTypes?.item_type.map(
                         (itemType, index) => (
-                          <option selected={itemType.id ===selectedItemType.id} value={index}>{itemType.title}</option>
+                          <option
+                            selected={itemType.id === selectedItemType.id}
+                            value={index}
+                          >
+                            {itemType.title}
+                          </option>
                         )
                       )}
                     </Form.Control>
@@ -274,17 +279,22 @@ function MaintenanceServiceComponent() {
                 <Trans>Enable</Trans>
               </label>
               <div className="col-sm-8">
-                <input
-                  type="checkbox"
-                  checked={selectedToEdit?.enable}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      enable: e.target.checked,
-                    }));
-                  }}
-                />
+                <div class="form-check form-check-primary mt-3">
+                  <label className="form-check-label">
+                    <input
+                      type="checkbox"
+                      checked={selectedToEdit?.enable}
+                      onChange={(e) => {
+                        e.persist();
+                        setSelectedToEdit((preState) => ({
+                          ...preState,
+                          enable: e.target.checked,
+                        }));
+                      }}
+                    />
+                    <i className="input-helper mt-3"></i>
+                  </label>
+                </div>
               </div>
             </Form.Group>
             <Form.Group className="row">
@@ -299,17 +309,22 @@ function MaintenanceServiceComponent() {
                 <Trans>Required</Trans>
               </label>
               <div className="col-sm-8">
-                <input
-                  type="checkbox"
-                  checked={selectedToEdit?.requires}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      requires: e.target.checked,
-                    }));
-                  }}
-                />
+                <div class="form-check form-check-primary mt-3">
+                  <label className="form-check-label">
+                    <input
+                      type="checkbox"
+                      checked={selectedToEdit?.requires}
+                      onChange={(e) => {
+                        e.persist();
+                        setSelectedToEdit((preState) => ({
+                          ...preState,
+                          requires: e.target.checked,
+                        }));
+                      }}
+                    />
+                    <i className="input-helper mt-3"></i>
+                  </label>
+                </div>
               </div>
             </Form.Group>
             <div className="row">
@@ -354,9 +369,15 @@ function MaintenanceServiceComponent() {
                       <TableCell className="col-sm-2">
                         <Trans>Interval for locations</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-1"><Trans>Enable</Trans></TableCell>
-                      <TableCell className="col-sm-1"><Trans>Required</Trans></TableCell>
-                      <TableCell className="col-sm-1"><Trans>Edit</Trans></TableCell>
+                      <TableCell className="col-sm-1">
+                        <Trans>Enable</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-1">
+                        <Trans>Required</Trans>
+                      </TableCell>
+                      <TableCell className="col-sm-1">
+                        <Trans>Edit</Trans>
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -373,18 +394,28 @@ function MaintenanceServiceComponent() {
                             {field.freq_in_loc}
                           </TableCell>
                           <TableCell className="col-sm-1">
-                            <input
-                              type="checkbox"
-                              disabled={true}
-                              checked={field.enable}
-                            />
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  disabled={true}
+                                  checked={field.enable}
+                                />
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell className="col-sm-1">
-                            <input
-                              type="checkbox"
-                              disabled={true}
-                              checked={field.requires}
-                            />
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  disabled={true}
+                                  checked={field.requires}
+                                />
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <button

@@ -81,16 +81,26 @@ function ItemClass() {
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3"><Trans>Item class list</Trans></h3>
-          <div >
+          <h3 className="page-title mb-3">
+            <Trans>Item class list</Trans>
+          </h3>
+          <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
                   <TableCell>Id</TableCell>
-                  <TableCell><Trans>Title</Trans></TableCell>
-                  <TableCell><Trans>Code</Trans></TableCell>
-                  <TableCell><Trans>Active</Trans></TableCell>
-                  <TableCell><Trans>Edit</Trans></TableCell>
+                  <TableCell>
+                    <Trans>Title</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Code</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Active</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -102,11 +112,16 @@ function ItemClass() {
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.code}</TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            checked={item.active}
-                            disabled
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                checked={item.active}
+                                disabled
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button
@@ -131,21 +146,26 @@ function ItemClass() {
                         </TableCell>
                         <TableCell>{editFormData.code}</TableCell>
                         <TableCell>
-                          <input
-                            name="active"
-                            type="checkbox"
-                            onChange={() =>
-                              setEditFormData({
-                                ...editFormData,
-                                active: !editFormData.active,
-                              })
-                            }
-                            checked={editFormData?.active}
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                name="active"
+                                type="checkbox"
+                                onChange={() =>
+                                  setEditFormData({
+                                    ...editFormData,
+                                    active: !editFormData.active,
+                                  })
+                                }
+                                checked={editFormData?.active}
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button className="save-btn" onClick={handleSubmit}>
-                          <Trans>Save</Trans>
+                            <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"

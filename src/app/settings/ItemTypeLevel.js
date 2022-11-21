@@ -192,12 +192,17 @@ function ItemTypeLevel() {
                           {item.title}
                         </TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            disabled={isItemTinLevelLoading}
-                            checked={!!isChecked}
-                            onChange={(e) => onEnableFieldHandler(e, item)}
-                          />
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                disabled={isItemTinLevelLoading}
+                                checked={!!isChecked}
+                                onChange={(e) => onEnableFieldHandler(e, item)}
+                              />
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                       </TableRow>
                     );

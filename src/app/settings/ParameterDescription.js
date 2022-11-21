@@ -168,22 +168,27 @@ function ParameterDescription() {
                 required
               ></input>
             </div>
-            <div className="col-md-4 d-flex justify-content-center align-items-center">
+            <div className="col-md-4 d-flex justify-content-center align-items-center mt-3">
               <label>
                 <Trans>Enable</Trans>
               </label>
-              <input
-                name="enabled"
-                className="mr-4"
-                type="checkbox"
-                onChange={() =>
-                  setAddRowFormData({
-                    ...addRowFormData,
-                    enabled: !addRowFormData.enabled,
-                  })
-                }
-                checked={addRowFormData?.enabled}
-              ></input>
+              <div class="form-check form-check-primary mt-3">
+                <label className="form-check-label">
+                  <input
+                    name="enabled"
+                    className="mr-4"
+                    type="checkbox"
+                    onChange={() =>
+                      setAddRowFormData({
+                        ...addRowFormData,
+                        enabled: !addRowFormData.enabled,
+                      })
+                    }
+                    checked={addRowFormData?.enabled}
+                  ></input>
+                  <i className="input-helper mt-3"></i>
+                </label>
+              </div>
               <button className="save-btn" type="submit">
                 <Trans>Save</Trans>
               </button>
@@ -221,11 +226,16 @@ function ParameterDescription() {
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.order}</TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            checked={item.enabled}
-                            disabled
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                checked={item.enabled}
+                                disabled
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button
@@ -257,17 +267,22 @@ function ParameterDescription() {
                           ></input>
                         </TableCell>
                         <TableCell>
-                          <input
-                            name="enabled"
-                            type="checkbox"
-                            onChange={() =>
-                              setEditFormData({
-                                ...editFormData,
-                                enabled: !editFormData.enabled,
-                              })
-                            }
-                            checked={editFormData?.enabled}
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                name="enabled"
+                                type="checkbox"
+                                onChange={() =>
+                                  setEditFormData({
+                                    ...editFormData,
+                                    enabled: !editFormData.enabled,
+                                  })
+                                }
+                                checked={editFormData?.enabled}
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button

@@ -174,7 +174,11 @@ function MaintenanceGroupComponent() {
         <div className="card">
           <div className="card-body">
             <h3 className="page-title mb-3">
-              {isEditMode ? (<Trans>Edit Maintenance Group</Trans>) : (<Trans>New maintenance group</Trans>)}
+              {isEditMode ? (
+                <Trans>Edit Maintenance Group</Trans>
+              ) : (
+                <Trans>New maintenance group</Trans>
+              )}
             </h3>
             <Form.Group className="row">
               <label
@@ -214,17 +218,22 @@ function MaintenanceGroupComponent() {
                 <Trans>Enable</Trans>
               </label>
               <div className="col-sm-8">
-                <input
-                  type="checkbox"
-                  checked={selectedToEdit?.enable}
-                  onChange={(e) => {
-                    e.persist();
-                    setSelectedToEdit((preState) => ({
-                      ...preState,
-                      enable: e.target.checked,
-                    }));
-                  }}
-                />
+                <div class="form-check form-check-primary mt-3">
+                  <label className="form-check-label">
+                    <input
+                      type="checkbox"
+                      checked={selectedToEdit?.enable}
+                      onChange={(e) => {
+                        e.persist();
+                        setSelectedToEdit((preState) => ({
+                          ...preState,
+                          enable: e.target.checked,
+                        }));
+                      }}
+                    />
+                    <i className="input-helper mt-3"></i>
+                  </label>
+                </div>
               </div>
             </Form.Group>
             <div className="row">
@@ -279,11 +288,16 @@ function MaintenanceGroupComponent() {
                             {field.name}
                           </TableCell>
                           <TableCell className="col-sm-1">
-                            <input
-                              type="checkbox"
-                              disabled={true}
-                              checked={field.enable}
-                            />
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  disabled={true}
+                                  checked={field.enable}
+                                />
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell className="col-sm-2">
                             <button

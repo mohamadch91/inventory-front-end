@@ -214,27 +214,32 @@ function MaintenanceServiceGroup() {
                             {field.maintance?.name}
                           </TableCell>
                           <TableCell className="col-sm-2">
-                            <input
-                              type="checkbox"
-                              defaultChecked={field.assigned}
-                              onChange={(e) => {
-                                const checked = e.target.checked;
-                                const _fieldsClone = [...editedFields];
-                                const index = _fieldsClone.findIndex(
-                                  (f) => f.id === field.id
-                                );
-                                if (index >= 0) {
-                                  _fieldsClone[index].enable = checked;
-                                } else {
-                                  _fieldsClone.push({
-                                    id: field.maintance.id,
-                                    gp: selectedGp.id,
-                                    enable: checked,
-                                  });
-                                }
-                                setEditedFields(_fieldsClone);
-                              }}
-                            />
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  defaultChecked={field.assigned}
+                                  onChange={(e) => {
+                                    const checked = e.target.checked;
+                                    const _fieldsClone = [...editedFields];
+                                    const index = _fieldsClone.findIndex(
+                                      (f) => f.id === field.id
+                                    );
+                                    if (index >= 0) {
+                                      _fieldsClone[index].enable = checked;
+                                    } else {
+                                      _fieldsClone.push({
+                                        id: field.maintance.id,
+                                        gp: selectedGp.id,
+                                        enable: checked,
+                                      });
+                                    }
+                                    setEditedFields(_fieldsClone);
+                                  }}
+                                />
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                         </TableRow>
                       );
