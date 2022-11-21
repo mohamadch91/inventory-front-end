@@ -89,22 +89,27 @@ const FacilityToPrint = forwardRef((props, ref) => {
                       >
                         {item.params.map((param) => (
                           <div className="param col-md-5">
-                            <input
-                              style={{
-                                Background: "white",
-                                Border: "1px solid #ababab70",
-                                BorderRadius: "5px",
-                                Padding: "0.5rem",
-                                marginRight: "5px",
-                              }}
-                              className="m-1"
-                              type="checkbox"
-                              checked={false}
-                              disabled
-                            />
-                            <span className="mr-3">
-                              {param.name || param.describe}
-                            </span>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  style={{
+                                    Background: "white",
+                                    Border: "1px solid #ababab70",
+                                    BorderRadius: "5px",
+                                    Padding: "0rem",
+                                    marginRight: "0px",
+                                  }}
+                                  className="m-1"
+                                  type="checkbox"
+                                  checked={false}
+                                  disabled
+                                />
+
+                                <i className="input-helper mt-5">
+                                  <span className="ml-4 mb-2">{param.name || param.describe}</span>
+                                </i>
+                              </label>
+                            </div>
                           </div>
                         ))}
                       </div>
