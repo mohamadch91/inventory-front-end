@@ -2,7 +2,7 @@ import axios from "axios";
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://127.0.0.1:8000/message/";
+const API_URL = "https://api.invgap.org/message/";
 
 class MessageService {
   getReceivedMessages() {
