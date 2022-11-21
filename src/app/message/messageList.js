@@ -198,44 +198,50 @@ function MessageList() {
                       }
 
                       return (
-                      
-                      <>
-                        <TableRow>
-                          <TableCell>{index + 1}</TableCell>
-                          <TableCell>
-                            {sentOrReceived === "s"
-                              ? item.reciever.name
-                              : item.sender.name}
-                          </TableCell>
-                          <TableCell>{item.subject}</TableCell>
-                          <TableCell>{item.body}</TableCell>
-                          <TableCell>
-                            {new Date(item.created_at).toLocaleDateString("en")}
-                          </TableCell>
-                          {sentOrReceived === "r" && (
+                        <>
+                          <TableRow>
+                            <TableCell>{index + 1}</TableCell>
                             <TableCell>
-                              <input
-                                disabled={item.read}
-                                 checked={checked}
-                                type="checkbox"
-                                onChange={(e) => {
-                                  // e.preventDefault();
-                                  handleChangeRead(item.id);
-                                }}
-                              ></input>
+                              {sentOrReceived === "s"
+                                ? item.reciever.name
+                                : item.sender.name}
                             </TableCell>
-                          )}
-                          <TableCell>
-                            <button
-                              className="edit-btn"
-                              onClick={(event) => handleEdit(item)}
-                            >
-                              <EditIcon />
-                            </button>
-                          </TableCell>
-                        </TableRow>
-                      </>
-                    )
+                            <TableCell>{item.subject}</TableCell>
+                            <TableCell>{item.body}</TableCell>
+                            <TableCell>
+                              {new Date(item.created_at).toLocaleDateString(
+                                "en"
+                              )}
+                            </TableCell>
+                            {sentOrReceived === "r" && (
+                              <TableCell>
+                                <div class="form-check form-check-primary mt-3">
+                                  <label className="form-check-label">
+                                    <input
+                                      disabled={item.read}
+                                      checked={checked}
+                                      type="checkbox"
+                                      onChange={(e) => {
+                                        // e.preventDefault();
+                                        handleChangeRead(item.id);
+                                      }}
+                                    ></input>
+                                    <i className="input-helper mt-3"></i>
+                                  </label>
+                                </div>
+                              </TableCell>
+                            )}
+                            <TableCell>
+                              <button
+                                className="edit-btn"
+                                onClick={(event) => handleEdit(item)}
+                              >
+                                <EditIcon />
+                              </button>
+                            </TableCell>
+                          </TableRow>
+                        </>
+                      );
                               })}
                 </TableBody>
               </SharedTable>
