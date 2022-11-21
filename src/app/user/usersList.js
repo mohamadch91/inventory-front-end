@@ -355,39 +355,64 @@ function UsersList() {
                           </TableCell>
                           <TableCell>{item?.owner}</TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.facadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.facadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.itemadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.itemadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.reportadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.reportadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.useradmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.useradmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.is_active}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.is_active}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>{item.position}</TableCell>
                           <TableCell>
@@ -557,89 +582,114 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Active</Trans>
                       </label>
-                      <input
-                        name="is_active"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            is_active: !editFormData.is_active,
-                          })
-                        }
-                        checked={editFormData?.is_active}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="is_active"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                is_active: !editFormData.is_active,
+                              })
+                            }
+                            checked={editFormData?.is_active}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Manage Facilities</Trans>
                       </label>
-                      <input
-                        name="facadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            facadmin: !editFormData.facadmin,
-                          })
-                        }
-                        checked={editFormData?.facadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="facadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                facadmin: !editFormData.facadmin,
+                              })
+                            }
+                            checked={editFormData?.facadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">
+                      <label className="m-0 mr-1 mb-2">
                         <Trans>Manage Items</Trans>
                       </label>
-                      <input
-                        name="itemadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            itemadmin: !editFormData.itemadmin,
-                          })
-                        }
-                        checked={editFormData?.itemadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="itemadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                itemadmin: !editFormData.itemadmin,
+                              })
+                            }
+                            checked={editFormData?.itemadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>View Reports</Trans>
                       </label>
-                      <input
-                        name="reportadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            reportadmin: !editFormData.reportadmin,
-                          })
-                        }
-                        checked={editFormData?.reportadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="reportadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                reportadmin: !editFormData.reportadmin,
+                              })
+                            }
+                            checked={editFormData?.reportadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Manage Users</Trans>
                       </label>
-                      <input
-                        name="useradmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            useradmin: !editFormData.useradmin,
-                          })
-                        }
-                        checked={editFormData?.useradmin}
-                        value={editFormData?.useradmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="useradmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                useradmin: !editFormData.useradmin,
+                              })
+                            }
+                            checked={editFormData?.useradmin}
+                            value={editFormData?.useradmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <button
@@ -820,88 +870,113 @@ function UsersList() {
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Active</Trans>
                       </label>
-                      <input
-                        name="is_active"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            is_active: !addRowFormData.is_active,
-                          })
-                        }
-                        checked={addRowFormData?.is_active}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="is_active"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                is_active: !addRowFormData.is_active,
+                              })
+                            }
+                            checked={addRowFormData?.is_active}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Manage Facilities</Trans>
                       </label>
-                      <input
-                        name="facadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            facadmin: !addRowFormData.facadmin,
-                          })
-                        }
-                        checked={addRowFormData?.facadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="facadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                facadmin: !addRowFormData.facadmin,
+                              })
+                            }
+                            checked={addRowFormData?.facadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">
+                      <label className="m-0 mr-1 mb-2">
                         <Trans>Manage Items</Trans>
                       </label>
-                      <input
-                        name="itemadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            itemadmin: !addRowFormData.itemadmin,
-                          })
-                        }
-                        checked={addRowFormData?.itemadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="itemadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                itemadmin: !addRowFormData.itemadmin,
+                              })
+                            }
+                            checked={addRowFormData?.itemadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>View Reports</Trans>
                       </label>
-                      <input
-                        name="reportadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            reportadmin: !addRowFormData.reportadmin,
-                          })
-                        }
-                        checked={addRowFormData?.reportadmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="reportadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                reportadmin: !addRowFormData.reportadmin,
+                              })
+                            }
+                            checked={addRowFormData?.reportadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">
+                      <label className="m-0 mr-2 mb-2">
                         <Trans>Manage Users</Trans>
                       </label>
-                      <input
-                        name="useradmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            useradmin: !addRowFormData.useradmin,
-                          })
-                        }
-                        checked={addRowFormData?.useradmin}
-                      />
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="useradmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                useradmin: !addRowFormData.useradmin,
+                              })
+                            }
+                            checked={addRowFormData?.useradmin}
+                          />
+                          <i className="input-helper "></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <button
