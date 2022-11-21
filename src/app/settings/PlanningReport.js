@@ -532,11 +532,16 @@ function PlanningReport() {
                         <TableCell>{report.vac_cap ?? "-"}</TableCell>
                         <TableCell>{report.freez_cap ?? "-"}</TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            disabled
-                            defaultChecked={report.assigned}
-                          />
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                disabled
+                                defaultChecked={report.assigned}
+                              />
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                       </TableRow>
                     );

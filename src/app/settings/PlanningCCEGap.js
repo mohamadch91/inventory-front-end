@@ -551,11 +551,16 @@ function PlanningCCEGap() {
                     return (
                       <TableRow key={index}>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            disabled
-                            defaultChecked={report.planned}
-                          />
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                disabled
+                                defaultChecked={report.planned}
+                              />
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>{report.facility ?? "-"}</TableCell>
                         <TableCell>{report.parent ?? "-"}</TableCell>
