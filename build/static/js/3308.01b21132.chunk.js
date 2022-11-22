@@ -916,7 +916,7 @@
         i = l(43144),
         r = l(54318),
         t = l(39877),
-        c = "https://api.invgap.org/reports/",
+        c = "https://tlsapi.invgap.org/reports/",
         s = (function () {
           function e() {
             (0, a.Z)(this, e);
