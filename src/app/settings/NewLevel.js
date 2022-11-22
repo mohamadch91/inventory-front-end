@@ -279,7 +279,7 @@ export default function DataTable() {
     if (
       text.toString().length > 0 &&
       parseInt(text) >= 0 &&
-      parseInt(text) <= 100000000 &&
+      parseInt(text) <= 300000000 &&
       !text.toString().includes(".")
     ) {
       return true;
