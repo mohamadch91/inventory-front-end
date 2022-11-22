@@ -699,7 +699,7 @@
         r = l(43144),
         s = l(54318),
         c = l(39877),
-        t = "https://phiapi.invgap.org/reports/",
+        t = "https://api.invgap.org/reports/",
         o = (function () {
           function e() {
             (0, a.Z)(this, e);

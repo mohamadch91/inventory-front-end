@@ -431,7 +431,7 @@
         i = s(74569),
         t = s.n(i),
         l = s(54318),
-        a = "https://phiapi.invgap.org/hr/",
+        a = "https://api.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, c.Z)(this, e);
