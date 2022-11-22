@@ -1,2 +1,2 @@
-const API_URL = "https://jorapi.invgap.org";
+const API_URL = "https://phiapi.invgap.org";
 export default API_URL;
