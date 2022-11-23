@@ -124,9 +124,11 @@ function Pqs3() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - pqs4.length) : 0;
 
   const [excel, setExcel] = useState(null);
+  const [excelName, setExcelName] = useState(null);
 
   const handleImport = (e) => {
     const [file] = e.target.files;
+    setExcelName(file.name);
     const reader = new FileReader();
     reader.onload = (evt) => {
       const bstr = evt.target.result;
@@ -235,6 +237,7 @@ function Pqs3() {
                     required
                   ></input>
                 </label>
+                <span className="glyphicon glyphicon-upload mt-3 text-black"> {excelName}</span>
               </div>
               <div className="col-md-3 flex-column d-flex ">
                 <label className="">
@@ -242,7 +245,7 @@ function Pqs3() {
                     If you click on submit, all old data will be erased!
                   </Trans>
                 </label>
-                <button onClick={handleExcel} className="save-btn">
+                <button onClick={handleExcel} className="save-btn mt-3">
                   <Trans>Submit</Trans>
                 </button>
               </div>
