@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://phlapi.invgap.org/related/";
+const API_URL = "https://jorapi.invgap.org/related/";
 
 class RelatedService {
   getParameters() {
