@@ -338,6 +338,8 @@ export default function ImportFacility() {
     return true;
   };
   const [excel, setExcel] = React.useState(null);
+  const [excelName, setExcelName] = React.useState("");
+
   const [editFormData, setEditFormData] = React.useState({});
   const [editableRowId, setEditableRowId] = React.useState(null);
   function handleEdit1(i) {
@@ -347,6 +349,7 @@ export default function ImportFacility() {
   }
   const handleImport = (e) => {
     const [file] = e.target.files;
+    setExcelName(file.name);
     const reader = new FileReader();
     reader.onload = (evt) => {
       const bstr = evt.target.result;
@@ -433,6 +436,10 @@ export default function ImportFacility() {
                         style={{ display: "none" }}
                       />
                     </label>
+                    <span className="glyphicon glyphicon-upload mt-3 text-black">
+                      {" "}
+                      {excelName}
+                    </span>
                   </div>
                   <div className="col-md-3 ml-2 mt-1">
                     <Button
