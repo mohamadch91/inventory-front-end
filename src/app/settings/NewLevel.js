@@ -274,6 +274,7 @@ export default function DataTable() {
   const [isEdit, setEdit] = React.useState(false);
   const [disable, setDisable] = React.useState(true);
   const [showConfirm, setShowConfirm] = React.useState(false);
+  const [excelName, setExcelName] = React.useState("");
 
   const isMinpopMaxpopValid = (text) => {
     if (
@@ -470,6 +471,7 @@ export default function DataTable() {
   }
   const handleImport = (e) => {
     const [file] = e.target.files;
+    setExcelName(file.name);
     const reader = new FileReader();
     reader.onload = (evt) => {
       const bstr = evt.target.result;
@@ -614,6 +616,10 @@ export default function DataTable() {
                           onChange={handleImport}
                         />
                       </label>
+                      <span className="glyphicon glyphicon-upload">
+                        {" "}
+                        {excelName}
+                      </span>
                     </div>
                     <div className="col-md-3 ml-2">
                       <Button

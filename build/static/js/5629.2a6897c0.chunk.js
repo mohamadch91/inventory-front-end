@@ -1031,7 +1031,7 @@
         t = a(43144),
         l = a(54318),
         c = a(39877),
-        i = "https://phlapi.invgap.org/reports/",
+        i = "http://127.0.0.1:8000/reports/",
         o = (function () {
           function e() {
             (0, r.Z)(this, e);
