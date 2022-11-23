@@ -624,12 +624,17 @@ function Item() {
                           <Trans>Is this item from PQS/PIS list?</Trans>
                         </label>
                         <div className="col-sm-6">
-                          <input
-                            name="is-from-pqs"
-                            type="checkbox"
-                            onChange={onIsFromPQSChange}
-                            checked={isFromPQS}
-                          />
+                          <div class="form-check form-check-primary mt-2">
+                            <label className="form-check-label">
+                              <input
+                                name="is-from-pqs"
+                                type="checkbox"
+                                onChange={onIsFromPQSChange}
+                                checked={isFromPQS}
+                              />
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </div>
                         <hr className="my-3" />
                       </Form.Group>
@@ -698,7 +703,7 @@ function Item() {
                             {pqsField.state === "PQSPISCode" && (
                               <div className="col-sm-1">
                                 <button
-                                  className="btn btn-primary w-100 h-100 mt-1"
+                                  className="btn btn-primary w-100 h-100"
                                   onClick={selectPQSHandler}
                                   type="button"
                                 >
