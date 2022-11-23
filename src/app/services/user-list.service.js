@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://tlsapi.invgap.org/auth/";
+const API_URL = "https://ukrapi.invgap.org/auth/";
 
 class UserListService {
   getUsersByFacilityId(id) {
