@@ -128,9 +128,10 @@ TablePaginationActions.propTypes = {
 
    
   const [excel, setExcel] = useState(null);
-
+  const [excelName, setExcelName] = useState("");
   const handleImport = (e) => {
     const [file] = e.target.files;
+    setExcelName(file.name);
     const reader = new FileReader();
     reader.onload = (evt) => {
       const bstr = evt.target.result;
@@ -218,6 +219,10 @@ TablePaginationActions.propTypes = {
                         required
                       ></input>
                     </label>
+                    <span className="glyphicon glyphicon-upload mt-3 text-black">
+                      {" "}
+                      {excelName}
+                    </span>
                   </div>
                   <div className="col-md-4 flex-column d-flex ">
                     <label className=" mb-3">
