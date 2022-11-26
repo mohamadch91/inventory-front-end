@@ -8,7 +8,7 @@
         l = i(74569),
         a = i.n(l),
         r = i(54318),
-        t = "https://phlapi.invgap.org/hr/",
+        t = "https://ukrapi.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -117,7 +117,7 @@
         p = i(43144),
         v = i(39877),
         b = i(54318),
-        g = "https://phlapi.invgap.org/auth/",
+        g = "https://ukrapi.invgap.org/auth/",
         k = new ((function () {
           function e() {
             (0, f.Z)(this, e);
