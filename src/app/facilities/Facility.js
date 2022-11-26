@@ -655,7 +655,7 @@ window.handleMapClick = handleMapClick;
                       textAlign: "right",
                     }}
                   >
-                    {field.name}
+                    <Trans>{field.name}</Trans>
                   </label>
                   <div className="col-sm-8">
                     {field.stateName === "gpsCordinate" ? (

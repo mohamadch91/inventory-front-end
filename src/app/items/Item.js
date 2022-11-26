@@ -392,6 +392,22 @@ function Item() {
 
   const onIsFromPQSChange = () => {
     setIsFromPQS((preChecked) => !preChecked);
+      const cloneFieldsValue = { ...fieldsValue };
+      delete cloneFieldsValue["PQSPISType"];
+      delete cloneFieldsValue["PQSPISManufacturer"];
+      delete cloneFieldsValue["PQSPISRefrigerantGas"];
+      delete cloneFieldsValue["PQSPISTemperatureWorkingZone"];
+      delete cloneFieldsValue["NetVaccineStorageCapacity"];
+      delete cloneFieldsValue["FreezerNetCapacity"];
+      delete cloneFieldsValue["Height"];
+      delete cloneFieldsValue["Width"];
+      delete cloneFieldsValue["Length"];
+      delete cloneFieldsValue["CoolantPackNominalCapacity"];
+      delete cloneFieldsValue["NumberOfCoolantPacksRequired"];
+      delete cloneFieldsValue["ExternalSize"];
+      setFieldValue(cloneFieldsValue);
+
+      
   };
 
   const selectPQSHandler = () => {
