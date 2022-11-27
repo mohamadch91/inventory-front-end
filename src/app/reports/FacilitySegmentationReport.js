@@ -115,7 +115,7 @@ function FacilitySegmentationReport() {
   return (
     <div>
       <h3 className="page-title mb-3">
-        <Trans>Facility Segmentation</Trans>
+        <Trans>Facility segmentation</Trans>
       </h3>
       <div className="mt-3">
         <div className="card">
@@ -401,9 +401,8 @@ function FacilitySegmentationReport() {
         <div className="card">
           <div className="card-body py-3">
             <h4>
-              <Trans>
-                Report Number: Facility Segmentation ({country?.country})
-              </Trans>
+              <Trans>Report</Trans>: <Trans>Facility segmentation</Trans> (
+              {country?.country})
             </h4>
             <h6>
               <Trans>Filter</Trans> : {""} {printFilterValues()}
