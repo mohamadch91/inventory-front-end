@@ -2,7 +2,7 @@ import axios from "axios";
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://jorapi.invgap.org/message/";
+const API_URL = "https://tlsapi.invgap.org/message/";
 
 class MessageService {
   getReceivedMessages() {
