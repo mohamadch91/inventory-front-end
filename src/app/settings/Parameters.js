@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function Parameters() {
   const [data, setData] = useState({});
@@ -19,7 +21,8 @@ function Parameters() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -29,18 +32,21 @@ function Parameters() {
   }, []);
 
   return (
-    <div className="item-class-page">
+    <div className="item-class-page-param">
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <h2 className="page-title mb-3">Facility:</h2>
+          <h2 className="page-title mb-3">
+            <Trans>Parameters related to facilities</Trans>
+          </h2>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -49,23 +55,26 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/facility-${item.id}`}>
-                          {item.name}
+                          <Trans>{item.name.replace(":", "")}</Trans> (
+                          {item.description})
                         </Link>
                       </TableCell>
-                      <TableCell>{item.order}</TableCell>
                     </TableRow>
                   </>
                 ))}
               </TableBody>
             </SharedTable>
           </div>
-          <h2 className="page-title mb-3 mt-5">Item:</h2>
+          <h2 className="page-title text-left mb-3 mt-5">
+            <Trans>Parameters related to item categories</Trans>
+          </h2>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -74,10 +83,10 @@ function Parameters() {
                     <TableRow>
                       <TableCell>
                         <Link to={`/settings/params/type-${item.id}`}>
-                          {item.name}
+                          <Trans>{item.name.replace(":", "")}</Trans> (
+                          {item.description})
                         </Link>
                       </TableCell>
-                      <TableCell>{item.order}</TableCell>
                     </TableRow>
                   </>
                 ))}

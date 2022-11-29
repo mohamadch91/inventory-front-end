@@ -9,12 +9,16 @@ import EditIcon from "../shared/EditIcon";
 import CloseIcon from "../shared/CloseIcon";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import StepButton from "@mui/material/StepButton";
 import "../styles/table.scss";
 import RelatedService from "../services/related.service";
+import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
+import LeftArrowIcon from "../shared/LeftArrowIcon";
+import RightArrowIcon from "../shared/RightArrowIcon";
+
 
 function FieldsOfItemT() {
   const [activeStep, setActiveStep] = useState(0);
@@ -53,7 +57,7 @@ function FieldsOfItemT() {
     {}
   );
 
-  const { data: relatedItemType } = useQuery(
+  const { data: relatedItemType, refetch: refetchRelatedx } = useQuery(
     ["related-item-type", selectedItemType?.id],
     async () => {
       const res = await RelatedService.getRelatedItemType(selectedItemType.id);
@@ -78,6 +82,7 @@ function FieldsOfItemT() {
 
   const selectItemClassHandler = (e) => {
     setSelectedItemClassAndItemTypes(itemClassesWithItemTypes[e.target.value]);
+    setSelectedItemType(itemClassesWithItemTypes[e.target.value].item_type[0]);
   };
 
   const selectItemTypeHandler = (e) => {
@@ -94,6 +99,7 @@ function FieldsOfItemT() {
         field.itemtypeid === selectedItemType.id &&
         field.fieldid === currentField.id
     );
+    console.log(kind);
     if (fieldIndex === -1) {
       //for the first time
       fieldValuesClone.push({
@@ -125,6 +131,7 @@ function FieldsOfItemT() {
 
   const onSaveHandler = async () => {
     const res = await RelatedService.putRelatedItemType(fieldsValue);
+    refetchRelatedx();
   };
 
   const handleNext = () => {
@@ -141,7 +148,9 @@ function FieldsOfItemT() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">Fields of "item category"</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Fields of Items categories</Trans>
+      </h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (
@@ -151,7 +160,9 @@ function FieldsOfItemT() {
               <div className="row">
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Item class</label>
+                    <label className="col-sm-12">
+                      <Trans>Item class</Trans>{" "}
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemClassHandler}
@@ -169,7 +180,9 @@ function FieldsOfItemT() {
                 </div>
                 <div className="col-sm-12 col-lg-6">
                   <Form.Group className="row">
-                    <label className="col-sm-12">item category</label>
+                    <label className="col-sm-12">
+                      <Trans>Items category</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemTypeHandler}
@@ -207,7 +220,7 @@ function FieldsOfItemT() {
                             color="inherit"
                             style={{ width: "max-content" }}
                           >
-                            {topic}
+                            <Trans>{topic}</Trans>
                           </StepButton>
                         </Step>
                       );
@@ -217,14 +230,25 @@ function FieldsOfItemT() {
                 <div className="row mt-2">
                   <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
                     <Button
-                      color="inherit"
+                      
                       disabled={activeStep === 0}
                       onClick={handleBack}
-                      sx={{ mr: 1 }}
+                      sx={{ ml: 1,pl:1 }}
                     >
-                      Back
+                      <LeftArrowIcon style={{ marginRight: 2 }} />
+
+                      <Trans>Back</Trans>
                     </Button>
-                    <Box sx={{ flex: "1 1 auto" }} />
+                    <Box sx={{ flex: "0.48 0.4 auto" }} />
+
+                    <button
+                      className="btn btn-primary "
+                      onClick={onSaveHandler}
+                    >
+                      <Trans>Save all</Trans>
+                    </button>
+                    <Box sx={{ flex: "0.5 0.5 auto" }} />
+
                     <Button
                       disabled={
                         activeStep === Object.keys(fieldsCategories).length - 1
@@ -232,14 +256,9 @@ function FieldsOfItemT() {
                       onClick={handleNext}
                       sx={{ mr: 1 }}
                     >
-                      Next
+                      <Trans>Next</Trans>
+                      <RightArrowIcon />
                     </Button>
-                    <button
-                      className="btn btn-primary "
-                      onClick={onSaveHandler}
-                    >
-                      Save
-                    </button>
                   </Box>
                 </div>
               </div>
@@ -250,17 +269,28 @@ function FieldsOfItemT() {
             <div className="card">
               <div className="card-body p-3">
                 <div className="row">
-                  <h4> {Object.keys(fieldsCategories)[activeStep]}</h4>
+                  <h4>
+                    {" "}
+                    <Trans>{Object.keys(fieldsCategories)[activeStep]}</Trans>
+                  </h4>
                   <div className="mt-5 table-container">
                     <SharedTable>
                       <TableHead>
                         <TableRow>
-                          <TableCell className="col-sm-4">Field name</TableCell>
-                          <TableCell className="col-sm-2">Enable</TableCell>
                           <TableCell className="col-sm-4">
-                            Is this required field for item category?
+                            <Trans>Field name</Trans>
                           </TableCell>
-                          <TableCell className="col-sm-2">Edit</TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Enable</Trans>
+                          </TableCell>
+                          <TableCell className="col-sm-4">
+                            <Trans>
+                              Is this field required for this item category?
+                            </Trans>
+                          </TableCell>
+                          <TableCell className="col-sm-2">
+                            <Trans>Edit</Trans>
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -296,45 +326,64 @@ function FieldsOfItemT() {
                                   )}
                                 </TableCell>
                                 <TableCell className="col-sm-2">
-                                  <input
-                                    type="checkbox"
-                                    disabled={!relatedItemType}
-                                    checked={isEnable}
-                                    onChange={(e) =>
-                                      onFieldChangeHandler(e, field, "enable")
-                                    }
-                                  />
+                                  <div class="form-check form-check-primary mt-3">
+                                    <label className="form-check-label">
+                                      <input
+                                        type="checkbox"
+                                        disabled={!relatedItemType}
+                                        checked={isEnable}
+                                        onChange={(e) =>
+                                          onFieldChangeHandler(
+                                            e,
+                                            field,
+                                            "enable"
+                                          )
+                                        }
+                                      />
+                                      <i className="input-helper mt-3"></i>
+                                    </label>
+                                  </div>
                                 </TableCell>
                                 <TableCell className="col-sm-4">
-                                  <input
-                                    type="checkbox"
-                                    disabled={!isEnable}
-                                    checked={isRequired}
-                                    onChange={(e) =>
-                                      onFieldChangeHandler(e, field, "required")
-                                    }
-                                  />
+                                  <div class="form-check form-check-primary mt-3">
+                                    <label className="form-check-label">
+                                      <input
+                                        type="checkbox"
+                                        disabled={!isEnable}
+                                        checked={isRequired}
+                                        onChange={(e) =>
+                                          onFieldChangeHandler(
+                                            e,
+                                            field,
+                                            "required"
+                                          )
+                                        }
+                                      />
+                                      <i className="input-helper mt-3"></i>
+                                    </label>
+                                  </div>
                                 </TableCell>
-                                <TableCell className="col-sm-2">
-                                  {editedField?.id === field.id ? (
-                                    <>
-                                      <button
-                                        className="save-btn"
-                                        onClick={handleSubmitEdit}
-                                      >
-                                        Save
-                                      </button>
-                                      <button
-                                        className="close-btn"
-                                        onClick={() => {
-                                          setEditedField(null);
-                                          setNewFieldName("");
-                                        }}
-                                      >
-                                        <CloseIcon />
-                                      </button>
-                                    </>
-                                  ) : (
+
+                                {editedField?.id === field.id ? (
+                                  <TableCell className="col-sm-2">
+                                    <button
+                                      className="save-btn"
+                                      onClick={handleSubmitEdit}
+                                    >
+                                      <Trans>Save</Trans>
+                                    </button>
+                                    <button
+                                      className="close-btn"
+                                      onClick={() => {
+                                        setEditedField(null);
+                                        setNewFieldName("");
+                                      }}
+                                    >
+                                      <CloseIcon />
+                                    </button>
+                                  </TableCell>
+                                ) : (
+                                  <TableCell className="col-sm-2">
                                     <button
                                       className="edit-btn"
                                       onClick={() => {
@@ -342,10 +391,10 @@ function FieldsOfItemT() {
                                         setNewFieldName(field.name);
                                       }}
                                     >
-                                      <EditIcon />
+                                      <EditIcon sx={{ marginLeft: "0" }} />
                                     </button>
-                                  )}
-                                </TableCell>
+                                  </TableCell>
+                                )}
                               </TableRow>
                             );
                           }

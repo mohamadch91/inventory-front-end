@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: app/AppRoutes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: app/AppRoutes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { Component, Suspense, lazy } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+
+import Spinner from "../app/shared/Spinner";
+import { connect } from "react-redux";
+import PrintItem from "./items/PrintItem";
+/**
+ *   AppRuotes - Main component for routing
+ * @param {Object} props - Props
+ * import all  components here
+ * @returns {JSX} - JSX
+ * @example
+ * &lt;AppRoutes />
+ */
+const Dashboard = lazy(() => import("./dashboard/Dashboard"));
+const WarningsTablePage = lazy(() =>
+  import("./dashboard/warnings/tables/WarningsTablePage")
+);
+const LogBookPage = lazy(() =>
+  import("./dashboard/warnings/tables/logbook/LogBookPage")
+);
+const LogBookDetailsPage = lazy(() =>
+  import("./dashboard/warnings/tables/logbook/LogBookDetailsPage")
+);
+
+const Mdi = lazy(() => import("./icons/Mdi"));
+
+const Error403 = lazy(() => import("./error-pages/Error403"));
+const Error409 = lazy(() => import("./error-pages/Error409"));
+
+const Login = lazy(() => import("./user-pages/Login"));
+const Register1 = lazy(() => import("./user-pages/Register"));
+const Country = lazy(() => import("./settings/Country"));
+const NewLevelList = lazy(() => import("./settings/NewLevel.js"));
+const ItemClass = lazy(() => import("./settings/ItemClass"));
+const ItemType = lazy(() => import("./settings/ItemType"));
+const Parameters = lazy(() => import("./settings/Parameters"));
+const Pqs4 = lazy(() => import("./settings/Pqs4"));
+const Pqs3 = lazy(() => import("./settings/Pqs3"));
+const ParameterDescription = lazy(() =>
+  import("./settings/ParameterDescription")
+);
+const MangeHelp = lazy(() => import("./settings/ManageHelp"));
+const PlanningCCEGap = lazy(() => import("./settings/PlanningCCEGap"));
+const PlanningReport = lazy(() => import("./settings/PlanningReport"));
+const FacilityGapInformation = lazy(() =>
+  import("./settings/FacilityGapInformation")
+);
+const FieldsOfItemT = lazy(() => import("./settings/FieldsOfItemT"));
+const FacilityFields = lazy(() => import("./settings/FacilityFields"));
+const Manufacturer = lazy(() => import("./settings/Manufacturer"));
+const HRList = lazy(() => import("./hr/HRList"));
+const UsersList = lazy(() => import("./user/usersList"));
+const AboutIGA = lazy(() => import("./about-iga"));
+const Facility = lazy(() => import("./facilities/Facility"));
+const FacilityList = lazy(() => import("./facilities/FacilityList"));
+const PrintFacility = lazy(() => import("./facilities/PrintFacility"));
+const NewMessage = lazy(() => import("./message/newMessage"));
+const MessageList = lazy(() => import("./message/messageList"));
+const ItemTypeLevel = lazy(() => import("./settings/ItemTypeLevel"));
+const EditLanguage = lazy(() => import("./settings/editLanguage"));
+const ReportToExcel = lazy(() => import("./settings/reportToExcel"));
+const Item = lazy(() => import("./items/Item"));
+const ItemList = lazy(() => import("./items/ItemList"));
+const ItemsQR = lazy(() => import("./items/items-qr/ItemsQR"));
+const scanQR = lazy(() => import("./items/scan-qr/ScanQR"));
+const MtnsSetting = lazy(() => import("./settings/Maintenance"));
+const MtnsSettingService = lazy(() => import("./settings/MaintenanceService"));
+const MaintenanceServiceGroup = lazy(() =>
+  import("./settings/MaintenanceServiceGroup")
+);
+const MaintenanceGroup = lazy(() => import("./settings/MaintenanceGroup"));
+
+const Map = lazy(() => import("./shared/sharedMap"));
+
+const FacilitySegmentationReport = lazy(() =>
+  import("./reports/FacilitySegmentationReport")
+);
+const SubFacilityPopulationDataReport = lazy(() =>
+  import("./reports/SubFacilityPopulationDataReport")
+);
+const FacilityMapBasedReport = lazy(() =>
+  import("./reports/FacilityMapBasedReport")
+);
+const ItemGroupReport = lazy(() => import("./reports/ItemGroupReport"));
+const ItemFacilityReport = lazy(() => import("./reports/ItemFacilityReport"));
+const ProfileOfFacility = lazy(() => import("./reports/ProfileOfFacility"));
+const ProfileOfColdChain = lazy(() => import("./reports/ProfileOfColdChain"));
+const GapItemReport = lazy(() => import("./reports/GapItemReport"));
+const GapMapBasedReport = lazy(() => import("./reports/GapMapBasedReport"));
+const Facimport = lazy(() => import("./settings/importFacility"));
+class AppRoutes extends Component {
+  render() {
+    return (
+      &lt;Suspense fallback={&lt;Spinner />}>
+        &lt;Switch>
+          &lt;Route exact path="/hr/list" component={HRList} />
+
+          &lt;Route exact path="/user/list" component={UsersList} />
+          &lt;Route exact path="/icons" component={Mdi} />
+
+          &lt;Route exact path="/message/new" component={NewMessage} />
+          &lt;Route exact path="/message/list" component={MessageList} />
+
+          &lt;Route exact path="/settings/country" component={Country} />
+          &lt;Route exact path="/settings/item-class" component={ItemClass} />
+          &lt;Route exact path="/settings/item-type" component={ItemType} />
+          &lt;Route exact path="/settings/params" component={Parameters} />
+          &lt;Route exact path="/settings/manufacturer" component={Manufacturer} />
+          &lt;Route exact path="/settings/pqs4" component={Pqs4} />
+          &lt;Route exact path="/settings/pqs3" component={Pqs3} />
+          &lt;Route exact path="/settings/import-facility" component={Facimport} />
+
+          &lt;Route
+            exact
+            path="/settings/reports/excel"
+            component={ReportToExcel}
+          />
+          &lt;Route
+            exact
+            path="/settings/language/edit"
+            component={EditLanguage}
+          />
+          &lt;Route
+            exact
+            path="/settings/params/:id"
+            component={ParameterDescription}
+          />
+          &lt;Route
+            exact
+            path="/settings/item-t-level"
+            component={ItemTypeLevel}
+          />
+          &lt;Route exact path="/settings/item-fields" component={FieldsOfItemT} />
+          &lt;Route
+            exact
+            path="/settings/facility-fields"
+            component={FacilityFields}
+          />
+          &lt;Route
+            exact
+            path="/settings/new-level-list"
+            component={NewLevelList}
+          />
+          &lt;Route exact path="/settings/manage-help" component={MangeHelp} />
+          &lt;Route
+            exact
+            path="/settings/planning-cce-gap"
+            component={PlanningCCEGap}
+          />
+          &lt;Route
+            exact
+            path="/settings/planning-report"
+            component={PlanningReport}
+          />
+          &lt;Route
+            exact
+            path="/settings/fac-gap-info/:id"
+            component={FacilityGapInformation}
+          />
+
+          &lt;Route exact path="/settings/mtns_setting" component={MtnsSetting} />
+          &lt;Route
+            exact
+            path="/settings/mtns_setting1"
+            component={MtnsSettingService}
+          />
+          &lt;Route
+            exact
+            path="/settings/mtns_setting2"
+            component={MaintenanceServiceGroup}
+          />
+          &lt;Route
+            exact
+            path="/settings/mtns_setting3"
+            component={MaintenanceGroup}
+          />
+
+          &lt;Route exact path="/about-iga" component={AboutIGA} />
+          &lt;Route exact path="/map" component={Map} />
+
+          &lt;Route exact path="/facilities/info/:id" component={Facility} />
+          &lt;Route exact path="/facilities/list" component={FacilityList} />
+          &lt;Route exact path="/facilities/print" component={PrintFacility} />
+
+          &lt;Route exact path="/items/info/:id" component={Item} />
+          &lt;Route exact path="/items/list" component={ItemList} />
+          &lt;Route exact path="/items/print" component={PrintItem} />
+          &lt;Route exact path="/items/qr" component={ItemsQR} />
+          &lt;Route exact path="/items/scan-qr" component={scanQR} />
+
+          &lt;Route
+            exact
+            path="/reports/fac-seg"
+            component={FacilitySegmentationReport}
+          />
+          &lt;Route
+            exact
+            path="/reports/subfac-pop-data"
+            component={SubFacilityPopulationDataReport}
+          />
+          &lt;Route
+            exact
+            path="/reports/fac-map-based"
+            component={FacilityMapBasedReport}
+          />
+          &lt;Route exact path="/reports/item-gp" component={ItemGroupReport} />
+          &lt;Route
+            exact
+            path="/reports/item-fac"
+            component={ItemFacilityReport}
+          />
+          &lt;Route
+            exact
+            path="/reports/gap-map-based"
+            component={GapMapBasedReport}
+          />
+          &lt;Route exact path="/reports/fac-prof" component={ProfileOfFacility} />
+          &lt;Route exact path="/reports/gap-item" component={GapItemReport} />
+          &lt;Route
+            exact
+            path="/reports/prof-cold-chain"
+            component={ProfileOfColdChain}
+          />
+
+          &lt;Route exact path="/dashboard" component={Dashboard} />
+          &lt;Route
+            exact
+            path="/dashboard/maintenanceLog"
+            component={LogBookPage}
+          />
+          &lt;Route
+            exact
+            path="/dashboard/maintenanceLog/:id"
+            component={LogBookDetailsPage}
+          />
+          &lt;Route
+            exact
+            path="/dashboard/warnings-info/:wType"
+            component={WarningsTablePage}
+          />
+
+          &lt;Route path="/user-pages/register-1" component={Register1} />
+
+          &lt;Route path="/error-pages/error-403" component={Error403} />
+          &lt;Route path="/error-pages/error-409" component={Error409} />
+
+          {/* &lt;Route path="/error-pages/error-404" component={Error404} /> */}
+          {/* &lt;Route path="/error-pages/error-500" component={Error500} /> */}
+          &lt;Route path="/" component={Login} />
+
+          &lt;Redirect to="/" />
+        &lt;/Switch>
+      &lt;/Suspense>
+    );
+  }
+}
+function mapStateToProps(state) {
+  const { user } = state.auth;
+  return {
+    user,
+  };
+}
+export default connect(mapStateToProps)(AppRoutes);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="AuthService.html">AuthService</a></li><li><a href="AuthVerify.html">AuthVerify</a></li><li><a href="Error403.html">Error403</a></li><li><a href="Footer.html">Footer</a></li><li><a href="Login.html">Login</a></li><li><a href="Navbar.html">Navbar</a></li><li><a href="SubFacilityReportChart.html">SubFacilityReportChart</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AboutIGA">AboutIGA</a></li><li><a href="global.html#AddFacilityIcon">AddFacilityIcon</a></li><li><a href="global.html#AddItemIcon">AddItemIcon</a></li><li><a href="global.html#addRowFormData">addRowFormData</a></li><li><a href="global.html#borderColor">borderColor</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#check">check</a></li><li><a href="global.html#clearMessage">clearMessage</a></li><li><a href="global.html#CloseIcon">CloseIcon</a></li><li><a href="global.html#componentDidMountisusedtocheckifthecurrentuserisloggedinornot">componentDidMount is used to check if the current user is logged in or not</a></li><li><a href="global.html#Dashboard">Dashboard</a></li><li><a href="global.html#DynamicInput">DynamicInput</a></li><li><a href="global.html#editFormData">editFormData</a></li><li><a href="global.html#EditIcon">EditIcon</a></li><li><a href="global.html#EmptyDataBaseMessage">EmptyDataBaseMessage</a></li><li><a href="global.html#eventBus">eventBus</a></li><li><a href="global.html#Facility">Facility</a></li><li><a href="global.html#FacilityIcon">FacilityIcon</a></li><li><a href="global.html#fromPQSFields">fromPQSFields</a></li><li><a href="global.html#fullPageLayoutRoutes">fullPageLayoutRoutes</a></li><li><a href="global.html#GetCoordinates">GetCoordinates</a></li><li><a href="global.html#getFacilitiesfetchfacilitiesfromserver">getFacilities fetch facilities from server</a></li><li><a href="global.html#handleLoginisusedtologintheuseriftheuserisloggedinsuccessfullythenredirecttothehomepageiftheuserisnotloggedinsuccessfullythendisplaytheerrormessage">handleLogin is used to login the user
+if the user is logged in successfully then redirect to the home page
+if the user is not logged in successfully then display the error message</a></li><li><a href="global.html#Help">Help</a></li><li><a href="global.html#id">id</a></li><li><a href="global.html#InformationIcon">InformationIcon</a></li><li><a href="global.html#isFullPageLayout">isFullPageLayout</a></li><li><a href="global.html#languages">languages</a></li><li><a href="global.html#LeftArrowIcon">LeftArrowIcon</a></li><li><a href="global.html#LocationMarker">LocationMarker</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#mapStateToProps">mapStateToProps</a></li><li><a href="global.html#MenuIcon">MenuIcon</a></li><li><a href="global.html#middleware">middleware</a></li><li><a href="global.html#numericKeys">numericKeys</a></li><li><a href="global.html#onChangePasswordisusedtosetthepasswordinthestatechangeuserpasswordcomefromtheform">onChangePassword is used to set the password in the state
+change user password come from the form</a></li><li><a href="global.html#onChangeUsernameisusedtosettheusernameinthestatechangeuserusernamecomefromtheform">onChangeUsername is used to set the username in the state
+change user username come from the form</a></li><li><a href="global.html#onRouteChangedisusedtocheckifthecurrentrouteisafullpagelayoutornotdefinethelogouteventbusforreadeventbusdocumentpleaseseecommon/EventBus.js">onRouteChanged is used to check if the current route is a full page layout or not
+define the logout event bus
+for read event bus document please see common/EventBus.js</a></li><li><a href="global.html#Option">Option</a></li><li><a href="global.html#parseJwt">parseJwt</a></li><li><a href="global.html#queryClient">queryClient</a></li><li><a href="global.html#renderisusedtorenderthecomponent">render is used to render the component</a></li><li><a href="global.html#responseMessages">responseMessages</a></li><li><a href="global.html#RightArrowIcon">RightArrowIcon</a></li><li><a href="global.html#setMessage">setMessage</a></li><li><a href="global.html#StepOperations">StepOperations</a></li><li><a href="global.html#TrashIcon">TrashIcon</a></li><li><a href="global.html#useHttp">useHttp</a></li><li><a href="global.html#USER_PROFILE">USER_PROFILE</a></li><li><a href="global.html#UsersList">UsersList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Mon Oct 31 2022 09:18:31 GMT+0330 (Iran Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

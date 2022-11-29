@@ -6,6 +6,7 @@ import ItemsService from "../services/items.service";
 import { useQuery } from "react-query";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
+import { Trans } from "react-i18next";
 
 function ItemTypeLevel() {
   const [selectedItemClass, setSelectedItemClass] = useState();
@@ -105,7 +106,9 @@ function ItemTypeLevel() {
 
   return (
     <div>
-      <h3 className="page-title mb-3">"item category" In different levels</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Item categories in different levels</Trans>
+      </h3>
       {isItemClassesLoading ? (
         <Spinner />
       ) : (
@@ -115,7 +118,9 @@ function ItemTypeLevel() {
               <div className="row">
                 <div className="col-sm-12 col-lg-5">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Item class</label>
+                    <label className="col-sm-12">
+                      <Trans>Item class</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectItemClassHandler}
@@ -133,7 +138,9 @@ function ItemTypeLevel() {
                 </div>
                 <div className="col-sm-12 col-lg-5">
                   <Form.Group className="row">
-                    <label className="col-sm-12">Level</label>
+                    <label className="col-sm-12">
+                      <Trans>Levels</Trans>
+                    </label>
                     <div className="col-sm-12">
                       <Form.Control
                         onChange={selectLevelHandler}
@@ -153,7 +160,7 @@ function ItemTypeLevel() {
                     className="btn btn-primary w-100 mt-4"
                     onClick={onSaveHandler}
                   >
-                    Save
+                    <Trans>Save</Trans>
                   </button>
                 </div>
               </div>
@@ -164,8 +171,12 @@ function ItemTypeLevel() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell className="col-sm-10">Title</TableCell>
-                    <TableCell>Enable</TableCell>
+                    <TableCell className="col-sm-10">
+                      <Trans>Items category</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Enable</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -181,12 +192,17 @@ function ItemTypeLevel() {
                           {item.title}
                         </TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            disabled={isItemTinLevelLoading}
-                            checked={!!isChecked}
-                            onChange={(e) => onEnableFieldHandler(e, item)}
-                          />
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                disabled={isItemTinLevelLoading}
+                                checked={!!isChecked}
+                                onChange={(e) => onEnableFieldHandler(e, item)}
+                              />
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                       </TableRow>
                     );

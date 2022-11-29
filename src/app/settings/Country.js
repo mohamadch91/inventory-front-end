@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import { Form } from "react-bootstrap";
-import DatePicker from "react-datepicker";
-import bsCustomFileInput from "bs-custom-file-input";
 import UserService from "../services/user.service";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import "./country.css";
-import LocationMarker from "./LocationMarker";
 import * as XLSX from "xlsx";
-import {toast} from "react-hot-toast";
+import { toast } from "react-hot-toast";
+import Map from "./Map";
+import { Translation,Trans } from "react-i18next";
+import { seperator } from "../helpers/seperator";
 
+import "./country.scss";
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+});
 export class Country extends Component {
   constructor(props) {
     super(props);
@@ -39,16 +41,17 @@ export class Country extends Component {
       put: false,
       snackopen: false,
       type: "success",
-      mainLocation: null,
+      isCountyValid: false,
+      isCountyCodeValid: false,
+      isCurrencyValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleExcelChange = this.handleExcelChange.bind(this);
-    this.cv = this.cv.bind(this);
-    this.CV = this.CV.bind(this);
-    this.countryvalidator = this.countryvalidator.bind(this);
-    this.ccodevalid = this.ccodevalid.bind(this);
-    this.CurrencyValidator = this.CurrencyValidator.bind(this);
+    this.isCountryValid = this.isCountryValid.bind(this);
+    this.isCurrencyValid = this.isCurrencyValid.bind(this);
+    this.isCountryCodeValid = this.isCountryCodeValid.bind(this);
+    this.handlemapclick = this.handlemapclick.bind(this);
   }
   changestate = (e, state) => {
     this.setState({ [state]: e.target.value });
@@ -61,121 +64,67 @@ export class Country extends Component {
       startDate: date,
     });
   };
+  handlemapclick(e) {
+    let str = "LatLng(" + e.latlng.lat + "," + e.latlng.lng + ")";
+    this.setState({ mainlocation: str});
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
     event.stopPropagation();
     const form = event.currentTarget;
-    if (!this.countryvalidator() || !this.CV()) {
+    if (
+      !this.isCountryCodeValid() ||
+      !this.isCurrencyValid() ||
+      !this.isCountryValid()
+    ) {
       this.setState({ validated: false });
-      console.log("salam");
       event.preventDefault();
       event.stopPropagation();
-      toast.error("complete form correctly");
-      return ;
+      toast.error(<Trans>complete form correctly</Trans>);
+      return;
     }
-      if (form.checkValidity() === false) {
-        event.preventDefault();
-        event.stopPropagation();
-        toast.error("complete form correctly");
-      } else {
-        this.setState({ validated: true });
-        let formData = new FormData();
-        formData.append("country", this.state.CountryName);
-        formData.append("codecountry", this.state.CountryCode);
-        formData.append("currency", this.state.Currency);
-        formData.append("levels", this.state.levels);
-        console.log(typeof this.state.logo);
-        if (this.state.logo !== null && typeof this.state.logo !== "string") {
-          formData.append("logo", this.state.logo);
-        }
-        if (this.state.slogo !== null && typeof this.state.slogo !== "string") {
-          formData.append("secondLogo", this.state.slogo);
-        }
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+            toast.error(<Trans>complete form correctly</Trans>);
 
-        formData.append("poptarget", this.state.targetpopulation);
-        formData.append("poprate", this.state.growthRate);
-        formData.append("havehr", this.state.enableHR);
-        formData.append("mainlocation", this.state.mainlocation);
-        formData.append("logo2", this.state.logo2);
-        formData.append("usingtool", this.state.requiredcapacities);
-        formData.append("usingmaintenance", this.state.enableMaintaining);
-
-        if (this.state.user.admin && Object.keys(this.state.country).length) {
-          formData.append("id", this.state.country.id);
-          console.log(this.state.targetpopulation);
-
-          UserService.editcountry(formData)
-            .then((res) => {
-              const perviuscountry = JSON.parse(
-                localStorage.getItem("country")
-              );
-              localStorage.setItem("country", JSON.stringify(res.data));
-              const country = JSON.parse(localStorage.getItem("country"));
-              if (country.levels > perviuscountry.levels) {
-                for (
-                  let i = 0;
-                  i < country.levels - perviuscountry.levels;
-                  i++
-                ) {
-                  const data = {
-                    maxpop: 0,
-                    minpop: 0,
-                    uppervol: 0,
-                    undervol: 0,
-                    m25vol: 0,
-                    m70vol: 0,
-                    m25volnew: 0,
-                    m70volnew: 0,
-                    uppervolnew: 0,
-                    undervolnew: 0,
-                    name: "levels" + (perviuscountry.levels + i + 1),
-                    dryvol: 0,
-                    dryvolnew: 0,
-                    country: 1,
-                    parent: perviuscountry.levels + i - 1,
-                  };
-                  console.log("hello");
-                  UserService.addlevel(data)
-                    .then((res) => {
-                      console.log(res);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                }
-              }
-              this.setState({
-                CountryName: country.country,
-                CountryCode: country.codecountry,
-                Currency: country.currency,
-                levels: country.levels,
-                logo: country.logo,
-                slogo: country.secondLogo,
-                growthRate: country.poprate,
-                targetpopulation: country.poptarget,
-                enableHR: country.havehr,
-                mainlocation: country.mainlocation,
-                requiredcapacities: country.usingtool,
-                enableMaintaining: country.usingmaintenance,
-              });
-              this.alerthandle("Country changed successfully", "success");
-              toast.success("Country changed successfully");
-            })
-            .catch((err) => {
-              // console.log(formData)
-              // console.log(err)
-              this.alerthandle("Country changed unsuccessfully", "error");
-              toast.error("Country changed unsuccessfully");
-            });
-        } else {
-          UserService.addcountry(formData)
-            .then((res) => {
-              this.alerthandle("Country added successfully", "success");
-              toast.success("Country added successfully");
-              localStorage.setItem("country", JSON.stringify(res.data));
-              const country = JSON.parse(localStorage.getItem("country"));
-              for (let i = 0; i < country.levels; i++) {
+    } else {
+      this.setState({ validated: true });
+      let formData = new FormData();
+      formData.append("country", this.state.CountryName);
+      formData.append("codecountry", this.state.CountryCode);
+      formData.append("currency", this.state.Currency);
+      formData.append("levels", this.state.levels);
+      if (this.state.logo !== null && typeof this.state.logo !== "string") {
+        formData.append("logo", this.state.logo);
+      }
+      if (this.state.slogo !== null && typeof this.state.slogo !== "string") {
+        formData.append("secondLogo", this.state.slogo);
+      }
+      let rate =this.state.growthRate
+      rate=rate.replace(seperator(),".")
+      rate=parseFloat(rate)
+      formData.append("poptarget", this.state.targetpopulation);
+      formData.append(
+        "poprate",
+                  rate
+      );
+      formData.append("havehr", this.state.enableHR);
+      formData.append("mainlocation", this.state.mainlocation);
+      formData.append("logo2", this.state.logo2);
+      formData.append("usingtool", this.state.requiredcapacities);
+      formData.append("usingmaintenance", this.state.enableMaintaining);
+      console.log(this.state.country)
+      if (this.state.user?.admin && Object.keys(this.state.country).length) {
+        formData.append("id", this.state.country.id);
+        UserService.editcountry(formData)
+          .then((res) => {
+            const perviuscountry = JSON.parse(localStorage.getItem("country"));
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country = JSON.parse(localStorage.getItem("country"));
+            if (country.levels > perviuscountry.levels) {
+              for (let i = 0; i < country.levels - perviuscountry.levels; i++) {
                 const data = {
                   maxpop: 0,
                   minpop: 0,
@@ -187,11 +136,11 @@ export class Country extends Component {
                   m70volnew: 0,
                   uppervolnew: 0,
                   undervolnew: 0,
-                  name: "levels" + i,
+                  name: "levels" + (perviuscountry.levels + i + 1),
                   dryvol: 0,
                   dryvolnew: 0,
                   country: 1,
-                  parent: i === 0 ? null : i - 1,
+                  parent: perviuscountry.levels + i - 1,
                 };
                 UserService.addlevel(data)
                   .then((res) => {
@@ -201,38 +150,92 @@ export class Country extends Component {
                     console.log(err);
                   });
               }
-              this.setState({
-                CountryName: country.country,
-                CountryCode: country.codecountry,
-                Currency: country.currency,
-                levels: country.levels,
-                logo: country.logo,
-                slogo: country.secondLogo,
-                growthRate: country.poprate,
-                targetpopulation: country.poptarget,
-                enableHR: country.havehr,
-                mainlocation: country.mainlocation,
-                requiredcapacities: country.usingtool,
-                enableMaintaining: country.usingmaintenance,
-              });
-            })
-            .catch((err) => {
-              // console.log(err)
-              this.alerthandle("Country added unsuccessfully", "error");
-              toast.error("Country added unsuccessfully");
+            }
+            this.setState({
+              CountryName: country.country,
+              CountryCode: country.codecountry,
+              Currency: country.currency,
+              levels: country.levels,
+              logo: country.logo,
+              slogo: country.secondLogo,
+              growthRate: country.poprate,
+              targetpopulation: country.poptarget,
+              enableHR: country.havehr,
+              mainlocation: country.mainlocation,
+              requiredcapacities: country.usingtool,
+              enableMaintaining: country.usingmaintenance,
             });
-        }
+            this.alerthandle("Country changed successfully", "success");
+            toast.success(<Trans>Country changed successfully</Trans>);
+          })
+          .catch((err) => {
+            this.alerthandle("Country changed unsuccessfully", "error");
+            toast.error(<Trans>Country changed unsuccessfully</Trans>);
+          });
+      } else {
+        UserService.addcountry(formData)
+          .then((res) => {
+            this.alerthandle("Country added successfully", "success");
+            toast.success("Country added successfully");
+            localStorage.setItem("country", JSON.stringify(res.data));
+            const country = JSON.parse(localStorage.getItem("country"));
+            for (let i = 0; i < country.levels; i++) {
+              const data = {
+                maxpop: 0,
+                minpop: 0,
+                uppervol: 0,
+                undervol: 0,
+                m25vol: 0,
+                m70vol: 0,
+                m25volnew: 0,
+                m70volnew: 0,
+                uppervolnew: 0,
+                undervolnew: 0,
+                name: "levels" + i,
+                dryvol: 0,
+                dryvolnew: 0,
+                country: 1,
+                parent: i === 0 ? null : i - 1,
+              };
+              UserService.addlevel(data)
+                .then((res) => {
+                  console.log(res);
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+            this.setState({
+              CountryName: country.country,
+              CountryCode: country.codecountry,
+              Currency: country.currency,
+              levels: country.levels,
+              logo: country.logo,
+              slogo: country.secondLogo,
+              growthRate: country.poprate,
+              targetpopulation: country.poptarget,
+              enableHR: country.havehr,
+              mainlocation: country.mainlocation,
+              requiredcapacities: country.usingtool,
+              enableMaintaining: country.usingmaintenance,
+            });
+          })
+          .catch((err) => {
+            this.alerthandle("Country added unsuccessfully", "error");
+            toast.error("Country added unsuccessfully");
+          });
       }
+    }
   };
-  countryvalidator = () => {
+  isCountryCodeValid = () => {
     var hasNumber = /\d/;
-    if (this.state.CountryCode.length === 0) {
+    if (this.state.CountryCode?.length === 0) {
       return true;
     }
-    if (this.state.CountryCode.length > 3) {
+    if (this.state.CountryCode?.length > 3) {
       return false;
     }
-    if (this.state.CountryCode.length < 3) {
+    if (this.state.CountryCode?.length < 3) {
       return false;
     }
     if (hasNumber.test(this.state.CountryCode)) {
@@ -240,42 +243,26 @@ export class Country extends Component {
     }
     return true;
   };
-  handleClosesnack = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+  isCountryValid = () => {
+    if (
+      this.state.CountryName?.length > 1 &&
+      !/\d/.test(this.state.CountryName)
+    ) {
+      return true;
     }
+    return false;
+  };
+  isCurrencyValid = () => {
+    if (
+      this.state.Currency?.length > 0 &&
+      this.state.Currency?.length < 4 &&
+      !/\d/.test(this.state.Currency)
+    ) {
+      return true;
+    }
+    return false;
+  };
 
-    this.setState({ snackopen: false });
-  };
-  ccodevalid = () => {
-    if (this.state.CountryCode.length === 0) {
-      return true;
-    }
-    if (this.state.CountryCode.length === 3) {
-      return false;
-    }
-    
-      return true;
-    
-  };
-  cv = () => {
-    if (this.state.CountryName.length > 1) {
-      return true;
-    }
-    return false;
-  };
-  CurrencyValidator = () => {
-    if (this.state.Currency.length < 4) {
-      return true;
-    }
-    return false;
-  };
-  CV = () => {
-    if (this.state.Currency.length > 0) {
-      return true;
-    }
-    return false;
-  };
   handleExcelChange(e) {
     const [file] = e.target.files;
     const reader = new FileReader();
@@ -289,6 +276,13 @@ export class Country extends Component {
     };
     reader.readAsBinaryString(file);
   }
+  handleClosesnack = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    this.setState({ snackopen: false });
+  };
 
   componentDidMount() {
     // bsCustomFileInput.init()
@@ -319,13 +313,18 @@ export class Country extends Component {
     return (
       <div>
         <div className="page-header">
-          <h3 className="page-title"> Settings </h3>
+          <h1 className="page-title">
+            {" "}
+            <Trans>Settings</Trans>{" "}
+          </h1>
         </div>
         <div className="row">
           <div className="col-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Add Country</h4>
+                <h4 className="card-title">
+                  <Trans>Add Country</Trans>
+                </h4>
                 <Form
                   noValidate
                   validated={this.state.validated}
@@ -334,20 +333,20 @@ export class Country extends Component {
                 >
                   <h3 className=" card-description text-bold">
                     {" "}
-                    Country info{" "}
+                    <Trans>Country</Trans> <Trans>Information</Trans>
                   </h3>
                   <div className="row">
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label control-label">
-                          Country
+                          <Trans>Country</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            isValid={this.cv()}
+                            isValid={this.isCountryValid()}
+                            isInvalid={!this.isCountryValid()}
                             value={this.state.CountryName}
                             onChange={(e) => {
-                              console.log(e);
                               this.setState({ CountryName: e.target.value });
                             }}
                             required
@@ -360,19 +359,18 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          Country code
+                          <Trans>Country</Trans> <Trans>code</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={true}
                             required
-                            isInvalid={this.ccodevalid()}
-                            isValid={this.countryvalidator()}
+                            isInvalid={!this.isCountryCodeValid()}
+                            isValid={this.isCountryCodeValid()}
                             value={this.state.CountryCode}
                             onChange={(e) => {
                               const code = e.target.value;
                               const x = code.toString().toUpperCase();
-
                               this.setState({ CountryCode: x });
                             }}
                             placeholder="Example: ABC"
@@ -386,15 +384,15 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          Currency
+                          <Trans>Currency</Trans>
                         </label>
                         <div className="col-sm-9">
                           <div className="input-group">
                             <Form.Control
                               required
-                              disabled={!this.state.user.admin}
-                              isInvalid={!this.CurrencyValidator()}
-                              isValid={this.CV()}
+                              disabled={!this.state.user?.admin}
+                              isInvalid={!this.isCurrencyValid()}
+                              isValid={this.isCurrencyValid()}
                               value={this.state.Currency}
                               onChange={(e) => {
                                 this.setState({ Currency: e.target.value });
@@ -411,14 +409,14 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          Allow levels
+                          <Trans>Allowed levels</Trans>
                         </label>
                         <div
                           style={{ marginTop: "2.5%" }}
                           className="col-sm-9 "
                         >
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             required
                             onChange={(e) => {
                               this.setState({ levels: e.target.value });
@@ -431,7 +429,7 @@ export class Country extends Component {
                           />
 
                           <label className="col-sm-3 col-form-label  ">
-                            value : {this.state.levels}{" "}
+                            <Trans>Value</Trans>: {this.state.levels}{" "}
                           </label>
                         </div>
                       </Form.Group>
@@ -441,32 +439,42 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">
-                          logo{" "}
+                          <Trans>
+                            Logo 1: jpg.jpeg.png, aspect ration 16:4
+                          </Trans>
                         </label>
-                        <div className="col-sm-9">
+                        <div className="col-sm-9 mt-3">
                           <div className="custom-file ">
                             <Form.Control
                               onChange={(e) => {
                                 this.setState({ logo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang"
                               lang="es"
+                              accept="image/png, image/jpeg, image/jpg"
                             />
-                            <label
-                              className="custom-file-label"
-                              htmlFor="customFileLang"
-                            >
-                              {this.state.logo !== null
-                                ? this.state.logo.name
-                                : "Upload image"}
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFileLang"
+                                  datacustomattr={t("Browse")}
+                                >
+                                  {this.state.logo !== null ? (
+                                    this.state.logo.name
+                                  ) : (
+                                    <Trans>Upload image</Trans>
+                                  )}
 
-                              {typeof this.state.logo === "string"
-                                ? this.state.logo.split("/")[2]
-                                : ""}
-                            </label>
+                                  {typeof this.state.logo === "string"
+                                    ? this.state.logo.split("/")[2]
+                                    : ""}
+                                </label>
+                              )}
+                            </Translation>
                           </div>
                         </div>
                       </Form.Group>
@@ -474,31 +482,39 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label ">
-                          second logo{" "}
+                          <Trans>Logo 2: jpg.jpeg.png, aspect ration 1:1</Trans>
                         </label>
-                        <div className="col-sm-9">
+                        <div className="col-sm-9 mt-3">
                           <div className="custom-file ">
                             <Form.Control
                               onChange={(e) => {
                                 this.setState({ slogo: e.target.files[0] });
                               }}
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               type="file"
                               className="form-control visibility-hidden"
                               id="customFileLang1"
                               lang="es"
+                              accept="image/png, image/jpeg, image/jpg"
                             />
-                            <label
-                              className="custom-file-label"
-                              htmlFor="customFileLang1"
-                            >
-                              {this.state.slogo !== null
-                                ? this.state.slogo.name
-                                : "Upload image"}
-                              {typeof this.state.slogo === "string"
-                                ? this.state.slogo.split("/")[2]
-                                : ""}
-                            </label>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="customFileLang1"
+                                  datacustomattr={t("Browse")}
+                                >
+                                  {this.state.slogo !== null ? (
+                                    this.state.slogo.name
+                                  ) : (
+                                    <Trans>Upload image</Trans>
+                                  )}
+                                  {typeof this.state.slogo === "string"
+                                    ? this.state.slogo.split("/")[2]
+                                    : ""}
+                                </label>
+                              )}
+                            </Translation>
                           </div>
                         </div>
                       </Form.Group>
@@ -509,33 +525,61 @@ export class Country extends Component {
                     <div className="col-md-6 ">
                       <Form.Group className=" row  ">
                         <label className="col-sm-3 col-form-label control-label">
-                          Annual Population Growth Rate
+                          <Trans>Annual population growth rate (%)</Trans>
                         </label>
                         <div className="col-sm-9">
                           <div className="input-group ">
                             <Form.Control
-                              disabled={!this.state.user.admin}
+                              disabled={!this.state.user?.admin}
                               required
                               isValid={true}
-                              value={this.state.growthRate}
-                              onChange={(e) => {
-                                let number = e.target.value;
+                              value={this.state.growthRate
+                                .toString()
+                                .replace(".", seperator())}
+                              onKeyPress={(e) => {
+                                e.persist();
+                                const numericKeys="0123456789"+seperator()
+                                if (numericKeys.indexOf(e.key)===-1){
+                                   e.preventDefault();
+                                   return;
+                                }
+                                let number = e.target.value.replace(
+                                  seperator(),
+                                  "."
+                                );
                                 const flag = number.split(".").length;
-                                console.log(flag);
                                 if (flag > 1) {
                                   const num = number.split(".")[0];
                                   const floatpoint = number
                                     .split(".")[1]
                                     .slice(0, 2);
                                   number = num + "." + floatpoint;
-                                  console.log(number);
                                 }
 
                                 this.setState({
-                                  growthRate: parseFloat(number),
+                                  growthRate: number.replace(".", seperator()),
+                                });
+                                
+                              }}
+                              onChange={(e) => {
+                                let number = e.target.value.replace(
+                                  seperator(),
+                                  "."
+                                );
+                                const flag = number.split(".").length;
+                                if (flag > 1) {
+                                  const num = number.split(".")[0];
+                                  const floatpoint = number
+                                    .split(".")[1]
+                                    .slice(0, 2);
+                                  number = num + "." + floatpoint;
+                                }
+
+                                this.setState({
+                                  growthRate: number.replace(".", seperator()),
                                 });
                               }}
-                              type="number"
+                              type="string"
                               className="form-control"
                               aria-label="Amount (to the nearest dollar)"
                             />
@@ -546,33 +590,16 @@ export class Country extends Component {
                         </div>
                       </Form.Group>
                     </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label ">
-                          Main Location
-                        </label>
-                        <div className="col-sm-9">
-                          <Form.Control
-                            disabled={!this.state.user.admin}
-                            value={this.state.mainlocation}
-                            onChange={(e) => {
-                              this.setState({ mainlocation: e.target.value });
-                            }}
-                            type="text"
-                          />
-                        </div>
-                      </Form.Group>
-                    </div>
                   </div>
                   <div className="row">
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          Enable HR
+                          <Trans>Enable HR data</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             checked={this.state.enableHR}
                             value={this.state.enableHR}
                             onChange={(e) => {
@@ -589,12 +616,12 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-5 col-form-label">
-                          Enable Maintenance
+                          <Trans>Enable maintenance functions</Trans>
                         </label>
                         <div className="col-sm-7">
                           <Form.Check
                             checked={this.state.enableMaintaining}
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 enableMaintaining:
@@ -613,12 +640,12 @@ export class Country extends Component {
                     <div className="col-md-6">
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label control-label">
-                          Target Population
+                          <Trans>Target populations:</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
                             required
-                            disabled={!this.state.user.admin}
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               this.setState({
                                 targetpopulation: e.target.value,
@@ -628,24 +655,33 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option value="General population">
-                              General population
-                            </option>
-                            <option value="Under-1 Population">
-                              Under-1 Population
-                            </option>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value="General population">
+                                  {t("General populations")}
+                                </option>
+                              )}
+                            </Translation>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value="Under-1 Population">
+                                  {t("Under-1 populations")}
+                                </option>
+                              )}
+                            </Translation>
                           </Form.Control>
                         </div>
                       </Form.Group>
                     </div>
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label ">
-                          Require Capacity
+                        <label className="col-sm-3 col-form-label control-label">
+                          <Trans>Required capacity</Trans>
                         </label>
                         <div className="col-sm-9">
                           <Form.Control
-                            disabled={!this.state.user.admin}
+                            required
+                            disabled={!this.state.user?.admin}
                             onChange={(e) => {
                               const value =
                                 e.target.value === "true" ? true : false;
@@ -657,55 +693,72 @@ export class Country extends Component {
                             className="form-select"
                             as="select"
                           >
-                            <option value={true}>
-                              Estimate required capacity (in MS Excel)
-                            </option>
-                            <option value={false}>
-                              Enter required capacity manually
-                            </option>
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option
+                                  value={true}
+                                  key="Estimate required capacity (in MS Excel)"
+                                >
+                                  {t(
+                                    "Import from Assistant Tool (in MS Excel)"
+                                  )}
+                                </option>
+                              )}
+                            </Translation>
+
+                            <Translation>
+                              {(t, { i18n }) => (
+                                <option value={false}>
+                                  {t("Enter manually")}
+                                </option>
+                              )}
+                            </Translation>
                           </Form.Control>
                         </div>
                       </Form.Group>
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <Form.Group className="row">
+                  <Form.Group className="row">
+                    <div className="col-md-6">
                       <label className="col-sm-3 col-form-label ">
-                        Main Location
+                        <Trans>Main location</Trans>
                       </label>
-
                       <div className="map">
-                        <MapContainer
-                          center={[52.22977, 21.01178]}
-                          zoom={13}
-                          scrollWheelZoom={false}
-                        >
-                          <TileLayer
-                            {...{
-                              attribution:
-                                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                              url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            }}
-                          />
-                          <LocationMarker />
-                        </MapContainer>
+                        <Map
+                          loca={this.state.mainlocation}
+                          handleChange={this.handlemapclick}
+                        />
                       </div>
-                    </Form.Group>
-                  </div>
+                    </div>
+                    <div className="col-md-6">
+                      <Form.Group className="mt-5">
+                        <div className="col-sm-12">
+                          <Form.Control
+                            disabled
+                            value={this.state.mainlocation}
+                            onChange={(e) => {
+                              this.setState({ mainlocation: e.target.value });
+                            }}
+                            type="text"
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                  </Form.Group>
 
                   {this.state.country !== [] &&
                   this.state.country !== undefined &&
-                  this.state.user.admin ? (
-                    <button type="submit" className="btn btn-primary mr-2">
-                      Save
+                  this.state.user?.admin ? (
+                    <button type="submit" className="btn w-25 btn-primary mr-2">
+                      <Trans>Save</Trans>
                     </button>
                   ) : (
                     <button
                       type="submit"
                       disabled
-                      className="btn btn-primary mr-2"
+                      className="btn w-25 btn-primary mr-2"
                     >
-                      Save
+                      <Trans>Save</Trans>
                     </button>
                   )}
                 </Form>

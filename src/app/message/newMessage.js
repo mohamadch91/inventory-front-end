@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import HRService from "../services/hr.service";
 import MessageService from "../services/message.service";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
@@ -7,6 +6,7 @@ import { MultiSelect } from "react-multi-select-component";
 import "../styles/inputs.scss";
 import "./message.scss";
 import "../settings/itemClass.scss";
+import { Trans } from "react-i18next";
 
 function NewMessage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,14 +15,15 @@ function NewMessage() {
   const [selected, setSelected] = useState([]);
 
   function getFacilities() {
-    HRService.getFacilities()
+    MessageService.getfacilities()
       .then((res) => {
         const data = res.data;
         setFacilities(data);
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -39,7 +40,7 @@ function NewMessage() {
   function handleSubmit(e) {
     e.preventDefault();
     if (selected.length === 0) {
-      toast.error("Please select at least one facility");
+      toast.error(<Trans>Please select at least one facility</Trans>);
     } else {
       const { subject, body } = formData;
       const data = {
@@ -49,12 +50,12 @@ function NewMessage() {
       };
       MessageService.sendMessage(data)
         .then((res) => {
-          toast.success("Message sent successfully");
+          toast.success(<Trans>Message sent successfully</Trans>);
           setFormData({});
           setSelected([]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending message");
+          toast.error(<Trans>There is a problem sending message</Trans>);
         });
     }
   }
@@ -66,9 +67,13 @@ function NewMessage() {
       ) : (
         <div className="container">
           <form onSubmit={handleSubmit}>
-            <h3 className="mb-1">Send Message</h3>
+            <h3 className="mb-1 page-title">
+              <Trans>Send message</Trans>
+            </h3>
             <div className="d-flex flex-column">
-              <label>Receivers</label>
+              <label>
+                <Trans>Receivers</Trans>
+              </label>
               <MultiSelect
                 options={facilities.map((item) => {
                   return { label: item.name, value: item.id };
@@ -76,10 +81,13 @@ function NewMessage() {
                 value={selected}
                 onChange={setSelected}
                 labelledBy="Select"
+                className="multi-select"
               />
             </div>
             <div className="d-flex flex-column">
-              <label>Subject</label>
+              <label>
+                <Trans>Subject</Trans>
+              </label>
               <input
                 onChange={handleChange}
                 type="text"
@@ -88,11 +96,13 @@ function NewMessage() {
               />
             </div>
             <div className="d-flex flex-column">
-              <label>Message Body</label>
+              <label>
+                <Trans>Message body</Trans>
+              </label>
               <textarea onChange={handleChange} name="body" required />
             </div>
             <button type="submit" className="w-100 save-btn mt-4">
-              Send
+              <Trans>Send</Trans>
             </button>
           </form>
         </div>

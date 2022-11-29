@@ -1,3 +1,7 @@
+/**
+ * retun an svg
+ *   CloseIcon
+ */
 function CloseIcon() {
   return (
     <>

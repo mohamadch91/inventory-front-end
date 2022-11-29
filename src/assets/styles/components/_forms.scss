@@ -41,7 +41,6 @@
 select {
   &.form-control {
     padding: .4375rem .75rem;
-    border: 0;
     outline: 1px solid $border-color;
     color: $input-placeholder-color;
     &:focus {
@@ -106,6 +105,7 @@ select {
     border-radius: 2px;
     &:after {
       background-color: theme-color(primary);
+      content: attr(datacustomattr);
       height: auto;
       @extend .btn-primary;
     }

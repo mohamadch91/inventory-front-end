@@ -1,0 +1,81 @@
+.item-class-page {
+  h3 {
+    color: black;
+  }
+  label {
+    color: black;
+  }
+
+  th {
+    background: rgb(40, 136, 254);
+    color: white;
+    white-space: nowrap;
+  }
+  td {
+    text-align: center;
+  }
+  tr:nth-child(even) {
+    background: #ffffff;
+  }
+  tr:nth-child(odd) {
+    background: #d8d8d85b;
+  }
+  .edit-btn {
+    min-width: 5.5rem;
+  min-height: 2rem;
+        width: max-content;
+    height: max-content;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+  }
+}
+.save-btn {
+  border: none;
+  background: #1de172;
+  border-radius: 5px;
+  // width: 5.5rem;
+  min-width: 5.5rem;
+  min-height: 2rem;
+      width: max-content;
+    height: max-content;
+}
+.close-btn {
+  width: 1rem;
+  border: none;
+  background-color: transparent;
+  svg {
+    width: 1rem;
+    height: auto;
+    margin-left: 1rem;
+  }
+}
+input,
+select,
+textarea {
+  background: white;
+  border: 1px solid #ababab70;
+  width: 70%;
+  border-radius: 5px;
+  padding: 0.5rem;
+  &:invalid:focus {
+    border-color: #ff0000;
+  }
+}
+input {
+  width: 90%;
+}
+textarea {
+  height: 10rem;
+}
+label {
+  color: black;
+}
+.multi-select {
+  button,
+  label {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}

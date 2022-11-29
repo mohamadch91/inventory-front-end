@@ -68,7 +68,7 @@ $theme-gradient-colors: (
 ////////// COLOR VARIABLES //////////
 $content-bg: #f0f1f6;
 $footer-bg: $content-bg;
-$footer-color: ctheme-color(light);
+$footer-color: #001737;
 $border-color: rgba(151,151,151, .3);
 $circle-border:$white; 
 
@@ -97,7 +97,7 @@ $social-colors: (
 
 $type1:     'Nunito', sans-serif;
 
-$default-font-size: .875rem; // 14px as base font size
+$default-font-size: 1rem; // 14px as base font size
 
 $text-muted: #a7afb7;
 $body-color: #a7afb7;
@@ -124,7 +124,7 @@ $sidebar-light-menu-border-color: #f2edf3;
 
 
 $sidebar-dark-bg: #181824;
-$sidebar-dark-menu-color: #8e94a9;
+$sidebar-dark-menu-color: #ffffff;
 $sidebar-dark-menu-active-bg: transparent;
 $sidebar-dark-menu-active-color: #44ce42;
 $sidebar-dark-menu-hover-bg: transparent;
@@ -140,7 +140,7 @@ $sidebar-dark-menu-arrow-color: #9e9da0;
 
 $sidebar-menu-font-size: 0.937rem;
 $sidebar-menu-padding-y: .625rem;
-$sidebar-menu-padding-x: 2.375rem;
+$sidebar-menu-padding-x: 1rem;
 
 $sidebar-submenu-font-size: .8125rem;
 $sidebar-submenu-item-padding: .75rem 2rem .75rem 2rem;
@@ -225,7 +225,7 @@ $tooltip-border-radius: .375rem;
 
 $input-bg:                color(white);
 $input-border-radius:     2px;
-$input-placeholder-color: #c9c8c8;
+$input-placeholder-color: #000000;
 $input-font-size: .8125rem;
 
 $input-padding-y:       .875rem;

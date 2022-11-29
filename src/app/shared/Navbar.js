@@ -1,57 +1,227 @@
-import React, { Component } from 'react';
-import { Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-// import { span } from 'react-i18next';
-import eventBus from '../common/EventBus';
-import userService from '../services/user.service';
+import React, { Component } from "react";
+import { Dropdown } from "react-bootstrap";
+import { withTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { HashLink as Links } from "react-router-hash-link";
+import i18n from "../../i18n";
+import eventBus from "../common/EventBus";
+import Help from "../components/Help";
+import { Translation, Trans } from "react-i18next";
+import dashboardService from "../services/dashboard.service";
+import UserService from "../services/user.service";
+import MessageService from "../services/message.service";
+import Modal from "react-bootstrap/Modal";
+import "../styles/hr.scss";
+import "../settings/itemClass.scss";
+import "../settings/itemType.scss";
+import toast from "react-hot-toast";
+import "../styles/navbar.scss";
+import { isBrowser } from "react-device-detect";
+/**
+ *   navbar component
+ * @return {JSX} return nav bar component
+ */
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-     user:JSON.parse(localStorage.getItem("user")),
-     logo1:null,
-      logo2:null,
+      user: JSON.parse(localStorage.getItem("user")),
+      logo1: null,
+      logo2: null,
+      has_maintain: false,
+      Profmodal: false,
+      passModal: false,
+      messageCount: 0,
+      changePassForm: {},
+      userInfo: {
+        name: JSON.parse(localStorage.getItem("user"))?.name,
+        idnumber: JSON.parse(localStorage.getItem("user"))?.idnumber,
+        phone: JSON.parse(localStorage.getItem("user"))?.phone,
+      },
     };
-
-  
   }
+  /**
+   * open profile modal
+   * @function
+   *
+   */
+  ProfmodalOpen = () => {
+    this.setState({ Profmodal: true });
+  };
+  /**
+   * close profile modal
+   * @function
+   *
+   */
+  ProfmodalClose = () => {
+    this.setState({ Profmodal: false });
+  };
+  /**
+   * open password modal
+   * @function
+   *
+   */
+  passModalOpen = () => {
+    this.setState({ passModal: true });
+  };
+  /**
+   * close password modal
+   * @function
+   *
+   */
+  passModalClose = () => {
+    this.setState({ passModal: false });
+  };
+  /**
+   * @param  {event} e
+   * handle password change input event
+   * just change the state
+   */
+  handleChangePass = (e) => {
+    const { name, value } = e.target;
+    const new_data = this.state.changePassForm;
+    new_data[name] = value;
+    this.setState({ changePassForm: new_data });
+  };
+  /**
+   * @param  {event} e click event
+   * change password
+   * send dataa to api
+   */
+  sumbitChangepass = (e) => {
+    e.preventDefault();
+    for (const key in this.state.changePassForm) {
+      if (this.state.changePassForm[key] === "") {
+        toast.error(<Trans>There is a problem loading data</Trans>);
+      }
+    }
+    /**
+     * check regex of length and password strength
+     */
+    const poorRegExp = /[a-z]/;
+    const weakRegExp = /(?=.*?[0-9])/;
+    const newpass = this.state.changePassForm["password"];
+    const confpass = this.state.changePassForm["conf_password"];
+    const poorPassword = poorRegExp.test(newpass);
+    const weakPassword = weakRegExp.test(newpass);
+    if (newpass.length < 8) {
+      toast.error(<Trans>password length must be larger than 8</Trans>);
+    } else if (!weakPassword) {
+      toast.error(<Trans>password must be contain numerical charecters</Trans>);
+    } else if (!poorPassword) {
+      toast.error(<Trans>password must be contain charechters</Trans>);
+    } else if (newpass !== confpass) {
+      toast.error(<Trans>confirm password is wrong</Trans>);
+    } else {
+      const id = this.state.user.id;
+      UserService.changePassword(id, this.state.changePassForm).then(
+        (res) => {
+          toast.success(<Trans>Password change succesfully</Trans>);
+          this.passModalClose();
+        },
+        (err) => {
+          const data = err.response.data;
+          if (data) {
+            if (data.old_password) {
+              toast.error(<Trans>Old password is not correct</Trans>);
+            }
+            if (data.password) {
+              toast.error(<Trans>Password is to common</Trans>);
+            }
+          }
+        }
+      );
+    }
+  };
+  handleChangeUser = (e) => {
+    const { name, value } = e.target;
+    const new_data = this.state.userInfo;
+    new_data[name] = value;
+    this.setState({ userInfo: new_data });
+  };
+  submitChaneprofile = (e) => {
+    e.preventDefault();
+    const id = this.state.user.id;
+    const new_data = {};
+    for (const key in this.state.userInfo) {
+      if (this.state.userInfo[key] !== "") {
+        new_data[key] = this.state.userInfo[key];
+      }
+    }
+    new_data["username"] = this.state.user.username;
+    UserService.updateUser(id, new_data).then(
+      (res) => {
+        toast.success(<Trans>Profile update succesfully</Trans>);
+        const user = JSON.parse(localStorage.getItem("user"));
+        user.phone = res.data.phone;
+        user.idnumber = res.data.idnumber;
+        user.name = res.data.name;
+        localStorage.removeItem("user");
+        localStorage.setItem("user", JSON.stringify(user));
+        this.ProfmodalClose();
+      },
+      (err) => {
+        toast.error(<Trans>Update profile failed</Trans>);
+      }
+    );
+  };
   componentDidMount() {
-        let country=JSON.parse(localStorage.getItem("country"));
-    console.log(country)
+    console.log(this.state.user);
+    if (this.state.user !== undefined && this.state.user !== null) {
+      dashboardService.getAllWarningsData().then(
+        (res) => {
+          const sum =
+            res.data.seven_days + res.data.three_days + res.data.extended.count;
+          if (sum !== 0) {
+            this.setState({ has_maintain: true });
+          }
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+      MessageService.getUnreadMessages().then((res) => {
+        this.setState({ messageCount: res.data });
+      });
+    }
+    let country = JSON.parse(localStorage.getItem("country"));
 
-    this.state.logo1=country.logo;
-    this.state.logo2 = country.secondLogo;
+    if (country !== null) {
+      this.state.logo1 = country.logo;
+      this.state.logo2 = country.secondLogo;
+    }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `http://5.182.47.38:8001${this.state.logo1}`,
+        logo1: `https://api.invgap.org${this.state.logo1}`,
+      });
     }
-    )
+    if (this.state.logo2 !== null) {
+      this.setState({
+        logo2: `https://api.invgap.org${this.state.logo2}`,
+      });
+    }
   }
-  console.log(this.state.logo2)
-  if (this.state.logo2 !== null) {
-    this.setState({
-      logo2: `http://5.182.47.38:8001${this.state.logo2}`,
-    })
-  }
-}
   toggleOffcanvas() {
     document.querySelector(".sidebar-offcanvas").classList.toggle("active");
   }
+  languages = {
+    en: "English",
+    fr: "Français",
+    ar: "عربی",
+    es: "Español",
+    ru: "Русский",
+    ot: "Other",
+    uk: "украї́нська",
+    ch: "Chinese",
+  };
   render() {
     return (
       <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <Link className="navbar-brand brand-logo" to="/dashboard">
-            <img src={this.state.logo1} alt="logo" />
-          </Link>
-          <Link className="navbar-brand brand-logo-mini" to="/dashboard">
-            <img
-              src={this.state.logo2}
-              alt="logo"
-            />
-          </Link>
-        </div>
+        {isBrowser && (
+          <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center"></div>
+        )}
+
         <div className="navbar-menu-wrapper d-flex align-items-stretch">
           <button
             className="navbar-toggler navbar-toggler align-self-center"
@@ -60,142 +230,76 @@ class Navbar extends Component {
           >
             <span className="mdi mdi-menu"></span>
           </button>
-          <div className="search-field d-none d-md-block">
-            <form className="d-flex align-items-center h-100" action="#">
-              <div className="input-group">
-                <div className="input-group-prepend bg-transparent">
-                  <i className="input-group-text border-0 mdi mdi-magnify"></i>
-                </div>
-                <input
-                  type="text"
-                  className="form-control bg-transparent border-0"
-                  placeholder="Search products"
+          {isBrowser && (
+            <div className="search-field search d-none d-md-block">
+              <div className="w-100 h-100">
+                <img
+                  src={require("../../assets/images/home/nav-logo.jpg")}
+                  alt="profile"
+                  className={"pl-1 images"}
+                />
+                <img
+                  className={"pl-1 images"}
+                  src={this.state.logo1}
+                  alt="logo"
+                />
+                <img
+                  className={"pl-1 images"}
+                  src={this.state.logo2}
+                  alt="logo"
                 />
               </div>
-            </form>
+            </div>
+          )}
+
+          <div className="text-center align-item-center align-center pl-3 sys-text ">
+            <Trans>Inventory and Gap Analysis</Trans> v3.0 (
+            {JSON.parse(localStorage.getItem("country"))?.country} :{" "}
+            {this.state.user?.facility_name} )
+          </div>
+          <div className="text-center align-item-center align-center pl-3 sys-text-mobile ">
+            <Trans>IGA</Trans> :{this.state.user?.facility_name}
           </div>
           <ul className="navbar-nav navbar-nav-right">
-            <li className="nav-item nav-profile d-none d-xl-flex">
+            {isBrowser && (
+              <li className="nav-item nav-profile  d-xl-flex">
+                <Help />
+              </li>
+            )}
+
+            <li className="nav-item nav-profile nav-language  d-flex">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator">
-                  <span>Reports</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-pdf mr-2"></i>
-                    <span>PDF</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-excel mr-2"></i>
-                    <span>Excel</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-file-word mr-2"></i>
-                    <span>doc</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
-            <li className="nav-item nav-profile d-none d-xl-flex">
-              <Dropdown alignRight>
-                <Dropdown.Toggle className="nav-link count-indicator">
-                  <span>Projects</span>
-                </Dropdown.Toggle>
-                <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-eye-outline mr-2"></i>
-                    <span>View Project</span>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <i className="mdi mdi-pencil-outline mr-2"></i>
-                    <span>Edit Project</span>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </li>
-            <li className="nav-item nav-profile nav-language d-none d-lg-flex">
-              <Dropdown alignRight>
-                <Dropdown.Toggle className="nav-link count-indicator">
-                  <div className="nav-language-icon">
-                    <i
-                      className="flag-icon flag-icon-us"
-                      title="us"
-                      id="us"
-                    ></i>
-                  </div>
-                  <div className="nav-language-text">
+                  <div className="">
                     <p className="mb-1 text-black">
-                      <span>English</span>
+                      <span>{this.languages[i18n.language]}</span>
                     </p>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="nav-language-icon mr-2">
-                      <i
-                        className="flag-icon flag-icon-ae"
-                        title="ae"
-                        id="ae"
-                      ></i>
-                    </div>
-                    <div className="nav-language-text">
-                      <p className="mb-1 text-black">
-                        <span>Arabic</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item d-flex align-items-center"
-                    href="!#"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="nav-language-icon mr-2">
-                      <i
-                        className="flag-icon flag-icon-gb"
-                        title="GB"
-                        id="gb"
-                      ></i>
-                    </div>
-                    <div className="nav-language-text">
-                      <p className="mb-1 text-black">
-                        <span>English</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
+                  {Object.keys(this.languages).map((key, i) => (
+                    <Dropdown.Item
+                      key={i + key}
+                      className="dropdown-item d-flex align-items-center"
+                      href="!#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        i18n.changeLanguage(key);
+                        window.location.reload();
+                      }}
+                    >
+                      <div className="nav-language-text">
+                        <p className="mb-1 text-black">
+                          <span>{this.languages[key]}</span>
+                        </p>
+                      </div>
+                    </Dropdown.Item>
+                  ))}
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-
-            <li className="nav-item nav-profile nav-language">
-              <Dropdown alignRight>
+            <li className="nav-item nav-profile nav-language d-flex">
+              <Dropdown>
                 <Dropdown.Toggle className="nav-link count-indicator">
                   <div className="nav-profile-img">
                     <img
@@ -205,7 +309,11 @@ class Navbar extends Component {
                   </div>
                   <div className="nav-profile-text">
                     <p className="mb-1 text-black">
-                      <span>{this.state.user==null ? "":this.state.user.username}</span>
+                      <span>
+                        {this.state.user == null
+                          ? ""
+                          : this.state.user.username}
+                      </span>
                     </p>
                   </div>
                 </Dropdown.Toggle>
@@ -219,58 +327,151 @@ class Navbar extends Component {
                   </div>
                   <div className="p-2">
                     <h5 className="dropdown-header text-uppercase pl-2 text-dark">
-                      <span>User Options</span>
+                      <span>
+                        <Trans>User Options</Trans>
+                      </span>
+                    </h5>
+                    <h5 className="dropdown-header text-uppercase pl-2 text-dark">
+                      <span>
+                        {" "}
+                        {this.state.user == null
+                          ? ""
+                          : this.state.user.username}
+                      </span>
                     </h5>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
+                      onClick={this.passModalOpen}
                     >
                       <span>
-                        <span>Inbox</span>
+                        <span>
+                          <Trans>Change password</Trans>
+                        </span>
                       </span>
-                      <span className="p-0">
-                        <span className="badge badge-primary">3</span>
-                        <i className="mdi mdi-email-open-outline ml-1"></i>
-                      </span>
+                      <i className="mdi  mdi-account-key ml-1"></i>
                     </Dropdown.Item>
+                    <Modal
+                      show={this.state.passModal}
+                      onHide={this.passModalClose}
+                      style={{ padding: "10px" }}
+                    >
+                      <form onSubmit={this.sumbitChangepass}>
+                        <h3 className="mb-1 text-center fs-5">
+                          <Trans>Change password</Trans>
+                        </h3>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Old password</Trans>
+                          </label>
+                          <input
+                            name="old_password"
+                            type="password"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.old_password}
+                            required
+                          ></input>
+                        </div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>New passowrd</Trans>
+                          </label>
+                          <input
+                            name="password"
+                            type="password"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.password}
+                            required
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Confirm new password</Trans>
+                          </label>
+                          <input
+                            name="conf_password"
+                            type="password"
+                            onChange={this.handleChangePass}
+                            value={this.state.changePassForm?.conf_password}
+                            required
+                          ></input>
+                        </div>
+
+                        <button className="save-btn w-100" type="submit">
+                          <Trans>Save</Trans>
+                        </button>
+                      </form>
+                    </Modal>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
+                      onClick={this.ProfmodalOpen}
                     >
                       <span>
-                        <span>Profile</span>
+                        <span>
+                          <Trans>Profile</Trans>
+                        </span>
                       </span>
-                      <span className="p-0">
-                        <span className="badge badge-success">1</span>
-                        <i className="mdi mdi-account-outline ml-1"></i>
-                      </span>
+                      <i className="mdi mdi mdi-account-star ml-1"></i>
                     </Dropdown.Item>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
+                    <Modal
+                      show={this.state.Profmodal}
+                      onHide={this.ProfmodalClose}
+                      style={{ padding: "10px" }}
                     >
-                      <span>
-                        <span>Settings</span>
-                      </span>
-                      <i className="mdi mdi-settings"></i>
-                    </Dropdown.Item>
-                    <div role="separator" className="dropdown-divider"></div>
-                    <h5 className="dropdown-header text-uppercase  pl-2 text-dark mt-2">
-                      <span>Actions</span>
-                    </h5>
-                    <Dropdown.Item
-                      className="dropdown-item d-flex align-items-center justify-content-between"
-                      href="!#"
-                      onClick={(evt) => evt.preventDefault()}
-                    >
-                      <span>
-                        <span>Lock Account</span>
-                      </span>
-                      <i className="mdi mdi-lock ml-1"></i>
-                    </Dropdown.Item>
+                      <form onSubmit={this.submitChaneprofile}>
+                        <h3 className="mb-1 text-center fs-5">
+                          <Trans>Update profile</Trans>
+                        </h3>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+                        <div className="d-flex flex-column align-items-center"></div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Name</Trans>
+                          </label>
+                          <input
+                            name="name"
+                            type="text"
+                            onChange={this.handleChangeUser}
+                            value={this.state.userInfo?.name}
+                          ></input>
+                        </div>
+
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>ID Number</Trans>
+                          </label>
+                          <input
+                            name="idnumber"
+                            type="number"
+                            onChange={this.handleChangeUser}
+                            value={this.state.userInfo?.idnumber}
+                          ></input>
+                        </div>
+                        <div className="d-flex flex-column align-items-center">
+                          <label>
+                            <Trans>Phone Number</Trans>
+                          </label>
+                          <input
+                            name="phone"
+                            type="number"
+                            onChange={this.handleChangeUser}
+                            value={this.state.userInfo?.phone}
+                          ></input>
+                        </div>
+
+                        <button className="save-btn w-100" type="submit">
+                          <Trans>Save</Trans>
+                        </button>
+                      </form>
+                    </Modal>
                     <Dropdown.Item
                       className="dropdown-item d-flex align-items-center justify-content-between"
                       href="/login"
@@ -279,7 +480,9 @@ class Navbar extends Component {
                       }}
                     >
                       <span>
-                        <span>Log Out</span>
+                        <span>
+                          <Trans>Logout</Trans>
+                        </span>
                       </span>
                       <i className="mdi mdi-logout ml-1"></i>
                     </Dropdown.Item>
@@ -287,95 +490,50 @@ class Navbar extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item">
+            <li className="nav-item ">
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-email-outline"></i>
-                  <span className="count-symbol bg-warning"></span>
+                  {this.state.messageCount !== 0 && (
+                    <span className="count-symbol bg-warning"></span>
+                  )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="preview-list navbar-dropdown">
                   <h6 className="p-3 bg-primary text-white py-4 mb-0">
-                    Messages
+                    <Trans>Messages</Trans>
                   </h6>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item
                     className="dropdown-item preview-item"
                     onClick={(evt) => evt.preventDefault()}
                   >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face4.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Mark send you a message</span>
+                        <Link to="/message/list">
+                          <span>
+                            <Trans>You have</Trans> {this.state.messageCount}{" "}
+                            <Trans>unread messages</Trans>
+                          </span>
+                        </Link>
                       </h6>
-                      <p className="text-gray mb-0">
-                        1 <span>Minutes ago</span>
-                      </p>
                     </div>
                   </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face2.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Cregh send you a message</span>
-                      </h6>
-                      <p className="text-gray mb-0">
-                        15 <span>Minutes ago</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <img
-                        src={require("../../assets/images/faces/face3.jpg")}
-                        alt="user"
-                        className="profile-pic"
-                      />
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject ellipsis mb-1 font-weight-normal">
-                        <span>Profile picture updated</span>
-                      </h6>
-                      <p className="text-gray mb-0">
-                        18 <span>Minutes ago</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer">
-                    4<span> new messages</span>
-                  </h6>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
-            <li className="nav-item">
+            <li className="nav-item" disabled>
               <Dropdown alignRight>
                 <Dropdown.Toggle className="nav-link count-indicator hide-carret">
                   <i className="mdi mdi-bell-outline"></i>
-                  <span className="count-symbol bg-danger"></span>
+                  {this.state.has_maintain && (
+                    <span className="count-symbol bg-danger"></span>
+                  )}
                 </Dropdown.Toggle>
                 <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
                   <h6 className="p-3 mb-0 bg-primary text-white py-4">
-                    <span>Notifications</span>
+                    <span>
+                      <Trans>Notifications</Trans>
+                    </span>
                   </h6>
                   <div className="dropdown-divider"></div>
                   <Dropdown.Item
@@ -389,58 +547,14 @@ class Navbar extends Component {
                     </div>
                     <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
                       <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Event today</span>
+                        <Links to="/dashboard#warnings">
+                          <span>
+                            <Trans>See all Maintenance</Trans>
+                          </span>
+                        </Links>
                       </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        {" "}
-                        <span>
-                          Just a reminder that you have an event today
-                        </span>{" "}
-                      </p>
                     </div>
                   </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <div className="preview-icon bg-warning">
-                        <i className="mdi mdi-settings"></i>
-                      </div>
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Settings</span>
-                      </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        <span>Update dashboard</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <Dropdown.Item
-                    className="dropdown-item preview-item"
-                    onClick={(evt) => evt.preventDefault()}
-                  >
-                    <div className="preview-thumbnail">
-                      <div className="preview-icon bg-info">
-                        <i className="mdi mdi-link-variant"></i>
-                      </div>
-                    </div>
-                    <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                      <h6 className="preview-subject font-weight-normal mb-1">
-                        <span>Launch Admin</span>
-                      </h6>
-                      <p className="text-gray ellipsis mb-0">
-                        <span>New admin wow!</span>
-                      </p>
-                    </div>
-                  </Dropdown.Item>
-                  <div className="dropdown-divider"></div>
-                  <h6 className="p-3 mb-0 text-center cursor-pointer">
-                    <span>See all notifications</span>
-                  </h6>
                 </Dropdown.Menu>
               </Dropdown>
             </li>
@@ -458,4 +572,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default withTranslation("translation")(Navbar);

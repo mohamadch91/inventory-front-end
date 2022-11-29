@@ -1,0 +1,15 @@
+/**
+css for print pages
+*/
+.print-page {
+  color: black;
+
+  .box {
+    border: gray 1px solid;
+    padding: 1rem;
+    border-radius: 5px;
+    .param {
+      display: inline-block;
+    }
+  }
+}

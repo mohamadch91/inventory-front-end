@@ -1,19 +1,19 @@
-import axios from "axios";
 import authHeader from "./auth-header";
+import ApiManager from "./axios-config";
 
-const API_URL = "http://5.182.47.38:8001/settings/";
-const URL="http://5.182.47.38:8001";
+const API_URL = "https://api.invgap.org/settings/";
+const URL = "https://api.invgap.org";
 class UserService {
   getPublicContent() {
-    return axios.get(API_URL + "all");
+    return ApiManager.get(API_URL + "all");
   }
   addcountry(country) {
-    return axios.post(API_URL + "country/", country, {
+    return ApiManager.post(API_URL + "country/", country, {
       headers: { Authorization: authHeader() },
     });
   }
   editcountry(country) {
-    return axios.put(API_URL + "country/", country, {
+    return ApiManager.put(API_URL + "country/", country, {
       headers: {
         Authorization: authHeader(),
         "Content-Type": "multipart/form-data",
@@ -21,40 +21,70 @@ class UserService {
     });
   }
   addlevel(level) {
-    return axios.post(API_URL + "level", level, {
+    return ApiManager.post(API_URL + "level", level, {
       headers: { Authorization: authHeader() },
     });
   }
   getLevels() {
-    return axios.get(API_URL + "level", {
+    return ApiManager.get(API_URL + "level", {
       headers: { Authorization: authHeader() },
     });
   }
   putLevels(level) {
-    return axios.put(API_URL + "level", level, {
+    return ApiManager.put(API_URL + "level", level, {
       headers: { Authorization: authHeader() },
     });
   }
   getUserBoard() {
-    return axios.get(API_URL + "user", {
+    return ApiManager.get(API_URL + "user", {
       headers: { Authorization: authHeader() },
     });
   }
 
   getModeratorBoard() {
-    return axios.get(API_URL + "mod", {
+    return ApiManager.get(API_URL + "mod", {
       headers: { Authorization: authHeader() },
     });
   }
 
   getAdminBoard() {
-    return axios.get(API_URL + "admin", {
+    return ApiManager.get(API_URL + "admin", {
       headers: { Authorization: authHeader() },
     });
   }
-  getUserimage(url){
-    return axios.get(URL+url, {
-      headers: { Authorization: authHeader()}
+  getUserimage(url) {
+    return ApiManager.get(URL + url, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getpqs4() {
+    return ApiManager.get(URL + "/pqs/4", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  addpqs4(data) {
+    return ApiManager.post(URL + "/pqs/4", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  getpqs3() {
+    return ApiManager.get(URL + "/pqs/3", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  addpqs3(data) {
+    return ApiManager.post(URL + "/pqs/3", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  changePassword(id, data) {
+    return ApiManager.put(URL + "/auth/change_password/" + id + "/", data, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  updateUser(id, data) {
+    return ApiManager.put(URL + "/auth/update_profile/" + id + "/", data, {
+      headers: { Authorization: authHeader() },
     });
   }
 }

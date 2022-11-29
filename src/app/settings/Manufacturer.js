@@ -7,6 +7,11 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "../styles/table.scss";
 import "../styles/inputs.scss";
+import "../styles/hr.scss";
+import "./itemClass.scss";
+import "./itemType.scss";
+import { Trans } from "react-i18next";
+
 import ItemsService from "../services/items.service";
 
 function Manufacturer() {
@@ -32,7 +37,8 @@ function Manufacturer() {
         getManufacturers(data[0].id);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -44,7 +50,8 @@ function Manufacturer() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -86,7 +93,8 @@ function Manufacturer() {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
@@ -95,7 +103,8 @@ function Manufacturer() {
           getManufacturers(selectedItemClass);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -106,10 +115,11 @@ function Manufacturer() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "" && editFormData[key] !== null;
+      return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPost = (({ describe, active, order, itemclass }) => ({
@@ -123,7 +133,8 @@ function Manufacturer() {
           getManufacturers(selectedItemClass);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({
@@ -141,14 +152,18 @@ function Manufacturer() {
 
   return (
     <div className="item-class-page">
-      <h3 className="page-title mb-3">Manufacturers by Item class</h3>
+      <h3 className="page-title mb-3">
+        <Trans>Manufacturers by item class</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4>Item class</h4>
+              <h4>
+                <Trans>Item class</Trans>
+              </h4>
             </div>
             <div className="col-md-10 d-flex">
               <select
@@ -175,11 +190,21 @@ function Manufacturer() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Item class</TableCell>
-                  <TableCell>Show order</TableCell>
-                  <TableCell>Enable</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Item class</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Show order</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Enable</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -194,11 +219,16 @@ function Manufacturer() {
                           </TableCell>
                           <TableCell>{item.order}</TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.active}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.active}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <button
@@ -246,24 +276,29 @@ function Manufacturer() {
                             ></input>
                           </TableCell>
                           <TableCell>
-                            <input
-                              name="active"
-                              type="checkbox"
-                              onChange={() =>
-                                setEditFormData({
-                                  ...editFormData,
-                                  active: !editFormData.active,
-                                })
-                              }
-                              checked={editFormData?.active}
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  name="active"
+                                  type="checkbox"
+                                  onChange={() =>
+                                    setEditFormData({
+                                      ...editFormData,
+                                      active: !editFormData.active,
+                                    })
+                                  }
+                                  checked={editFormData?.active}
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
                             <button
                               className="save-btn"
                               onClick={handleSubmitEdit}
                             >
-                              Save
+                              <Trans>Save</Trans>
                             </button>
                             <button
                               className="close-btn"
@@ -281,10 +316,14 @@ function Manufacturer() {
           </div>
           <div className="add-row mt-4 mb-4">
             <form onSubmit={handleSubmitNew}>
-              <h3 className="mb-3 mt-3">Insert Manufacturer</h3>
+              <h3 className="mb-3 mt-3">
+                <Trans>Insert manufacturer</Trans>
+              </h3>
               <div className="row">
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Parameter description</label>
+                  <label className="mb-2">
+                    <Trans>Name</Trans>
+                  </label>
                   <input
                     name="describe"
                     type="text"
@@ -294,7 +333,9 @@ function Manufacturer() {
                   ></input>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Item class</label>
+                  <label className="mb-1">
+                    <Trans>Item class</Trans>
+                  </label>
                   <select
                     name="itemclass"
                     onChange={handleChangeAdd}
@@ -312,7 +353,9 @@ function Manufacturer() {
                   </select>
                 </div>
                 <div className="col-md-3 flex-column d-flex">
-                  <label>Show order</label>
+                  <label className="mb-1">
+                    <Trans>Show order</Trans>
+                  </label>
                   <input
                     name="order"
                     type="number"
@@ -321,22 +364,29 @@ function Manufacturer() {
                     required
                   ></input>
                 </div>
-                <div className="col-md-3 d-flex justify-content-center align-items-center">
-                  <label>Active</label>
-                  <input
-                    name="active"
-                    className="mr-4"
-                    type="checkbox"
-                    onChange={() =>
-                      setAddRowFormData({
-                        ...addRowFormData,
-                        active: !addRowFormData.active,
-                      })
-                    }
-                    checked={addRowFormData?.active}
-                  ></input>
+                <div className="col-md-3 d-flex justify-content-center align-items-center mt-3">
+                  <label>
+                    <Trans>Active</Trans>
+                  </label>
+                  <div class="form-check form-check-primary mt-3">
+                    <label className="form-check-label">
+                      <input
+                        name="active"
+                        className="mr-4"
+                        type="checkbox"
+                        onChange={() =>
+                          setAddRowFormData({
+                            ...addRowFormData,
+                            active: !addRowFormData.active,
+                          })
+                        }
+                        checked={addRowFormData?.active}
+                      ></input>
+                      <i className="input-helper mt-3"></i>
+                    </label>
+                  </div>
                   <button className="save-btn" type="submit">
-                    Save
+                    <Trans>Save</Trans>
                   </button>
                 </div>
               </div>

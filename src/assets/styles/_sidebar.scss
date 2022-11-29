@@ -6,6 +6,18 @@
   padding: 0;
   width: $sidebar-width-lg;
   z-index: 11;
+      min-height: calc(100vh - 64px);
+    background: #181824;
+    font-family: "Nunito", sans-serif;
+    font-weight: 600;
+    padding: 0;
+    overflow-y: scroll;
+    /* height: 100%; */
+    width: 258px;
+    position: fixed;
+    overflow-y: scroll;
+    top: 64px;
+    bottom: 0;
   transition: width $action-transition-duration
       $action-transition-timing-function,
     background $action-transition-duration $action-transition-timing-function;
@@ -375,12 +387,12 @@
     top: $navbar-height;
     bottom: 0;
     overflow: auto;
-    right: -$sidebar-width-lg;
+    left: -$sidebar-width-lg;
     -webkit-transition: all 0.25s ease-out;
     -o-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
     &.active {
-      right: 0;
+      left: 0;
     }
   }
 }

@@ -108,11 +108,11 @@
 @mixin accordion-inverse-variant($color) {
   .card {
     background: rgba($color, 0.16);
-    color: $color;
+    color: black;
     border: none;
 
     .card-header {
-      color: $color;
+      color: black;
       border: none;
 
       a,
@@ -124,7 +124,7 @@
       h6,
       p,
       span {
-        color: $color;
+        color: black;
       }
 
       a {

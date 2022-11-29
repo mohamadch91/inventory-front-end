@@ -1,4 +1,43 @@
 .table-container {
+  height: 500px;
+  overflow: auto;
+  td,
+  th {
+    text-align: left;
+  }
+  th {
+    background: rgb(40, 136, 254);
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background: #ffffff;
+  }
+  tr:nth-child(odd) {
+    background: #d8d8d85b;
+  }
+  tr:last-child {
+    // background: red;
+    border-bottom: 10px solid rgb(40, 136, 254);
+  }
+  .edit-btn {
+    min-width: 5.5rem;
+  min-height: 2rem;
+        width: max-content;
+    height: max-content;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+  }
+  svg {
+    width: 2rem;
+  }
+  .qr svg {
+    width: 100%;
+  }
+}
+.table-container-to-print {
   td,
   th {
     text-align: left;
@@ -14,11 +53,38 @@
     background: #d8d8d85b;
   }
   .edit-btn {
-    width: 2rem;
-    height: 2rem;
+       width: max-content;
+    height: max-content;
     outline: none;
     border: none;
     border-radius: 3px;
     background: transparent;
   }
 }
+
+.label {
+  text-align: right;
+}
+
+.label-center {
+  text-align: center;
+}
+.save-btn {
+  border: none;
+  background: #1de172;
+  border-radius: 5px;
+  min-width: 5.5rem;
+  min-height: 2rem;
+      width: max-content;
+    height: max-content;
+}
+ .edit-btn {
+  min-width: 5.5rem;
+  min-height: 2rem;
+        width: max-content;
+    height: max-content;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+  }

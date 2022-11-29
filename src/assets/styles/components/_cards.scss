@@ -3,6 +3,8 @@
 .card {
   border: 0;
   border-radius: 0;
+    margin-bottom: 30px;
+
   .card-body {
     padding: $card-padding-y $card-padding-x;
     @media(max-width: 767px) {
@@ -14,12 +16,12 @@
     color: black;
   }
   .card-title {
-    color: $black;
+    color: $black !important;
     margin-bottom: 1.625rem;
     text-transform: capitalize;
     font-family: $type1;
-    font-weight: 600;
-    font-size: 1.125rem;
+    font-weight: bold!important;
+    font-size: 1.125rem!important;
   }
   .card-subtitle {
     @extend .text-gray;
@@ -33,7 +35,7 @@
     margin-bottom: 1.5rem;
     font-family: $type1;
     font-weight: 400;
-    color: $card-description-color;
+    color: black;
   }
   &.card-outline-success {
 		border: 1px solid theme-color("success");

@@ -6,8 +6,9 @@ import EditIcon from "../shared/EditIcon";
 import SharedTable from "../shared/SharedTable";
 import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
-import "./itemClass.scss";
+import "./itemClassLang.scss";
 import "../styles/inputs.scss";
+import { Trans } from "react-i18next";
 
 function ItemClass() {
   const [itemClasses, setItemClasses] = useState([]);
@@ -22,7 +23,8 @@ function ItemClass() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -46,7 +48,8 @@ function ItemClass() {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       const newData = [...itemClasses];
@@ -63,7 +66,8 @@ function ItemClass() {
           getItemClasses();
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -72,21 +76,31 @@ function ItemClass() {
   }
 
   return (
-    <div className="item-class-page">
+    <div className="item-class-page mb-5">
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <h3 className="page-title mb-3">Item class list</h3>
+          <h3 className="page-title mb-3">
+            <Trans>Item class list</Trans>
+          </h3>
           <div>
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Code</TableCell>
-                  <TableCell>Active</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell>Id</TableCell>
+                  <TableCell>
+                    <Trans>Title</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Code</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Active</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -98,11 +112,16 @@ function ItemClass() {
                         <TableCell>{item.title}</TableCell>
                         <TableCell>{item.code}</TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            checked={item.active}
-                            disabled
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                checked={item.active}
+                                disabled
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button
@@ -127,21 +146,26 @@ function ItemClass() {
                         </TableCell>
                         <TableCell>{editFormData.code}</TableCell>
                         <TableCell>
-                          <input
-                            name="active"
-                            type="checkbox"
-                            onChange={() =>
-                              setEditFormData({
-                                ...editFormData,
-                                active: !editFormData.active,
-                              })
-                            }
-                            checked={editFormData?.active}
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                name="active"
+                                type="checkbox"
+                                onChange={() =>
+                                  setEditFormData({
+                                    ...editFormData,
+                                    active: !editFormData.active,
+                                  })
+                                }
+                                checked={editFormData?.active}
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button className="save-btn" onClick={handleSubmit}>
-                            Save
+                            <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"

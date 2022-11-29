@@ -1,0 +1,26 @@
+
+.item  {
+    text-align: center!important;
+    align-items: center!important;
+    justify-content: center!important;
+    display: flex!important;
+    flex-direction: column!important;
+}
+.item {
+    width: 700px;
+}
+.item p {
+    font-size: 1rem;
+
+}
+
+.item span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .item {
+        width: 100%;
+    }
+}

@@ -14,7 +14,7 @@
   @media (min-width: 992px) {
     .navbar {
       .navbar-brand-wrapper {
-        width: $sidebar-width-mini;
+        width: $sidebar-width-mini -10px;
       }
       .navbar-menu-wrapper {
         width: calc(100% - #{$sidebar-width-mini});
@@ -77,6 +77,7 @@
 
     .main-panel {
       width: calc(100% - #{$sidebar-width-mini});
+      
     }
     &:not(.sidebar-icon-only) {
       //Apply these styles only when sidebar-mini is not collapsed to icon-only mode
@@ -121,7 +122,7 @@
   @media (min-width: 992px) {
     .navbar {
       .navbar-brand-wrapper {
-        width: $sidebar-width-icon;
+        width: 55px;
         .brand-logo {
           display: none;
         }
@@ -299,6 +300,7 @@
 
     .main-panel {
       width: calc(100% - #{$sidebar-width-icon});
+      margin-left: calc(#{$sidebar-width-icon});
     }
   }
 }

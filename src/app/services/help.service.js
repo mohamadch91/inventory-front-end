@@ -1,7 +1,7 @@
-import axios from "axios";
+import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "http://5.182.47.38:8001/help/";
+const API_URL = "https://api.invgap.org/help/";
 
 class HelpService {
   getHelpContent(lang, page) {
@@ -9,18 +9,18 @@ class HelpService {
       lang,
       page,
     };
-    return axios.get(API_URL, {
+    return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,
     });
   }
   postHelpContent(payload) {
-    return axios.post(API_URL, payload, {
+    return ApiManager.post(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
   }
   putHelpContent(payload) {
-    return axios.put(API_URL, payload, {
+    return ApiManager.put(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
   }

@@ -1,31 +1,67 @@
-import axios from "axios";
+import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
+import axios from "axios";
 
-const API_URL = "http://5.182.47.38:8001/facilities/";
+const API_URL = "https://api.invgap.org/facilities/";
 
 class FacilitiesService {
-  getFacilities(id) {
-    const params = {};
-    if (id) {
-      params.id = id;
-    }
-    return axios.get(API_URL, {
+  getFacilities(params) {
+    return ApiManager.get(API_URL, {
       headers: { Authorization: authHeader() },
       params,
     });
   }
-  getFacilityFields() {
-    return axios.get(API_URL + "facility-field", {
+  getSubFacilities(id) {
+    const params = { id };
+    return ApiManager.get(API_URL + "parent", {
       headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  // deleteFacility(id) {
+  //   return ApiManager.delete(API_URL, {
+  //     headers: { Authorization: authHeader() },
+  //     data: { id },
+  //   });
+  // }
+  getFacilityFields(params) {
+    return ApiManager.get(API_URL + "facility-field", {
+      headers: { Authorization: authHeader() },
+      params,
+    });
+  }
+  getFacilityFields1(params) {
+    return ApiManager.get(API_URL + "print", {
+      headers: { Authorization: authHeader() },
+      params,
     });
   }
   postFacility(payload) {
-    return axios.post(API_URL, payload, {
+    return ApiManager.post(API_URL, payload, {
       headers: { Authorization: authHeader() },
     });
   }
   putFacility(payload) {
-    return axios.put(API_URL, payload, {
+    return ApiManager.put(API_URL, payload, {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  importFacilities(payload) {
+    return ApiManager.post(
+      "https://api.invgap.org/facilities/" + "import",
+      payload,
+      {
+        headers: { Authorization: authHeader() },
+      }
+    );
+  }
+  deletefacilityparam() {
+    return ApiManager.get(API_URL + "delete", {
+      headers: { Authorization: authHeader() },
+    });
+  }
+  deleteFacility(payload) {
+    return ApiManager.post(API_URL + "delete", payload, {
       headers: { Authorization: authHeader() },
     });
   }

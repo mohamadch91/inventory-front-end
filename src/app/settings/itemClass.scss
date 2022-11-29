@@ -1,6 +1,50 @@
 .item-class-page {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: black;
+  }
+  label {
+    color: black;
+  }
+  td,
+  th {
+    text-align: center;
+  }
+  th {
+    background: rgb(40, 136, 254);
+    color: white;
+  }
+  tr:nth-child(even) {
+    background: #ffffff;
+  }
+  tr:nth-child(odd) {
+    background: #d8d8d85b;
+  }
+    tr:last-child {
+    // background: red;
+    border-bottom: 10px solid rgb(40, 136, 254);
+  }
+  .edit-btn {
+    min-width: 5.5rem;
+  min-height: 2rem;
+        width: max-content;
+    height: max-content;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+  }
+}
+.item-class-page-param {
   h3 {
     color: black;
+  }
+  .param-name {
+    color: #1d75e1;
   }
   label {
     color: black;
@@ -20,8 +64,10 @@
     background: #d8d8d85b;
   }
   .edit-btn {
-    width: 2rem;
-    height: 2rem;
+    min-width: 5.5rem;
+  min-height: 2rem;
+    width: max-content;
+    height: max-content;
     outline: none;
     border: none;
     border-radius: 3px;
@@ -29,11 +75,13 @@
   }
 }
 .save-btn {
+  min-width: 5.5rem;
+  min-height: 2rem;
   border: none;
   background: #1de172;
   border-radius: 5px;
-  width: 4rem;
-  height: 2rem;
+      width: max-content;
+    height: max-content;
 }
 .close-btn {
   width: 1rem;
@@ -44,4 +92,21 @@
     height: auto;
     margin-left: 1rem;
   }
+}
+.tableFixHead {
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.tableFixHead tbody {
+  display: block;
+  overflow: auto;
+  height: 300px;
+}
+.tableFixHead thead tr {
+  display: block;
+}
+.tableFixHead th,
+.tableFixHead td {
+  padding: 5px 10px;
+  width: 150px;
 }

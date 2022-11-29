@@ -7,11 +7,14 @@ import toast from "react-hot-toast";
 import Spinner from "../shared/Spinner";
 import "./itemClass.scss";
 import "./itemType.scss";
+import "../styles/inputs.scss";
 import RelatedService from "../services/related.service";
 import { useParams } from "react-router-dom";
+import { Trans } from "react-i18next";
 
 function ParameterDescription() {
   const [descriptions, setDescriptions] = useState([]);
+  const [paramName, setParamName] = useState("");
   const [editFormData, setEditFormData] = useState({});
   const [addRowFormData, setAddRowFormData] = useState({
     name: "",
@@ -25,11 +28,13 @@ function ParameterDescription() {
   function getData(type, id) {
     RelatedService.getParameterDescriptions(id, type)
       .then((res) => {
-        setDescriptions(res.data);
+        setDescriptions(res.data["description"]);
+        setParamName(res.data["name"]);
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+                toast.error(<Trans>There is a problem loading data</Trans>);
+
         setIsLoading(false);
       });
   }
@@ -70,7 +75,8 @@ function ParameterDescription() {
       return editFormData[key] !== "" && editFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = editFormData;
@@ -81,7 +87,8 @@ function ParameterDescription() {
           getData(params[0], params[1]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setEditableRowId(null);
@@ -92,10 +99,11 @@ function ParameterDescription() {
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "" && editFormData[key] !== null;
+      return addRowFormData[key] !== "" && addRowFormData[key] !== null;
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+            toast.error(<Trans>Please fill all the fields</Trans>);
+
     } else {
       setIsLoading(true);
       let formToPut = (({ name, enabled, order }) => ({
@@ -111,7 +119,8 @@ function ParameterDescription() {
           getData(params[0], params[1]);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+                    toast.error(<Trans>There is a problem sending data</Trans>);
+
           setIsLoading(false);
         });
       setAddRowFormData({
@@ -124,14 +133,21 @@ function ParameterDescription() {
   }
 
   return (
-    <div className="item-class-page">
-      <h3 className="page-title mb-3">Parameter Descriptions</h3>
+    <div className="item-class-page-param">
+      <h2 className="page-title mb-3">
+        <Trans>{id?.split("-")[0]}</Trans> <Trans>Parameter Descriptions</Trans>
+      </h2>
+      <h3 className="mb-3 param-name">{paramName}</h3>
       <div className="add-row mt-4 mb-4">
-        <h3>Insert parameter In this row!</h3>
+        <h3>
+          <Trans>Insert parameter In this row :</Trans>
+        </h3>
         <form onSubmit={handleSubmitNew}>
           <div className="row">
             <div className="col-md-4 flex-column d-flex">
-              <label>Parameter description</label>
+              <label>
+                <Trans>Parameter description</Trans>
+              </label>
               <input
                 name="name"
                 type="text"
@@ -141,7 +157,9 @@ function ParameterDescription() {
               ></input>
             </div>
             <div className="col-md-4 flex-column d-flex">
-              <label>Show order</label>
+              <label>
+                <Trans>Show order</Trans>
+              </label>
               <input
                 name="order"
                 type="number"
@@ -150,22 +168,29 @@ function ParameterDescription() {
                 required
               ></input>
             </div>
-            <div className="col-md-4 d-flex justify-content-center align-items-center">
-              <label>Enable</label>
-              <input
-                name="enabled"
-                className="mr-4"
-                type="checkbox"
-                onChange={() =>
-                  setAddRowFormData({
-                    ...addRowFormData,
-                    enabled: !addRowFormData.enabled,
-                  })
-                }
-                checked={addRowFormData?.enabled}
-              ></input>
+            <div className="col-md-4 d-flex justify-content-center align-items-center mt-3">
+              <label>
+                <Trans>Enable</Trans>
+              </label>
+              <div class="form-check form-check-primary mt-3">
+                <label className="form-check-label">
+                  <input
+                    name="enabled"
+                    className="mr-4"
+                    type="checkbox"
+                    onChange={() =>
+                      setAddRowFormData({
+                        ...addRowFormData,
+                        enabled: !addRowFormData.enabled,
+                      })
+                    }
+                    checked={addRowFormData?.enabled}
+                  ></input>
+                  <i className="input-helper mt-3"></i>
+                </label>
+              </div>
               <button className="save-btn" type="submit">
-                Save
+                <Trans>Save</Trans>
               </button>
             </div>
           </div>
@@ -179,10 +204,18 @@ function ParameterDescription() {
             <SharedTable>
               <TableHead>
                 <TableRow>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Show order</TableCell>
-                  <TableCell>Enable</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell>
+                    <Trans>Description</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Show order</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Enable</Trans>
+                  </TableCell>
+                  <TableCell>
+                    <Trans>Edit</Trans>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -193,11 +226,16 @@ function ParameterDescription() {
                         <TableCell>{item.name}</TableCell>
                         <TableCell>{item.order}</TableCell>
                         <TableCell>
-                          <input
-                            type="checkbox"
-                            checked={item.enabled}
-                            disabled
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                type="checkbox"
+                                checked={item.enabled}
+                                disabled
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button
@@ -229,24 +267,29 @@ function ParameterDescription() {
                           ></input>
                         </TableCell>
                         <TableCell>
-                          <input
-                            name="enabled"
-                            type="checkbox"
-                            onChange={() =>
-                              setEditFormData({
-                                ...editFormData,
-                                enabled: !editFormData.enabled,
-                              })
-                            }
-                            checked={editFormData?.enabled}
-                          ></input>
+                          <div class="form-check form-check-primary mt-3">
+                            <label className="form-check-label">
+                              <input
+                                name="enabled"
+                                type="checkbox"
+                                onChange={() =>
+                                  setEditFormData({
+                                    ...editFormData,
+                                    enabled: !editFormData.enabled,
+                                  })
+                                }
+                                checked={editFormData?.enabled}
+                              ></input>
+                              <i className="input-helper mt-3"></i>
+                            </label>
+                          </div>
                         </TableCell>
                         <TableCell>
                           <button
                             className="save-btn"
                             onClick={handleSubmitEdit}
                           >
-                            Save
+                            <Trans>Save</Trans>
                           </button>
                           <button
                             className="close-btn"

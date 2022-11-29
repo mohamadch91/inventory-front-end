@@ -1,0 +1,20 @@
+.print-page {
+  color: black;
+  button {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    color: black;
+    text-decoration: none;
+    border: none;
+    background: #1de172;
+    border-radius: 5px;
+  }
+  .box {
+    border: gray 1px solid;
+    padding: 1rem;
+    border-radius: 5px;
+    .param {
+      display: inline-block;
+    }
+  }
+}

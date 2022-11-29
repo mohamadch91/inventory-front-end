@@ -12,16 +12,29 @@ import "../styles/inputs.scss";
 import "../styles/hr.scss";
 import "../settings/itemClass.scss";
 import "../settings/itemType.scss";
-
+import { Trans } from "react-i18next";
+/**
+ *   Users List components load the users list and
+ * can add or modify users
+ * @returns JSX elements
+ */
 function UsersList() {
   const [list, setList] = useState([]);
+  /**
+   * @constant {JSON} editFormData json for edited user data
+   */
   const [editFormData, setEditFormData] = useState({});
+  /**
+   * @constant {JSON} addRowFormData json for add user datas
+   */
   const [addRowFormData, setAddRowFormData] = useState({
     facadmin: false,
     itemadmin: false,
     reportadmin: false,
     useradmin: false,
-    is_superuser: false,
+    is_active: false,
+    password: "",
+    conf_password: "",
   });
   const [isLoading, setIsLoading] = useState(true);
   const [facilities, setFacilities] = useState([]);
@@ -29,7 +42,9 @@ function UsersList() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-
+  /**
+   * @function getFacilities fetch facilities from server
+   */
   function getFacilities() {
     HRService.getFacilities()
       .then((res) => {
@@ -40,11 +55,15 @@ function UsersList() {
         getList(data[0].id);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
         setIsLoading(false);
       });
   }
-
+  /**
+   * @param  {Int} id facility id
+   * fetch facility users by facility id
+   *
+   */
   function getList(id) {
     UserListService.getUsersByFacilityId(id)
       .then((res) => {
@@ -52,7 +71,7 @@ function UsersList() {
         setIsLoading(false);
       })
       .catch((err) => {
-        toast.error("There is a problem loading data");
+        toast.error(<Trans>There is a problem loading data</Trans>);
         setIsLoading(false);
       });
   }
@@ -69,13 +88,19 @@ function UsersList() {
       });
     }
   }, [facilities]);
-
+  /**
+   * @param  {int} i user id
+   * set edited user id
+   *
+   */
   function handleEdit(i) {
-    const formData = list.find((item) => item.idnumber === i.idnumber);
+    const formData = list.find((item) => item.pk === i.pk);
     setEditFormData(formData);
     setIsEditModalOpen(true);
   }
-
+  /**
+   * @param  {event} e change event
+   */
   function handleChangeEdit(e) {
     const { name, value } = e.target;
     setEditFormData({ ...editFormData, [name]: value });
@@ -85,19 +110,23 @@ function UsersList() {
     const { name, value } = e.target;
     setAddRowFormData({ ...addRowFormData, [name]: value });
   }
-
+  /**
+   * @param  {event} e
+   * send data to api
+   */
   function handleSubmitEdit(e) {
     e.preventDefault();
     const isValid = Object.keys(editFormData).every((key) => {
       return editFormData[key] !== "";
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+      toast.error(<Trans>Please fill all the fields</Trans>);
     } else {
       setIsLoading(true);
       let formToPut = (({
+        pk,
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -108,8 +137,10 @@ function UsersList() {
         reportadmin,
         useradmin,
       }) => ({
+        pk,
+
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -120,6 +151,7 @@ function UsersList() {
         reportadmin,
         useradmin,
       }))(editFormData);
+      console.log(editFormData);
       UserListService.updateUser(formToPut)
         .then((res) => {
           setIsLoading(true);
@@ -127,26 +159,39 @@ function UsersList() {
           setEditFormData({});
           setIsEditModalOpen(false);
           setActiveStep(0);
+          toast.success(<Trans>user edit succesfuly</Trans>);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
+          toast.error(<Trans>There is a problem sending data</Trans>);
           setIsLoading(false);
         });
     }
   }
-
+  /**
+   * @param  {event} e
+   * sumbit new user to api
+   */
   function handleSubmitNew(e) {
     e.preventDefault();
     const isValid = Object.keys(addRowFormData).every((key) => {
-      return addRowFormData[key] !== "";
+      console.log(key);
+      /**
+       * check for empty or not
+       * empty is ok
+       */
+      if (key !== "idnumber" || key !== "phone" || key !== "position") {
+        console.log(addRowFormData[key]);
+        return addRowFormData[key] !== "";
+      }
     });
     if (!isValid) {
-      toast.error("Please fill all the fields");
+      toast.error(<Trans>Please fill all the fields</Trans>);
     } else {
       setIsLoading(true);
+      const owner = JSON.parse(localStorage.getItem("user")).username;
       let formToPost = (({
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -159,7 +204,7 @@ function UsersList() {
         name,
       }) => ({
         password,
-        is_superuser,
+        is_active,
         facilityid,
         username,
         idnumber,
@@ -171,8 +216,11 @@ function UsersList() {
         useradmin,
         name,
       }))(addRowFormData);
+      console.log(formToPost);
+      formToPost.owner = owner;
       UserListService.addUser(formToPost)
         .then((res) => {
+          toast.success("user added successfully");
           setIsLoading(true);
           getList(selectedFacility);
           setAddRowFormData({
@@ -181,36 +229,53 @@ function UsersList() {
             itemadmin: false,
             reportadmin: false,
             useradmin: false,
-            is_superuser: false,
+            is_active: true,
+            password: "",
+            conf_password: "",
           });
           setIsAddModalOpen(false);
           setActiveStep(0);
         })
         .catch((err) => {
-          toast.error("There is a problem sending data");
-          setIsLoading(false);
+          if (err.response.data.username) {
+            toast.error(err.response.data.username[0]);
+            setIsLoading(false);
+          } else {
+            toast.error("There is a problem sending data");
+            setIsLoading(false);
+          }
         });
     }
   }
-
+  /**
+   * close or open modal
+   * !! change modal state
+   */
   function toggleModal() {
     setIsAddModalOpen((prevState) => !prevState);
   }
-
+  /**
+   * @param  {int} id facility id
+   * find facility by its id in list
+   */
   function findFacilityById(id) {
     return facilities.find((item) => item.id === id);
   }
 
   return (
     <div className="item-class-page hr-page">
-      <h3 className="page-title mb-3">HR by Facility</h3>
+      <h3 className="page-title mb-3">
+        <Trans>User by Facility</Trans>
+      </h3>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <div className="row mb-4 mt-4">
             <div className="col-md-2 d-flex align-items-center">
-              <h4 className="page-title">Main Facility</h4>
+              <h4 className="page-title">
+                <Trans>Main Facility</Trans>
+              </h4>
             </div>
             <div className="col-md-10 d-flex">
               <select
@@ -219,6 +284,10 @@ function UsersList() {
                   setSelectedFacility(e.target.value);
                   setIsLoading(true);
                   getList(e.target.value);
+                  setAddRowFormData({
+                    ...addRowFormData,
+                    facilityid: e.target.value,
+                  });
                 }}
                 value={selectedFacility}
               >
@@ -235,17 +304,42 @@ function UsersList() {
               <SharedTable>
                 <TableHead>
                   <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Username</TableCell>
-                    <TableCell>Facility Name</TableCell>
-                    <TableCell>Manage Facilities</TableCell>
-                    <TableCell>Manage Items</TableCell>
-                    <TableCell>View Reports</TableCell>
-                    <TableCell>Manage Users</TableCell>
-                    <TableCell>Super User</TableCell>
-                    <TableCell>Position</TableCell>
-                    <TableCell>Edit</TableCell>
+                    <TableCell>
+                      <Trans>ID</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Username</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Facility Name</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Owner</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Facilities</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Items</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>View Reports</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Manage Users</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Active</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Position</Trans>
+                    </TableCell>
+                    <TableCell>
+                      <Trans>Edit</Trans>
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -253,46 +347,72 @@ function UsersList() {
                     list.map((item, index) => (
                       <>
                         <TableRow>
-                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>{item.pk}</TableCell>
                           <TableCell>{item.name}</TableCell>
                           <TableCell>{item.username}</TableCell>
                           <TableCell>
                             {findFacilityById(item.facilityid)?.name}
                           </TableCell>
+                          <TableCell>{item?.owner}</TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.facadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.facadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.itemadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.itemadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.reportadmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.reportadmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.useradmin}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.useradmin}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>
-                            <input
-                              type="checkbox"
-                              checked={item.is_superuser}
-                              disabled
-                            ></input>
+                            <div class="form-check form-check-primary mt-3">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  checked={item.is_active}
+                                  disabled
+                                ></input>
+                                <i className="input-helper mt-3"></i>
+                              </label>
+                            </div>
                           </TableCell>
                           <TableCell>{item.position}</TableCell>
                           <TableCell>
@@ -313,15 +433,15 @@ function UsersList() {
           <Modal
             show={isEditModalOpen}
             onHide={() => {
-              setIsEditModalOpen(false);
-              setActiveStep(0);
+              // setIsEditModalOpen(false);
+              // setActiveStep(0);
             }}
           >
             <form onSubmit={handleSubmitEdit}>
               {activeStep === 0 ? (
                 <>
                   <h3 className="mb-3 text-center">
-                    Human Resource Information
+                    <Trans>Edit</Trans> <Trans>user</Trans>
                   </h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
@@ -329,7 +449,9 @@ function UsersList() {
                   <div className="d-flex flex-column align-items-center"></div>
 
                   <div className="d-flex flex-column align-items-center">
-                    <label>Facility</label>
+                    <label>
+                      <Trans>Facility Name</Trans>
+                    </label>
                     <select
                       name="facilityid"
                       onChange={handleChangeEdit}
@@ -347,7 +469,9 @@ function UsersList() {
                     </select>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Name</label>
+                    <label>
+                      <Trans>Name</Trans>
+                    </label>
                     <input
                       name="name"
                       type="text"
@@ -357,19 +481,25 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Username</label>
+                    <label>
+                      <Trans>Username</Trans>
+                    </label>
                     <input
                       name="username"
                       type="text"
                       onChange={handleChangeEdit}
                       value={editFormData?.username}
+                      autoComplete="off"
                       required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Password</label>
+                    <label>
+                      <Trans>Password</Trans>
+                    </label>
                     <input
                       name="password"
+                      autoComplete="off"
                       type="password"
                       onChange={handleChangeEdit}
                       value={editFormData?.password}
@@ -377,17 +507,20 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Confirm Password</label>
+                    <label>
+                      <Trans>Confirm Password</Trans>
+                    </label>
                     <input
                       name="conf_password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeEdit}
                       value={editFormData?.conf_password}
                       required
                     ></input>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-5"
                     onClick={(e) => {
                       e.preventDefault();
                       if (
@@ -399,155 +532,212 @@ function UsersList() {
                       }
                     }}
                   >
-                    Next
+                    <Trans>Next</Trans>
+                  </button>
+                  <button
+                    className="btn-danger text-dark w-25 ml-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               ) : (
                 <>
                   <div className="d-flex flex-column align-items-center">
-                    <label>ID Number</label>
+                    <label>
+                      <Trans>ID Number</Trans>
+                    </label>
                     <input
                       name="idnumber"
                       type="number"
                       onChange={handleChangeEdit}
                       value={editFormData?.idnumber}
-                      required
-                      disabled
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Position</label>
+                    <label>
+                      <Trans>Position</Trans>
+                    </label>
                     <input
                       name="position"
                       type="text"
                       onChange={handleChangeEdit}
                       value={editFormData?.position}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Phone Number</label>
+                    <label>
+                      <Trans>Phone Number</Trans>
+                    </label>
                     <input
                       name="phone"
                       type="tel"
                       onChange={handleChangeEdit}
                       value={editFormData?.phone}
-                      required
                     ></input>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Super user</label>
-                      <input
-                        name="is_superuser"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            is_superuser: !editFormData.is_superuser,
-                          })
-                        }
-                        checked={editFormData?.is_superuser}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Active</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="is_active"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                is_active: !editFormData.is_active,
+                              })
+                            }
+                            checked={editFormData?.is_active}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Manage Facilities</label>
-                      <input
-                        name="facadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            facadmin: !editFormData.facadmin,
-                          })
-                        }
-                        checked={editFormData?.facadmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Manage Facilities</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="facadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                facadmin: !editFormData.facadmin,
+                              })
+                            }
+                            checked={editFormData?.facadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">Manage Items</label>
-                      <input
-                        name="itemadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            itemadmin: !editFormData.itemadmin,
-                          })
-                        }
-                        checked={editFormData?.itemadmin}
-                      />
+                      <label className="m-0 mr-1 mb-2">
+                        <Trans>Manage Items</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="itemadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                itemadmin: !editFormData.itemadmin,
+                              })
+                            }
+                            checked={editFormData?.itemadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">View Reports</label>
-                      <input
-                        name="reportadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            reportadmin: !editFormData.reportadmin,
-                          })
-                        }
-                        checked={editFormData?.reportadmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>View Reports</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="reportadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                reportadmin: !editFormData.reportadmin,
+                              })
+                            }
+                            checked={editFormData?.reportadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">Manage Users</label>
-                      <input
-                        name="useradmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setEditFormData({
-                            ...editFormData,
-                            useradmin: !editFormData.useradmin,
-                          })
-                        }
-                        checked={editFormData?.useradmin}
-                        value={editFormData?.useradmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Manage Users</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="useradmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setEditFormData({
+                                ...editFormData,
+                                useradmin: !editFormData.useradmin,
+                              })
+                            }
+                            checked={editFormData?.useradmin}
+                            value={editFormData?.useradmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-3 mr-4"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
-                    Back
+                    <Trans>Back</Trans>
                   </button>
-                  <button className="save-btn w-100" type="submit">
-                    Save
+                  <button className="save-btn w-25 mr-4" type="submit">
+                    <Trans>Save</Trans>
+                  </button>
+                  <button
+                    className="btn-danger text-dark w-25 ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsEditModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               )}
             </form>
           </Modal>
           <button className="modal-btn" onClick={toggleModal}>
-            Human Resource Information
+            <Trans>Add user</Trans>
           </button>
           <Modal
             show={isAddModalOpen}
             onHide={() => {
-              setIsAddModalOpen(false);
-              setActiveStep(0);
+              // setIsAddModalOpen(false);
+              // setActiveStep(0);
             }}
           >
             <form onSubmit={handleSubmitNew}>
               {activeStep === 0 ? (
                 <>
-                  <h3 className="mb-3 text-center">
-                    Human Resource Information
-                  </h3>
+                  <h3 className="mb-3 text-center">Add user</h3>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
                   <div className="d-flex flex-column align-items-center"></div>
 
                   <div className="d-flex flex-column align-items-center">
-                    <label>Facility</label>
+                    <label>
+                      <Trans>Facility Name</Trans>
+                    </label>
                     <select
                       name="facilityid"
                       onChange={handleChangeAdd}
@@ -557,15 +747,18 @@ function UsersList() {
                         <option
                           key={item.id}
                           value={item.id}
-                          selected={item.id === addRowFormData?.facilityid}
+                          selected={parseInt(selectedFacility) === item.id}
                         >
+                          {console.log(parseInt(addRowFormData?.facilityid))}
                           {item.name}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Name</label>
+                    <label>
+                      <Trans>Name</Trans>
+                    </label>
                     <input
                       name="name"
                       type="text"
@@ -575,40 +768,48 @@ function UsersList() {
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Username</label>
+                    <label>
+                      <Trans>Username</Trans>
+                    </label>
                     <input
                       name="username"
                       type="text"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.username}
                       required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Password</label>
+                    <label>
+                      <Trans>Password</Trans>
+                    </label>
                     <input
                       name="password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.password}
                       required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Confirm Password</label>
+                    <label>
+                      <Trans>Confirm Password</Trans>
+                    </label>
                     <input
                       name="conf_password"
                       type="password"
+                      autoComplete="off"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.conf_password}
                       required
                     ></input>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-5"
                     onClick={(e) => {
                       e.preventDefault();
-
                       if (
                         addRowFormData?.password ===
                         addRowFormData?.conf_password
@@ -619,125 +820,183 @@ function UsersList() {
                       }
                     }}
                   >
-                    Next
+                    <Trans>Next</Trans>
+                  </button>
+                  <button
+                    className="btn-danger text-dark w-25 ml-5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               ) : (
                 <>
                   <div className="d-flex flex-column align-items-center">
-                    <label>ID Number</label>
+                    <label>
+                      <Trans>ID Number</Trans>
+                    </label>
                     <input
                       name="idnumber"
                       type="number"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.idnumber}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Position</label>
+                    <label>
+                      <Trans>Position</Trans>
+                    </label>
                     <input
                       name="position"
                       type="text"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.position}
-                      required
                     ></input>
                   </div>
                   <div className="d-flex flex-column align-items-center">
-                    <label>Phone Number</label>
+                    <label>
+                      <Trans>Phone Number</Trans>
+                    </label>
                     <input
                       name="phone"
                       type="tel"
                       onChange={handleChangeAdd}
                       value={addRowFormData?.phone}
-                      required
                     ></input>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Super user</label>
-                      <input
-                        name="is_superuser"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            is_superuser: !addRowFormData.is_superuser,
-                          })
-                        }
-                        checked={addRowFormData?.is_superuser}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Active</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="is_active"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                is_active: !addRowFormData.is_active,
+                              })
+                            }
+                            checked={addRowFormData?.is_active}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">Manage Facilities</label>
-                      <input
-                        name="facadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            facadmin: !addRowFormData.facadmin,
-                          })
-                        }
-                        checked={addRowFormData?.facadmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Manage Facilities</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="facadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                facadmin: !addRowFormData.facadmin,
+                              })
+                            }
+                            checked={addRowFormData?.facadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-1">Manage Items</label>
-                      <input
-                        name="itemadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            itemadmin: !addRowFormData.itemadmin,
-                          })
-                        }
-                        checked={addRowFormData?.itemadmin}
-                      />
+                      <label className="m-0 mr-1 mb-2">
+                        <Trans>Manage Items</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="itemadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                itemadmin: !addRowFormData.itemadmin,
+                              })
+                            }
+                            checked={addRowFormData?.itemadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                     <div className="d-flex align-items-center justify-content-center col-sm-6">
-                      <label className="m-0 mr-2">View Reports</label>
-                      <input
-                        name="reportadmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            reportadmin: !addRowFormData.reportadmin,
-                          })
-                        }
-                        checked={addRowFormData?.reportadmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>View Reports</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="reportadmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                reportadmin: !addRowFormData.reportadmin,
+                              })
+                            }
+                            checked={addRowFormData?.reportadmin}
+                          />
+                          <i className="input-helper mt-3"></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <div className="row mt-3">
                     <div className="d-flex align-items-center justify-content-center col-sm-12">
-                      <label className="m-0 mr-2">Manage Users</label>
-                      <input
-                        name="useradmin"
-                        type="checkbox"
-                        onChange={() =>
-                          setAddRowFormData({
-                            ...addRowFormData,
-                            useradmin: !addRowFormData.useradmin,
-                          })
-                        }
-                        checked={addRowFormData?.useradmin}
-                      />
+                      <label className="m-0 mr-2 mb-2">
+                        <Trans>Manage Users</Trans>
+                      </label>
+                      <div class="form-check form-check-primary mt-3">
+                        <label className="form-check-label">
+                          <input
+                            name="useradmin"
+                            type="checkbox"
+                            onChange={() =>
+                              setAddRowFormData({
+                                ...addRowFormData,
+                                useradmin: !addRowFormData.useradmin,
+                              })
+                            }
+                            checked={addRowFormData?.useradmin}
+                          />
+                          <i className="input-helper "></i>
+                        </label>
+                      </div>
                     </div>
                   </div>
                   <button
-                    className="save-btn w-100"
+                    className="save-btn w-25 ml-5 mr-4"
                     onClick={() => setActiveStep((prev) => prev - 1)}
                   >
-                    Back
+                    <Trans>Back</Trans>
                   </button>
-                  <button className="save-btn w-100" type="submit">
-                    Save
+                  <button className="save-btn w-25 mr-3 mb-3" type="submit">
+                    <Trans>Save</Trans>
+                  </button>
+                  <button
+                    className="btn-danger text-dark mr-4 btn-round w-25"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsAddModalOpen(false);
+                      setActiveStep(0);
+                    }}
+                  >
+                    <Trans>Cancel</Trans>
                   </button>
                 </>
               )}
