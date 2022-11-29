@@ -373,7 +373,12 @@ function Item() {
         window.location.reload();
      }
      else{
+      if(parent){
+    history.push(`/items/list?facility=${parent}`);    
+      }
+     else{ 
     history.push(`/items/list`);
+     }
     setFieldValue(_fieldsValue);
      }
   };
