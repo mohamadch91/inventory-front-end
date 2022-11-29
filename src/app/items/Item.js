@@ -154,20 +154,24 @@ function Item() {
       }
       return res?.data?.map((item) => ({
         label: item.pqsnumber
-          ? (item.pqsnumber +
+          ? item.pqsnumber +
             " , " +
             item.type +
             " , " +
             item.vaccinenetstoragecapacity +
             " , " +
-            item.manufacturer
-          ):(item.pqscode +
+            item.manufacturer +
+            " , " +
+            item.model
+          : item.pqscode +
             " , " +
             item.description +
             " , " +
             item.freezercapacity +
             " , " +
-            item.make),
+            item.make +
+            " , " +
+            item.model,
         value: item,
       }));
     },
