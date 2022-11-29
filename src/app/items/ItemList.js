@@ -584,11 +584,22 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                               : "-"}
                           </TableCell>
                           <TableCell className="col-sm-2">
-                            <Link to={`/items/info/${item.id}`}>
-                              <div style={{ width: "20px", height: "20px" }}>
-                                <EditIcon />
-                              </div>
-                            </Link>
+                            {facility ? (
+                              <Link
+                                to={`/items/info/${item.id}?parent=${facility}`}
+                              >
+                                <div style={{ width: "20px", height: "20px" }}>
+                                  <EditIcon />
+                                </div>
+                              </Link>
+                            ) : (
+                              <Link to={`/items/info/${item.id}`}>
+                                <div style={{ width: "20px", height: "20px" }}>
+                                  <EditIcon />
+                                </div>
+                              </Link>
+                            )}
+
                             <Tooltip title={<Trans>Delete item</Trans>}>
                               <button
                                 className="edit-btn"
@@ -786,9 +797,18 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       </div>
                       <div className="col-6">
                         <h4 className="text-center text-black">
-                          <Link to={`/items/info/${itemModalInfo?.id}`}>
-                            <EditIcon />
-                          </Link>
+                          {facility ? (
+                            <Link
+                              to={`/items/info/${itemModalInfo.id}?parent=${facility}`}
+                            >
+                                <EditIcon />
+                            </Link>
+                          ) : (
+                            <Link to={`/items/info/${itemModalInfo?.id}`}>
+                              <EditIcon />
+                            </Link>
+                          )}
+
                           <Tooltip title={<Trans>Delete item</Trans>}>
                             <button
                               className="edit-btn"
