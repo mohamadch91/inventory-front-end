@@ -1,8 +1,8 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "https://phlapi.invgap.org/settings/";
-const URL = "https://phlapi.invgap.org";
+const API_URL = "https://tlsapi.invgap.org/settings/";
+const URL = "https://tlsapi.invgap.org";
 class UserService {
   getPublicContent() {
     return ApiManager.get(API_URL + "all");
