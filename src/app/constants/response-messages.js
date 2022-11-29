@@ -1,6 +1,6 @@
 /**
  * @constant responseMessages - Response messages for the application
- * @type {Object}
+ * 
  * get status from request and then get message from this object
  */
 export const responseMessages = {
