@@ -62,11 +62,11 @@ function SubFacilityPopulationDataReport() {
         <div className="card">
           <div className="card-body py-3">
             <Form.Group className="row">
-              <label className="col-sm-4">
+              <label className="col-sm-4 mt-4">
                 <Trans>Levels</Trans>:
               </label>
               <Form.Control
-                className="form-select col-sm-4"
+                className="form-select col-sm-4 mt-1"
                 onChange={(e) => {
                   const value = e.target.value;
                   setSelectedLevel(value);

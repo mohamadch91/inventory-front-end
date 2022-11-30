@@ -7,7 +7,7 @@
         r = t(43144),
         o = t(54318),
         i = t(39877),
-        u = "https://api.invgap.org/reports/",
+        u = "http://localhost:8000/reports/",
         l = (function () {
           function e() {
             (0, n.Z)(this, e);

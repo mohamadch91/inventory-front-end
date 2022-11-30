@@ -135,9 +135,9 @@ class Navbar extends Component {
     }
   };
   /**
-   * 
+   *
    * @param {event} e
-   * cahnge user state data in user profile 
+   * cahnge user state data in user profile
    */
   handleChangeUser = (e) => {
     const { name, value } = e.target;
@@ -146,10 +146,10 @@ class Navbar extends Component {
     this.setState({ userInfo: new_data });
   };
   /**
-   * 
-   * @param {event} e 
-   * send new profile data to api 
-   * 
+   *
+   * @param {event} e
+   * send new profile data to api
+   *
    */
   submitChaneprofile = (e) => {
     e.preventDefault();
@@ -178,7 +178,7 @@ class Navbar extends Component {
       }
     );
   };
-  
+
   /**
    * when component munt called
    * get warnings from API
@@ -212,12 +212,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://api.invgap.org${this.state.logo1}`,
+        logo1: `http://localhost:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://api.invgap.org${this.state.logo2}`,
+        logo2: `http://localhost:8000${this.state.logo2}`,
       });
     }
   }

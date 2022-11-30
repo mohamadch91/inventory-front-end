@@ -8,7 +8,7 @@
         l = i(74569),
         a = i.n(l),
         r = i(54318),
-        t = "https://api.invgap.org/hr/",
+        t = "http://localhost:8000/hr/",
         d = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -117,7 +117,7 @@
         p = i(43144),
         v = i(39877),
         b = i(54318),
-        g = "https://api.invgap.org/auth/",
+        g = "http://localhost:8000/auth/",
         k = new ((function () {
           function e() {
             (0, f.Z)(this, e);
