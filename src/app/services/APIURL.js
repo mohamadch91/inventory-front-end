@@ -1,2 +1,2 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "https://api.invgap.org";
 export default API_URL;
