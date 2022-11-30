@@ -1031,7 +1031,7 @@
         t = a(43144),
         l = a(54318),
         c = a(39877),
-        i = "https://ukrapi.invgap.org/reports/",
+        i = "https://jorapi.invgap.org/reports/",
         o = (function () {
           function e() {
             (0, r.Z)(this, e);
