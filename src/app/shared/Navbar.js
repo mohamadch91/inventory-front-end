@@ -212,12 +212,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://phlapi.invgap.org${this.state.logo1}`,
+        logo1: `https://mobile.invgap.org${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://phlapi.invgap.org${this.state.logo2}`,
+        logo2: `https://mobile.invgap.org${this.state.logo2}`,
       });
     }
   }
