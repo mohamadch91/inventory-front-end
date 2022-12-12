@@ -543,7 +543,7 @@ window.handleMapClick = handleMapClick;
             <div className="row ">
               <Form.Group className="row mb-0">
                 <label
-                  className={`col-sm-4 text-right`}
+                  className={`col-sm-4 text-right control-label`}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
@@ -554,7 +554,7 @@ window.handleMapClick = handleMapClick;
                 >
                   <Trans>Parent facility</Trans>:
                 </label>
-                <div className={"col-sm-8"}>
+                <div className={"col-sm-8 control-input"}>
                   <DynamicInput
                     field={parentFacilityField}
                     defaultValue={fieldsValue["parentName"]}
@@ -576,7 +576,7 @@ window.handleMapClick = handleMapClick;
                 >
                   <Trans>Facility Name</Trans>:
                 </label>
-                <div className={"col-sm-8"}>
+                <div className={"col-sm-8 control-input"}>
                   <DynamicInput
                     field={facilityNameField}
                     defaultValue={fieldsValue["name"]}
@@ -610,7 +610,7 @@ window.handleMapClick = handleMapClick;
                 >
                   <Trans>Levels</Trans>:
                 </label>
-                <div className={"col-sm-8"}>
+                <div className={"col-sm-8 control-input"}>
                   <DynamicInput
                     field={levelField}
                     defaultValue={fieldsValue["level"]}
@@ -657,7 +657,11 @@ window.handleMapClick = handleMapClick;
                   >
                     <Trans>{field.name}</Trans>
                   </label>
-                  <div className="col-sm-8">
+                  <div
+                    className={`col-sm-8 ${
+                      field.required ? "control-input" : ""
+                    }`}
+                  >
                     {field.stateName === "gpsCordinate" ? (
                       <div className="map  ">
                         <div className="mb-2">
