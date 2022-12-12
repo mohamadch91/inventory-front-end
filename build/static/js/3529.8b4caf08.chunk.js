@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkinventory=self.webpackChunkinventory||[]).push([[3529],{73529:function(e,n,a){a.r(n);a(72791);var t=a(34313),u=a(60324),i=a(80184);n.default=function(){var e=u.Z.language;return(0,i.jsx)("div",{children:(0,i.jsx)(t.Z,{selectedLang:e,selectedPage:"admin_guide"})})}}}]);
+//# sourceMappingURL=3529.8b4caf08.chunk.js.map
