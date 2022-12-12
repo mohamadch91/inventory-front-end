@@ -587,7 +587,7 @@ function GapItemReport({i18n}) {
                         <TableCell
                           key={i}
                           align="center"
-                          colSpan={4}
+                          colSpan={6}
                           style={{ textAlign: "center" }}
                         >
                           {degrees[i].name}
@@ -596,7 +596,7 @@ function GapItemReport({i18n}) {
                     ) : (
                       <TableCell
                         align="center"
-                        colSpan={5}
+                        colSpan={6}
                         style={{ textAlign: "center" }}
                       >
                         {degrees[+selectedDegree - 1].name}
@@ -613,7 +613,7 @@ function GapItemReport({i18n}) {
                       (_, i) => (
                         <Fragment key={i}>
                           {tableDegreeData.map((td) => (
-                            <TableCell key={`${td.valueKey}${i + 1}`}>
+                            <TableCell colSpan={td.valueKey=== "item_type" ? 2 : 1} key={`${td.valueKey}${i + 1}`}>
                               <Trans>{td.headTitle}</Trans>
                             </TableCell>
                           ))}
@@ -638,8 +638,87 @@ function GapItemReport({i18n}) {
                             {tableDegreeData.map((td) => (
                               <>
                                 {td.valueKey === "item_type" ? (
-                                  <TableCell key={`${td.valueKey}${i + 1}`}>
-                                    salam
+                                  <TableCell
+                                    colSpan={2}
+                                    key={`${td.valueKey}${i + 1}`}
+                                  >
+                                    <>
+                                      {selectedDegree !== "2" &&
+                                        selectedDegree !== "3" &&
+                                        selectedDegree !== "6" && (
+                                          <>
+                                            {report["item_type"]["name"]}:
+                                            {report["item_type"]["count"]}
+                                            <br />
+                                            {
+                                              report["item_type"]["name1"]
+                                            }:{report["item_type"]["count1"]}
+                                            <br />
+                                            {
+                                              report["item_type"]["name2"]
+                                            }:{report["item_type"]["count2"]}
+                                          </>
+                                        )}
+                                    </>
+                                    <>
+                                      {selectedDegree === "2" && (
+                                        <>
+                                          {report["item_type"]["name"]} :{" "}
+                                          {report["item_type"]["count"]}
+                                          <br />
+                                          {report["item_type"]["name1"]} :{" "}
+                                          {report["item_type"]["count1"]}
+                                        </>
+                                      )}
+                                    </>
+                                    <>
+                                      {selectedDegree === "3" && (
+                                        <>
+                                          {report["item_type"]["name"]}:
+                                          {report["item_type"]["count"]}
+                                        </>
+                                      )}
+                                    </>
+                                    <>
+                                      {selectedDegree === "6" && (
+                                        <>
+                                          {console.log(i)}
+                                          {i !== 1 && i !== 2 && (
+                                            <>
+                                              {report["item_type"]["name"]}:
+                                              {report["item_type"]["count"]}
+                                              <br />
+                                              {
+                                                report["item_type"]["name1"]
+                                              }:
+                                              {report["item_type"]["count1"]}
+                                              <br />
+                                              {
+                                                report["item_type"]["name2"]
+                                              }:
+                                              {report["item_type"]["count2"]}
+                                            </>
+                                          )}
+                                          {i == 1 && (
+                                            <>
+                                              {report["item_type"]["name5"]}:
+                                              {report["item_type"]["count5"]}
+                                              <br />
+                                              {
+                                                report["item_type"]["name4"]
+                                              } :
+                                              {report["item_type"]["count4"]}
+                                            </>
+                                          )}
+                                          {i == 2 && (
+                                            <>
+                                              {report["item_type"]["name3"]}:
+                                              {report["item_type"]["count3"]}
+                                            </>
+                                          )}
+                                        </>
+                                      )}
+                                    </>
                                   </TableCell>
                                 ) : (
                                   <TableCell
@@ -653,7 +732,6 @@ function GapItemReport({i18n}) {
                                           : "unset",
                                     }}
                                   >
-                                    {console.log(report)}
                                     {td.func(
                                       report[`${td.valueKey}${i + 1}`]
                                     ) ?? "-"}
