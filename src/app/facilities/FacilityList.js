@@ -10,8 +10,9 @@ import EditIcon from "../shared/EditIcon";
 import MenuIcon from "../shared/MenuIcon";
 import AddItemIcon from "../shared/AddItemIcon";
 import TrashIcon from "../shared/TrashIcon";
-import AddFacilityIcon from "../shared/AddFacilityIcon";
-import FacilityIcon from "../shared/FacilityIcon";
+import { FcFlowChart } from "react-icons/fc";
+import { FaClinicMedical } from "react-icons/fa";
+
 import InformationIcon from "../shared/InformationIcon";
 import { Link, useHistory } from "react-router-dom";
 import { Translation,Trans } from "react-i18next";
@@ -561,7 +562,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <TableCell className="col-sm-1">
                         <Trans>Last Changed on</Trans>
                       </TableCell>
-                      <TableCell  className="col-sm-3">
+                      <TableCell className="col-sm-3">
                         <Trans>Tool box</Trans>
                       </TableCell>
                     </TableRow>
@@ -591,7 +592,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           <TableCell className="col-sm-2">
                             <Link to={`/facilities/info/${facility.id}`}>
                               <Tooltip title={<Trans>Edit</Trans>}>
-                                  <EditIcon />
+                                <EditIcon />
                               </Tooltip>
                             </Link>
                             {((pid && index > 0) || !pid) && (
@@ -602,7 +603,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                     search: `?pid=${facility.id}`,
                                   }}
                                 >
-                                  <FacilityIcon />
+                                  <FcFlowChart size={30} />
                                 </Link>
                               </Tooltip>
                             )}
@@ -613,7 +614,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                   search: `?pid=${facility.id}`,
                                 }}
                               >
-                                <AddFacilityIcon />
+                                <FaClinicMedical size={30} />
                               </Link>
                             </Tooltip>
                             <Tooltip title={<Trans>Item list</Trans>}>
@@ -638,7 +639,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                             </Tooltip>
                             <Tooltip title={<Trans>Delete facility</Trans>}>
                               <button
-                              className="delete-btn"
+                                className="delete-btn"
                                 disabled={isDeleteLoading}
                                 onClick={() => openDeleteModal(facility.id)}
                               >
@@ -840,7 +841,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                   search: `?pid=${facMod?.id}`,
                                 }}
                               >
-                                <FacilityIcon />
+                                <FcFlowChart size={30} />
                               </Link>
                             </Tooltip>
                           )}
@@ -851,7 +852,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                 search: `?pid=${facMod?.id}`,
                               }}
                             >
-                              <AddFacilityIcon />
+                              <FaClinicMedical size={30} />
                             </Link>
                           </Tooltip>
                           <Tooltip title={<Trans>Item list</Trans>}>

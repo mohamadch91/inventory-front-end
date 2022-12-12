@@ -57,6 +57,7 @@
     "react-gauge-chart": "^0.4.0",
     "react-hot-toast": "^2.3.0",
     "react-i18next": "^11.18.4",
+    "react-icons": "^4.7.1",
     "react-images": "^1.0.0",
     "react-input-mask": "^3.0.0-alpha.0",
     "react-jvectormap": "0.0.13",
