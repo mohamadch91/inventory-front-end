@@ -7,7 +7,7 @@
         i = t(43144),
         r = t(39877),
         o = t(54318),
-        l = (t(74569), "https://mobile.invgap.org/facilities/"),
+        l = (t(74569), "http://localhost:8000/facilities/"),
         s = (function () {
           function e() {
             (0, n.Z)(this, e);
@@ -71,7 +71,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return r.Z.post(
-                    "https://mobile.invgap.org/facilities/import",
+                    "http://localhost:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, o.Z)() } }
                   );

@@ -370,7 +370,7 @@
         l = n(43144),
         r = n(54318),
         o = n(39877),
-        c = "https://mobile.invgap.org/reports/",
+        c = "http://localhost:8000/reports/",
         s = (function () {
           function e() {
             (0, a.Z)(this, e);

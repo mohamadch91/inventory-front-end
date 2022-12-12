@@ -7,7 +7,7 @@
         n = r(43144),
         a = r(39877),
         s = r(54318),
-        c = "https://mobile.invgap.org/related/",
+        c = "http://localhost:8000/related/",
         l = (function () {
           function e() {
             (0, i.Z)(this, e);

@@ -743,7 +743,7 @@
         Y = a(43144),
         ee = a(39877),
         te = a(54318),
-        ae = "https://mobile.invgap.org/languages/",
+        ae = "http://localhost:8000/languages/",
         ne = new ((function () {
           function e() {
             (0, K.Z)(this, e);

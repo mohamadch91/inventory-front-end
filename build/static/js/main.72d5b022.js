@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (e, t) {
                     return s()
-                      .post("https://mobile.invgap.org/auth/login/", {
+                      .post("http://localhost:8000/auth/login/", {
                         username: e,
                         password: t,
                       })
@@ -37,7 +37,7 @@
                             access: e.data.access,
                           };
                           return s()
-                            .get("https://mobile.invgap.org/user-data/", {
+                            .get("http://localhost:8000/user-data/", {
                               headers: { Authorization: "Bearer " + t.access },
                             })
                             .then(function (e) {
@@ -224,7 +224,7 @@
       },
       80794: function (e, t) {
         "use strict";
-        t.Z = "https://mobile.invgap.org";
+        t.Z = "http://localhost:8000";
       },
       54318: function (e, t, n) {
         "use strict";
@@ -305,7 +305,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://mobile.invgap.org/dashboard",
+          s = "http://localhost:8000/dashboard",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -388,7 +388,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://mobile.invgap.org/help/",
+          s = "http://localhost:8000/help/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -433,7 +433,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://mobile.invgap.org/item/",
+          s = "http://localhost:8000/item/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -559,7 +559,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://mobile.invgap.org/items/",
+          s = "http://localhost:8000/items/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -692,7 +692,7 @@
           i = n(43144),
           o = (n(74569), n(39877)),
           a = n(54318),
-          s = "https://mobile.invgap.org/message/",
+          s = "http://localhost:8000/message/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -767,8 +767,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://mobile.invgap.org/settings/",
-          u = "https://mobile.invgap.org",
+          s = "http://localhost:8000/settings/",
+          u = "http://localhost:8000",
           l = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -5256,8 +5256,7 @@
             defaultNS: "translation",
             supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
             backend: {
-              loadPath:
-                "https://mobile.invgap.org/languages/{{ns}}?name={{lng}}",
+              loadPath: "http://localhost:8000/languages/{{ns}}?name={{lng}}",
               addPath: null,
               crossDomain: !0,
               withCredentials: !0,
@@ -31963,15 +31962,11 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "https://mobile.invgap.org".concat(
-                          this.state.logo1
-                        ),
+                        logo1: "http://localhost:8000".concat(this.state.logo1),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "https://mobile.invgap.org".concat(
-                          this.state.logo2
-                        ),
+                        logo2: "http://localhost:8000".concat(this.state.logo2),
                       });
                 },
               },
