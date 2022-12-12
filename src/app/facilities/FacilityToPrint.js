@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Trans } from "react-i18next";
 import FacilitiesService from "../services/facilities.service.js";
 import Spinner from "../shared/Spinner";
+import "./print.scss"
 
 const FacilityToPrint = forwardRef((props, ref) => {
   const [data, setData] = useState({});
@@ -70,7 +71,7 @@ const FacilityToPrint = forwardRef((props, ref) => {
             <p>
               <Trans>Date</Trans>: -----------
             </p>
-            <div className="wrapper">
+            <div className="wrapper p-1 mb-5">
               <Row>
                 {data.map((item) => (
                   <>
@@ -79,33 +80,36 @@ const FacilityToPrint = forwardRef((props, ref) => {
                         <Trans>{item.name}</Trans>
                       </h6>
                       <div
-                        className="box mb-3 row"
+                        className="box mb-3 column"
                         style={{
                           border: "gray 1px solid",
                           padding: "1rem",
                           "border-radius": "5px",
                           marginButtom: "5px",
+                          minHeight: "150px",
                         }}
                       >
                         {item.params.map((param) => (
-                          <div className="param col-md-5">
-                            <div class="form-check form-check-primary mt-3">
-                              <label className="form-check-label">
+                          <div className="param col-md-4 "
+                          style={
+                            {
+                              display: "flex",
+                              "align-items": "center",
+                              flexdirection: "row",
+                            }
+                          }
+                          >
+                            <div class=" ">
+                              <label className="">
                                 <input
-                                  style={{
-                                    Background: "white",
-                                    Border: "1px solid #ababab70",
-                                    BorderRadius: "5px",
-                                    Padding: "0rem",
-                                    marginRight: "0px",
-                                  }}
+                               
                                   className="m-1"
                                   type="checkbox"
                                   checked={false}
                                   disabled
                                 />
 
-                                <i className="input-helper mt-5">
+                                <i className=" mt-5">
                                   <span className="ml-4 mb-2">{param.name || param.describe}</span>
                                 </i>
                               </label>
