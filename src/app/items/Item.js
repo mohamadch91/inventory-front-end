@@ -540,7 +540,7 @@ function Item() {
             <div className="row">
               <Form.Group className="row mb-0">
                 <label
-                  className={`col-sm-4 text-right`}
+                  className={`col-sm-4 text-right control-label`}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
@@ -551,7 +551,7 @@ function Item() {
                 >
                   <Trans>Facility Name</Trans>:
                 </label>
-                <div className={"col-sm-8"}>
+                <div className={"col-sm-8 control-input"}>
                   <DynamicInput
                     field={facilityField}
                     defaultValue={fieldsValue["facility"]?.name}
@@ -562,7 +562,7 @@ function Item() {
             <div className="row mt-3">
               <Form.Group className="row mb-0">
                 <label
-                  className={`col-sm-4 text-left control-label`}
+                  className={`col-sm-4 text-left control-label `}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
@@ -573,7 +573,7 @@ function Item() {
                 >
                   <Trans>Item class</Trans>
                 </label>
-                <div className="col-sm-8">
+                <div className="col-sm-8 control-input">
                   <Form.Control
                     onChange={selectItemClassHandler}
                     className="form-select"
@@ -596,7 +596,7 @@ function Item() {
             <div className="row mt-3">
               <Form.Group className="row mb-0">
                 <label
-                  className={`col-sm-4 text-right control-label`}
+                  className={`col-sm-4 text-right control-label `}
                   style={{
                     display: "flex",
                     justifyContent: "flex-end",
@@ -607,7 +607,7 @@ function Item() {
                 >
                   <Trans>Items category</Trans>
                 </label>
-                <div className="col-sm-8">
+                <div className="col-sm-8 control-input">
                   <Form.Control
                     onChange={selectItemTypeHandler}
                     className="form-select"
@@ -766,7 +766,11 @@ function Item() {
                     >
                       <Trans>{field.name}</Trans>
                     </label>
-                    <div className="col-sm-8">
+                    <div
+                      className={`col-sm-8 ${
+                        field.required ? "control-input" : ""
+                      }`}
+                    >
                       <DynamicInput
                         field={field}
                         onChangeHandler={onChangeHandler}

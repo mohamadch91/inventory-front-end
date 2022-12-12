@@ -4,7 +4,7 @@
   margin-bottom: 1.5rem;
 }
 .form-group.required .control-label:after { 
-  content:"   *";
+  content:"  salam *";
   color:red;
   white-space: pre;
 }
@@ -80,10 +80,16 @@ select {
     white-space: pre;
   }
   .control-label:after { 
-    content:" *";
+    content:"  *";
     color:red;
     white-space: pre;
  }
+  .control-input input {
+    background: rgb(233, 233, 159);
+  }
+  .control-input select {
+   background: rgb(233, 233, 159);
+  }
   .file-upload-info {
     background: transparent;
   }
