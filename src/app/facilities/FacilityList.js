@@ -591,9 +591,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           <TableCell className="col-sm-2">
                             <Link to={`/facilities/info/${facility.id}`}>
                               <Tooltip title={<Trans>Edit</Trans>}>
-                                <button className="edit-btn">
                                   <EditIcon />
-                                </button>
                               </Tooltip>
                             </Link>
                             {((pid && index > 0) || !pid) && (
@@ -640,7 +638,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                             </Tooltip>
                             <Tooltip title={<Trans>Delete facility</Trans>}>
                               <button
-                                className="edit-btn"
+                              className="delete-btn"
                                 disabled={isDeleteLoading}
                                 onClick={() => openDeleteModal(facility.id)}
                               >
