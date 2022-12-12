@@ -647,7 +647,6 @@ function GapItemReport({i18n}) {
                                       : "unset",
                                 }}
                               >
-                                {console.log(report[`${td.valueKey}${i + 1}`])}
                                 {td.func(report[`${td.valueKey}${i + 1}`]) ??
                                   "-"}
                               </TableCell>
