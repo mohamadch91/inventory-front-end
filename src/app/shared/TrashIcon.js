@@ -9,8 +9,8 @@ function TrashIcon() {
       id="Layer_1"
       x="0px"
       y="0px"
-      width="20px"
-      height="20px"
+      width="30px"
+      height="30px"
       viewBox="0 0 473 473"
     >
       <path

@@ -7,10 +7,10 @@ import { useMutation, useQuery } from "react-query";
 import SharedTable from "../shared/SharedTable";
 import FacilitiesService from "../services/facilities.service";
 import EditIcon from "../shared/EditIcon";
-import MenuIcon from "../shared/MenuIcon";
-import AddItemIcon from "../shared/AddItemIcon";
 import TrashIcon from "../shared/TrashIcon";
 import { FcFlowChart } from "react-icons/fc";
+import { FcList } from "react-icons/fc";
+
 import { FaClinicMedical } from "react-icons/fa";
 import { FaFileMedical } from "react-icons/fa";
 
@@ -625,7 +625,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                   search: `?facility=${facility.id}`,
                                 }}
                               >
-                                <MenuIcon />
+                                <FcList size={30} />
                               </Link>
                             </Tooltip>
                             <Tooltip title={<Trans>Add item</Trans>}>
@@ -863,7 +863,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                 search: `?facility=${facMod?.id}`,
                               }}
                             >
-                              <MenuIcon />
+                              <FcList size={30} />
                             </Link>
                           </Tooltip>
                           <Tooltip title={<Trans>Add item</Trans>}>

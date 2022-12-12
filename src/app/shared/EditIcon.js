@@ -9,8 +9,8 @@ function EditIcon() {
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
-        width="20"
-        height="20"
+        width="30"
+        height="30"
         xmlnsXlink="http://www.w3.org/1999/xlink"
         enable-background="new 0 0 512 512"
       >
