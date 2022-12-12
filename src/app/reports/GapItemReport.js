@@ -110,7 +110,7 @@ const tableDegreeData = [
     func: (val) => parseFloat(val).toFixed(2).toString().replace(".", seperator()),
   },
   {
-    headTitle: "Items category",
+    headTitle: "Items Count",
     valueKey: "item_type",
     func: (val) => val,
   }
@@ -636,20 +636,30 @@ function GapItemReport({i18n}) {
                         }).map((_, i) => (
                           <Fragment key={i}>
                             {tableDegreeData.map((td) => (
-                              <TableCell
-                                key={`${td.valueKey}${i + 1}`}
-                                style={{
-                                  color:
-                                    td.valueKey === "excees"
-                                      ? report[`exceed${i + 1}`]
-                                        ? "blue"
-                                        : "red"
-                                      : "unset",
-                                }}
-                              >
-                                {td.func(report[`${td.valueKey}${i + 1}`]) ??
-                                  "-"}
-                              </TableCell>
+                              <>
+                                {td.valueKey === "item_type" ? (
+                                  <TableCell key={`${td.valueKey}${i + 1}`}>
+                                    salam
+                                  </TableCell>
+                                ) : (
+                                  <TableCell
+                                    key={`${td.valueKey}${i + 1}`}
+                                    style={{
+                                      color:
+                                        td.valueKey === "excees"
+                                          ? report[`exceed${i + 1}`]
+                                            ? "blue"
+                                            : "red"
+                                          : "unset",
+                                    }}
+                                  >
+                                    {console.log(report)}
+                                    {td.func(
+                                      report[`${td.valueKey}${i + 1}`]
+                                    ) ?? "-"}
+                                  </TableCell>
+                                )}
+                              </>
                             ))}
                           </Fragment>
                         ))}
