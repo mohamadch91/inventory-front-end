@@ -12,6 +12,7 @@ import AddItemIcon from "../shared/AddItemIcon";
 import TrashIcon from "../shared/TrashIcon";
 import { FcFlowChart } from "react-icons/fc";
 import { FaClinicMedical } from "react-icons/fa";
+import { FaFileMedical } from "react-icons/fa";
 
 import InformationIcon from "../shared/InformationIcon";
 import { Link, useHistory } from "react-router-dom";
@@ -634,7 +635,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                   search: `?parent=${facility.id}`,
                                 }}
                               >
-                                <AddItemIcon />
+                                <FaFileMedical size={30} />
                               </Link>
                             </Tooltip>
                             <Tooltip title={<Trans>Delete facility</Trans>}>
@@ -872,7 +873,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                                 search: `?parent=${facMod?.id}`,
                               }}
                             >
-                              <AddItemIcon />
+                              <FaFileMedical size={30} />
                             </Link>
                           </Tooltip>
                           <Tooltip title={<Trans>Delete facility</Trans>}>
