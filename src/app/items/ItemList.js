@@ -545,13 +545,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <TableCell className="col-sm-2">
                         <Trans>Code</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell className="col-sm-1">
                         <Trans>Manufacturer</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell className="col-sm-1">
                         <Trans>Last Changed on</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell className="col-sm-1">
                         <Trans>Edit</Trans>
                       </TableCell>
                     </TableRow>
@@ -575,34 +575,30 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           <TableCell className="col-sm-2">
                             {item.code ?? "-"}
                           </TableCell>
-                          <TableCell className="col-sm-2">
+                          <TableCell className="col-sm-1">
                             {item.Manufacturer ?? "-"}
                           </TableCell>
-                          <TableCell className="col-sm-2">
+                          <TableCell className="col-sm-1">
                             {item?.updated_at
                               ? convertDate(item.updated_at)
                               : "-"}
                           </TableCell>
-                          <TableCell className="col-sm-2">
+                          <TableCell className="col-sm-1">
                             {facility ? (
                               <Link
                                 to={`/items/info/${item.id}?parent=${facility}`}
                               >
-                                <div style={{ width: "20px", height: "20px" }}>
                                   <EditIcon />
-                                </div>
                               </Link>
                             ) : (
                               <Link to={`/items/info/${item.id}`}>
-                                <div style={{ width: "20px", height: "20px" }}>
                                   <EditIcon />
-                                </div>
                               </Link>
                             )}
 
                             <Tooltip title={<Trans>Delete item</Trans>}>
                               <button
-                                className="edit-btn"
+                                className="delete-btn"
                                 disabled={isDeleteLoading}
                                 onClick={() => openDeleteModal(item.id)}
                               >
