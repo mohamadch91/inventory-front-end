@@ -555,13 +555,13 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <TableCell className="col-sm-1">
                         <Trans>Code</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell className="col-sm-1">
                         <Trans>Type</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell className="col-sm-1">
                         <Trans>Last Changed on</Trans>
                       </TableCell>
-                      <TableCell className="col-sm-2">
+                      <TableCell  className="col-sm-3">
                         <Trans>Tool box</Trans>
                       </TableCell>
                     </TableRow>
@@ -582,7 +582,7 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           <TableCell className="col-sm-1">
                             {facility.code ?? "-"}
                           </TableCell>
-                          <TableCell className="col-sm-2">
+                          <TableCell className="col-sm-1">
                             {facility.type ?? "-"}
                           </TableCell>
                           <TableCell className="col-sm-2">
