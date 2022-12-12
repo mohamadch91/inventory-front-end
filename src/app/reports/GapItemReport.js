@@ -109,6 +109,11 @@ const tableDegreeData = [
     valueKey: "excees",
     func: (val) => parseFloat(val).toFixed(2).toString().replace(".", seperator()),
   },
+  {
+    headTitle: "Items category",
+    valueKey: "item_type",
+    func: (val) => val,
+  }
 ];
 
 function GapItemReport({i18n}) {
@@ -591,7 +596,7 @@ function GapItemReport({i18n}) {
                     ) : (
                       <TableCell
                         align="center"
-                        colSpan={4}
+                        colSpan={5}
                         style={{ textAlign: "center" }}
                       >
                         {degrees[+selectedDegree - 1].name}
