@@ -225,7 +225,7 @@
         o = a(43144),
         r = a(54318),
         l = a(39877),
-        c = "https://api.invgap.org/reports/",
+        c = "https://mobile.invgap.org/reports/",
         i = (function () {
           function e() {
             (0, n.Z)(this, e);
