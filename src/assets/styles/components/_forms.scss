@@ -88,7 +88,8 @@ select {
     background: rgb(233, 233, 159);
   }
   .control-input select {
-   background: rgb(233, 233, 159);
+   background-color: rgb(233, 233, 159);
+  //  z-index: -1;
   }
   .file-upload-info {
     background: transparent;
