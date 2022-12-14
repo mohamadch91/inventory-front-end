@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://jorapi.invgap.org/dashboard";
+const API_URL = "https://mobile.invgap.org/dashboard";
 
 class DashboardService {
   getAllDashboardItems() {

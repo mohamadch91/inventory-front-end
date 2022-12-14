@@ -591,11 +591,12 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                             {convertDate(facility.updated_at)}
                           </TableCell>
                           <TableCell className="col-sm-2">
-                            <Link to={`/facilities/info/${facility.id}`}>
-                              <Tooltip title={<Trans>Edit</Trans>}>
+                            <Tooltip title={<Trans>Edit</Trans>}>
+                              <Link to={`/facilities/info/${facility.id}`}>
                                 <EditIcon />
-                              </Tooltip>
-                            </Link>
+                              </Link>
+                            </Tooltip>
+
                             {((pid && index > 0) || !pid) && (
                               <Tooltip title={<Trans>Sub Facilities</Trans>}>
                                 <Link
