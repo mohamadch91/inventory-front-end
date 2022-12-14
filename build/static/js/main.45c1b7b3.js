@@ -26,7 +26,7 @@
                   key: "login",
                   value: function (e, t) {
                     return s()
-                      .post("https://phlapi.invgap.org/auth/login/", {
+                      .post("https://tlsapi.invgap.org/auth/login/", {
                         username: e,
                         password: t,
                       })
@@ -37,7 +37,7 @@
                             access: e.data.access,
                           };
                           return s()
-                            .get("https://phlapi.invgap.org/user-data/", {
+                            .get("https://tlsapi.invgap.org/user-data/", {
                               headers: { Authorization: "Bearer " + t.access },
                             })
                             .then(function (e) {
@@ -224,7 +224,7 @@
       },
       80794: function (e, t) {
         "use strict";
-        t.Z = "https://phlapi.invgap.org";
+        t.Z = "https://tlsapi.invgap.org";
       },
       54318: function (e, t, n) {
         "use strict";
@@ -305,7 +305,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://phlapi.invgap.org/dashboard",
+          s = "https://tlsapi.invgap.org/dashboard",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -388,7 +388,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://phlapi.invgap.org/help/",
+          s = "https://tlsapi.invgap.org/help/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -433,7 +433,7 @@
           i = n(43144),
           o = n(39877),
           a = n(54318),
-          s = "https://phlapi.invgap.org/item/",
+          s = "https://tlsapi.invgap.org/item/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -559,7 +559,7 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://phlapi.invgap.org/items/",
+          s = "https://tlsapi.invgap.org/items/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -692,7 +692,7 @@
           i = n(43144),
           o = (n(74569), n(39877)),
           a = n(54318),
-          s = "https://phlapi.invgap.org/message/",
+          s = "https://tlsapi.invgap.org/message/",
           u = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -767,8 +767,8 @@
           i = n(43144),
           o = n(54318),
           a = n(39877),
-          s = "https://phlapi.invgap.org/settings/",
-          u = "https://phlapi.invgap.org",
+          s = "https://tlsapi.invgap.org/settings/",
+          u = "https://tlsapi.invgap.org",
           l = (function () {
             function e() {
               (0, r.Z)(this, e);
@@ -5257,7 +5257,7 @@
             supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
             backend: {
               loadPath:
-                "https://phlapi.invgap.org/languages/{{ns}}?name={{lng}}",
+                "https://tlsapi.invgap.org/languages/{{ns}}?name={{lng}}",
               addPath: null,
               crossDomain: !0,
               withCredentials: !0,
@@ -31967,13 +31967,13 @@
                     (this.state.logo2 = t.secondLogo)),
                     null !== this.state.logo1 &&
                       this.setState({
-                        logo1: "https://phlapi.invgap.org".concat(
+                        logo1: "https://tlsapi.invgap.org".concat(
                           this.state.logo1
                         ),
                       }),
                     null !== this.state.logo2 &&
                       this.setState({
-                        logo2: "https://phlapi.invgap.org".concat(
+                        logo2: "https://tlsapi.invgap.org".concat(
                           this.state.logo2
                         ),
                       });
