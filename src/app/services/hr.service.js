@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "https://ukrapi.invgap.org/hr/";
+const API_URL = "https://tlsapi.invgap.org/hr/";
 
 class HRService {
   getFacilities() {
