@@ -370,7 +370,7 @@
         l = n(43144),
         r = n(54318),
         o = n(39877),
-        c = "https://tlsapi.invgap.org/reports/",
+        c = "https://jorapi.invgap.org/reports/",
         s = (function () {
           function e() {
             (0, a.Z)(this, e);
