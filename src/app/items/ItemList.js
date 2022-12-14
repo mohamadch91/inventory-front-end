@@ -585,15 +585,21 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                           </TableCell>
                           <TableCell className="col-sm-1">
                             {facility ? (
+                            <Tooltip title={<Trans>Edit</Trans>}>
+
                               <Link
                                 to={`/items/info/${item.id}?parent=${facility}`}
                               >
                                   <EditIcon />
                               </Link>
+                            </Tooltip>
                             ) : (
+                            <Tooltip title={<Trans>Edit</Trans>}>
+
                               <Link to={`/items/info/${item.id}`}>
                                   <EditIcon />
                               </Link>
+                              </Tooltip>
                             )}
 
                             <Tooltip title={<Trans>Delete item</Trans>}>
@@ -794,15 +800,21 @@ const [is_deleted, setIsDeleted] = React.useState(false);
                       <div className="col-6">
                         <h4 className="text-center text-black">
                           {facility ? (
+                            <Tooltip title={<Trans>Edit</Trans>}>
+
                             <Link
                               to={`/items/info/${itemModalInfo.id}?parent=${facility}`}
                             >
                                 <EditIcon />
                             </Link>
+                            </Tooltip>
                           ) : (
+                            <Tooltip title={<Trans>Edit</Trans>}>
+
                             <Link to={`/items/info/${itemModalInfo?.id}`}>
                               <EditIcon />
                             </Link>
+                            </Tooltip>
                           )}
 
                           <Tooltip title={<Trans>Delete item</Trans>}>
