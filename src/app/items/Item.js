@@ -10,7 +10,7 @@ import ItemService from "../services/item.service";
 import DynamicInput from "../components/DynamicInput";
 import { fromPQSFields } from "../constants/item";
 import { hasValidationError } from "../helpers/validation-checker";
-import { Trans } from "react-i18next";
+import { Trans,Translation } from "react-i18next";
 import Select from "react-select";
 import StepOperations from "../components/StepOperations";
 import { isRelatedFieldOk, relatedFields } from "../helpers/related-tem";
@@ -764,7 +764,17 @@ function Item() {
                         textAlign: "right",
                       }}
                     >
-                      <Trans>{field.name}</Trans>
+                      <Translation>
+                        {(t, { i18n }) => (
+                          <>
+                            {t(field.name) === "" ? (
+                              <Trans>{`${field.name}`}</Trans>
+                            ) : (
+                              t(field.name)
+                            )}
+                          </>
+                        )}
+                      </Translation>
                     </label>
                     <div
                       className={`col-sm-8 ${
