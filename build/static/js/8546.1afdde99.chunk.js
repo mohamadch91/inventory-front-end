@@ -856,7 +856,7 @@
         c = i(74569),
         r = i.n(c),
         t = i(54318),
-        a = "https://jorapi.invgap.org/hr/",
+        a = "https://ukrapi.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, l.Z)(this, e);

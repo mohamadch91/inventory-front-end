@@ -16,7 +16,7 @@ import { isRelatedFieldOk, relatedFields } from "../helpers/related-field";
 import { isRelatedFieldOkReq } from "../helpers/related-field-req";
 
 import Map from "../settings/Map";
-import { Trans } from "react-i18next";
+import { Trans, Translation } from "react-i18next";
 import { separator } from "../helpers/separator";
 import StepOperations from "../components/StepOperations";
 import { useEffect } from "react";
@@ -270,7 +270,7 @@ const [x2, setx2] = useState(
 
         result[firstTopic].unshift({
           id: "code",
-          name: "Facility code:",
+          name: "Facility code",
           topic: firstTopic,
           type: "text",
           active: false,
@@ -655,7 +655,17 @@ window.handleMapClick = handleMapClick;
                       textAlign: "right",
                     }}
                   >
-                    <Trans>{field.name}</Trans>
+                    <Translation>
+                      {(t, { i18n }) => (
+                        <>
+                          {t(field.name) === "" ? (
+                            <Trans>{`${field.name}`}</Trans>
+                          ) : (
+                            t(field.name)
+                          )}
+                        </>
+                      )}
+                    </Translation>
                   </label>
                   <div
                     className={`col-sm-8 ${
