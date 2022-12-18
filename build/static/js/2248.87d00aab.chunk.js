@@ -7,7 +7,7 @@
         l = n(43144),
         a = n(39877),
         i = n(54318),
-        t = "https://jorapi.invgap.org/maintanance/",
+        t = "http://localhost:8000/maintanance/",
         r = (function () {
           function e() {
             (0, c.Z)(this, e);

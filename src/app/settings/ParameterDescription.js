@@ -19,7 +19,7 @@ function ParameterDescription() {
   const [addRowFormData, setAddRowFormData] = useState({
     name: "",
     order: null,
-    enabled: false,
+    enabled: true,
   });
   const [editableRowId, setEditableRowId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);

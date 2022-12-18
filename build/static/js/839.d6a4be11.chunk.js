@@ -1656,7 +1656,7 @@
         t = l(43144),
         c = l(39877),
         i = l(54318),
-        a = (l(74569), "https://jorapi.invgap.org/facilities/"),
+        a = (l(74569), "http://localhost:8000/facilities/"),
         r = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -1720,7 +1720,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return c.Z.post(
-                    "https://jorapi.invgap.org/facilities/import",
+                    "http://localhost:8000/facilities/import",
                     e,
                     { headers: { Authorization: (0, i.Z)() } }
                   );
@@ -1753,7 +1753,7 @@
         t = l(43144),
         c = l(54318),
         i = l(39877),
-        a = "https://jorapi.invgap.org/reports/",
+        a = "http://localhost:8000/reports/",
         r = (function () {
           function e() {
             (0, s.Z)(this, e);

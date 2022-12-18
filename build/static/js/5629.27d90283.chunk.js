@@ -1290,7 +1290,7 @@
         r = t(43144),
         l = t(54318),
         c = t(39877),
-        i = "https://jorapi.invgap.org/reports/",
+        i = "http://localhost:8000/reports/",
         o = (function () {
           function e() {
             (0, a.Z)(this, e);
