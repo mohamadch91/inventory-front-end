@@ -185,8 +185,9 @@ const MapWrapper = (props) => {
             }}
           />
 
-          <GetCoordinates change={handl} />
+          {/* <GetCoordinates change={handl} /> */}
           <>
+          {console.log(locations)}
             {locations?.map((e, i) => {
               return (
                 <Marker key={i} position={e.cordinates} icon={levels[e.level] ?levels[e.level] :blueIcon } >

@@ -1,8 +1,8 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "http://localhost:8000/settings/";
-const URL = "http://localhost:8000";
+const API_URL = "https://tlsapi.invgap.org/settings/";
+const URL = "https://tlsapi.invgap.org";
 class UserService {
   getPublicContent() {
     return ApiManager.get(API_URL + "all");
