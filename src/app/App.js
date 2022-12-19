@@ -171,3 +171,5 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(
   withTranslation("translation")(withRouter(App))
 );
+
+// done
