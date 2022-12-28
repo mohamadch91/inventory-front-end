@@ -7,7 +7,7 @@
         r = a(43144),
         o = a(54318),
         i = a(39877),
-        u = "https://phlapi.invgap.org/reports/",
+        u = "https://jorapi.invgap.org/reports/",
         l = (function () {
           function e() {
             (0, n.Z)(this, e);
