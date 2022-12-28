@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://tlsapi.invgap.org/maintanance/";
+const API_URL = "http://localhost:8000/maintanance/";
 
 class MaintenanceService {
   getMaintenanceHelper() {

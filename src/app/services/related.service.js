@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://tlsapi.invgap.org/related/";
+const API_URL = "http://localhost:8000/related/";
 
 class RelatedService {
   getParameters() {

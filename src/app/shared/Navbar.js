@@ -212,12 +212,12 @@ class Navbar extends Component {
     }
     if (this.state.logo1 !== null) {
       this.setState({
-        logo1: `https://tlsapi.invgap.org${this.state.logo1}`,
+        logo1: `http://localhost:8000${this.state.logo1}`,
       });
     }
     if (this.state.logo2 !== null) {
       this.setState({
-        logo2: `https://tlsapi.invgap.org${this.state.logo2}`,
+        logo2: `http://localhost:8000${this.state.logo2}`,
       });
     }
   }
@@ -232,7 +232,7 @@ class Navbar extends Component {
     ru: "Русский",
     ot: "Other",
     uk: "украї́нська",
-    ch: "Chinese",
+    vi: "tiếng Việt",
   };
   render() {
     return (
