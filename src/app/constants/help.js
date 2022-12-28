@@ -13,7 +13,7 @@ export const languages = {
   ru: "Русский",
   ot: "Other",
   uk: "украї́нська",
-  ch: "Chinese",
+  vi: "tiếng Việt",
 };
 
 export const pages = {

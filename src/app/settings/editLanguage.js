@@ -36,7 +36,7 @@ function EditLanguage() {
     { label: "Española", value: "es" },
     { label: "Pусский", value: "ru" },
     { label: "украї́нська", value: "uk" },
-    { label: "Chinese", value: "ch" },
+    { label: "tiếng Việt", value: "vi" },
     { label: "Other", value: "ot" },
   ];
 
