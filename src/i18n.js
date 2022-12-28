@@ -32,7 +32,7 @@ i18n
     ns: ["translation"],
     defaultNS: "translation",
     // define languages we support
-    supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "ch"],
+    supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "vi"],
     backend: {
       loadPath: "https://tlsapi.invgap.org/languages/{{ns}}?name={{lng}}",
       addPath: null,
