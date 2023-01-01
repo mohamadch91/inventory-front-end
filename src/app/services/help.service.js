@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://tls.invgap.org/help/";
+const API_URL = "https://tlsapi.invgap.org/help/";
 
 class HelpService {
   getHelpContent(lang, page) {

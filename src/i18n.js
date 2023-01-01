@@ -34,7 +34,7 @@ i18n
     // define languages we support
     supportedLngs: ["en", "ar", "ru", "ot", "fr", "es", "uk", "vi"],
     backend: {
-      loadPath: "https://tls.invgap.org/languages/{{ns}}?name={{lng}}",
+      loadPath: "https://tlsapi.invgap.org/languages/{{ns}}?name={{lng}}",
       addPath: null,
       crossDomain: true,
       withCredentials: true,

@@ -7,7 +7,7 @@
         t = s(43144),
         c = s(39877),
         i = s(54318),
-        l = "https://tls.invgap.org/maintanance/",
+        l = "https://tlsapi.invgap.org/maintanance/",
         r = (function () {
           function e() {
             (0, a.Z)(this, e);
