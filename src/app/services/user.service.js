@@ -1,8 +1,8 @@
 import authHeader from "./auth-header";
 import ApiManager from "./axios-config";
 
-const API_URL = "https://azeapi.invgap.org/settings/";
-const URL = "https://azeapi.invgap.org";
+const API_URL = "https://tjkapi.invgap.org/settings/";
+const URL = "https://tjkapi.invgap.org";
 class UserService {
   getPublicContent() {
     return ApiManager.get(API_URL + "all");

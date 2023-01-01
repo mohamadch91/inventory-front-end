@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://azeapi.invgap.org/maintanance/";
+const API_URL = "https://tjkapi.invgap.org/maintanance/";
 
 class MaintenanceService {
   getMaintenanceHelper() {
