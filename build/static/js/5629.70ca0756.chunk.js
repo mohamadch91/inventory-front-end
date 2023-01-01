@@ -1290,7 +1290,7 @@
         r = t(43144),
         l = t(54318),
         c = t(39877),
-        i = "https://tjkapi.invgap.org/reports/",
+        i = "https://geoapi.invgap.org/reports/",
         o = (function () {
           function e() {
             (0, a.Z)(this, e);

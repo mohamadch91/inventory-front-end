@@ -226,7 +226,7 @@
         r = n(43144),
         a = n(39877),
         s = n(54318),
-        c = (n(74569), "https://tjkapi.invgap.org/facilities/"),
+        c = (n(74569), "https://geoapi.invgap.org/facilities/"),
         l = (function () {
           function e() {
             (0, i.Z)(this, e);
@@ -290,7 +290,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return a.Z.post(
-                    "https://tjkapi.invgap.org/facilities/import",
+                    "https://geoapi.invgap.org/facilities/import",
                     e,
                     { headers: { Authorization: (0, s.Z)() } }
                   );
