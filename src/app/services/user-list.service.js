@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://jorapi.invgap.org/auth/";
+const API_URL = "https://mdemo.invgap.org/auth/";
 
 class UserListService {
   getUsersByFacilityId(id) {
