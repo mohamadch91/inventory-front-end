@@ -1656,7 +1656,7 @@
         t = l(43144),
         c = l(39877),
         i = l(54318),
-        a = (l(74569), "https://mdemo.invgap.org/facilities/"),
+        a = (l(74569), "https://azeapi.invgap.org/facilities/"),
         r = (function () {
           function e() {
             (0, s.Z)(this, e);
@@ -1720,7 +1720,7 @@
                 key: "importFacilities",
                 value: function (e) {
                   return c.Z.post(
-                    "https://mdemo.invgap.org/facilities/import",
+                    "https://azeapi.invgap.org/facilities/import",
                     e,
                     { headers: { Authorization: (0, i.Z)() } }
                   );
@@ -1753,7 +1753,7 @@
         t = l(43144),
         c = l(54318),
         i = l(39877),
-        a = "https://mdemo.invgap.org/reports/",
+        a = "https://azeapi.invgap.org/reports/",
         r = (function () {
           function e() {
             (0, s.Z)(this, e);

@@ -1,7 +1,7 @@
 import ApiManager from "./axios-config";
 import authHeader from "./auth-header";
 
-const API_URL = "https://mdemo.invgap.org/related/";
+const API_URL = "https://azeapi.invgap.org/related/";
 
 class RelatedService {
   getParameters() {

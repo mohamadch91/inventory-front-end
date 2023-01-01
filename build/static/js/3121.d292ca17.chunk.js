@@ -7,7 +7,7 @@
         r = n(43144),
         c = n(54318),
         s = n(39877),
-        t = "https://mdemo.invgap.org/reports/",
+        t = "https://azeapi.invgap.org/reports/",
         o = (function () {
           function e() {
             (0, a.Z)(this, e);

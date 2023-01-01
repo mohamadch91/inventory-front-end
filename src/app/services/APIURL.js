@@ -1,2 +1,2 @@
-const API_URL = "https://mdemo.invgap.org";
+const API_URL = "https://azeapi.invgap.org";
 export default API_URL;

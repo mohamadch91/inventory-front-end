@@ -431,7 +431,7 @@
         i = s(74569),
         t = s.n(i),
         l = s(54318),
-        a = "https://mdemo.invgap.org/hr/",
+        a = "https://azeapi.invgap.org/hr/",
         d = (function () {
           function e() {
             (0, c.Z)(this, e);
